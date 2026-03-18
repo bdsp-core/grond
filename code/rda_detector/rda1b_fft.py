@@ -72,9 +72,13 @@ def fcn_rdafooof_enhanced(seg,freqs, Fs,channel_filter):
         fooof_ (numpy array): peaks, location and bw of frequency peaks that meet rda condition
         channels (numpy array): list of channels where an rda is detected
         spectra (numpy array): list of spectra for channels where an rda is detected
+        rda_scores (numpy array): per-channel RDA score (peak_power / baseline_power), NaN if no peak
+        channel_freqs (numpy array): per-channel detected peak frequency, NaN if no peak
     """
     fooof=[]
     count = 0
+    # Track which original channel index maps to each fooof row
+    channel_indices = []
     spectra = np.zeros([len(seg),int(seg.shape[1]/2)])
     for k in range(0,len(seg)):
 
@@ -92,63 +96,65 @@ def fcn_rdafooof_enhanced(seg,freqs, Fs,channel_filter):
         fm = FOOOF()
         freqs = np.array(freqs)
         spectrum = np.array(spectrum)
-        
+
         try:
             fm.fit(freqs, spectrum, freq_range)
         except Exception as e:
             print(f"Error fitting FOOOF model for segment {k+1}: {e}")
-            return 69420, 69420, 69420
+            return 69420, 69420, 69420, np.full(len(seg), np.nan), np.full(len(seg), np.nan)
 
-        
+
         tmp=fm.peak_params_
-        
+
         if len(tmp)==0:
             x=fooofgap
             fooof.append(x)
         else:
             x=np.append(np.append(tmp[0],fm.error_),fm.r_squared_)
             fooof.append(x)
+        channel_indices.append(k)
         count+=1
     fooof=np.array(fooof)
-    bw=np.round(100*fooof[:,2])/100 
-    
-    
+    bw=np.round(100*fooof[:,2])/100
+
+    # Initialize per-channel scores (all 18 channels)
+    rda_scores = np.full(len(seg), np.nan)
+    channel_freqs = np.full(len(seg), np.nan)
+
     idx=np.where(bw<=thr_bw)
     idx2 = []
     pks = fooof[:,0]
     bw = fooof[:,2]
-    
+
     for pk_idx,pk in enumerate(pks):
-        #print('Channel :'+str(pk_idx))
-        #print(pk)
         closest_value = min(freqs, key=lambda x: abs(x-pk))
-        #print(closest_value)
-        
+
         #select the indexes corresponding to the detected peak as well as the bandwidth identified around it - this all would represent the freq content of interest
         select_pk_bw = (freqs > closest_value-(bw[pk_idx]/2)) & (freqs < closest_value+(bw[pk_idx]/2))
 
         #select the rest of the signal in the delta band [0.5, 3] Hz and everything outside the peak/content of interest - calculate the mean
-        condition_proeminence = np.mean(spectra[pk_idx,(freqs<=3) & (freqs>=0.5) & ~select_pk_bw])#+np.std(spectra[pk_idx,(freqs<3)  & (freqs>0.5)])
-        #print(condition_proeminence)
-        #print(np.mean(spectra[pk_idx,(freqs > closest_value-(bw[pk_idx]/2)) & (freqs < closest_value+(bw[pk_idx]/2))]))
-        #print('#'*25)
+        baseline_power = np.mean(spectra[pk_idx,(freqs<=3) & (freqs>=0.5) & ~select_pk_bw])
+        peak_power = np.mean(spectra[pk_idx,select_pk_bw])
 
-        if np.mean(spectra[pk_idx,select_pk_bw]) > condition_proeminence:
+        # Store continuous score and frequency for this channel
+        orig_ch_idx = channel_indices[pk_idx]
+        if baseline_power > 0 and not np.isnan(pk):
+            rda_scores[orig_ch_idx] = peak_power / baseline_power
+            channel_freqs[orig_ch_idx] = pk
+
+        if peak_power > baseline_power:
             idx2.append(pk_idx)
 
     if len(idx2)==0:
-        return 69420, 69420, 69420
-    
-    idx2 = (np.array(idx2),)
-    #pdb.set_trace()
-    
-    #print(idx2)
-    fooof_=fooof[idx2]
+        return 69420, 69420, 69420, rda_scores, channel_freqs
 
+    idx2 = (np.array(idx2),)
+
+    fooof_=fooof[idx2]
 
     channels_=np.array(bipolar_channels)[idx2[0]]
 
-    return fooof_,channels_,spectra
+    return fooof_,channels_,spectra, rda_scores, channel_freqs
 
 
 def rda1b_fft(segment,fs,channel_filter):
@@ -172,8 +178,8 @@ def rda1b_fft(segment,fs,channel_filter):
 
     """ 
     # filters to denoise
-    segment=notch_filter(segment,fs,60,n_jobs=-1,verbose="ERROR")
-    segment=filter_data(segment,fs,0.5,40,n_jobs=-1,verbose="ERROR")
+    segment=notch_filter(segment,fs,60,n_jobs=1,verbose="ERROR")
+    segment=filter_data(segment,fs,0.5,40,n_jobs=1,verbose="ERROR")
 
     # L-bipolar
     segment=fcn_getBanana(segment)
@@ -186,7 +192,46 @@ def rda1b_fft(segment,fs,channel_filter):
     freqs = np.fft.fftfreq(seg.shape[1],1/fs)
     freqs = freqs[:len(freqs) //2]
     #pdb.set_trace()
-    fooof,channels,spectra=fcn_rdafooof_enhanced(seg,freqs, fs,channel_filter)
+    # Left/right hemisphere channel indices (into bipolar_channels, 0-indexed)
+    left_indices = [0, 1, 2, 3, 8, 9, 10, 11]   # Fp1-F7, F7-T3, T3-T5, T5-O1, Fp1-F3, F3-C3, C3-P3, P3-O1
+    right_indices = [4, 5, 6, 7, 12, 13, 14, 15] # Fp2-F8, F8-T4, T4-T6, T6-O2, Fp2-F4, F4-C4, C4-P4, P4-O2
+    # Midline indices 16, 17 (Fz-Cz, Cz-Pz) excluded from laterality
+
+    fooof,channels,spectra, rda_scores, channel_freqs=fcn_rdafooof_enhanced(seg,freqs, fs,channel_filter)
+
+    # Build per-channel score dicts (always available, even if no RDA detected)
+    channel_rda_scores = {bipolar_channels[i]: rda_scores[i] for i in range(len(bipolar_channels))}
+    channel_frequencies = {bipolar_channels[i]: channel_freqs[i] for i in range(len(bipolar_channels))}
+
+    # Region-level scores (mean RDA score per region)
+    # Use score=1.0 (neutral) for channels with no detected peak
+    scores_for_lat = np.where(np.isnan(rda_scores), 1.0, rda_scores)
+    region_channel_map = {
+        'LF': [0, 8, 9, 1],    # Fp1-F7, Fp1-F3, F3-C3, F7-T3
+        'RF': [4, 5, 12, 13],  # Fp2-F8, F8-T4, Fp2-F4, F4-C4
+        'LT': [2, 3],          # T3-T5, T5-O1
+        'RT': [6, 7],          # T4-T6, T6-O2
+        'LCP': [10],           # C3-P3
+        'RCP': [14],           # C4-P4
+        'LO': [11],            # P3-O1
+        'RO': [15],            # P4-O2
+    }
+    region_scores = {}
+    for region, idxs in region_channel_map.items():
+        region_vals = scores_for_lat[idxs]
+        region_scores[region] = float(np.mean(region_vals))
+
+    # Compute laterality index from region means (equal weight per region,
+    # avoids over-weighting frontal regions which have 4 channels vs 1 for occipital)
+    left_mean = np.mean([region_scores['LF'], region_scores['LT'],
+                         region_scores['LCP'], region_scores['LO']])
+    right_mean = np.mean([region_scores['RF'], region_scores['RT'],
+                          region_scores['RCP'], region_scores['RO']])
+    denom = right_mean + left_mean
+    if denom > 0:
+        laterality_index = (right_mean - left_mean) / denom
+    else:
+        laterality_index = 0.0
 
     spatial_areas = []
     if np.any(fooof == 69420) or np.any(channels == 69420):
@@ -199,19 +244,16 @@ def rda1b_fft(segment,fs,channel_filter):
             "r_squared": np.nan,
             "spatial_extent": np.nan,
             "spatial_areas":np.nan,
-            "channels": np.nan
-        }    
+            "channels": np.nan,
+            "channel_rda_scores": channel_rda_scores,
+            "channel_frequencies": channel_frequencies,
+            "region_scores": region_scores,
+            "laterality_index": laterality_index,
+            "left_mean_score": left_mean,
+            "right_mean_score": right_mean,
+        }
     else:
-        
-        #if sparcnet_score==4: # LRDA
-            
-        #    if len(channels)!=0:
-        #        scr=np.square(fooof[:,1])*fooof[:,4]/(fooof[:,2]*fooof[:,3]) 
-        #        idx=np.argsort(scr) 
-        #        if len(idx)>1:
-        #            fooof=fooof[idx[[-1,-2]]]
-        #            channels=channels[idx[[-1,-2]]]
-                                
+
         if len(channels)==0:
             data_obj = {
                 "type_event":np.nan,
@@ -222,8 +264,14 @@ def rda1b_fft(segment,fs,channel_filter):
                 "r_squared": np.nan,
                 "spatial_extent": np.nan,
                 "spatial_areas":np.nan,
-                "channels": np.nan
-            }               
+                "channels": np.nan,
+                "channel_rda_scores": channel_rda_scores,
+                "channel_frequencies": channel_frequencies,
+                "region_scores": region_scores,
+                "laterality_index": laterality_index,
+                "left_mean_score": left_mean,
+                "right_mean_score": right_mean,
+            }
         else:
             for channel in channels:
                 if channel in ['Fp1-F7','Fp1-F3','F3-C3','F7-T3']:
@@ -260,6 +308,12 @@ def rda1b_fft(segment,fs,channel_filter):
                 "spatial_extent": len(channels)/seg.shape[0],
                 "spatial_areas":spatial_areas,
                 "channels": pd.Series(channels),
+                "channel_rda_scores": channel_rda_scores,
+                "channel_frequencies": channel_frequencies,
+                "region_scores": region_scores,
+                "laterality_index": laterality_index,
+                "left_mean_score": left_mean,
+                "right_mean_score": right_mean,
                 }
 
     return data_obj,spectra, freqs

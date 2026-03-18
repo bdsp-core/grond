@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test Case Image Viewer</title>
+<style>
+  body { margin: 0; background: #1a1a1a; color: #eee; font-family: monospace; }
+  #header { display: flex; justify-content: space-between; align-items: center; padding: 8px 16px; background: #222; flex-wrap: wrap; gap: 8px; }
+  #header select { font-size: 14px; padding: 4px; }
+  #info { font-size: 14px; }
+  #counter { color: #aaa; }
+  #view-label { font-weight: bold; }
+  #freq-panel { background: #333; padding: 8px 16px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .freq-btn { padding: 6px 16px; border: 2px solid #555; border-radius: 6px; background: #444; color: #eee;
+         cursor: pointer; font-family: monospace; font-size: 15px; font-weight: bold; min-width: 180px; text-align: center; }
+  .freq-btn:hover { background: #555; border-color: #888; }
+  .freq-btn.selected-a { background: #8b2020; border-color: #e03030; box-shadow: 0 0 8px #e03030; }
+  .freq-btn.selected-b { background: #885510; border-color: #ee7722; box-shadow: 0 0 8px #ee7722; }
+  .freq-btn.selected-tie { background: #2a5a8a; border-color: #4499dd; box-shadow: 0 0 8px #4499dd; }
+  .freq-expert-label { padding: 6px 16px; border: 2px solid #2a6e2a; border-radius: 6px; background: #2a3a2a;
+         font-family: monospace; font-size: 15px; font-weight: bold; min-width: 140px; text-align: center; color: #44cc44; }
+  .freq-label { font-size: 11px; color: #999; display: block; margin-bottom: 2px; }
+  .freq-hz { font-size: 16px; }
+  #img-container { text-align: center; padding: 8px; }
+  #img-container img { max-width: 100%; max-height: calc(100vh - 110px); }
+  .key { background: #444; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+  #save-status { color: #44cc44; font-size: 12px; }
+  .which-label { color: #aaa; font-size: 13px; }
+</style>
+</head>
+<body>
+<div id="header">
+  <div>
+    <select id="filter" onchange="filterChanged()">
+      <option value="all">All (100)</option>
+      <option value="lpd">LPD (25)</option>
+      <option value="gpd">GPD (25)</option>
+      <option value="lrda">LRDA (25)</option>
+      <option value="grda">GRDA (25)</option>
+    </select>
+    &nbsp;
+    <span class="key">&larr;</span> <span class="key">&rarr;</span> nav &nbsp;
+    <span class="key">&uarr;</span> <span class="key">&darr;</span> toggle &nbsp;
+    <span class="key">1</span> <span class="key">2</span> <span class="key">3</span> rate freq &nbsp;
+    <span class="key">0</span> all &nbsp;
+    <span class="key">E</span> export
+  </div>
+  <div id="info">
+    <span id="view-label">EEG</span> &nbsp;
+    <span id="filename"></span> &nbsp; <span id="counter"></span>
+  </div>
+</div>
+<div id="freq-panel">
+  <span class="which-label">Which frequency is better?</span>
+  <button class="freq-btn" id="btn-a" onclick="rate('A')">
+    <span class="freq-label">Freq A (peak det)</span>
+    <span class="freq-hz" id="freq-a-val">—</span>
+  </button>
+  <button class="freq-btn" id="btn-b" onclick="rate('B')">
+    <span class="freq-label">Freq B (ACF)</span>
+    <span class="freq-hz" id="freq-b-val">—</span>
+  </button>
+  <button class="freq-btn" id="btn-tie" onclick="rate('tie')">
+    <span class="freq-label">&nbsp;</span>
+    <span class="freq-hz">Tie</span>
+  </button>
+  <div class="freq-expert-label">
+    <span class="freq-label">Expert</span>
+    <span class="freq-hz" id="freq-expert-val">?</span>
+  </div>
+  <span id="save-status"></span>
+</div>
+<div id="img-container">
+  <img id="viewer" src="" />
+</div>
+<script>
+const BASE_IMAGES = ["gpd_01_sub-S0001112303445_20131231062403", "gpd_02_sub-S0001114467351_20121221230210", "gpd_03_sub-S0001115393315_20130423222554", "gpd_04_sub-S0001115766762_20130709150902", "gpd_05_sub-S0001115679892_20151228010536", "gpd_06_sub-S0001117415355_20130320191842", "gpd_07_sub-S0001114486508_20150818101920", "gpd_08_sub-S0001114037812_20130112170532", "gpd_09_sub-S0001117128712_20121231115036", "gpd_10_sub-S0001114938862_20150430160034", "gpd_11_sub-S0001115720992_20130128175653", "gpd_12_sub-S0001112532030_20130108213147", "gpd_13_sub-S0001117406866_20180430134058", "gpd_14_sub-S0001117881487_20130412214314", "gpd_15_sub-S0001119560745_20150505232002", "gpd_16_sub-S0001117578612_20121003231026", "gpd_17_sub-S0001112734905_20160124001839", "gpd_18_sub-S0001118074762_20170411174850", "gpd_19_sub-S0001115983631_20160131174526", "gpd_20_sub-S0001116254595_20150420201118", "gpd_21_sub-S0001116236384_20111003020522", "gpd_22_sub-S0001111990918_20140127154036", "gpd_23_sub-S0001114880232_20130401131036", "gpd_24_sub-S0001114865119_20130608153709", "gpd_25_sub-S0001111958090_20120226164014", "grda_01_sub-S0001111954062_20141016000029", "grda_02_sub-S0001111894444_20161208050017", "grda_03_sub-S0001111958090_20120103161245", "grda_04_sub-S0001116254595_20150421192047", "grda_05_sub-S0001114210421_20140706091002", "grda_06_sub-S0001112827622_20151223164843", "grda_07_sub-S0001114187067_20110722072132", "grda_08_sub-S0001118228584_20140411105614", "grda_09_sub-S0001112760940_20140502123525", "grda_10_sub-S0001112048732_20120327150051", "grda_11_sub-S0001115437226_20170115190641", "grda_12_sub-S0001114605879_20130806181000", "grda_13_sub-S0001115790878_20141227155620", "grda_14_sub-S0001111986347_20171107020426", "grda_15_sub-S0001114848960_20120224101137", "grda_16_sub-S0001116892755_20130605105548", "grda_17_sub-S0001117629659_20160726023236", "grda_18_sub-S0001114082063_20150317041607", "grda_19_sub-S0001111806336_20130717004831", "grda_20_sub-S0001117834348_20141201070616", "grda_21_sub-S0001116263695_20180310055212", "grda_22_sub-S0001117175030_20160531050206", "grda_23_sub-S0001111410344_20150111190533", "grda_24_sub-S0001119458597_20151106044952", "grda_25_sub-S0001113652944_20170724224502", "lpd_01_sub-S0001112968514_20160210135620", "lpd_02_sub-S0001112591683_20160911141146", "lpd_03_sub-S0001115902478_20140529100833", "lpd_04_sub-S0001113937382_20121119104859", "lpd_05_sub-S0001112973556_20160810224027", "lpd_06_sub-S0001118109236_20140317154140", "lpd_07_sub-S0001117713134_20150123110235", "lpd_08_sub-S0001119063263_20140804164012", "lpd_09_sub-S0001116689943_20150315213054", "lpd_10_sub-S0001114436894_20111122210847", "lpd_11_sub-S0001117678743_20141003021411", "lpd_12_sub-S0001111696263_20140405185623", "lpd_13_sub-S0001117286225_20131128164040", "lpd_14_sub-S0001113720932_20140121014458", "lpd_15_sub-S0001112489790_20130303110502", "lpd_16_sub-S0001111573876_20160430035101", "lpd_17_sub-S0001116044770_20120902214031", "lpd_18_sub-S0001115365077_20160706050316", "lpd_19_sub-S0001113658728_20140427012355", "lpd_20_sub-S0001112289437_20120501184554", "lpd_21_sub-S0001116433635_20160731213908", "lpd_22_sub-S0001114305927_20121011040708", "lpd_23_sub-S0001113651215_20121023021623", "lpd_24_sub-S0001113113816_20121128065153", "lpd_25_sub-S0001117936577_20120605111402", "lrda_01_sub-S0001116263695_20180305213732", "lrda_02_sub-S0001113503202_20131122221132", "lrda_03_sub-S0001111630617_20140324095339", "lrda_04_sub-S0001118704204_20140919035403", "lrda_05_sub-S0001114448538_20140114114706", "lrda_06_sub-S0001112976653_20140101074847", "lrda_07_sub-S0001113261348_20150707161221", "lrda_08_sub-S0001115861457_20161226183944", "lrda_09_sub-S0001117307111_20120920211529", "lrda_10_sub-S0001115633229_20190719143934", "lrda_11_sub-S0001112968514_20160211004010", "lrda_12_sub-S0001115280615_20160928080222", "lrda_13_sub-S0001113509262_20150324130708", "lrda_14_sub-S0001113235464_20150320164736", "lrda_15_sub-S0001115790878_20141227203206", "lrda_16_sub-S0001111983979_20161008073610", "lrda_17_sub-S0001116036574_20150501043837", "lrda_18_sub-S0001116369912_20151105125537", "lrda_19_sub-S0001115601423_20131021021955", "lrda_20_sub-S0001115862944_20180820053502", "lrda_21_sub-S0001113953268_20141101043722", "lrda_22_sub-S0001117525395_20130413045831", "lrda_23_sub-S0001118100880_20110616080641", "lrda_24_sub-S0001115485168_20171116103237", "lrda_25_sub-S0001111574799_20170514213904"];
+
+let metadata = {};
+let ratings = {};
+let items = BASE_IMAGES;
+let idx = 0;
+let showPointiness = false;
+
+// Load metadata - try fetch first, fall back to inline
+function loadMetadata() {
+  fetch('metadata.json?t=' + Date.now())
+    .then(r => { if (!r.ok) throw new Error('fetch failed'); return r.json(); })
+    .then(d => { metadata = d; show(); })
+    .catch(() => {
+      // Fallback: load via script tag for file:// protocol
+      const s = document.createElement('script');
+      s.src = 'metadata.js?t=' + Date.now();
+      document.head.appendChild(s);
+    });
+}
+loadMetadata();
+
+// Load saved ratings
+try { ratings = JSON.parse(localStorage.getItem('freq_ratings') || '{}'); } catch(e) {}
+
+function getSrc(base) {
+  return showPointiness ? base + '_pointiness.png' : base + '.png';
+}
+
+function show() {
+  const name = items[idx];
+  document.getElementById('viewer').src = getSrc(name);
+  document.getElementById('filename').textContent = name;
+  document.getElementById('counter').textContent = (idx + 1) + ' / ' + items.length;
+  document.getElementById('view-label').textContent = showPointiness ? 'POINTINESS' : 'EEG';
+  document.getElementById('view-label').style.color = showPointiness ? '#ee7722' : '#ffcc44';
+
+  const meta = metadata[name] || {};
+  document.getElementById('freq-a-val').textContent = meta.freq_a != null ? meta.freq_a + ' Hz' : '—';
+  document.getElementById('freq-b-val').textContent = meta.freq_b != null ? meta.freq_b + ' Hz' : '—';
+  document.getElementById('freq-expert-val').textContent = meta.expert_freq != null ? meta.expert_freq + ' Hz' : '?';
+
+  // Show current rating
+  const r = ratings[name];
+  const btnA = document.getElementById('btn-a');
+  const btnB = document.getElementById('btn-b');
+  const btnTie = document.getElementById('btn-tie');
+  btnA.classList.remove('selected-a');
+  btnB.classList.remove('selected-b');
+  btnTie.classList.remove('selected-tie');
+  if (r === 'A') btnA.classList.add('selected-a');
+  if (r === 'B') btnB.classList.add('selected-b');
+  if (r === 'tie') btnTie.classList.add('selected-tie');
+  document.getElementById('save-status').textContent = '';
+}
+
+function rate(choice) {
+  const name = items[idx];
+  ratings[name] = choice;
+  localStorage.setItem('freq_ratings', JSON.stringify(ratings));
+
+  const btnA = document.getElementById('btn-a');
+  const btnB = document.getElementById('btn-b');
+  const btnTie = document.getElementById('btn-tie');
+  btnA.classList.remove('selected-a');
+  btnB.classList.remove('selected-b');
+  btnTie.classList.remove('selected-tie');
+  if (choice === 'A') btnA.classList.add('selected-a');
+  if (choice === 'B') btnB.classList.add('selected-b');
+  if (choice === 'tie') btnTie.classList.add('selected-tie');
+
+  // Count ratings
+  const n = Object.keys(ratings).length;
+  document.getElementById('save-status').textContent = `Saved (${n} rated)`;
+
+  // Auto-advance
+  if (idx < items.length - 1) {
+    setTimeout(() => { idx++; show(); }, 300);
+  }
+}
+
+function filterChanged() {
+  const f = document.getElementById('filter').value;
+  items = f === 'all' ? BASE_IMAGES : BASE_IMAGES.filter(n => n.startsWith(f + '_'));
+  idx = 0;
+  show();
+}
+
+function setFilter(val) {
+  document.getElementById('filter').value = val;
+  filterChanged();
+}
+
+function exportRatings() {
+  const blob = new Blob([JSON.stringify(ratings, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'frequency_ratings.json';
+  a.click();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') { idx = Math.min(idx + 1, items.length - 1); show(); }
+  else if (e.key === 'ArrowLeft') { idx = Math.max(idx - 1, 0); show(); }
+  else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') { showPointiness = !showPointiness; show(); e.preventDefault(); }
+  else if (e.key === '0') setFilter('all');
+  else if (e.key === '1') rate('A');
+  else if (e.key === '2') rate('B');
+  else if (e.key === '3') rate('tie');
+  else if (e.key === 'a' || e.key === 'A') rate('A');
+  else if (e.key === 'b' || e.key === 'B') rate('B');
+  else if (e.key === 't' || e.key === 'T') rate('tie');
+  else if (e.key === 'e' || e.key === 'E') exportRatings();
+});
+
+show();
+</script>
+</body>
+</html>

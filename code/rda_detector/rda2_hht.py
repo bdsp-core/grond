@@ -217,8 +217,8 @@ def rda2_hht(segment,fs,channel_filter):
             channels: number of channels detected to have RDA events
     """ 
     # filters to denoise
-    segment=notch_filter(segment,fs,60,n_jobs=-1,verbose="ERROR")
-    segment=filter_data(segment,fs,0.5,40,n_jobs=-1,verbose="ERROR")
+    segment=notch_filter(segment,fs,60,n_jobs=1,verbose="ERROR")
+    segment=filter_data(segment,fs,0.5,40,n_jobs=1,verbose="ERROR")
 
     # L-bipolar
     segment=fcn_getBanana(segment)

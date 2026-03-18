@@ -12,9 +12,11 @@ This repository provides automated algorithms for detecting and characterizing e
 - **LRDA**: Lateralized Rhythmic Delta Activity
 - **GRDA**: Generalized Rhythmic Delta Activity
 
-The algorithms extract two key features:
+The algorithms extract key features:
 1. **Frequency** of the epileptiform activity
 2. **Spatial extent** (brain regions affected)
+3. **Laterality** (region-based laterality index, unilateral vs bilateral asymmetric)
+4. **Verbal descriptions** following ACNS 2021 standardized nomenclature
 
 ## Quick Links
 
@@ -29,6 +31,8 @@ The algorithms extract two key features:
 - [Repository Structure](#repository-structure)
 - [Usage](#usage)
 - [Algorithm Details](#algorithm-details)
+- [Verbal Descriptions](#verbal-descriptions)
+- [Interactive Browser](#interactive-browser)
 - [Reproducing Paper Results](#reproducing-paper-results)
 - [Citation](#citation)
 - [Troubleshooting](#troubleshooting)
@@ -135,6 +139,9 @@ data/
 │   ├── imageGeneration/          # Visualization functions
 │   │   └── plot_events.py        # Plotting functions for algorithm output
 │   ├── extract_frequency_spatial_extent.py  # Main analysis script
+│   ├── extract_with_laterality.py           # Laterality-enhanced analysis
+│   ├── browse_results.py         # Interactive EEG browser with verbal descriptions
+│   ├── generate_test_images.py   # Batch generate 100 test-case images from IIIC data
 │   ├── visualize_output.py       # Example visualization script
 │   ├── irr_analysis_onagreement.ipynb       # IRR analysis (agreement subset)
 │   ├── irr_analysis_fulldataset.ipynb       # IRR analysis (full dataset)
@@ -148,7 +155,10 @@ data/
 │   ├── lpd_results.csv           # LPD detection results
 │   ├── grda_results.csv          # GRDA detection results
 │   ├── lrda_results.csv          # LRDA detection results
+│   ├── *_laterality_results.csv  # Laterality-enhanced results (per-region scores)
 │   └── results_figures/          # Generated figures
+├── test_case_images/             # 100 example images (25 per pattern) + raw EEG
+├── DESCRIPTION_RULES.md          # Verbal description rules (ACNS 2021)
 └── README.md                     # This file
 ```
 
@@ -256,6 +266,65 @@ Each detector returns a dictionary with:
 - RO: Right Occipital
 - LCP: Left Central-Parietal
 - RCP: Right Central-Parietal
+
+## Verbal Descriptions
+
+The system generates concise verbal descriptions of each detected pattern following **ACNS 2021 standardized critical care EEG terminology**. Descriptions are assembled from the model outputs (event type, frequency, laterality, region scores) using a rule-based system.
+
+**Templates:**
+```
+LRDA / LPD:   {type} at {freq} Hz, {laterality}; maximal in the {regions}.
+GRDA / GPD:   {type} at {freq} Hz, {regional predominance}.
+```
+
+**Example outputs:**
+```
+LRDA at 2.1 Hz, unilateral left; maximal in the centro-parietal and temporal regions.
+GRDA at 1.8 Hz, frontally predominant.
+GPD at 1.5 Hz, no regional predominance.
+```
+
+**Key design decisions:**
+
+- **Laterality index** is computed from **region means** (equal weight per region), not channel means. This prevents frontal regions (4 channels) from dominating over occipital or centro-parietal regions (1 channel each).
+- **Laterality thresholds** (for L types): |LI| > 0.15 → unilateral; 0.10 < |LI| ≤ 0.15 → bilateral asymmetric; |LI| ≤ 0.10 → bilateral/symmetric. Calibrated against clinical judgment.
+- **Regional predominance** (for G types): frontally, occipitally, or midline predominant per ACNS 2021 guidance; or "no regional predominance" if no group exceeds the active threshold (2.0).
+- **Region names** for L types use bare names (e.g., "frontal" not "left frontal") since the side is already stated in the laterality term.
+
+For the complete rule set, see [DESCRIPTION_RULES.md](DESCRIPTION_RULES.md).
+
+### Test Case Images
+
+The `test_case_images/` directory contains 100 example images (25 per pattern type) generated from expert-labeled segments in the IIIC dataset. Each image shows a 10-second EEG segment with the detector output, region scores, laterality analysis, and verbal description overlaid. Raw EEG segments (`.mat` files) are saved alongside the images for quick regeneration.
+
+To regenerate:
+```bash
+conda activate foe
+cd code
+python generate_test_images.py
+```
+
+## Interactive Browser
+
+An interactive browser ([code/browse_results.py](code/browse_results.py)) allows visual inspection of model outputs overlaid on EEG traces:
+
+```bash
+conda activate foe
+cd code
+python browse_results.py --event lrda
+```
+
+**Controls:**
+- `←` / `→` — Navigate between segments
+- `1` / `2` / `3` / `4` — Switch to LRDA / GRDA / LPD / GPD
+- `Tab` — Cycle through available event types
+- `Q` — Quit
+
+**Display features:**
+- 18-channel bipolar montage with left hemisphere (pink), right hemisphere (blue), midline (gray) backgrounds
+- Detected channels highlighted in blue with per-channel scores
+- Right panel: summary statistics, region scores, laterality index bar, per-channel score chart
+- Verbal description banner (ACNS 2021 nomenclature) at the top of each segment
 
 ## Reproducing Paper Results
 

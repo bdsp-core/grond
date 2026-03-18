@@ -20,8 +20,8 @@ import mne
 
 
 def plot_rda_events(segment,data_obj,start_sec,end_sec,fs): 
-    segment=notch_filter(segment,fs,60,n_jobs=-1,verbose="ERROR")
-    segment=filter_data(segment,fs,0.5,40,n_jobs=-1,verbose="ERROR")
+    segment=notch_filter(segment,fs,60,n_jobs=1,verbose="ERROR")
+    segment=filter_data(segment,fs,0.5,40,n_jobs=1,verbose="ERROR")
 
     gs = GridSpec(18,2, width_ratios=[100,1],hspace=0.1)
 
@@ -95,8 +95,8 @@ def plot_rda_events(segment,data_obj,start_sec,end_sec,fs):
 def plot_pd_events(segment,data_obj,start_sec,end_sec,fs): 
 
     
-    segment=notch_filter(segment,fs,60,n_jobs=-1,verbose="ERROR")
-    segment=filter_data(segment,fs,0.5,40,n_jobs=-1,verbose="ERROR")
+    segment=notch_filter(segment,fs,60,n_jobs=1,verbose="ERROR")
+    segment=filter_data(segment,fs,0.5,40,n_jobs=1,verbose="ERROR")
 
     gs = GridSpec(18,2, width_ratios=[100,1],hspace=0.01)
 

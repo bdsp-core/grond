@@ -1,5 +1,5 @@
 from mne.filter import notch_filter,filter_data
-import hdf5storage 
+import hdf5storage
 import scipy.io as sio
 import numpy as np
 import pandas as pd
@@ -9,10 +9,11 @@ import math
 import os
 import pdb
 import scipy.io as io
-from scipy.signal import find_peaks, detrend
+from scipy.signal import find_peaks, detrend, butter, filtfilt
 from scipy.stats import shapiro
 from scipy import signal
 from scipy.signal import savgol_filter
+from scipy.ndimage import gaussian_filter1d
 
 
 # global var
@@ -123,18 +124,39 @@ def pd_detect_alternate(segment,fs,pk_detect='apd'):
                             - cwt - continuous wavelet transform peak detector
                             - zscore - z-score based peak detector
     Output:
-        data_obj (data struct): 
+        data_obj (data struct):
                 type_event: LPD or GPD based on the spatial extent
                 event_frequency: frequency of event as a median over all channel frequencies
                 spatial_extent: 0-1, 0 - no channel contains an event, 1 - all channels contain an event
                 spatial_areas: brain areas that show events based on the channels identified: LF, RF, LCP, RCP, LT, RT, LO, RO
                 channels: differential channels detected to have events
-                peaks: location of the peaks 
+                peaks: location of the peaks
+                channel_pd_scores: dict of {channel_name: pd_score} for all 18 channels
+                channel_frequencies: dict of {channel_name: frequency} for all 18 channels
+                region_scores: dict of {region_name: mean_pd_score} for 8 regions
+                laterality_index: float in [-1, +1], negative=left, positive=right
+                left_mean_score: mean PD score across left hemisphere channels
+                right_mean_score: mean PD score across right hemisphere channels
     """
 
+    # Left/right hemisphere channel indices (into bipolar_channels, 0-indexed)
+    left_indices = [0, 1, 2, 3, 8, 9, 10, 11]   # Fp1-F7, F7-T3, T3-T5, T5-O1, Fp1-F3, F3-C3, C3-P3, P3-O1
+    right_indices = [4, 5, 6, 7, 12, 13, 14, 15] # Fp2-F8, F8-T4, T4-T6, T6-O2, Fp2-F4, F4-C4, C4-P4, P4-O2
+
+    region_channel_map = {
+        'LF': [0, 8, 9, 1],    # Fp1-F7, Fp1-F3, F3-C3, F7-T3
+        'RF': [4, 5, 12, 13],  # Fp2-F8, F8-T4, Fp2-F4, F4-C4
+        'LT': [2, 3],          # T3-T5, T5-O1
+        'RT': [6, 7],          # T4-T6, T6-O2
+        'LCP': [10],           # C3-P3
+        'RCP': [14],           # C4-P4
+        'LO': [11],            # P3-O1
+        'RO': [15],            # P4-O2
+    }
+
     # filters to denoise
-    segment=notch_filter(segment,fs,60,n_jobs=-1,verbose="ERROR")
-    segment=filter_data(segment,fs,0.5,40,n_jobs=-1,verbose="ERROR")
+    segment=notch_filter(segment,fs,60,n_jobs=1,verbose="ERROR")
+    segment=filter_data(segment,fs,0.5,40,n_jobs=1,verbose="ERROR")
 
     # L-bipolar
     segment=fcn_getBanana(segment)
@@ -142,6 +164,12 @@ def pd_detect_alternate(segment,fs,pk_detect='apd'):
 
     seg=segment
     df_peaks = pd.DataFrame(index=range(len(seg)),columns=['peaks','intervals','frequency'])
+
+    # Per-channel continuous scores
+    pd_scores = np.full(len(seg), np.nan)
+    channel_freqs = np.full(len(seg), np.nan)
+    # Store ALL detected peaks per channel (for synchrony analysis), not just those passing std<1
+    all_channel_peaks = {}
 
     for i in range(0,seg.shape[0]):
         x = seg[i,:]
@@ -162,11 +190,159 @@ def pd_detect_alternate(segment,fs,pk_detect='apd'):
             d_peaks = zscore_peak_detection(d_x)
 
         intervals = np.diff(d_peaks/fs)
-        if (d_peaks.shape[0]>1) & (intervals.shape[0]>1) & (np.std(intervals, ddof=1) < 1):
-            df_peaks.loc[i,'peaks'] = d_peaks
-            df_peaks.loc[i,'intervals'] = intervals
-            df_peaks.loc[i,'frequency'] = 1/np.mean(intervals)
 
+        # Store all peaks for synchrony analysis (before any thresholding)
+        if d_peaks.shape[0] > 0:
+            all_channel_peaks[i] = d_peaks
+
+        # Compute continuous score for every channel with >=2 peaks
+        if (d_peaks.shape[0]>1) & (intervals.shape[0]>1):
+            std_intervals = np.std(intervals, ddof=1)
+            if std_intervals > 0:
+                pd_scores[i] = 1.0 / std_intervals
+            channel_freqs[i] = 1.0 / np.mean(intervals)
+
+            # Binary decision unchanged: std < 1 threshold
+            if std_intervals < 1:
+                df_peaks.loc[i,'peaks'] = d_peaks
+                df_peaks.loc[i,'intervals'] = intervals
+                df_peaks.loc[i,'frequency'] = 1/np.mean(intervals)
+
+    # Build per-channel score dicts
+    channel_pd_scores = {bipolar_channels[i]: pd_scores[i] for i in range(len(bipolar_channels))}
+    channel_frequencies = {bipolar_channels[i]: channel_freqs[i] for i in range(len(bipolar_channels))}
+
+    # Compute laterality index (NaN channels get score 0 = no periodicity evidence)
+    scores_for_lat = np.where(np.isnan(pd_scores), 0.0, pd_scores)
+    left_mean = np.mean(scores_for_lat[left_indices])
+    right_mean = np.mean(scores_for_lat[right_indices])
+    denom = right_mean + left_mean
+    if denom > 0:
+        laterality_index = (right_mean - left_mean) / denom
+    else:
+        laterality_index = 0.0
+
+    # Region-level scores
+    region_scores = {}
+    for region, idxs in region_channel_map.items():
+        region_scores[region] = float(np.mean(scores_for_lat[idxs]))
+
+    # --- Pointiness+ACF synchrony for L/G classification ---
+    # Optimal params from grid search: lp=15Hz, sigma=0.02, peak_thr=0.20,
+    # ph_frac=0.3, sync_thr=0.8, acf_min_lag=0.4
+    SYNC_TOLERANCE_MS = 200
+    SYNC_THRESHOLD = 0.8
+    SYNC_MIN_PEAKS = 5
+    POINTINESS_LP_HZ = 15.0
+    POINTINESS_SIGMA = 0.02
+    POINTINESS_ACF_MIN_LAG = 0.4
+    POINTINESS_ACF_PEAK_THR = 0.20
+    POINTINESS_PH_FRAC = 0.3
+
+    def _compute_pointiness_trace(signal_1d, half_win=8):
+        n = len(signal_1d)
+        trace = np.zeros(n)
+        pks, _ = find_peaks(signal_1d)
+        for loc in pks:
+            if loc < half_win or loc >= n - half_win:
+                continue
+            peak_val = signal_1d[loc]
+            left_valley = np.min(signal_1d[loc - half_win:loc])
+            right_valley = np.min(signal_1d[loc + 1:loc + half_win + 1])
+            prom = peak_val - max(left_valley, right_valley)
+            if prom <= 0:
+                continue
+            half_prom_level = peak_val - 0.5 * prom
+            width = 0
+            for j in range(1, half_win + 1):
+                if signal_1d[loc - j] > half_prom_level:
+                    width += 1
+                else:
+                    break
+            for j in range(1, half_win + 1):
+                if loc + j < n and signal_1d[loc + j] > half_prom_level:
+                    width += 1
+                else:
+                    break
+            if width > 0:
+                trace[loc] = prom ** 2 / width
+        return trace
+
+    # Apply 15 Hz lowpass to bipolar signal for pointiness analysis
+    b_lp, a_lp = butter(4, POINTINESS_LP_HZ / (fs / 2), btype='low')
+    seg_lp = np.zeros_like(seg)
+    for ch_i in range(seg.shape[0]):
+        try:
+            seg_lp[ch_i] = filtfilt(b_lp, a_lp, seg[ch_i])
+        except ValueError:
+            seg_lp[ch_i] = seg[ch_i]
+
+    # Compute pointiness trace per channel, find peaks, check ACF for periodicity
+    pt_left_peaks = []
+    pt_right_peaks = []
+    pt_acf_freqs = []
+    sigma_samples = max(1, int(POINTINESS_SIGMA * fs))
+
+    for ch_i in range(seg_lp.shape[0]):
+        pt = _compute_pointiness_trace(seg_lp[ch_i])
+        pt = gaussian_filter1d(pt, sigma=sigma_samples)
+
+        # ACF periodicity check
+        ptm = pt - np.mean(pt)
+        max_lag = min(4 * fs, len(ptm) - 1)
+        if max_lag > 10:
+            acf = np.correlate(ptm, ptm, mode='full')
+            acf = acf[len(ptm) - 1:][:max_lag + 1]
+            if acf[0] > 0:
+                acf = acf / acf[0]
+            min_lag_samp = int(POINTINESS_ACF_MIN_LAG * fs)
+            ch_periodic = False
+            for k in range(min_lag_samp + 1, len(acf) - 1):
+                if acf[k] > acf[k-1] and acf[k] > acf[k+1] and acf[k] > POINTINESS_ACF_PEAK_THR:
+                    ch_periodic = True
+                    pt_acf_freqs.append(fs / k)
+                    break
+        else:
+            ch_periodic = False
+
+        # Only collect peaks from channels with ACF-confirmed periodicity
+        if ch_periodic:
+            mx = np.max(pt)
+            pk_height = mx * POINTINESS_PH_FRAC if mx > 0 else 0
+            ch_pks, _ = find_peaks(pt, height=pk_height, distance=int(0.2 * fs))
+            if len(ch_pks) > 0:
+                if ch_i in left_indices:
+                    pt_left_peaks.extend(ch_pks)
+                elif ch_i in right_indices:
+                    pt_right_peaks.extend(ch_pks)
+
+    pt_left_peaks = np.sort(np.array(pt_left_peaks))
+    pt_right_peaks = np.sort(np.array(pt_right_peaks))
+
+    synchrony_ratio = np.nan
+    if len(pt_left_peaks) >= SYNC_MIN_PEAKS and len(pt_right_peaks) >= SYNC_MIN_PEAKS:
+        tol_samples = int(SYNC_TOLERANCE_MS * fs / 1000)
+        matched_left = 0
+        for lp in pt_left_peaks:
+            idx = np.searchsorted(pt_right_peaks, lp)
+            for ci in [idx - 1, idx]:
+                if 0 <= ci < len(pt_right_peaks):
+                    if abs(pt_right_peaks[ci] - lp) <= tol_samples:
+                        matched_left += 1
+                        break
+        matched_right = 0
+        for rp in pt_right_peaks:
+            idx = np.searchsorted(pt_left_peaks, rp)
+            for ci in [idx - 1, idx]:
+                if 0 <= ci < len(pt_left_peaks):
+                    if abs(pt_left_peaks[ci] - rp) <= tol_samples:
+                        matched_right += 1
+                        break
+        synchrony_ratio = (matched_left / len(pt_left_peaks)
+                           + matched_right / len(pt_right_peaks)) / 2.0
+
+    # ACF-based frequency estimate (median across channels with ACF periodicity)
+    acf_frequency = float(np.median(pt_acf_freqs)) if pt_acf_freqs else np.nan
 
     df_peaks['chan'] = bipolar_channels
     df_peaks = df_peaks[~df_peaks['frequency'].isna()]
@@ -175,12 +351,20 @@ def pd_detect_alternate(segment,fs,pk_detect='apd'):
         data_obj = {
             "type_event":np.nan,
             "event_frequency": np.nan,
+            "acf_frequency": acf_frequency,
             "spatial_extent": np.nan,
             "spatial_areas":np.nan,
             "channels": np.nan,
-            "peaks":np.nan
-
-        }               
+            "peaks":np.nan,
+            "channel_pd_scores": channel_pd_scores,
+            "channel_frequencies": channel_frequencies,
+            "region_scores": region_scores,
+            "laterality_index": laterality_index,
+            "left_mean_score": left_mean,
+            "right_mean_score": right_mean,
+            "all_channel_peaks": all_channel_peaks,
+            "synchrony_ratio": synchrony_ratio,
+        }
     else:
         for channel in df_peaks['chan']:
             if channel in ['Fp1-F7','Fp1-F3','F3-C3','F7-T3']:
@@ -200,21 +384,41 @@ def pd_detect_alternate(segment,fs,pk_detect='apd'):
             if channel in ['P4-O2']:
                 spatial_areas.append('RO')
 
-            spatial_areas = list(set(spatial_areas))
+        spatial_areas = list(set(spatial_areas))
 
+        # Synchrony-based classification: if peaks are time-locked across
+        # hemispheres, classify as GPD; otherwise LPD.
+        # Falls back to spatial_extent > 0.80 if insufficient peaks for
+        # synchrony analysis.
+        if np.isfinite(synchrony_ratio):
+            if synchrony_ratio > SYNC_THRESHOLD:
+                type_event = "GPD"
+            else:
+                type_event = "LPD"
+        else:
+            # Fallback: original spatial extent rule
             if len(df_peaks['chan'])/seg.shape[0] > 0.8:
                 type_event = "GPD"
             else:
                 type_event = "LPD"
 
-            data_obj = {
-                "type_event":type_event,
-                "event_frequency": df_peaks['frequency'].median(),
-                "spatial_extent": df_peaks.shape[0]/18,
-                "spatial_areas":spatial_areas,
-                "channels": pd.Series(df_peaks['chan']),
-                "peaks":df_peaks['peaks']
-                }
+        data_obj = {
+            "type_event":type_event,
+            "event_frequency": df_peaks['frequency'].median(),
+            "acf_frequency": acf_frequency,
+            "spatial_extent": df_peaks.shape[0]/18,
+            "spatial_areas":spatial_areas,
+            "channels": pd.Series(df_peaks['chan']),
+            "peaks":df_peaks['peaks'],
+            "channel_pd_scores": channel_pd_scores,
+            "channel_frequencies": channel_frequencies,
+            "region_scores": region_scores,
+            "laterality_index": laterality_index,
+            "left_mean_score": left_mean,
+            "right_mean_score": right_mean,
+            "all_channel_peaks": all_channel_peaks,
+            "synchrony_ratio": synchrony_ratio,
+            }
 
 
     return data_obj
