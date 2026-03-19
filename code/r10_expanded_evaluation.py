@@ -43,7 +43,7 @@ from pd_pointiness_acf import pd_detect_pointiness_acf, compute_pointiness_trace
 from mne.filter import notch_filter, filter_data
 
 CACHE_DIR = PROJECT_DIR / 'data' / 'dl_cache'
-ANNOT_CSV = PROJECT_DIR / 'data' / '_archive' / 'annotation_candidates' / 'frequency_annotations.csv'
+ANNOT_CSV = PROJECT_DIR / 'data' / '_archive' / 'pd_round1_candidates' / 'frequency_annotations.csv'
 FREQ_LO, FREQ_HI = 0.3, 3.5
 
 ADJACENT_PAIRS = [

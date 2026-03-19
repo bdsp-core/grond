@@ -27,7 +27,7 @@ EEG_DIR = DATA / 'eeg'
 LABELS_DIR = DATA / 'labels'
 SEGMENTS_CSV = LABELS_DIR / 'segments.csv'
 PATIENTS_CSV = LABELS_DIR / 'patients.csv'
-OUT_DIR = DATA / '_archive' / 'annotation_rda_round1'
+OUT_DIR = DATA / '_archive' / 'rda_round1'
 IMG_DIR = OUT_DIR / 'images'
 
 EXTERNAL_SEG_DIR = Path('/Volumes/sanD_photos/IIIC/segments_raw')

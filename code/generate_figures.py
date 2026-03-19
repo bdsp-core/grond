@@ -27,10 +27,10 @@ gpd_expert = np.array(cv['gpd_expert_vals'])
 # ── Load expert-expert pairwise data ─────────────────────────────────────────
 def load_expert_csv(pattern_type, expert_initial):
     """Load annotation CSV for a given pattern (LPDS/GPDS) and expert."""
-    prefix = f'data/_archive/annotations/{pattern_type}_{expert_initial}_'
-    matches = [f for f in os.listdir('data/_archive/annotations') if f.startswith(f'{pattern_type}_{expert_initial}_')]
+    prefix = f'data/_archive/pd_expert_raw/{pattern_type}_{expert_initial}_'
+    matches = [f for f in os.listdir('data/_archive/pd_expert_raw') if f.startswith(f'{pattern_type}_{expert_initial}_')]
     assert len(matches) == 1, f"Expected 1 file for {pattern_type}_{expert_initial}, got {matches}"
-    df = pd.read_csv(f'data/_archive/annotations/{matches[0]}')
+    df = pd.read_csv(f'data/_archive/pd_expert_raw/{matches[0]}')
     # Extract a patient/segment key from the filename
     def extract_key(filepath):
         basename = os.path.basename(str(filepath))

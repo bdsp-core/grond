@@ -27,7 +27,7 @@ import hdf5storage
 REPO_ROOT = CODE_DIR.parent
 TEST_DIR = REPO_ROOT / 'test_case_images' / 'raw_eeg'
 DATA_DIR = REPO_ROOT / 'data' / '_archive' / 'dataset_eeg'
-ANN_DIR = REPO_ROOT / 'data' / '_archive' / 'annotations'
+ANN_DIR = REPO_ROOT / 'data' / '_archive' / 'pd_expert_raw'
 RESULTS_DIR = REPO_ROOT / 'results'
 RESULTS_DIR.mkdir(exist_ok=True)
 

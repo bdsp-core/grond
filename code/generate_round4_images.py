@@ -26,7 +26,7 @@ from browse_results import BIPOLAR_CHANNELS, get_bipolar
 
 BASE = CODE_DIR.parent
 DATA = BASE / 'data'
-R4_DIR = DATA / '_archive' / 'annotation_round4'
+R4_DIR = DATA / '_archive' / 'pd_round4'
 GPD_DIR = R4_DIR / 'gpd'
 LPD_DIR = R4_DIR / 'lpd'
 IMG_DIR = R4_DIR / 'images'

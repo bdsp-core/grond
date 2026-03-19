@@ -161,11 +161,11 @@ const KEY_MAP = { '1': '0.25', '2': '0.5', '3': '0.75', '4': '1.0', '5': '1.25',
 
 // ── Load manifest ───────────────────────────────────────────────────
 function loadManifest() {
-  // Try loading CSV from relative path (for serving from data/annotation_candidates/)
+  // Try loading CSV from relative path (for serving from data/pd_round1_candidates/)
   // or from the expected path relative to this HTML file
   const paths = [
-    '../../data/annotation_candidates/manifest.csv',
-    '../../../data/annotation_candidates/manifest.csv',
+    '../../data/pd_round1_candidates/manifest.csv',
+    '../../../data/pd_round1_candidates/manifest.csv',
     'manifest.csv',
   ];
 
@@ -256,9 +256,9 @@ function show() {
 
   // Image path: try multiple relative paths
   const imgName = item.file_name + '.png';
-  document.getElementById('viewer').src = '../../data/annotation_candidates/images/' + imgName;
+  document.getElementById('viewer').src = '../../data/pd_round1_candidates/images/' + imgName;
   document.getElementById('viewer').onerror = function() {
-    this.src = '../../../data/annotation_candidates/images/' + imgName;
+    this.src = '../../../data/pd_round1_candidates/images/' + imgName;
     this.onerror = function() { this.alt = 'Image not found: ' + imgName; };
   };
 

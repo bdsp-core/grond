@@ -44,7 +44,7 @@ LOWPASS_HZ = 15.0
 TKEO_SIGMA = 0.02
 
 CACHE_DIR = PROJECT_DIR / 'data' / 'dl_cache'
-OUTPUT_DIR = PROJECT_DIR / 'data' / '_archive' / 'annotation_round2'
+OUTPUT_DIR = PROJECT_DIR / 'data' / '_archive' / 'pd_round2'
 
 # Target distribution
 BIN_TARGETS = [
@@ -194,7 +194,7 @@ def main():
     print(f"  Original annotated: {len(ann['patients'])} segments, {len(set(ann['patients']))} unique patients")
 
     # Round 1: 77 new patients from frequency_annotations.csv
-    r1_csv = PROJECT_DIR / 'data' / '_archive' / 'annotation_candidates' / 'frequency_annotations.csv'
+    r1_csv = PROJECT_DIR / 'data' / '_archive' / 'pd_round1_candidates' / 'frequency_annotations.csv'
     r1_patients = set()
     if r1_csv.exists():
         with open(str(r1_csv)) as f:
@@ -204,7 +204,7 @@ def main():
         print(f"  Round 1 patients: {len(r1_patients)}")
     else:
         # Fall back to manifest.csv
-        r1_manifest = PROJECT_DIR / 'data' / '_archive' / 'annotation_candidates' / 'manifest.csv'
+        r1_manifest = PROJECT_DIR / 'data' / '_archive' / 'pd_round1_candidates' / 'manifest.csv'
         if r1_manifest.exists():
             with open(str(r1_manifest)) as f:
                 for row in csv.DictReader(f):
@@ -374,7 +374,7 @@ def main():
     print(f"  Median: {np.median(freqs):.3f} Hz")
     print(f"\nNext steps:")
     print(f"  1. Generate PNGs: conda run -n foe python code/dl/generate_round2_pngs.py")
-    print(f"  2. Open viewer:   open data/annotation_round2/annotation_viewer.html")
+    print(f"  2. Open viewer:   open data/pd_round2/annotation_viewer.html")
 
 
 if __name__ == '__main__':

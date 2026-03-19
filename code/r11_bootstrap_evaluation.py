@@ -24,7 +24,7 @@ np.random.seed(42)
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = PROJECT_DIR / 'data'
-ANNOT_DIR = DATA_DIR / '_archive' / 'annotations'
+ANNOT_DIR = DATA_DIR / '_archive' / 'pd_expert_raw'
 RESULTS_DIR = PROJECT_DIR / 'results'
 
 N_BOOTSTRAP = 10_000

@@ -8,7 +8,7 @@ import pandas as pd
 from pathlib import Path
 
 BASE = Path(__file__).resolve().parent.parent
-R4_DIR = BASE / 'data' / '_archive' / 'annotation_round4'
+R4_DIR = BASE / 'data' / '_archive' / 'pd_round4'
 IMG_DIR = R4_DIR / 'images'
 
 def main():

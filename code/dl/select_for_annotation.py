@@ -54,7 +54,7 @@ ALL_ADJACENT_PAIRS = (LEFT_TEMPORAL_PAIRS + RIGHT_TEMPORAL_PAIRS +
                       LEFT_PARASAG_PAIRS + RIGHT_PARASAG_PAIRS + MIDLINE_PAIRS)
 
 CACHE_DIR = PROJECT_DIR / 'data' / 'dl_cache'
-OUTPUT_DIR = PROJECT_DIR / 'data' / '_archive' / 'annotation_candidates'
+OUTPUT_DIR = PROJECT_DIR / 'data' / '_archive' / 'pd_round1_candidates'
 
 N_LPD = 50
 N_GPD = 30

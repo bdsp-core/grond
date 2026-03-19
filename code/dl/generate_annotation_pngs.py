@@ -1,7 +1,7 @@
 """
 Generate EEG trace PNGs for annotation candidates.
 
-Loads each candidate segment from data/annotation_candidates/{lpd,gpd}/*.mat,
+Loads each candidate segment from data/pd_round1_candidates/{lpd,gpd}/*.mat,
 plots 18-channel bipolar EEG traces, and saves as PNG.
 
 Run: conda run -n foe_dl python code/dl/generate_annotation_pngs.py
@@ -27,7 +27,7 @@ sys.path.insert(0, str(CODE_DIR))
 
 from pd_pointiness_acf import bipolar_channels
 
-OUTPUT_DIR = PROJECT_DIR / 'data' / '_archive' / 'annotation_candidates'
+OUTPUT_DIR = PROJECT_DIR / 'data' / '_archive' / 'pd_round1_candidates'
 IMAGES_DIR = OUTPUT_DIR / 'images'
 FS = 200
 

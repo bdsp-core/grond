@@ -33,7 +33,7 @@ from pd_pointiness_acf import pd_detect_pointiness_acf, compute_pointiness_trace
 from generate_test_images import draw_figure, run_detector
 from browse_results import BIPOLAR_CHANNELS, get_bipolar
 
-OUTPUT_DIR = CODE_DIR.parent / 'data' / '_archive' / 'expert_review'
+OUTPUT_DIR = CODE_DIR.parent / 'data' / '_archive' / 'pd_expert_review'
 IMAGES_DIR = OUTPUT_DIR / 'images'
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 IMAGES_DIR.mkdir(parents=True, exist_ok=True)

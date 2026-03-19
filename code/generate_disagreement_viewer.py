@@ -83,7 +83,7 @@ def _load_draw_functions():
     _draw_funcs_loaded = True
 
 DATA_DIR = CODE_DIR.parent / 'data' / '_archive' / 'dataset_eeg'
-ANN_DIR = CODE_DIR.parent / 'data' / '_archive' / 'annotations'
+ANN_DIR = CODE_DIR.parent / 'data' / '_archive' / 'pd_expert_raw'
 OUTPUT_DIR = CODE_DIR.parent / 'results' / 'disagreement_cases'
 
 

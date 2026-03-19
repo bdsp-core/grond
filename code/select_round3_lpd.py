@@ -21,7 +21,7 @@ from pathlib import Path
 BASE = Path(__file__).resolve().parent.parent
 DATA = BASE / 'data'
 CACHE = DATA / 'dl_cache'
-OUT = DATA / '_archive' / 'annotation_round3'
+OUT = DATA / '_archive' / 'pd_round3'
 FS = 200  # sampling rate
 
 def load_previously_annotated():
@@ -36,18 +36,18 @@ def load_previously_annotated():
         print(f"  canonical_dataset: {len(df)} rows, {len(df['patient_id'].unique())} unique patients")
 
     # Round 1 candidates
-    cand_path = DATA / '_archive' / 'annotation_candidates' / 'manifest.csv'
+    cand_path = DATA / '_archive' / 'pd_round1_candidates' / 'manifest.csv'
     if cand_path.exists():
         df = pd.read_csv(cand_path)
         pids.update(df['patient_id'].astype(str).tolist())
-        print(f"  annotation_candidates: {len(df)} rows")
+        print(f"  pd_round1_candidates: {len(df)} rows")
 
     # Round 2
-    r2_path = DATA / '_archive' / 'annotation_round2' / 'manifest.csv'
+    r2_path = DATA / '_archive' / 'pd_round2' / 'manifest.csv'
     if r2_path.exists():
         df = pd.read_csv(r2_path)
         pids.update(df['patient_id'].astype(str).tolist())
-        print(f"  annotation_round2: {len(df)} rows")
+        print(f"  pd_round2: {len(df)} rows")
 
     print(f"  Total previously annotated patient IDs: {len(pids)}")
     return pids

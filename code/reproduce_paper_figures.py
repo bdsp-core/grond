@@ -35,7 +35,7 @@ from pd_detect_alternate import pd_detect_alternate
 from pd_pointiness_acf import pd_detect_pointiness_acf
 
 DATA_DIR = CODE_DIR.parent / 'data' / '_archive' / 'dataset_eeg'
-ANN_DIR = CODE_DIR.parent / 'data' / '_archive' / 'annotations'
+ANN_DIR = CODE_DIR.parent / 'data' / '_archive' / 'pd_expert_raw'
 RESULTS_DIR = CODE_DIR.parent / 'results'
 
 

@@ -70,7 +70,7 @@ BASE = CODE_DIR.parent
 DATA = BASE / 'data'
 EEG_DIR = DATA / 'eeg'
 SEGMENTS_CSV = DATA / 'labels' / 'segments.csv'
-OUT_DIR = DATA / '_archive' / 'annotation_mw_catchup'
+OUT_DIR = DATA / '_archive' / 'pd_mw_catchup'
 IMG_DIR = OUT_DIR / 'images'
 IMG_DIR.mkdir(parents=True, exist_ok=True)
 

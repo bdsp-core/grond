@@ -13,7 +13,7 @@ import json
 from pathlib import Path
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent.parent
-OUTPUT_DIR = PROJECT_DIR / 'data' / '_archive' / 'annotation_round2'
+OUTPUT_DIR = PROJECT_DIR / 'data' / '_archive' / 'pd_round2'
 IMAGES_DIR = OUTPUT_DIR / 'images'
 
 

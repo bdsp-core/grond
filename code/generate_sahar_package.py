@@ -2,204 +2,233 @@
 Generate annotation package for Sahar: unified manifest + images + viewer.
 All 336 patients that MW has labeled (202 canonical + 134 round4).
 
+Improvements over v1:
+- JPEG images (quality=70) instead of PNG — much smaller file size
+- Lower DPI (100) and smaller figure (12x8) — compact but readable
+- Clean EEG only: 20 Hz lowpass filter, linear detrend, no side panels
+- Calculator uses n/t (not (n-1)/t)
+- No algorithm estimates or MW ratings shown
+- Randomized order to avoid ordering bias
+
 Must run with: conda run -n foe python code/generate_sahar_package.py
 """
 
-import sys, os, json, base64, shutil
+import sys, os, json, base64, io
 import numpy as np
 import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MultipleLocator
 import scipy.io
+from scipy.signal import detrend, butter, filtfilt
 from pathlib import Path
-from mne.filter import notch_filter, filter_data
 import warnings
 warnings.filterwarnings('ignore')
 
-CODE_DIR = Path(__file__).resolve().parent
-sys.path.insert(0, str(CODE_DIR))
-sys.path.insert(0, str(CODE_DIR / 'pd_detector_alternate'))
-sys.path.insert(0, str(CODE_DIR / 'rda_detector'))
-
-from generate_test_images import draw_figure
-from browse_results import BIPOLAR_CHANNELS
-
-BASE = CODE_DIR.parent
+BASE = Path(__file__).resolve().parent.parent
 DATA = BASE / 'data'
+EEG_DIR = DATA / 'eeg'
 OUT_DIR = BASE / 'annotation_package_sahar'
-IMG_DIR = OUT_DIR / 'images'
-IMG_DIR.mkdir(parents=True, exist_ok=True)
+OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# Existing image directories (priority order)
-IMAGE_DIRS = [
-    DATA / '_archive' / 'annotation_round4' / 'images',
-    DATA / '_archive' / 'annotation_round3' / 'images',
-    DATA / '_archive' / 'annotation_round2' / 'images',
-    DATA / '_archive' / 'annotation_candidates' / 'images',
+BIPOLAR_CHANNELS = [
+    'Fp1-F7', 'F7-T3', 'T3-T5', 'T5-O1',
+    'Fp2-F8', 'F8-T4', 'T4-T6', 'T6-O2',
+    'Fp1-F3', 'F3-C3', 'C3-P3', 'P3-O1',
+    'Fp2-F4', 'F4-C4', 'C4-P4', 'P4-O2',
+    'Fz-Cz', 'Cz-Pz',
 ]
 
+MONO_CHANNELS = ['Fp1','F3','C3','P3','F7','T3','T5','O1','Fz','Cz','Pz',
+                 'Fp2','F4','C4','P4','F8','T4','T6','O2','EKG']
 
-def find_existing_image(file_name):
-    """Find an existing PNG image for the given file_name."""
-    for d in IMAGE_DIRS:
-        p = d / f"{file_name}.png"
-        if p.exists():
-            return p
-    return None
+LEFT_INDICES = [0, 1, 2, 3, 8, 9, 10, 11]
+RIGHT_INDICES = [4, 5, 6, 7, 12, 13, 14, 15]
+
+
+def get_bipolar(segment):
+    """Convert 20-channel monopolar to 18-channel bipolar."""
+    bipolar_ids = np.array([
+        [MONO_CHANNELS.index(bc.split('-')[0]), MONO_CHANNELS.index(bc.split('-')[1])]
+        for bc in BIPOLAR_CHANNELS
+    ])
+    return segment[bipolar_ids[:, 0]] - segment[bipolar_ids[:, 1]]
 
 
 def build_manifest():
-    """Build unified manifest of all patients MW has labeled."""
+    """Build unified manifest of all 336 patients MW has labeled."""
     rows = []
 
     # --- Canonical dataset (202 non-excluded patients) ---
     labels = pd.read_csv(DATA / '_archive' / 'canonical_dataset' / 'labels.csv')
     canonical = labels[labels.excluded == False].copy()
-    canonical['file_name'] = canonical['mat_name'].str.replace('.mat', '', regex=False)
 
     for _, row in canonical.iterrows():
-        source = row['source']
-        if source == 'original_dataset':
-            source_round = 'original'
-        elif source == 'external_drive_round1':
-            source_round = 'round1'
-        elif source == 'external_drive_round2':
-            source_round = 'round2'
-        elif source == 'external_drive_round3':
-            source_round = 'round3'
-        else:
-            source_round = source
-
         rows.append({
             'patient_id': str(row['patient_id']),
-            'file_name': row['file_name'],
             'subtype': row['subtype'],
-            'source_round': source_round,
+            'source_round': 'canonical',
         })
 
-    # --- Round 4 (134 patients, all of them including skips) ---
-    r4_annot = pd.read_csv(DATA / '_archive' / 'annotation_round4' / 'frequency_annotations_round4.csv')
+    # --- Round 4 (134 patients) ---
+    r4_annot = pd.read_csv(DATA / '_archive' / 'pd_round4' / 'frequency_annotations_round4.csv')
     for _, row in r4_annot.iterrows():
         rows.append({
             'patient_id': str(row['patient_id']),
-            'file_name': row['file_name'],
             'subtype': row['subtype'],
             'source_round': 'round4',
         })
 
     manifest = pd.DataFrame(rows)
-    print(f"Unified manifest: {len(manifest)} patients")
+    # Create a unique key for each entry (patient_id + subtype for the 6 dual-subtype cases)
+    manifest['case_id'] = manifest['patient_id'] + '_' + manifest['subtype']
+    print(f"Unified manifest: {len(manifest)} cases ({manifest.case_id.nunique()} unique)")
     print(f"  By source: {manifest.source_round.value_counts().to_dict()}")
     print(f"  By subtype: {manifest.subtype.value_counts().to_dict()}")
     return manifest
 
 
-def generate_image_from_segments(file_name, seg_bi, fs, subtype, patient_id):
-    """Generate a PNG image from a bipolar EEG segment array."""
+def generate_clean_eeg_jpeg(seg_bi, fs, subtype, case_id):
+    """Generate a clean EEG JPEG image with 20Hz lowpass + detrend.
+
+    Returns JPEG bytes (not saved to disk).
+    """
     seg_bi = seg_bi.astype(np.float64)
     if seg_bi.shape[0] > seg_bi.shape[1]:
         seg_bi = seg_bi.T
 
-    # Mock result row (no detector scores — just display EEG)
-    result_row = {
-        'files': file_name,
-        'type_event': np.nan,
-        'event_frequency': np.nan,
-        'acf_frequency': np.nan,
-        'spatial_extent': np.nan,
-        'laterality_index': np.nan,
-        'left_mean_score': np.nan,
-        'right_mean_score': np.nan,
-    }
-    for ch in BIPOLAR_CHANNELS:
-        result_row[f'score_{ch}'] = 2.0  # Mark all active for display
-        result_row[f'freq_{ch}'] = np.nan
+    # Replace NaN/Inf
+    seg_bi = np.nan_to_num(seg_bi, nan=0.0, posinf=0.0, neginf=0.0)
 
-    fig = draw_figure(result_row, seg_bi, fs, subtype,
-                      title_extra=f'Patient {patient_id}')
-    png_path = IMG_DIR / f"{file_name}.png"
-    fig.savefig(str(png_path), dpi=150, bbox_inches='tight')
-    plt.close(fig)
-    return png_path
+    n_channels, n_samples = seg_bi.shape
+    time_vec = np.linspace(0, n_samples / fs, n_samples)
 
-
-def generate_missing_images(manifest):
-    """Generate images for patients that don't have existing ones."""
-    # Load canonical segments
-    labels = pd.read_csv(DATA / '_archive' / 'canonical_dataset' / 'labels.csv')
-    segments = np.load(DATA / '_archive' / 'canonical_dataset' / 'segments.npy', allow_pickle=True)
-    # Build index: mat_name (without .mat) -> row index in segments.npy
-    seg_index = {}
-    for i, row in labels.iterrows():
-        fn = row['mat_name'].replace('.mat', '')
-        seg_index[fn] = i
-
-    generated = 0
-    failed = 0
-    copied = 0
-    already_in_out = 0
-
-    for _, row in manifest.iterrows():
-        fn = row['file_name']
-        out_path = IMG_DIR / f"{fn}.png"
-
-        # Already in output dir
-        if out_path.exists():
-            already_in_out += 1
-            continue
-
-        # Check existing image dirs
-        existing = find_existing_image(fn)
-        if existing:
-            shutil.copy2(str(existing), str(out_path))
-            copied += 1
-            continue
-
-        # Need to generate from EEG data
-        if fn in seg_index:
-            idx = seg_index[fn]
-            seg_bi = segments[idx]  # (18, 2000)
-            fs = 200  # canonical dataset is 200 Hz
+    # Apply 20 Hz lowpass filter
+    nyq = fs / 2.0
+    if nyq > 20:
+        b, a = butter(4, 20.0 / nyq, btype='low')
+        for i in range(n_channels):
             try:
-                generate_image_from_segments(fn, seg_bi, fs,
-                                             row['subtype'], row['patient_id'])
-                generated += 1
-                print(f"  Generated: {fn}")
-            except Exception as e:
-                print(f"  FAILED: {fn}: {e}")
-                failed += 1
+                seg_bi[i, :] = filtfilt(b, a, seg_bi[i, :])
+            except ValueError:
+                pass
+
+    # Linear detrend each channel
+    for i in range(n_channels):
+        seg_bi[i, :] = detrend(seg_bi[i, :], type='linear')
+
+    # Create clean figure: 12x8, no side panels
+    fig, axes = plt.subplots(n_channels, 1, figsize=(12, 8), sharex=True)
+    fig.patch.set_facecolor('white')
+
+    # Compute uniform y-scale across all channels
+    all_ranges = []
+    for i in range(n_channels):
+        ch_range = np.ptp(seg_bi[i, :])
+        if ch_range > 0:
+            all_ranges.append(ch_range)
+    if all_ranges:
+        median_range = np.median(all_ranges)
+        y_half = max(median_range * 0.75, 10)  # at least 10 uV
+    else:
+        y_half = 50
+
+    for i in range(n_channels):
+        ax = axes[i]
+        ch_mean = np.mean(seg_bi[i, :])
+
+        # Color: blue for left, red-blue for right, gray for midline
+        if i in LEFT_INDICES:
+            color = '#cc3333'
+            bg = '#fff5f5'
+        elif i in RIGHT_INDICES:
+            color = '#3333cc'
+            bg = '#f5f5ff'
         else:
-            # Try loading from .mat files in dataset_eeg
-            subtype_dir = DATA / '_archive' / 'dataset_eeg' / row['subtype']
-            mat_path = subtype_dir / f"{fn}.mat"
-            if mat_path.exists():
-                try:
-                    mat = scipy.io.loadmat(str(mat_path))
-                    data = mat['data']
-                    fs = int(mat['Fs'].ravel()[0])
-                    generate_image_from_segments(fn, data, fs,
-                                                 row['subtype'], row['patient_id'])
-                    generated += 1
-                    print(f"  Generated (mat): {fn}")
-                except Exception as e:
-                    print(f"  FAILED (mat): {fn}: {e}")
-                    failed += 1
-            else:
-                print(f"  NO DATA: {fn}")
+            color = '#333333'
+            bg = '#f5f5f5'
+
+        ax.set_facecolor(bg)
+        ax.plot(time_vec, seg_bi[i, :], color=color, linewidth=0.8)
+
+        # Channel label on the left
+        ax.set_ylabel(BIPOLAR_CHANNELS[i], fontsize=7, rotation=0,
+                      labelpad=50, va='center')
+
+        ax.set_ylim(ch_mean - y_half, ch_mean + y_half)
+        ax.set_yticks([])
+        ax.xaxis.set_major_locator(MultipleLocator(1))
+        ax.grid(True, alpha=0.3, axis='x')
+
+        for spine in ax.spines.values():
+            spine.set_visible(False)
+
+        if i < n_channels - 1:
+            ax.tick_params(axis='x', labelbottom=False)
+
+    axes[-1].set_xlabel('Time (seconds)', fontsize=9)
+    axes[-1].tick_params(axis='x', labelsize=7)
+
+    # Title: just subtype and case ID
+    fig.suptitle(f'{subtype.upper()} — {case_id}', fontsize=12, fontweight='bold', y=0.98)
+
+    fig.subplots_adjust(left=0.08, right=0.98, top=0.95, bottom=0.04, hspace=0.05)
+
+    # Save to JPEG bytes in memory
+    buf = io.BytesIO()
+    fig.savefig(buf, format='jpg', dpi=100, pil_kwargs={'quality': 70})
+    plt.close(fig)
+    buf.seek(0)
+    return buf.read()
+
+
+def generate_all_images(manifest):
+    """Generate JPEG images for all cases, return dict of case_id -> base64 JPEG."""
+    image_data = {}
+    failed = 0
+
+    for idx, row in manifest.iterrows():
+        pid = row['patient_id']
+        subtype = row['subtype']
+        case_id = row['case_id']
+
+        mat_path = EEG_DIR / f"{pid}_seg000.mat"
+        if not mat_path.exists():
+            print(f"  NO DATA: {case_id} (missing {mat_path.name})")
+            failed += 1
+            continue
+
+        try:
+            mat = scipy.io.loadmat(str(mat_path))
+            data = mat['data'].astype(np.float64)
+            fs = int(mat['Fs'].ravel()[0])
+            if data.shape[0] > data.shape[1]:
+                data = data.T
+            # Convert monopolar (20 ch) to bipolar (18 ch)
+            if data.shape[0] == 20:
+                data = get_bipolar(data)
+            elif data.shape[0] != 18:
+                print(f"  SKIP: {case_id} has {data.shape[0]} channels (expected 18 or 20)")
                 failed += 1
+                continue
+            # Replace NaN/Inf with 0
+            data = np.nan_to_num(data, nan=0.0, posinf=0.0, neginf=0.0)
+            jpeg_bytes = generate_clean_eeg_jpeg(data, fs, subtype, case_id)
+            image_data[case_id] = base64.b64encode(jpeg_bytes).decode('ascii')
 
-    print(f"\nImage summary:")
-    print(f"  Already existed in output: {already_in_out}")
-    print(f"  Copied from other rounds: {copied}")
-    print(f"  Newly generated: {generated}")
-    print(f"  Failed: {failed}")
+            if (idx + 1) % 50 == 0:
+                print(f"  Generated {idx + 1}/{len(manifest)} images...")
+        except Exception as e:
+            print(f"  FAILED: {case_id}: {e}")
+            failed += 1
 
-    return failed
+    print(f"\nImage summary: {len(image_data)} generated, {failed} failed")
+    return image_data, failed
 
 
-def build_viewer(manifest):
-    """Build the annotation viewer HTML with inlined base64 images."""
+def build_viewer(manifest, image_data):
+    """Build the annotation viewer HTML with inlined base64 JPEG images."""
     n_total = len(manifest)
     n_gpd = (manifest['subtype'] == 'gpd').sum()
     n_lpd = (manifest['subtype'] == 'lpd').sum()
@@ -208,22 +237,10 @@ def build_viewer(manifest):
     # Shuffle manifest so cases are randomized (avoids ordering bias)
     manifest_shuffled = manifest.sample(frac=1, random_state=42).reset_index(drop=True)
 
-    manifest_json = manifest_shuffled[['patient_id', 'file_name', 'subtype', 'source_round']].to_dict('records')
+    manifest_json = manifest_shuffled[['patient_id', 'case_id', 'subtype', 'source_round']].to_dict('records')
 
-    # Inline images as base64
-    image_data = {}
-    missing_imgs = 0
-    for _, row in manifest_shuffled.iterrows():
-        fn = row['file_name']
-        img_path = IMG_DIR / f"{fn}.png"
-        if img_path.exists():
-            with open(img_path, 'rb') as f:
-                image_data[fn] = base64.b64encode(f.read()).decode('ascii')
-        else:
-            missing_imgs += 1
-            print(f"  WARNING: Image not found: {img_path}")
-
-    print(f"  Inlined {len(image_data)} images ({missing_imgs} missing)")
+    missing_imgs = sum(1 for _, r in manifest_shuffled.iterrows() if r['case_id'] not in image_data)
+    print(f"  {len(image_data)} images inlined, {missing_imgs} missing")
 
     html = f"""<!DOCTYPE html>
 <html>
@@ -347,7 +364,7 @@ def build_viewer(manifest):
 <div id="info-panel">
   <span class="info-badge" id="type-badge">--</span>
   <span class="info-item">Patient: <strong id="patient-id">--</strong></span>
-  <span class="info-item">File: <strong id="file-name">--</strong></span>
+  <span class="info-item">Case: <strong id="case-id">--</strong></span>
 </div>
 
 <div id="calc-panel">
@@ -409,11 +426,11 @@ const KEY_MAP = {{ '1': '0.25', '2': '0.5', '3': '0.75', '4': '1.0', '5': '1.25'
 
 // Load saved annotations
 try {{
-  annotations = JSON.parse(localStorage.getItem('freq_annotations_sahar') || '{{}}');
+  annotations = JSON.parse(localStorage.getItem('freq_annotations_sahar_v2') || '{{}}');
 }} catch(e) {{ annotations = {{}}; }}
 
 function saveAnnotations() {{
-  localStorage.setItem('freq_annotations_sahar', JSON.stringify(annotations));
+  localStorage.setItem('freq_annotations_sahar_v2', JSON.stringify(annotations));
 }}
 
 function init() {{
@@ -428,8 +445,8 @@ function filterChanged() {{
 
   filteredItems = MANIFEST.filter(m => {{
     if (typeFilter !== 'all' && m.subtype !== typeFilter) return false;
-    if (statusFilter === 'unannotated' && annotations[m.file_name]) return false;
-    if (statusFilter === 'annotated' && !annotations[m.file_name]) return false;
+    if (statusFilter === 'unannotated' && annotations[m.case_id]) return false;
+    if (statusFilter === 'annotated' && !annotations[m.case_id]) return false;
     return true;
   }});
 
@@ -442,19 +459,19 @@ function show() {{
     document.getElementById('viewer').src = '';
     document.getElementById('counter').textContent = '0 / 0';
     document.getElementById('patient-id').textContent = '--';
-    document.getElementById('file-name').textContent = '--';
+    document.getElementById('case-id').textContent = '--';
     return;
   }}
   idx = Math.max(0, Math.min(idx, filteredItems.length - 1));
   const item = filteredItems[idx];
 
-  // Image from inlined data
-  const b64 = IMAGE_DATA[item.file_name];
+  // Image from inlined data (JPEG)
+  const b64 = IMAGE_DATA[item.case_id];
   if (b64) {{
-    document.getElementById('viewer').src = 'data:image/png;base64,' + b64;
+    document.getElementById('viewer').src = 'data:image/jpeg;base64,' + b64;
   }} else {{
     document.getElementById('viewer').src = '';
-    document.getElementById('viewer').alt = 'Image not found: ' + item.file_name;
+    document.getElementById('viewer').alt = 'Image not found: ' + item.case_id;
   }}
 
   // Info panel
@@ -462,12 +479,12 @@ function show() {{
   badge.textContent = item.subtype.toUpperCase();
   badge.className = 'info-badge badge-' + item.subtype;
   document.getElementById('patient-id').textContent = item.patient_id;
-  document.getElementById('file-name').textContent = item.file_name;
+  document.getElementById('case-id').textContent = item.case_id;
 
   document.getElementById('counter').textContent = (idx + 1) + ' / ' + filteredItems.length;
 
   // Highlight current annotation
-  const currentAnno = annotations[item.file_name];
+  const currentAnno = annotations[item.case_id];
   document.querySelectorAll('.freq-btn').forEach(btn => btn.classList.remove('selected'));
   if (currentAnno) {{
     document.querySelectorAll('.freq-btn').forEach(btn => {{
@@ -489,7 +506,7 @@ function show() {{
 
 function updateProgress() {{
   const total = MANIFEST.length;
-  const nAnnotated = MANIFEST.filter(m => annotations[m.file_name]).length;
+  const nAnnotated = MANIFEST.filter(m => annotations[m.case_id]).length;
   const pct = total > 0 ? (nAnnotated / total * 100) : 0;
   document.getElementById('progress-bar').style.width = pct + '%';
   document.getElementById('progress-text').textContent = nAnnotated + '/' + total + ' annotated';
@@ -498,7 +515,7 @@ function updateProgress() {{
 function annotate(value) {{
   if (filteredItems.length === 0 || !value) return;
   const item = filteredItems[idx];
-  annotations[item.file_name] = value;
+  annotations[item.case_id] = value;
   saveAnnotations();
 
   document.querySelectorAll('.freq-btn').forEach(btn => btn.classList.remove('selected'));
@@ -553,12 +570,12 @@ function useCustomFreq() {{
 }}
 
 function exportCSV() {{
-  const headers = ['patient_id', 'file_name', 'subtype', 'expert_annotation'];
+  const headers = ['patient_id', 'case_id', 'subtype', 'expert_annotation'];
   const rows = [headers.join(',')];
   for (const item of MANIFEST) {{
-    const anno = annotations[item.file_name] || '';
+    const anno = annotations[item.case_id] || '';
     rows.push([
-      item.patient_id, item.file_name, item.subtype, anno
+      item.patient_id, item.case_id, item.subtype, anno
     ].join(','));
   }}
   const blob = new Blob([rows.join('\\n')], {{ type: 'text/csv' }});
@@ -598,7 +615,7 @@ init();
 
     size_mb = output_path.stat().st_size / (1024 * 1024)
     print(f"  Saved annotation_viewer.html ({size_mb:.1f} MB)")
-    return output_path
+    return output_path, size_mb
 
 
 def write_readme():
@@ -609,13 +626,13 @@ def write_readme():
 What is this?
 -------------
 This package contains EEG recordings of periodic discharges (PD) from 336
-patients. Your task is to estimate the FREQUENCY of the periodic discharges
+cases. Your task is to estimate the FREQUENCY of the periodic discharges
 in each recording, measured in Hz (discharges per second).
 
 How to open
 -----------
 1. Open "annotation_viewer.html" in Chrome or Safari (Firefox works too).
-2. No internet connection or installation is needed — everything is self-contained.
+2. No internet connection or installation is needed -- everything is self-contained.
 
 How to use
 ----------
@@ -635,9 +652,9 @@ What is frequency?
 ------------------
 Frequency = number of discharges per second (Hz).
 - Count the number of discharge peaks visible in a time window.
-- Frequency = (number of peaks - 1) / time window in seconds.
-- Example: 11 peaks in 10 seconds = (11-1)/10 = 1.0 Hz.
-- The built-in calculator does this math for you.
+- Frequency = number of peaks / time window in seconds.
+- Example: 10 peaks in 10 seconds = 10/10 = 1.0 Hz.
+- The built-in calculator does this math for you (N peaks / T seconds).
 
 When to skip
 ------------
@@ -650,7 +667,7 @@ Important notes
 ---------------
 - Rate each case independently. Do not look at previous ratings.
 - Your annotations are automatically saved in your browser (localStorage).
-- You can close and reopen the viewer — your progress will be preserved.
+- You can close and reopen the viewer -- your progress will be preserved.
 - When done, click "Export CSV" (or press E) to download your annotations.
 - Send the exported CSV file back when complete.
 
@@ -658,7 +675,7 @@ Expected time
 -------------
 - About 1-2 minutes per case on average.
 - Total: approximately 6-10 hours for all 336 cases.
-- You can do this in multiple sessions — progress is saved automatically.
+- You can do this in multiple sessions -- progress is saved automatically.
 
 Thank you!
 """
@@ -671,7 +688,7 @@ Thank you!
 
 def main():
     print("=" * 60)
-    print("Building annotation package for Sahar")
+    print("Building annotation package for Sahar (v2 - compact)")
     print("=" * 60)
 
     # Step 1: Build manifest
@@ -680,25 +697,26 @@ def main():
     manifest.to_csv(OUT_DIR / 'manifest.csv', index=False)
     print(f"  Saved manifest.csv ({len(manifest)} rows)")
 
-    # Step 2 & 3: Generate/copy images
-    print("\n--- Step 2-3: Generating/copying images ---")
-    n_failed = generate_missing_images(manifest)
+    # Step 2: Generate all images as JPEG (in memory)
+    print("\n--- Step 2: Generating clean EEG images (JPEG, 100 DPI) ---")
+    image_data, n_failed = generate_all_images(manifest)
 
-    # Step 4: Build viewer
-    print("\n--- Step 4: Building annotation viewer ---")
-    viewer_path = build_viewer(manifest)
+    # Step 3: Build viewer
+    print("\n--- Step 3: Building annotation viewer ---")
+    viewer_path, size_mb = build_viewer(manifest, image_data)
 
-    # Step 5: Write instructions
-    print("\n--- Step 5: Writing instructions ---")
+    # Step 4: Write instructions
+    print("\n--- Step 4: Writing instructions ---")
     write_readme()
 
     # Summary
     print("\n" + "=" * 60)
     print("DONE!")
     print(f"  Output directory: {OUT_DIR}")
-    print(f"  Total patients: {len(manifest)}")
-    print(f"  Images: {len(list(IMG_DIR.glob('*.png')))}")
+    print(f"  Total cases: {len(manifest)}")
+    print(f"  Images generated: {len(image_data)}")
     print(f"  Failed: {n_failed}")
+    print(f"  HTML viewer size: {size_mb:.1f} MB")
     print(f"  Viewer: {viewer_path}")
     print("=" * 60)
 

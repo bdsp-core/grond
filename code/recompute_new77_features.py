@@ -60,8 +60,8 @@ ADJACENT_PAIRS = [
 ]
 
 RAW_DIR = Path('/Volumes/sanD_photos/IIIC/segments_raw')
-ANNOT_CSV = PROJECT_DIR / 'data' / '_archive' / 'annotation_candidates' / 'frequency_annotations.csv'
-OUTPUT_CSV = PROJECT_DIR / 'data' / '_archive' / 'annotation_candidates' / 'frequency_annotations_with_features.csv'
+ANNOT_CSV = PROJECT_DIR / 'data' / '_archive' / 'pd_round1_candidates' / 'frequency_annotations.csv'
+OUTPUT_CSV = PROJECT_DIR / 'data' / '_archive' / 'pd_round1_candidates' / 'frequency_annotations_with_features.csv'
 
 
 # ── Feature computation (identical to r10_expanded_evaluation.py) ─────
