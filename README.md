@@ -56,14 +56,38 @@ The `data/` directory contains:
 data/
 ├── eeg/              2,241 .mat files (10s segments, 200 Hz, 19 channels)
 ├── labels/
-│   ├── segments.csv      Segment registry
-│   ├── annotations.csv   Expert ratings (long format, 3 annotators)
-│   └── patients.csv      Patient summary + gold standard frequency
+│   ├── segments.csv      Segment registry (segment metadata, file paths)
+│   ├── annotations.csv   Expert ratings (long format: per-segment, per-rater)
+│   └── patients.csv      Patient summary (gold standard freq, laterality, exclusions)
 ├── dl_cache/         CNN weights, segment pool
 ├── rda_cache/        Precomputed RDA features
 ├── templates_*.npy   Template banks for matched filtering
-└── _archive/         Previous round-specific data
+└── _archive/         Source annotation files (organized by round/task)
 ```
+
+### Label Management
+
+The three files in `data/labels/` are the canonical label set for the project. All analysis code reads from these files. When new annotations are collected, they are integrated into these files following this process:
+
+**The three canonical label files:**
+
+- **`patients.csv`** — One row per patient. Contains: `patient_id`, `subtype` (lpd/gpd/lrda/grda), `n_segments`, `n_raters`, `raters`, `gold_standard_freq`, `excluded`, `exclusion_reason`, `laterality`. This is where patient-level labels live (frequency, laterality, exclusion status).
+- **`annotations.csv`** — One row per segment per rater (long format). Contains: `segment_id`, `patient_id`, `rater`, `frequency_hz`, `no_pd`, `skipped`, `spatial_extent`, `spatial_channels`, `annotation_date`, `annotation_round`, `notes`. This is where individual rater judgments live.
+- **`segments.csv`** — One row per segment. Contains: `segment_id`, `patient_id`, `subtype`, `subtype_source`, `mat_file`, `duration_sec`, `fs`, `n_channels`, `montage`, `original_source`, `original_filename`. This is the segment registry (metadata, not labels).
+
+**How to add new labels:**
+
+1. Save the raw source annotation file to `data/_archive/<task_name>/` (e.g., `data/_archive/lpd_laterality/lpd_laterality_annotations.csv`). This preserves the original data as received.
+2. Write a script or use inline Python to merge the new annotations into the appropriate canonical file(s):
+   - Patient-level labels (e.g., laterality, exclusions) → add/update columns in `patients.csv`
+   - Per-segment per-rater labels (e.g., frequency ratings) → add rows to `annotations.csv`
+   - New segments → add rows to `segments.csv`
+3. Verify the merge: check row counts, confirm no patients are missing or duplicated, and spot-check values.
+4. Labels that an annotator marked as "skip" should be left blank (not stored as "skip") in the canonical files.
+
+**Existing archive directories** in `data/_archive/`: `canonical_dataset`, `dataset_eeg`, `pd_expert_raw`, `pd_expert_review`, `pd_mw_catchup`, `pd_round1_candidates`, `pd_round2`, `pd_round3`, `pd_round4`, `rda_round1`, `lpd_laterality`.
+
+**Current laterality status:** LPD patients are fully annotated (95 left, 75 right, 3 bilateral, 13 skipped). LRDA patients still need laterality annotation.
 
 ## Repository Structure
 
