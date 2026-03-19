@@ -83,8 +83,8 @@ def adaptive_peak_detection(signal, window_size=200, n_std=3):
 
 def pd_detect_alternate(segment,fs,pk_detect='apd'):
     # filters to denoise
-    segment=notch_filter(segment,fs,60,n_jobs=-1,verbose="ERROR")
-    segment=filter_data(segment,fs,0.5,40,n_jobs=-1,verbose="ERROR")
+    segment=notch_filter(segment,fs,60,n_jobs=1,verbose="ERROR")
+    segment=filter_data(segment,fs,0.5,40,n_jobs=1,verbose="ERROR")
 
     # L-bipolar
     segment=fcn_getBanana(segment)

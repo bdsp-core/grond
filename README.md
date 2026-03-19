@@ -1,397 +1,191 @@
-# Automated Estimation of Frequency and Spatial Extent of Periodic and Rhythmic Epileptiform Activity
+# Automated Frequency Estimation for Periodic and Rhythmic EEG Patterns (LPD, GPD, LRDA, GRDA)
 
-This repository contains the code and data to reproduce the results from:
+Algorithms for estimating the frequency of periodic discharges (PD) and rhythmic delta activity (RDA) in continuous EEG, developed for ICU EEG monitoring at Massachusetts General Hospital.
 
-**Tăuțan AM, Jing J, Basovic L, Hadar PN, Sartipi S, Fernandes MP, Kim J, Struck AF, Westover MB, Zafar SF.** "Automated estimation of frequency and spatial extent of periodic and rhythmic epileptiform activity from continuous electroencephalography data"
+**Paper**: Tautan AM, Jing J, Basovic L, Hadar PN, Sartipi S, Fernandes MP, Kim J, Struck AF, Westover MB, Zafar SF. "Automated estimation of frequency and spatial extent of periodic and rhythmic epileptiform activity from continuous electroencephalography data." *Journal of Neural Engineering*, 22(6), 2025. [PubMed](https://pubmed.ncbi.nlm.nih.gov/41330044/)
+
+## Status
+
+| Task | Metric | N patients | Performance |
+|------|--------|-----------|-------------|
+| PD frequency (LPD + GPD) | Spearman rho | 335 | **0.686** |
+| RDA frequency (GRDA + LRDA) | Spearman rho | 23 | **0.840** |
+| Timing | Per 10s segment | -- | 33 ms |
 
 ## Overview
 
-This repository provides automated algorithms for detecting and characterizing epileptiform activity in continuous EEG data, specifically:
-- **LPD**: Lateralized Periodic Discharges
-- **GPD**: Generalized Periodic Discharges
-- **LRDA**: Lateralized Rhythmic Delta Activity
-- **GRDA**: Generalized Rhythmic Delta Activity
+The system extracts four properties from 10-second EEG segments:
 
-The algorithms extract key features:
-1. **Frequency** of the epileptiform activity
-2. **Spatial extent** (brain regions affected)
-3. **Laterality** (region-based laterality index, unilateral vs bilateral asymmetric)
-4. **Verbal descriptions** following ACNS 2021 standardized nomenclature
+1. **Frequency** of the epileptiform pattern (Hz)
+2. **Spatial extent** (proportion of brain regions affected)
+3. **Laterality** (unilateral, bilateral asymmetric, bilateral symmetric)
+4. **Verbal description** following ACNS 2021 standardized nomenclature
 
-## Quick Links
-
-- **New to this project?** Start with [QUICKSTART.md](QUICKSTART.md)
-- **Need data?** See [DATASET_INFO.md](DATASET_INFO.md)
-- **Testing?** See [TESTING.md](TESTING.md)
-
-## Table of Contents
-
-- [Installation](#installation)
-- [Data Access](#data-access)
-- [Repository Structure](#repository-structure)
-- [Usage](#usage)
-- [Algorithm Details](#algorithm-details)
-- [Verbal Descriptions](#verbal-descriptions)
-- [Interactive Browser](#interactive-browser)
-- [Reproducing Paper Results](#reproducing-paper-results)
-- [Citation](#citation)
-- [Troubleshooting](#troubleshooting)
-- [Contact](#contact)
+Supported pattern types: LPD, GPD, LRDA, GRDA.
 
 ## Installation
 
-### Prerequisites
-- Python 3.8.19
-- Conda or Miniconda
-
-### Setup Environment
-
-1. Clone this repository:
 ```bash
 git clone https://github.com/bdsp-core/IIIC-Frequency-Analysis-2.git
 cd IIIC-Frequency-Analysis-2
-```
-
-2. Create the conda environment from the provided environment file:
-```bash
 conda env create -f code/environment.yml
 conda activate foe
 ```
 
-**Alternative installation**: If you prefer to install packages separately, we recommend installing with `fooof` to simplify dependency requirements.
-
-### Key Dependencies
-- Python 3.8.19
-- MNE (1.0.3) - EEG data processing
-- NumPy (1.24.4)
-- Pandas (1.5.3)
-- SciPy (1.10.1)
-- Matplotlib (3.7.3)
-- fooof (1.0.0) - Frequency modeling
-- pyhht (0.1.0) - Hilbert-Huang Transform
-- irrcac (0.4.0) - Inter-rater reliability analysis
-
-See [code/environment.yml](code/environment.yml) for the complete list of dependencies.
+Key dependencies: Python 3.8, MNE 1.0.3, NumPy 1.24, SciPy 1.10, fooof 1.0, pyhht 0.1.
 
 ## Data Access
 
-### EEG Dataset
-The EEG dataset and expert annotations used in this study are available through the **Brain Data Science Platform (BDSP)**.
+EEG data and expert annotations are available through the [Brain Data Science Platform (BDSP)](https://bdsp.io). Submit an access request, then extract the dataset to create the `data/` directory.
 
-**To access the data:**
-1. Visit [bdsp.io](https://bdsp.io)
-2. Submit an access request through their portal
-3. Once approved, download the dataset ZIP file from AWS S3
-4. Extract the ZIP file to create the `data/` directory in your repository
+### Data Structure
 
-**Dataset Contents:**
-- **1,060 EEG files** (.mat format, ~283 MB total)
-- **12 annotation files** (CSV format with expert ratings)
-- See [data_manifest.csv](data_manifest.csv) for complete file listing
-
-**For detailed data access instructions, see [DATASET_INFO.md](DATASET_INFO.md)**
-
-**Dataset structure** (after extraction):
 ```
 data/
-├── dataset_eeg/          # EEG recordings (50-second segments)
-│   ├── gpd/              # Generalized Periodic Discharges
-│   ├── lpd/              # Lateralized Periodic Discharges
-│   ├── grda/             # Generalized Rhythmic Delta Activity
-│   └── lrda/             # Lateralized Rhythmic Delta Activity
-└── annotations/          # Expert annotations (CSV files)
-    ├── GPDS_LB_2_2025.csv
-    ├── GPDS_PH_3_2025.csv
-    ├── GPDS_SZ_3_2025.csv
-    ├── GRDA_LB_2_2025.csv
-    ├── GRDA_PH_3_2025.csv
-    ├── GRDA_SZ_3_2025.csv
-    ├── LPDS_LB_2_2025.csv
-    ├── LPDS_PH_3_3025.csv
-    ├── LPDS_SZ_3_2025.csv
-    ├── LRDA_LB_2_2025.csv
-    ├── LRDA_PH_3_2025.csv
-    └── LRDA_SZ_3_2025.csv
+├── eeg/              2,241 .mat files (10s segments, 200 Hz, 19 channels)
+├── labels/
+│   ├── segments.csv      Segment registry
+│   ├── annotations.csv   Expert ratings (long format, 3 annotators)
+│   └── patients.csv      Patient summary + gold standard frequency
+├── dl_cache/         CNN weights, segment pool
+├── rda_cache/        Precomputed RDA features
+├── templates_*.npy   Template banks for matched filtering
+└── _archive/         Previous round-specific data
 ```
-
-**Data format:**
-- EEG files: MATLAB `.mat` files containing 50-second segments sampled at 200 Hz
-- Annotations: CSV files with expert ratings for frequency and spatial extent
-- Three expert annotators: LB, PH, SZ
 
 ## Repository Structure
 
 ```
-.
-├── code/
-│   ├── pd_detector/              # Periodic discharge detectors
-│   │   ├── pd_detect.py          # Original McGraw et al. detector
-│   │   ├── calculate.py          # Core calculation functions
-│   │   ├── find_events.py        # Event detection utilities
-│   │   ├── eegfilt.py            # EEG filtering
-│   │   └── utils.py              # Utility functions
-│   ├── pd_detector_alternate/    # Enhanced PD detector
-│   │   └── pd_detect_alternate.py # Supports 'apd' and 'zscore' peak detection
-│   ├── rda_detector/             # Rhythmic delta activity detectors
-│   │   ├── rda1a_fft.py          # FFT-based with frequency modeling
-│   │   ├── rda1b_fft.py          # FFT-based with enhanced peak selection
-│   │   └── rda2_hht.py           # Hilbert-Huang Transform based
-│   ├── imageGeneration/          # Visualization functions
-│   │   └── plot_events.py        # Plotting functions for algorithm output
-│   ├── extract_frequency_spatial_extent.py  # Main analysis script
-│   ├── extract_with_laterality.py           # Laterality-enhanced analysis
-│   ├── browse_results.py         # Interactive EEG browser with verbal descriptions
-│   ├── generate_test_images.py   # Batch generate 100 test-case images from IIIC data
-│   ├── visualize_output.py       # Example visualization script
-│   ├── irr_analysis_onagreement.ipynb       # IRR analysis (agreement subset)
-│   ├── irr_analysis_fulldataset.ipynb       # IRR analysis (full dataset)
-│   ├── environment.yml           # Conda environment specification
-│   └── readme.txt                # Original code documentation
-├── data/                         # Data directory (download separately)
-│   ├── dataset_eeg/              # EEG recordings
-│   └── annotations/              # Expert annotations
-├── results/                      # Algorithm outputs
-│   ├── gpd_results.csv           # GPD detection results
-│   ├── lpd_results.csv           # LPD detection results
-│   ├── grda_results.csv          # GRDA detection results
-│   ├── lrda_results.csv          # LRDA detection results
-│   ├── *_laterality_results.csv  # Laterality-enhanced results (per-region scores)
-│   └── results_figures/          # Generated figures
-├── test_case_images/             # 100 example images (25 per pattern) + raw EEG
-├── DESCRIPTION_RULES.md          # Verbal description rules (ACNS 2021)
-└── README.md                     # This file
+code/
+├── Signal Processing
+│   ├── pd_pointiness_acf.py          Core SP feature extraction (ACF, pointiness, etc.)
+│   ├── pd_detector/                  Original McGraw et al. PD detector
+│   ├── pd_detector_alternate/        Enhanced PD detector (APD + z-score peak detection)
+│   └── rda_detector/                 RDA detectors (FFT/FOOOF + Hilbert-Huang)
+│
+├── Optimization Frameworks
+│   ├── optimization_harness_v2.py    PD evaluation framework (LOPO cross-validation)
+│   ├── rda_optimization_harness.py   RDA evaluation framework
+│   ├── update_dashboard_v2.py        Regenerate PD optimization dashboard
+│   └── update_rda_dashboard.py       Regenerate RDA optimization dashboard
+│
+├── Experiment Scripts
+│   ├── exp_t1_*.py                   Feature engineering experiments
+│   ├── exp_t2_*.py                   Model selection experiments (GBM, KNN, etc.)
+│   ├── exp_t3_*.py                   CNN embedding + timing experiments
+│   ├── exp_rda_*.py                  RDA-specific experiments
+│   ├── r3_*.py through r12_*.py      Round-specific experiment scripts
+│   └── run_baselines.py              Baseline method evaluation
+│
+├── Deep Learning (dl/)
+│   ├── model.py                      CNN architecture
+│   ├── train_phase1.py               Phase 1: pretrain on weak labels
+│   ├── train_phase2.py               Phase 2: fine-tune on expert labels
+│   └── evaluate.py                   Evaluation utilities
+│
+├── Visualization & Annotation
+│   ├── browse_results.py             Interactive EEG browser with verbal descriptions
+│   ├── generate_test_images.py       Generate test-case images (25 per pattern)
+│   ├── generate_figures.py           Publication figures
+│   ├── imageGeneration/              EEG plotting utilities
+│   └── generate_*_viewer.py          Annotation review viewers
+│
+├── Analysis
+│   ├── extract_frequency_spatial_extent.py   Main batch extraction
+│   ├── extract_with_laterality.py            Laterality-enhanced extraction
+│   ├── evaluate_methods.py                   Method comparison
+│   └── irr_analysis_*.ipynb                  Inter-rater reliability notebooks
+│
+└── environment.yml                   Conda environment specification
+
+docs/                                 Archived approach review documents (v1-v6)
+APPROACH_REVIEW_v7.md                 Current optimization approach and results
+DESCRIPTION_RULES.md                  Verbal description rules (ACNS 2021)
+QUICKSTART.md                         Getting started guide
+DATASET_INFO.md                       Detailed data access instructions
+TESTING.md                            Testing guide
+test_case_images/                     100 example images (25 per pattern) + raw EEG
 ```
 
 ## Usage
 
-### Quick Start
+### Run Experiments
 
-After installing dependencies and downloading data, you can test the algorithms on individual files:
+```bash
+conda activate foe
 
-```python
-import hdf5storage
-import h5py
-import rda_detector as rda
-import pd_detector_alternate as pd_detect
-import imageGeneration as im
-import matplotlib.pyplot as plt
+# Run a PD frequency experiment
+python code/exp_t1_expanded_features.py
 
-# Load EEG data
-def load_mat_file(filepath):
-    try:
-        return hdf5storage.loadmat(filepath)
-    except NotImplementedError:
-        with h5py.File(filepath, 'r') as f:
-            return {key: f[key][()] for key in f.keys()}
+# Run an RDA experiment
+python code/exp_rda_task_a.py
 
-# Example 1: Detect LRDA
-mat = load_mat_file('data/dataset_eeg/lrda/abn514_20130114_210759_3843_seg_5.mat')
-segment = mat['data']
-fs = 200  # Sampling frequency
-
-# Run detector
-data_obj = rda.rda2_hht(segment, fs, 1)
-
-# View results
-print(f"Event type: {data_obj['type_event']}")
-print(f"Frequency: {data_obj['event_frequency']} Hz")
-print(f"Spatial extent: {data_obj['spatial_extent']}")
-print(f"Brain regions: {data_obj['spatial_areas']}")
-
-# Visualize
-fig = im.plot_rda_events(segment, data_obj, 0, int(segment.shape[1]/fs), fs)
-plt.show()
-
-# Example 2: Detect LPD
-mat = load_mat_file('data/dataset_eeg/lpd/abn1762_20180428_125520_2948_seg_3.mat')
-segment = mat['data']
-data_obj = pd_detect.pd_detect_alternate(segment, fs, pk_detect='apd')
-
-# View results
-fig = im.plot_pd_events(segment, data_obj, 0, int(segment.shape[1]/fs), fs)
-plt.show()
+# Update the optimization dashboard
+python code/update_dashboard_v2.py
 ```
 
-### Processing Full Dataset
-
-To run all algorithms on the complete dataset:
+### Process Full Dataset
 
 ```bash
 cd code
 python extract_frequency_spatial_extent.py
 ```
 
-This will:
-1. Process all EEG files in `data/dataset_eeg/` for each event type (GPD, LPD, GRDA, LRDA)
-2. Run multiple detector variants on each file
-3. Save results to `results/` directory as CSV files
-4. Generate optional visualization figures
+Processes all EEG files, runs multiple detector variants, saves results to `results/`.
 
-**Expected runtime:** Approximately 2-4 hours depending on hardware (processing ~1,000+ EEG segments)
+### Interactive Browser
+
+```bash
+cd code
+python browse_results.py --event lrda
+```
+
+Controls: arrow keys to navigate, 1-4 to switch pattern types, Q to quit.
+
+### View Dashboards
+
+Results dashboards (when generated) are in `results/`:
+- `optimization_dashboard_v2.html` -- PD optimization results
+- `rda_dashboard.html` -- RDA optimization results
 
 ## Algorithm Details
 
-### Rhythmic Delta Activity (RDA) Detectors
+### PD Detectors (LPD/GPD)
 
-Three variants are implemented for LRDA and GRDA detection:
+Best model: GBM on 6 signal-processing features (Spearman 0.686).
 
-1. **rda1a_fft**: FFT-based detector with frequency modeling using FOOOF
-2. **rda1b_fft**: FFT-based with additional peak selection logic (best performance for RDA)
-3. **rda2_hht**: Hilbert-Huang Transform based detector
+- `pd_detect` -- Original McGraw et al. detector
+- `pd_detect_alternate (pk_detect='apd')` -- Adaptive peak detection (best)
+- `pd_detect_alternate (pk_detect='zscore')` -- Z-score based
 
-### Periodic Discharge (PD) Detectors
+### RDA Detectors (LRDA/GRDA)
 
-Three variants are implemented for LPD and GPD detection:
+Best model: FFT peak frequency (Spearman 0.840).
 
-1. **pd_detect**: Original McGraw et al. detector
-2. **pd_detect_alternate (pk_detect='apd')**: Enhanced detector with adaptive peak detection (best performance for PD)
-3. **pd_detect_alternate (pk_detect='zscore')**: Z-score based peak detection
+- `rda1a_fft` -- FFT + FOOOF frequency modeling
+- `rda1b_fft` -- FFT with enhanced peak selection (best)
+- `rda2_hht` -- Hilbert-Huang Transform
 
-### Output Format
+### Verbal Descriptions
 
-Each detector returns a dictionary with:
-- `type_event`: Detected event type (e.g., 'LPD', 'GPD', 'LRDA', 'GRDA')
-- `event_frequency`: Dominant frequency in Hz
-- `spatial_extent`: Proportion of brain regions affected (0-1)
-- `spatial_areas`: List of affected brain regions (e.g., ['LF', 'RF', 'LT', 'RT'])
-- `channels`: Channel-level detection information
-- `peaks`: Detected peak information
-
-**Brain region abbreviations:**
-- LF: Left Frontal
-- RF: Right Frontal
-- LT: Left Temporal
-- RT: Right Temporal
-- LO: Left Occipital
-- RO: Right Occipital
-- LCP: Left Central-Parietal
-- RCP: Right Central-Parietal
-
-## Verbal Descriptions
-
-The system generates concise verbal descriptions of each detected pattern following **ACNS 2021 standardized critical care EEG terminology**. Descriptions are assembled from the model outputs (event type, frequency, laterality, region scores) using a rule-based system.
-
-**Templates:**
-```
-LRDA / LPD:   {type} at {freq} Hz, {laterality}; maximal in the {regions}.
-GRDA / GPD:   {type} at {freq} Hz, {regional predominance}.
-```
-
-**Example outputs:**
+Generates ACNS 2021 standardized descriptions, e.g.:
 ```
 LRDA at 2.1 Hz, unilateral left; maximal in the centro-parietal and temporal regions.
 GRDA at 1.8 Hz, frontally predominant.
 GPD at 1.5 Hz, no regional predominance.
 ```
 
-**Key design decisions:**
-
-- **Laterality index** is computed from **region means** (equal weight per region), not channel means. This prevents frontal regions (4 channels) from dominating over occipital or centro-parietal regions (1 channel each).
-- **Laterality thresholds** (for L types): |LI| > 0.15 → unilateral; 0.10 < |LI| ≤ 0.15 → bilateral asymmetric; |LI| ≤ 0.10 → bilateral/symmetric. Calibrated against clinical judgment.
-- **Regional predominance** (for G types): frontally, occipitally, or midline predominant per ACNS 2021 guidance; or "no regional predominance" if no group exceeds the active threshold (2.0).
-- **Region names** for L types use bare names (e.g., "frontal" not "left frontal") since the side is already stated in the laterality term.
-
-For the complete rule set, see [DESCRIPTION_RULES.md](DESCRIPTION_RULES.md).
-
-### Test Case Images
-
-The `test_case_images/` directory contains 100 example images (25 per pattern type) generated from expert-labeled segments in the IIIC dataset. Each image shows a 10-second EEG segment with the detector output, region scores, laterality analysis, and verbal description overlaid. Raw EEG segments (`.mat` files) are saved alongside the images for quick regeneration.
-
-To regenerate:
-```bash
-conda activate foe
-cd code
-python generate_test_images.py
-```
-
-## Interactive Browser
-
-An interactive browser ([code/browse_results.py](code/browse_results.py)) allows visual inspection of model outputs overlaid on EEG traces:
-
-```bash
-conda activate foe
-cd code
-python browse_results.py --event lrda
-```
-
-**Controls:**
-- `←` / `→` — Navigate between segments
-- `1` / `2` / `3` / `4` — Switch to LRDA / GRDA / LPD / GPD
-- `Tab` — Cycle through available event types
-- `Q` — Quit
-
-**Display features:**
-- 18-channel bipolar montage with left hemisphere (pink), right hemisphere (blue), midline (gray) backgrounds
-- Detected channels highlighted in blue with per-channel scores
-- Right panel: summary statistics, region scores, laterality index bar, per-channel score chart
-- Verbal description banner (ACNS 2021 nomenclature) at the top of each segment
-
-## Reproducing Paper Results
-
-### 1. Run Detectors on Dataset
-
-```bash
-cd code
-python extract_frequency_spatial_extent.py
-```
-
-This generates result CSV files in `results/`:
-- `gpd_results.csv`
-- `lpd_results.csv`
-- `grda_results.csv`
-- `lrda_results.csv`
-
-### 2. Inter-Rater Reliability Analysis
-
-Open and run the Jupyter notebooks:
-
-```bash
-cd code
-jupyter notebook
-```
-
-**For agreement subset analysis** (segments where all annotators agreed on classification):
-- Open `irr_analysis_onagreement.ipynb`
-- Run all cells to compute inter-rater reliability metrics
-
-**For full dataset analysis**:
-- Open `irr_analysis_fulldataset.ipynb`
-- Run all cells for comprehensive analysis
-
-These notebooks compute:
-- Intraclass Correlation Coefficient (ICC)
-- Concordance Correlation Coefficient (CCC)
-- Agreement statistics between algorithms and expert annotators
-
-### 3. Visualization
-
-To visualize algorithm outputs:
-
-```bash
-cd code
-python visualize_output.py
-```
-
-This script demonstrates:
-- Loading EEG data
-- Running detectors
-- Visualizing detected events with frequency and spatial extent overlays
-
-## Best Performing Algorithms
-
-Based on validation results in the paper:
-
-- **For RDA (LRDA/GRDA)**: `rda1b_fft`
-- **For PD (LPD/GPD)**: `pd_detect_alternate` with `pk_detect='apd'`
+See [DESCRIPTION_RULES.md](DESCRIPTION_RULES.md) for the complete rule set.
 
 ## Citation
 
-If you use this code or data in your research, please cite:
-
 ```bibtex
 @article{tautan2025automated,
-  title={Automated estimation of frequency and spatial extent of periodic and rhythmic epileptiform activity from continuous electroencephalography data},
-  author={T{\u{a}}u{\c{t}}an, Alexandra-Maria and Jing, Jin and Basovic, Lara and Hadar, Parimala Nallappan and Sartipi, Sahar and Fernandes, Marcos Paulo and Kim, Jonathan and Struck, Aaron F and Westover, M Brandon and Zafar, Sahar F},
+  title={Automated estimation of frequency and spatial extent of periodic and
+         rhythmic epileptiform activity from continuous electroencephalography data},
+  author={T{\u{a}}u{\c{t}}an, Alexandra-Maria and Jing, Jin and Basovic, Lara
+          and Hadar, Parimala Nallappan and Sartipi, Sahar and Fernandes, Marcos Paulo
+          and Kim, Jonathan and Struck, Aaron F and Westover, M Brandon and Zafar, Sahar F},
   journal={Journal of Neural Engineering},
   volume={22},
   number={6},
@@ -403,75 +197,21 @@ If you use this code or data in your research, please cite:
 }
 ```
 
-## Troubleshooting
+## License
 
-### Common Issues
+CC BY-NC 4.0 (Attribution-NonCommercial 4.0 International). See [LICENSE.txt](LICENSE.txt).
 
-**Issue: `ModuleNotFoundError` when importing detectors**
-```bash
-# Solution: Ensure you're running Python from the code/ directory
-cd code
-python extract_frequency_spatial_extent.py
-```
+- Academic/research use: free with citation
+- Commercial use: contact authors for licensing
 
-**Issue: Cannot load .mat files**
-```python
-# Solution: Use the load_mat_file helper function
-import hdf5storage
-import h5py
-
-def load_mat_file(filepath):
-    try:
-        return hdf5storage.loadmat(filepath)
-    except NotImplementedError:
-        with h5py.File(filepath, 'r') as f:
-            return {key: f[key][()] for key in f.keys()}
-```
-
-**Issue: Conda environment creation fails**
-```bash
-# Solution: Try creating environment with specific channels
-conda env create -f code/environment.yml -c conda-forge
-# Or install fooof first
-conda create -n foe python=3.8
-conda activate foe
-conda install -c conda-forge fooof
-```
-
-**Issue: Results differ from paper**
-- Verify you're using the correct detector variant (see "Best Performing Algorithms" section)
-- Check that data files match expected format (200 Hz, 19 channels)
-- Ensure you're analyzing the same segments as in the paper
+Data provided by BDSP under their Data Use Agreement.
 
 ## Contact
 
-For questions about:
-- **Data access**: Brain Data Science Platform at [bdsp.io](https://bdsp.io) or support@bdsp.io
-- **Code issues**: Open an issue on [GitHub Issues](https://github.com/bdsp-core/IIIC-Frequency-Analysis-2/issues)
+- **Data access**: [bdsp.io](https://bdsp.io) or support@bdsp.io
+- **Code issues**: [GitHub Issues](https://github.com/bdsp-core/IIIC-Frequency-Analysis-2/issues)
 - **Research collaboration**: Contact the corresponding authors via the publication
-
-## License
-
-This code is licensed under **CC BY-NC 4.0 (Attribution-NonCommercial 4.0 International)** - see the [LICENSE.txt](LICENSE.txt) file for details.
-
-**Key Terms:**
-- ✅ **Attribution Required**: Cite the paper when using this code
-- ✅ **Academic/Research Use**: Free for non-commercial research
-- ❌ **Commercial Use Prohibited**: Contact authors for commercial licensing
-
-**Data License**: The EEG dataset is provided by BDSP under their Data Use Agreement. Users must comply with BDSP terms of use.
 
 ## Acknowledgments
 
-This work was conducted at:
-- Massachusetts General Hospital, Department of Neurology
-- Brain Data Science Platform (BDSP)
-- Harvard Medical School
-
-We thank all the expert EEG annotators (LB, PH, SZ) for their careful review of the dataset.
-
-## Related Publications
-
-If you're interested in related work on automated EEG analysis:
-- McGraw CM, et al. "Detection of rhythmic delta activity in the EEG" (original PD detector)
-- Additional references can be found in the main publication
+Massachusetts General Hospital, Department of Neurology; Brain Data Science Platform (BDSP); Harvard Medical School. We thank expert EEG annotators LB, PH, and SZ for their careful review.

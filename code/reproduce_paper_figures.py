@@ -34,8 +34,8 @@ sys.path.insert(0, str(CODE_DIR / 'pd_detector_alternate'))
 from pd_detect_alternate import pd_detect_alternate
 from pd_pointiness_acf import pd_detect_pointiness_acf
 
-DATA_DIR = CODE_DIR.parent / 'data' / 'dataset_eeg'
-ANN_DIR = CODE_DIR.parent / 'data' / 'annotations'
+DATA_DIR = CODE_DIR.parent / 'data' / '_archive' / 'dataset_eeg'
+ANN_DIR = CODE_DIR.parent / 'data' / '_archive' / 'annotations'
 RESULTS_DIR = CODE_DIR.parent / 'results'
 
 

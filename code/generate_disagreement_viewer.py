@@ -82,8 +82,8 @@ def _load_draw_functions():
     draw_pointiness_figure = _dpf
     _draw_funcs_loaded = True
 
-DATA_DIR = CODE_DIR.parent / 'data' / 'dataset_eeg'
-ANN_DIR = CODE_DIR.parent / 'data' / 'annotations'
+DATA_DIR = CODE_DIR.parent / 'data' / '_archive' / 'dataset_eeg'
+ANN_DIR = CODE_DIR.parent / 'data' / '_archive' / 'annotations'
 OUTPUT_DIR = CODE_DIR.parent / 'results' / 'disagreement_cases'
 
 

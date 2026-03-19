@@ -44,7 +44,7 @@ def main():
     script_dir = Path(__file__).resolve().parent
     repo_root = script_dir.parent if script_dir.name == 'code' else script_dir
 
-    data_dir = repo_root / 'data' / 'dataset_eeg'
+    data_dir = repo_root / 'data' / '_archive' / 'dataset_eeg'
     results_dir = repo_root / 'results'
     results_dir.mkdir(parents=True, exist_ok=True)
 

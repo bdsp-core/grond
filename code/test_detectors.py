@@ -21,7 +21,7 @@ import pd_detector_alternate as pddeta
 # Robust path handling
 script_dir = Path(__file__).parent
 repo_root = script_dir.parent if script_dir.name == 'code' else script_dir
-data_dir = repo_root / 'data' / 'dataset_eeg'
+data_dir = repo_root / 'data' / '_archive' / 'dataset_eeg'
 
 def load_mat_file(filepath):
     """Load MATLAB file, handling both v7.3 and earlier versions."""

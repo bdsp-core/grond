@@ -25,8 +25,8 @@ CODE_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(CODE_DIR))
 sys.path.insert(0, str(CODE_DIR / 'pd_detector_alternate'))
 
-DATA_DIR = CODE_DIR.parent / 'data' / 'dataset_eeg'
-ANN_DIR = CODE_DIR.parent / 'data' / 'annotations'
+DATA_DIR = CODE_DIR.parent / 'data' / '_archive' / 'dataset_eeg'
+ANN_DIR = CODE_DIR.parent / 'data' / '_archive' / 'annotations'
 RESULTS_DIR = CODE_DIR.parent / 'results'
 RUNS_DIR = RESULTS_DIR / 'optimization_runs'
 RUNS_DIR.mkdir(exist_ok=True)

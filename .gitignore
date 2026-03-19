@@ -1,10 +1,11 @@
-# Data files (download separately via BDSP)
-data/dataset_eeg/
-data/annotations/
+# Data files (large binary files, download separately via BDSP)
+data/
 
-# Results
-results/*.csv
-results/results_figures/
+# Results (generated)
+results/
+
+# Annotation packages
+annotation_package_sahar/
 
 # Python
 __pycache__/

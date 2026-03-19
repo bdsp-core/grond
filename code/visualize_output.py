@@ -31,7 +31,7 @@ script_dir = Path(__file__).parent
 repo_root = script_dir.parent if script_dir.name == 'code' else script_dir
 
 # Define paths
-data_dir = repo_root / 'data' / 'dataset_eeg'
+data_dir = repo_root / 'data' / '_archive' / 'dataset_eeg'
 
 # Verify data directory exists
 if not data_dir.exists():

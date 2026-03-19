@@ -279,7 +279,7 @@ class EEGBrowser:
         self.datasets = {}
         for et in EVENT_TYPES:
             results_file = self.repo_root / 'results' / f'{et}_laterality_results.csv'
-            data_dir = self.repo_root / 'data' / 'dataset_eeg' / et
+            data_dir = self.repo_root / 'data' / '_archive' / 'dataset_eeg' / et
             if results_file.exists() and data_dir.exists():
                 self.datasets[et] = {
                     'df': pd.read_csv(results_file),
