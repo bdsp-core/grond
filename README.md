@@ -36,7 +36,19 @@ Key dependencies: Python 3.8, MNE 1.0.3, NumPy 1.24, SciPy 1.10, fooof 1.0, pyhh
 
 ## Data Access
 
-EEG data and expert annotations are available through the [Brain Data Science Platform (BDSP)](https://bdsp.io). Submit an access request, then extract the dataset to create the `data/` directory.
+EEG data and expert annotations are stored on AWS S3 (not in this git repository due to size):
+
+```bash
+aws s3 sync s3://bdsp-opendata-credentialed/iiic-freq3/data/ data/
+```
+
+This requires AWS credentials with access to the `bdsp-opendata-credentialed` bucket. To request access, visit the [Brain Data Science Platform (BDSP)](https://bdsp.io).
+
+The `data/` directory contains:
+- `eeg/` — 2,246 .mat files (10s bipolar EEG segments at 200 Hz)
+- `labels/` — `segments.csv`, `annotations.csv` (long-format expert ratings), `patients.csv`
+- `dl_cache/` — CNN model weights and external segment pool
+- `_archive/` — previous round-specific data directories
 
 ### Data Structure
 
