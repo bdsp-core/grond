@@ -8,9 +8,11 @@ Algorithms for estimating the frequency of periodic discharges (PD) and rhythmic
 
 | Task | Metric | N patients | Performance |
 |------|--------|-----------|-------------|
-| PD frequency (LPD + GPD) | Spearman rho | 335 | **0.686** |
+| PD frequency (LPD + GPD) | Spearman rho | 594 | **0.640** (CNN+Attention) |
+| Subtype classification (LPD vs GPD) | AUC | 594 | **0.931** |
+| Laterality classification (L vs R) | AUC | 143 | **0.959** |
+| Channel-level PD detection | AUC | 815 | **0.870** (CNN+Attention) |
 | RDA frequency (GRDA + LRDA) | Spearman rho | 23 | **0.840** |
-| Timing | Per 10s segment | -- | 33 ms |
 
 ## Overview
 
@@ -45,7 +47,7 @@ aws s3 sync s3://bdsp-opendata-credentialed/iiic-freq3/data/ data/
 This requires AWS credentials with access to the `bdsp-opendata-credentialed` bucket. To request access, visit the [Brain Data Science Platform (BDSP)](https://bdsp.io).
 
 The `data/` directory contains:
-- `eeg/` — 2,246 .mat files (10s bipolar EEG segments at 200 Hz)
+- `eeg/` — ~2,511 .mat files (10s bipolar EEG segments at 200 Hz)
 - `labels/` — `segments.csv`, `annotations.csv` (long-format expert ratings), `patients.csv`
 - `dl_cache/` — CNN model weights and external segment pool
 - `_archive/` — previous round-specific data directories
@@ -71,7 +73,7 @@ The three files in `data/labels/` are the canonical label set for the project. A
 
 **The three canonical label files:**
 
-- **`patients.csv`** — One row per patient. Contains: `patient_id`, `subtype` (lpd/gpd/lrda/grda), `n_segments`, `n_raters`, `raters`, `gold_standard_freq`, `excluded`, `exclusion_reason`, `laterality`. This is where patient-level labels live (frequency, laterality, exclusion status).
+- **`patients.csv`** — One row per patient. Contains: `patient_id`, `subtype`, `subtype_original`, `n_segments`, `n_raters`, `raters`, `gold_standard_freq`, `gold_standard_freq_original`, `excluded`, `exclusion_reason`, `laterality`, `laterality_original`, `subtype_rater`, `laterality_rater`. This is where patient-level labels live (frequency, laterality, exclusion status). See "Label versioning" below for the `_original` vs active column convention.
 - **`annotations.csv`** — One row per segment per rater (long format). Contains: `segment_id`, `patient_id`, `rater`, `frequency_hz`, `no_pd`, `skipped`, `spatial_extent`, `spatial_channels`, `annotation_date`, `annotation_round`, `notes`. This is where individual rater judgments live.
 - **`segments.csv`** — One row per segment. Contains: `segment_id`, `patient_id`, `subtype`, `subtype_source`, `mat_file`, `duration_sec`, `fs`, `n_channels`, `montage`, `original_source`, `original_filename`. This is the segment registry (metadata, not labels).
 
@@ -85,9 +87,38 @@ The three files in `data/labels/` are the canonical label set for the project. A
 3. Verify the merge: check row counts, confirm no patients are missing or duplicated, and spot-check values.
 4. Labels that an annotator marked as "skip" should be left blank (not stored as "skip") in the canonical files.
 
-**Existing archive directories** in `data/_archive/`: `canonical_dataset`, `dataset_eeg`, `pd_expert_raw`, `pd_expert_review`, `pd_mw_catchup`, `pd_round1_candidates`, `pd_round2`, `pd_round3`, `pd_round4`, `rda_round1`, `lpd_laterality`.
+**Existing archive directories** in `data/_archive/`: `canonical_dataset`, `dataset_eeg`, `pd_expert_raw`, `pd_expert_review`, `pd_mw_catchup`, `pd_round1_candidates`, `pd_round2`, `pd_round3`, `pd_round4`, `rda_round1`, `lpd_laterality`, `misclass_review`.
 
 **Current laterality status:** LPD patients are fully annotated (95 left, 75 right, 3 bilateral, 13 skipped). LRDA patients still need laterality annotation.
+
+### Label Versioning
+
+`patients.csv` maintains two versions of each label:
+
+- **Active columns** (`subtype`, `gold_standard_freq`, `laterality`) — the current best ground truth. These get updated when corrections are applied after reviewing algorithm errors. All evaluation code uses these columns.
+- **Original columns** (`subtype_original`, `gold_standard_freq_original`, `laterality_original`) — the annotator's first-pass labels, frozen at the time of initial annotation. These are **never updated**, even when corrections are applied.
+
+This dual-column design supports three types of comparison:
+
+| Comparison | Use case | Columns |
+|-----------|----------|---------|
+| Expert vs expert (IRR) | Inter-rater reliability | `*_original` for each rater |
+| Algorithm vs noisy expert | Fair comparison (algorithm never saw corrections) | algorithm vs `*_original` |
+| Algorithm vs ground truth | Best-available performance metric | algorithm vs active columns |
+
+**Rater provenance** is tracked via `subtype_rater` and `laterality_rater`:
+- `"original"` — label came from the original dataset (folder structure or prior annotation)
+- `"MW"` — label was set or corrected by MW
+- Future raters (e.g., `"SZ"` for Sahar) will be added when their labels arrive
+
+**Correction workflow:**
+
+1. Run `code/generate_misclass_reviewer.py` to build an HTML viewer of algorithm errors
+2. Review cases in the browser, annotating corrections via the buttons/keyboard
+3. Export the corrections CSV from the viewer
+4. Save the CSV to `data/_archive/misclass_review/` with date and rater (e.g., `label_corrections_mw_20260319.csv`)
+5. Run a merge script to apply corrections to the **active columns** in `patients.csv` (the `_original` columns are never touched)
+6. Re-run the evaluation to measure the impact of cleaner labels
 
 ## Repository Structure
 
@@ -135,7 +166,7 @@ code/
 └── environment.yml                   Conda environment specification
 
 docs/                                 Archived approach review documents (v1-v6)
-APPROACH_REVIEW_v7.md                 Current optimization approach and results
+APPROACH_REVIEW_v8.md                 Current optimization approach and results
 DESCRIPTION_RULES.md                  Verbal description rules (ACNS 2021)
 QUICKSTART.md                         Getting started guide
 DATASET_INFO.md                       Detailed data access instructions
@@ -188,7 +219,7 @@ Results dashboards (when generated) are in `results/`:
 
 ### PD Detectors (LPD/GPD)
 
-Best model: GBM on 6 signal-processing features (Spearman 0.686).
+Best model: CNN+Temporal Attention on raw single-channel waveforms with PD-weighted aggregation (Spearman 0.640 on 594 patients). Best handcrafted: RF 200 trees on 6 SP features (Spearman 0.604).
 
 - `pd_detect` -- Original McGraw et al. detector
 - `pd_detect_alternate (pk_detect='apd')` -- Adaptive peak detection (best)

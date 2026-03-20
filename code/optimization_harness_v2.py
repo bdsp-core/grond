@@ -54,6 +54,10 @@ ADJACENT_PAIRS = [
     (16, 17),
 ]
 
+# Hemisphere channel indices (into 18-channel bipolar montage)
+LEFT_INDICES = [0, 1, 2, 3, 8, 9, 10, 11]    # Fp1-F7, F7-T3, T3-T5, T5-O1, Fp1-F3, F3-C3, C3-P3, P3-O1
+RIGHT_INDICES = [4, 5, 6, 7, 12, 13, 14, 15]  # Fp2-F8, F8-T4, T4-T6, T6-O2, Fp2-F4, F4-C4, C4-P4, P4-O2
+
 DATA_DIR = PROJECT_DIR / 'data'
 LABELS_DIR = DATA_DIR / 'labels'
 EEG_DIR = DATA_DIR / 'eeg'
@@ -84,9 +88,11 @@ def _compute_fft_peak(trace, fs, freq_lo=FREQ_LO, freq_hi=FREQ_HI):
 
 
 def compute_sp_features(segment, is_gpd):
-    """Compute the 6 SP features from a single (18, 2000) bipolar segment.
+    """Compute SP features from a single (18, 2000) bipolar segment.
 
-    Returns dict with keys: f_B, f_peaks, f_fft, f_tkeo, f_coh, is_gpd
+    Returns dict with keys:
+        f_B, f_peaks, f_fft, f_tkeo, f_coh, is_gpd  (frequency features)
+        lat_idx, lat_energy_ratio, lat_acf_ratio      (laterality features)
     """
     fs = FS
     seg_bip = np.asarray(segment, dtype=np.float64)
@@ -181,6 +187,46 @@ def compute_sp_features(segment, is_gpd):
             continue
     features['f_coh'] = float(np.median(coh_freqs)) if coh_freqs else np.nan
 
+    # ── Laterality features ──────────────────────────────────────────
+    # lat_idx: lateralization index from ACF periodicity scores (R-L)/(R+L)
+    #   Follows pd_detect_alternate convention: NaN channels → 0 (no periodicity)
+    #   Range [-1, +1]: negative=left, positive=right
+    scores_for_lat = np.where(np.isnan(acf_freqs), 0.0, np.abs(acf_freqs))
+    # Use pointiness-trace peak heights as periodicity strength per channel
+    peak_strengths = np.zeros(n_channels)
+    for ch in range(n_channels):
+        pt = pointiness_traces[ch]
+        mx = np.max(pt)
+        if mx > 0:
+            pks, props = find_peaks(pt, height=mx * PEAK_HEIGHT_FRAC, distance=int(0.2 * fs))
+            if len(pks) >= 2:
+                peak_strengths[ch] = np.mean(props['peak_heights'])
+
+    left_strength = np.mean(peak_strengths[LEFT_INDICES])
+    right_strength = np.mean(peak_strengths[RIGHT_INDICES])
+    denom = left_strength + right_strength
+    features['lat_idx'] = float((right_strength - left_strength) / denom) if denom > 0 else 0.0
+
+    # lat_energy_ratio: log ratio of right/left RMS energy
+    left_energy = np.mean([np.sqrt(np.mean(seg_lp[ch] ** 2)) for ch in LEFT_INDICES])
+    right_energy = np.mean([np.sqrt(np.mean(seg_lp[ch] ** 2)) for ch in RIGHT_INDICES])
+    if left_energy > 0 and right_energy > 0:
+        features['lat_energy_ratio'] = float(np.log(right_energy / left_energy))
+    else:
+        features['lat_energy_ratio'] = 0.0
+
+    # lat_acf_ratio: asymmetry of ACF frequency estimates (R-L)/(R+L)
+    left_acf = acf_freqs[LEFT_INDICES]
+    right_acf = acf_freqs[RIGHT_INDICES]
+    left_valid = left_acf[np.isfinite(left_acf)]
+    right_valid = right_acf[np.isfinite(right_acf)]
+    if len(left_valid) > 0 and len(right_valid) > 0:
+        lm, rm = np.median(left_valid), np.median(right_valid)
+        d = lm + rm
+        features['lat_acf_ratio'] = float((rm - lm) / d) if d > 0 else 0.0
+    else:
+        features['lat_acf_ratio'] = 0.0
+
     return features
 
 
@@ -239,7 +285,7 @@ def load_dataset(verbose=True):
     # ── Load patients and segments CSVs ───────────────────────────────
     df_patients = pd.read_csv(str(LABELS_DIR / 'patients.csv'))
     df_patients['patient_id'] = df_patients['patient_id'].astype(str)
-    df_patients = df_patients[df_patients['excluded'] == False].copy()
+    df_patients = df_patients[df_patients['excluded'] != True].copy()
     # Only keep patients with a valid gold standard frequency
     df_patients = df_patients[df_patients['gold_standard_freq'].notna()].copy()
     df_patients = df_patients[df_patients['gold_standard_freq'] > 0].copy()
@@ -279,12 +325,18 @@ def load_dataset(verbose=True):
             except Exception:
                 continue
 
+        laterality = pat_row.get('laterality', '')
+        if pd.isna(laterality):
+            laterality = ''
+        laterality = str(laterality)
+
         if not loaded_segs:
             n_missing += 1
             records.append({
                 'patient_id': pid,
                 'subtype': subtype,
                 'gold_standard_freq': gold,
+                'laterality': laterality,
             })
             all_segments[pid] = []
             all_features[pid] = []
@@ -304,13 +356,15 @@ def load_dataset(verbose=True):
                 n_computed += 1
             except Exception:
                 feats = {'f_B': np.nan, 'f_peaks': np.nan, 'f_fft': np.nan,
-                         'f_tkeo': np.nan, 'f_coh': np.nan, 'is_gpd': float(is_gpd)}
+                         'f_tkeo': np.nan, 'f_coh': np.nan, 'is_gpd': float(is_gpd),
+                         'lat_idx': 0.0, 'lat_energy_ratio': 0.0, 'lat_acf_ratio': 0.0}
             seg_features.append(feats)
 
         records.append({
             'patient_id': pid,
             'subtype': subtype,
             'gold_standard_freq': gold,
+            'laterality': laterality,
         })
         all_segments[pid] = loaded_segs
         all_features[pid] = seg_features
@@ -324,8 +378,11 @@ def load_dataset(verbose=True):
     if verbose:
         elapsed = time.time() - t0
         print(f"\n  Total patients: {len(df)}")
-        print(f"  LPD: {len(df[df['subtype']=='lpd'])}, "
-              f"GPD: {len(df[df['subtype']=='gpd'])}")
+        n_lpd = len(df[df['subtype'] == 'lpd'])
+        n_gpd = len(df[df['subtype'] == 'gpd'])
+        n_lat = len(df[(df['laterality'] != '') & (df['laterality'].notna())])
+        print(f"  LPD: {n_lpd}, GPD: {n_gpd}")
+        print(f"  With laterality labels: {n_lat}")
         print(f"  Feature sets computed: {n_computed}")
         if n_missing > 0:
             print(f"  Patients with no segments: {n_missing}")
@@ -341,6 +398,8 @@ def load_dataset(verbose=True):
 # ── Feature matrix helpers ────────────────────────────────────────────
 
 FEATURE_COLS = ['f_B', 'f_peaks', 'f_fft', 'f_tkeo', 'f_coh', 'is_gpd']
+LATERALITY_FEATURE_COLS = ['lat_idx', 'lat_energy_ratio', 'lat_acf_ratio']
+ALL_FEATURE_COLS = FEATURE_COLS + LATERALITY_FEATURE_COLS
 
 
 def _build_segment_level_data(dataset):
@@ -370,13 +429,14 @@ def _build_segment_level_data(dataset):
         for i, feat_dict in enumerate(pat_feats):
             seg_patient_ids.append(pid)
             seg_labels.append(gold)
-            seg_feat_rows.append([feat_dict.get(c, np.nan) for c in FEATURE_COLS])
+            seg_feat_rows.append([feat_dict.get(c, np.nan) for c in ALL_FEATURE_COLS])
             if i < len(pat_segs):
                 seg_arrays.append(pat_segs[i])
             else:
                 seg_arrays.append(None)
 
-    seg_features = np.array(seg_feat_rows, dtype=float) if seg_feat_rows else np.empty((0, 6))
+    n_feats = len(ALL_FEATURE_COLS)
+    seg_features = np.array(seg_feat_rows, dtype=float) if seg_feat_rows else np.empty((0, n_feats))
     seg_labels = np.array(seg_labels, dtype=float)
 
     return seg_patient_ids, seg_labels, seg_features, seg_arrays
@@ -632,15 +692,345 @@ def evaluate_experiment(dataset, experiment_name, predict_fn, eval_type='patient
     return metrics
 
 
-# ── Main: run Ridge baseline ──────────────────────────────────────────
+# ── Classification: subtype (LPD vs GPD) ─────────────────────────────
+
+def evaluate_subtype_classification(dataset, experiment_name):
+    """LOPO classification of LPD vs GPD using laterality + frequency features.
+
+    Uses logistic regression on the feature matrix (excluding is_gpd).
+    Returns metrics dict (also writes JSON).
+    """
+    t0 = time.time()
+    print(f"\nRunning subtype classification: {experiment_name}")
+
+    df = dataset['df']
+    seg_pids, seg_labels, seg_features, seg_arrays = _build_segment_level_data(dataset)
+    seg_pids = np.array(seg_pids)
+
+    # Build subtype labels per segment
+    pid_to_subtype = dict(zip(df['patient_id'], df['subtype']))
+    seg_subtypes = np.array([1 if pid_to_subtype.get(p) == 'gpd' else 0 for p in seg_pids])
+
+    # Feature columns: use all EXCEPT is_gpd (that's the target)
+    is_gpd_idx = ALL_FEATURE_COLS.index('is_gpd')
+    feat_mask = [i for i in range(len(ALL_FEATURE_COLS)) if i != is_gpd_idx]
+
+    unique_patients = df['patient_id'].values
+    patient_preds = {}
+
+    for pat in unique_patients:
+        test_mask = seg_pids == pat
+        train_mask = ~test_mask
+        if np.sum(test_mask) == 0 or np.sum(train_mask) < 5:
+            continue
+
+        X_train = seg_features[train_mask][:, feat_mask].copy()
+        y_train = seg_subtypes[train_mask]
+        X_test = seg_features[test_mask][:, feat_mask].copy()
+
+        # Impute NaN with training median
+        for j in range(X_train.shape[1]):
+            col = X_train[:, j]
+            finite = np.isfinite(col)
+            med = np.median(col[finite]) if np.any(finite) else 0.0
+            X_train[~finite, j] = med
+            X_test[~np.isfinite(X_test[:, j]), j] = med
+
+        # Add intercept
+        X_train_b = np.column_stack([X_train, np.ones(len(X_train))])
+        X_test_b = np.column_stack([X_test, np.ones(X_test.shape[0])])
+
+        # Ridge logistic regression via iteratively reweighted least squares (3 iters)
+        w = np.zeros(X_train_b.shape[1])
+        alpha = 1.0
+        for _ in range(5):
+            logits = X_train_b @ w
+            logits = np.clip(logits, -10, 10)
+            p = 1.0 / (1.0 + np.exp(-logits))
+            p = np.clip(p, 1e-6, 1 - 1e-6)
+            W_diag = p * (1 - p)
+            z = logits + (y_train - p) / W_diag
+            W_X = X_train_b * W_diag[:, None]
+            try:
+                w = np.linalg.solve(W_X.T @ X_train_b + alpha * np.eye(X_train_b.shape[1]),
+                                    W_X.T @ z)
+            except np.linalg.LinAlgError:
+                break
+
+        test_logits = X_test_b @ w
+        test_probs = 1.0 / (1.0 + np.exp(-np.clip(test_logits, -10, 10)))
+        patient_preds[pat] = float(np.mean(test_probs))
+
+    # Aggregate at patient level
+    y_true, y_prob = [], []
+    for _, row in df.iterrows():
+        pid = row['patient_id']
+        if pid not in patient_preds:
+            continue
+        y_true.append(1 if row['subtype'] == 'gpd' else 0)
+        y_prob.append(patient_preds[pid])
+
+    y_true = np.array(y_true)
+    y_prob = np.array(y_prob)
+    y_pred = (y_prob >= 0.5).astype(int)
+
+    accuracy = float(np.mean(y_true == y_pred))
+    n = len(y_true)
+
+    # Balanced accuracy
+    tp = np.sum((y_true == 1) & (y_pred == 1))
+    tn = np.sum((y_true == 0) & (y_pred == 0))
+    fp = np.sum((y_true == 0) & (y_pred == 1))
+    fn = np.sum((y_true == 1) & (y_pred == 0))
+    sens = tp / (tp + fn) if (tp + fn) > 0 else 0
+    spec = tn / (tn + fp) if (tn + fp) > 0 else 0
+    bal_acc = (sens + spec) / 2
+
+    # AUC (trapezoidal)
+    sorted_idx = np.argsort(-y_prob)
+    y_sorted = y_true[sorted_idx]
+    n_pos = np.sum(y_true == 1)
+    n_neg = np.sum(y_true == 0)
+    if n_pos > 0 and n_neg > 0:
+        tpr_list, fpr_list = [0.0], [0.0]
+        tp_cum, fp_cum = 0, 0
+        for i in range(len(y_sorted)):
+            if y_sorted[i] == 1:
+                tp_cum += 1
+            else:
+                fp_cum += 1
+            tpr_list.append(tp_cum / n_pos)
+            fpr_list.append(fp_cum / n_neg)
+        auc = float(np.trapz(tpr_list, fpr_list))
+    else:
+        auc = np.nan
+
+    metrics = {
+        'experiment': experiment_name,
+        'task': 'subtype_classification',
+        'timestamp': time.time(),
+        'n_patients': n,
+        'n_lpd': int(np.sum(y_true == 0)),
+        'n_gpd': int(np.sum(y_true == 1)),
+        'accuracy': round(accuracy, 4),
+        'balanced_accuracy': round(bal_acc, 4),
+        'sensitivity': round(sens, 4),
+        'specificity': round(spec, 4),
+        'auc': round(float(auc), 4) if np.isfinite(auc) else None,
+        'confusion_matrix': {'tp': int(tp), 'tn': int(tn), 'fp': int(fp), 'fn': int(fn)},
+    }
+
+    # Write JSON
+    out_path = RUNS_DIR / f'{experiment_name}.json'
+    with open(str(out_path), 'w') as f:
+        json.dump(metrics, f, indent=2)
+
+    elapsed = time.time() - t0
+    print(f"\n{'='*72}")
+    print(f"SUBTYPE CLASSIFICATION: {experiment_name}  ({elapsed:.1f}s)")
+    print(f"{'='*72}")
+    print(f"  N={n} (LPD={metrics['n_lpd']}, GPD={metrics['n_gpd']})")
+    print(f"  Accuracy:          {accuracy:.3f}")
+    print(f"  Balanced accuracy: {bal_acc:.3f}")
+    print(f"  Sensitivity (GPD): {sens:.3f}")
+    print(f"  Specificity (LPD): {spec:.3f}")
+    print(f"  AUC:               {auc:.3f}" if np.isfinite(auc) else "  AUC: N/A")
+    print(f"  Confusion: TP={tp} TN={tn} FP={fp} FN={fn}")
+    print(f"  Results saved to: {out_path}")
+    print(f"{'='*72}")
+
+    return metrics
+
+
+# ── Classification: laterality (left vs right) ──────────────────────
+
+def evaluate_laterality_classification(dataset, experiment_name):
+    """LOPO classification of laterality (left/right) for LPD patients.
+
+    Uses logistic regression on laterality features.
+    Bilateral cases are excluded (only 3 patients). Patients without
+    laterality labels are excluded.
+    """
+    t0 = time.time()
+    print(f"\nRunning laterality classification: {experiment_name}")
+
+    df = dataset['df']
+
+    # Filter to LPD patients with left/right laterality
+    lat_map = {'left': 0, 'right': 1}
+    eligible = df[df['laterality'].isin(['left', 'right'])].copy()
+
+    if len(eligible) < 10:
+        print(f"  Only {len(eligible)} eligible patients — skipping.")
+        return {}
+
+    eligible_pids = set(eligible['patient_id'].values)
+    pid_to_lat = dict(zip(eligible['patient_id'], eligible['laterality'].map(lat_map)))
+
+    seg_pids, seg_labels, seg_features, seg_arrays = _build_segment_level_data(dataset)
+    seg_pids = np.array(seg_pids)
+
+    # Use laterality features + frequency features (but NOT is_gpd since all LPD)
+    lat_feat_indices = [ALL_FEATURE_COLS.index(c) for c in LATERALITY_FEATURE_COLS]
+    # Also include frequency features as they may differ L vs R
+    freq_feat_indices = [ALL_FEATURE_COLS.index(c) for c in ['f_B', 'f_peaks', 'f_fft', 'f_tkeo', 'f_coh']]
+    feat_indices = lat_feat_indices + freq_feat_indices
+
+    # Filter segments to eligible patients
+    eligible_mask = np.array([p in eligible_pids for p in seg_pids])
+    seg_pids_e = seg_pids[eligible_mask]
+    seg_features_e = seg_features[eligible_mask]
+    seg_lat = np.array([pid_to_lat.get(p, -1) for p in seg_pids_e])
+
+    unique_patients = eligible['patient_id'].values
+    patient_preds = {}
+
+    for pat in unique_patients:
+        test_mask = seg_pids_e == pat
+        train_mask = ~test_mask
+        if np.sum(test_mask) == 0 or np.sum(train_mask) < 5:
+            continue
+
+        X_train = seg_features_e[train_mask][:, feat_indices].copy()
+        y_train = seg_lat[train_mask]
+        X_test = seg_features_e[test_mask][:, feat_indices].copy()
+
+        # Impute NaN
+        for j in range(X_train.shape[1]):
+            col = X_train[:, j]
+            finite = np.isfinite(col)
+            med = np.median(col[finite]) if np.any(finite) else 0.0
+            X_train[~finite, j] = med
+            X_test[~np.isfinite(X_test[:, j]), j] = med
+
+        X_train_b = np.column_stack([X_train, np.ones(len(X_train))])
+        X_test_b = np.column_stack([X_test, np.ones(X_test.shape[0])])
+
+        # Ridge logistic regression
+        w = np.zeros(X_train_b.shape[1])
+        alpha = 1.0
+        for _ in range(5):
+            logits = X_train_b @ w
+            logits = np.clip(logits, -10, 10)
+            p = 1.0 / (1.0 + np.exp(-logits))
+            p = np.clip(p, 1e-6, 1 - 1e-6)
+            W_diag = p * (1 - p)
+            z = logits + (y_train - p) / W_diag
+            W_X = X_train_b * W_diag[:, None]
+            try:
+                w = np.linalg.solve(W_X.T @ X_train_b + alpha * np.eye(X_train_b.shape[1]),
+                                    W_X.T @ z)
+            except np.linalg.LinAlgError:
+                break
+
+        test_logits = X_test_b @ w
+        test_probs = 1.0 / (1.0 + np.exp(-np.clip(test_logits, -10, 10)))
+        patient_preds[pat] = float(np.mean(test_probs))
+
+    # Aggregate
+    y_true, y_prob = [], []
+    for _, row in eligible.iterrows():
+        pid = row['patient_id']
+        if pid not in patient_preds:
+            continue
+        y_true.append(pid_to_lat[pid])
+        y_prob.append(patient_preds[pid])
+
+    y_true = np.array(y_true)
+    y_prob = np.array(y_prob)
+    y_pred = (y_prob >= 0.5).astype(int)
+
+    accuracy = float(np.mean(y_true == y_pred))
+    n = len(y_true)
+
+    tp = np.sum((y_true == 1) & (y_pred == 1))  # right correct
+    tn = np.sum((y_true == 0) & (y_pred == 0))  # left correct
+    fp = np.sum((y_true == 0) & (y_pred == 1))  # left predicted right
+    fn = np.sum((y_true == 1) & (y_pred == 0))  # right predicted left
+
+    sens = tp / (tp + fn) if (tp + fn) > 0 else 0  # sensitivity for right
+    spec = tn / (tn + fp) if (tn + fp) > 0 else 0  # specificity (= left accuracy)
+    bal_acc = (sens + spec) / 2
+
+    # AUC
+    sorted_idx = np.argsort(-y_prob)
+    y_sorted = y_true[sorted_idx]
+    n_pos = np.sum(y_true == 1)
+    n_neg = np.sum(y_true == 0)
+    if n_pos > 0 and n_neg > 0:
+        tpr_list, fpr_list = [0.0], [0.0]
+        tp_cum, fp_cum = 0, 0
+        for i in range(len(y_sorted)):
+            if y_sorted[i] == 1:
+                tp_cum += 1
+            else:
+                fp_cum += 1
+            tpr_list.append(tp_cum / n_pos)
+            fpr_list.append(fp_cum / n_neg)
+        auc = float(np.trapz(tpr_list, fpr_list))
+    else:
+        auc = np.nan
+
+    metrics = {
+        'experiment': experiment_name,
+        'task': 'laterality_classification',
+        'timestamp': time.time(),
+        'n_patients': n,
+        'n_left': int(np.sum(y_true == 0)),
+        'n_right': int(np.sum(y_true == 1)),
+        'accuracy': round(accuracy, 4),
+        'balanced_accuracy': round(bal_acc, 4),
+        'sensitivity_right': round(sens, 4),
+        'specificity_left': round(spec, 4),
+        'auc': round(float(auc), 4) if np.isfinite(auc) else None,
+        'confusion_matrix': {'tp_right': int(tp), 'tn_left': int(tn),
+                             'fp': int(fp), 'fn': int(fn)},
+        'pred_probs': [round(v, 4) for v in y_prob.tolist()],
+        'true_labels': y_true.tolist(),
+    }
+
+    out_path = RUNS_DIR / f'{experiment_name}.json'
+    with open(str(out_path), 'w') as f:
+        json.dump(metrics, f, indent=2)
+
+    elapsed = time.time() - t0
+    print(f"\n{'='*72}")
+    print(f"LATERALITY CLASSIFICATION: {experiment_name}  ({elapsed:.1f}s)")
+    print(f"{'='*72}")
+    print(f"  N={n} (left={metrics['n_left']}, right={metrics['n_right']})")
+    print(f"  Accuracy:          {accuracy:.3f}")
+    print(f"  Balanced accuracy: {bal_acc:.3f}")
+    print(f"  Sens (right):      {sens:.3f}")
+    print(f"  Spec (left):       {spec:.3f}")
+    print(f"  AUC:               {auc:.3f}" if np.isfinite(auc) else "  AUC: N/A")
+    print(f"  Confusion: TP(R)={tp} TN(L)={tn} FP={fp} FN={fn}")
+    print(f"  Results saved to: {out_path}")
+    print(f"{'='*72}")
+
+    return metrics
+
+
+# ── Main: run all baselines ──────────────────────────────────────────
 
 if __name__ == '__main__':
     dataset = load_dataset(verbose=True)
 
-    # Ridge baseline with alpha=1.0
-    metrics = evaluate_experiment(
+    # 1. Frequency estimation (existing)
+    metrics_freq = evaluate_experiment(
         dataset,
         experiment_name='ridge_baseline_v2',
         predict_fn=ridge_predict_fn(alpha=1.0),
         eval_type='patient_lopo',
+    )
+
+    # 2. Subtype classification (LPD vs GPD)
+    metrics_subtype = evaluate_subtype_classification(
+        dataset,
+        experiment_name='subtype_baseline',
+    )
+
+    # 3. Laterality classification (left vs right, LPD only)
+    metrics_lat = evaluate_laterality_classification(
+        dataset,
+        experiment_name='laterality_baseline',
     )
