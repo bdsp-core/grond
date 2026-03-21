@@ -422,3 +422,60 @@ Adapt the HPP algorithm for RDA waves:
 10. **BIPD analysis** (Phase 4)
 11. **CET+HPP for RDA** (Phase 2.8)
 12. **Phase-amplitude coupling analysis**
+
+====== NOTES ========
+
+i have changed my mind about the goal. 
+ i don't want a "unified" model. 
+ separate models that each do their job very well are fine, and already are a big advance. 
+
+ so, here's are the tasks i want to accomplish: 
+
+ 1- LPD vs GPD classification
+ 2- LRDA vs GRDA classification
+ 3- channel identification: which channels have RDA?
+ 4- channel identification: which channels have PD?
+ 5- discharge peak timing for PDs
+ 6- RDA peak timing
+ 7- frequency estimation for RDA
+ 8- frequency estimation for PDs
+ 9- BIPD analysis - will specify later
+
+ some notes about these (by numbers):
+ 
+ 1- when we use these algorithms, we will first apply an already extremely good model ("morgoth") that can tell use the pattern type (among: seizure, LPD, GPD, LRDA, GRDA). that's why distinguishing LPD, GPD, LRDA, GRDA is not very important for us to do. i still want to do LPD vs GPD here, because i think doing that well helps us to do other things well and is an important sanity check. 
+ 
+ 2- similar comment. 
+ 
+ 3- for this, we use the abundant pseudolabels to help ensure we do it well. but, it's important to fine tune the resulting model to ensure it's not overly aggressive in including too many channels. we can use the region labels from peter hadar, laura (forgot her last name), and sahar zafar, and the more recent channel labels that i provided, for this fine tuning. we might also need to label more examples to get this to work better. the ultimate goal here is to make the model able to spatially localize the LPDs or GPDs, and support verbal description of the localization. we have a bunch of rules that we developed to go from the channel identification to the verbal descriptions. 
+ 
+ 4- similar comments to #3. 
+ 
+ 5- our HPP model already works quite well for this. i would like to pursue creating a CNN that can provide an even better evidence trace, in hopes of getting even more accurate timing information, especially in difficult cases. we need to compare our current HPP model with the resulting CNN+HPP model. the CNN that would do this probably can be relatively simple. it needs to do these things: 
+ - give narrowly concentrated signal / evidence around the discharge peaks
+ - give near zero signal / evidence away from the peaks
+ - give near zero signal / evidence on channels that don't have discharges -- so somehow we want this to be consistent with model #3, so that channels not involved don't get much evidence from the CNN. maybe this will just happen naturally if the CNN is already good at assigning evidence? or maybe if the CNN is good in this way, we can use it to help with channel localization? need to explore. 
+
+ 6- we haven't worked on this yet. i want to develop an HPP model for this similar to the one we have for the PDs. one thing that may help to provide an "evidence trace" to get this going is the previous method we developed for estimating the frequency of RDA, by finding a narrow-band "sinusoidal" approximation to the signal that maximizes varience explained. you should be able to find what we did along these lines previously. anyway the goal would be to put a marker at the beginning, end, and peak of each wave. this lets us e.g. estimate the phase of RDA, which will eventually be important for downstream tasks, e.g. identfying whether fast activity reliably occurs at a certain phase of RDA. 
+
+7- i hypothesize that the CNN + HPP method will be best. we need to compare it with (a) alexandra's original method, (b) our recent best before HPP, (c) HPP (works extremely well!), (d) HPP + CNN. 
+
+8- similar comments to 7. 
+
+9- i will be getting a large collection of BIPDs. when i get these, we'll need to update our plan to distinguish LPDs vs GPDs vs BIPDs. probably we'll do this by using the CNN+HPP model, and trying to determine whether the phase and / or frequency of PDs are different on the left and right. 
+
+please clean up the description of these plans, elaborate on them as needed, and make a systematic roadmap that we can follow to accomplish them all. include a list of figures and tables that we want to produce to write this up as a paper. that will help steer us to the goal. some of the things that i think will need to be included are: 
+- good description of the tasks, and lots of examples (EEG images) showing for each task a range of difficulty, from easy to hard. want to show why the tasks are not trivial. some of this can go in the appendix / supplemental material. but we need abundant visual examples -- otherwise most people have no concept of why this is not easy. 
+- description of the new labels, the methods and tools we developed to gather them (e.g. html tools; active learning). these are much richer labels than were available for our prior projects!
+- description of the "contest of agents" approach with the leaderboard to finding good algorithms for the different tasks
+- description and figure showing how the HPP method works
+- description and figure showing how the CNN models training works
+- description and figure showing how we can identify RDA frequency using the narrow-bandpass filter optimization method (incidentally, we need to come up with good names for each of the major methods that have good abbreviations -- similar to "HPP")
+- diagram explaining how the HPP algorithm works
+- table with performance metrics comparisons for all the different tasks
+- scatter plots for tasks where that's appropriate
+- other performance metrics plots
+- plots showing successful operation of the algorithms
+- plots showing algorithm failure modes, and commentary on why we think these cases happen, and opportunities for future improvements
+
+please improve this plan, and include the paper outline / plan in our paper roadmap document. 
