@@ -4,7 +4,7 @@ Generate HTML viewer comparing 3 evidence methods:
   2. Old CET (CETModel encoder-decoder, no skip connections)
   3. New CET-UNet (CETUNet with skip connections)
 
-Shows ~100 cases (50 LPD + 50 GPD, sorted by gold_standard_freq).
+Shows ALL 593 LPD+GPD patients (sorted by gold_standard_freq).
 For each case:
   - Canvas EEG rendering (18 bipolar channels, 20Hz lowpass, white bg)
   - Interactive discharge markers (Add/Delete/Undo)
@@ -12,6 +12,10 @@ For each case:
       Blue = HPP handcrafted (pointiness+TKEO)
       Orange = Old CET (CNN ensemble)
       Green = New CET-UNet (CNN ensemble)
+  - Two sets of vertical lines:
+      Red solid = ground truth markers (editable)
+      Blue-purple dashed = CET-UNet predicted discharge times (read-only)
+  - U key: Accept CET-UNet predictions as ground truth
 
 Usage:
     conda run -n foe_dl python code/cet_model/generate_evidence_comparison_viewer.py
@@ -26,13 +30,16 @@ warnings.filterwarnings('ignore')
 
 import torch
 
-# ── Path setup ────────────────────────────────────────────────────────
+# -- Path setup ----------------------------------------------------------------
 CODE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_DIR = CODE_DIR.parent
 sys.path.insert(0, str(CODE_DIR))
 
 from optimization_harness_v2 import load_dataset, LEFT_INDICES, RIGHT_INDICES, FS
-from label_pipeline.hpp_discharge_marking import _compute_channel_evidence, _aggregate_evidence
+from label_pipeline.hpp_discharge_marking import (
+    _compute_channel_evidence, _aggregate_evidence,
+    _detect_active_interval, _extract_candidates, _dp_best_sequence, _em_refine,
+)
 from cet_model.cet import CETModel, CETUNet
 
 DATA_DIR = PROJECT_DIR / 'data'
@@ -57,10 +64,10 @@ BIPOLAR_CHANNELS = [
     'Fz-Cz', 'Cz-Pz',
 ]
 
-TARGET_N_CASES = 100
+DURATION = 10.0  # seconds
 
 
-# ── CET model loading ────────────────────────────────────────────────
+# -- CET model loading --------------------------------------------------------
 
 def load_cet_models(n_folds=5):
     """Load ensemble of old CET models (CETModel) from all folds."""
@@ -114,7 +121,52 @@ def compute_cnn_evidence_single_channel(channel_data, models):
     return np.mean(predictions, axis=0).astype(np.float32)
 
 
-# ── Downsample ────────────────────────────────────────────────────────
+def hpp_dp_discharge_times(evidence, fs, gold_freq):
+    """Run the HPP DP algorithm on evidence to get predicted discharge times.
+
+    Uses gold_standard_freq as the period prior (the "cheating" version for
+    label refinement, not deployment).
+
+    Args:
+        evidence: 1D numpy array of evidence values (raw, before normalization)
+        fs: sampling rate
+        gold_freq: expected frequency in Hz (used as freq_estimate)
+
+    Returns:
+        List of discharge times in seconds.
+    """
+    if len(evidence) < 10 or gold_freq <= 0:
+        return []
+
+    freq_estimate = np.clip(gold_freq, 0.3, 3.5)
+
+    # A. Detect active interval
+    active_start, active_end = _detect_active_interval(evidence, fs)
+
+    # B. Extract candidate peaks
+    candidates = _extract_candidates(evidence, fs, freq_estimate,
+                                     active_start, active_end)
+
+    if len(candidates) == 0:
+        return []
+
+    # C. DP best sequence
+    discharge_samples = _dp_best_sequence(candidates, evidence, fs, freq_estimate)
+
+    if len(discharge_samples) == 0:
+        return []
+
+    # D. EM refinement
+    if len(discharge_samples) >= 3:
+        discharge_samples = _em_refine(evidence, discharge_samples, fs, freq_estimate)
+
+    # Convert to times
+    times = (discharge_samples / fs).tolist()
+    times = [t for t in times if 0 <= t <= DURATION]
+    return times
+
+
+# -- Downsample ----------------------------------------------------------------
 
 def downsample(arr, target_len):
     """Downsample 1D or 2D array to target_len along last axis."""
@@ -132,7 +184,7 @@ def downsample(arr, target_len):
         return arr[:, indices].tolist()
 
 
-# ── JSON serializer ───────────────────────────────────────────────────
+# -- JSON serializer -----------------------------------------------------------
 
 def _json_default(obj):
     if isinstance(obj, (np.integer,)):
@@ -146,7 +198,7 @@ def _json_default(obj):
     return str(obj)
 
 
-# ── HTML builder ──────────────────────────────────────────────────────
+# -- HTML builder --------------------------------------------------------------
 
 def build_html(cases_data):
     html = r"""<!DOCTYPE html>
@@ -199,6 +251,7 @@ def build_html(cases_data):
   #legend {
     display: flex; justify-content: center; gap: 24px;
     padding: 6px; background: #252525; font-size: 13px;
+    flex-wrap: wrap;
   }
   .legend-item { display: flex; align-items: center; gap: 6px; }
   .legend-swatch { width: 30px; height: 4px; border-radius: 2px; }
@@ -246,10 +299,11 @@ def build_html(cases_data):
   </div>
   <div class="info-col">
     <span class="info-item">Gold freq: <strong id="info-gold-freq">--</strong></span>
-    <span class="info-item">N discharges: <strong id="info-n-discharges">--</strong></span>
+    <span class="info-item">Mode: <strong id="info-mode">Navigate</strong></span>
   </div>
   <div class="info-col">
-    <span class="info-item">Marker times: <strong id="info-marker-times">--</strong></span>
+    <span class="info-item">GT markers: <strong id="info-gt-count" style="color:#ff4444;">--</strong> (red)</span>
+    <span class="info-item">CET markers: <strong id="info-cet-count" style="color:#6a5acd;">--</strong> (blue-purple)</span>
   </div>
 </div>
 
@@ -273,7 +327,11 @@ def build_html(cases_data):
   </div>
   <div class="legend-item">
     <div class="legend-swatch" style="background: rgba(255,0,0,0.6); height: 12px; width: 2px;"></div>
-    <span>Discharge markers</span>
+    <span>GT markers (editable)</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-swatch" style="background: #6a5acd; height: 12px; width: 2px; border-left: 2px dashed #6a5acd;"></div>
+    <span>CET-UNet predictions</span>
   </div>
 </div>
 
@@ -281,6 +339,7 @@ def build_html(cases_data):
   <span class="key">A</span> Add mode &nbsp;&nbsp;
   <span class="key">D</span> Delete mode &nbsp;&nbsp;
   <span class="key">Z</span> Undo &nbsp;&nbsp;
+  <span class="key">U</span> Accept CET labels &nbsp;&nbsp;
   <span class="key">&larr;</span>/<span class="key">&rarr;</span> Navigate (auto-save) &nbsp;&nbsp;
   <span class="key">C</span> Accept &amp; advance &nbsp;&nbsp;
   <span class="key">Enter</span> Save &amp; advance &nbsp;&nbsp;
@@ -311,16 +370,19 @@ const PLOT_BOTTOM = EEG_HEIGHT - MARGIN_BOTTOM;
 const PLOT_W = PLOT_RIGHT - PLOT_LEFT;
 const PLOT_H = PLOT_BOTTOM - PLOT_TOP;
 
+const CET_LINE_COLOR = '#6a5acd';  // blue-purple for CET-UNet predictions
+
 // State
 let idx = 0;
 let reviewed = new Set();
 let mode = 'nav'; // 'nav', 'add', 'delete'
-let markers = [];  // current marker times (seconds)
+let markers = [];  // current GT marker times (seconds) - editable
 let undoStack = [];
 let hoverMarker = -1;
+let caseStatus = {};  // track status per patient_id: 'unchanged', 'edited', 'cet_accepted'
 
 // Marker persistence via localStorage
-const STORAGE_KEY = 'evidence_comparison_markers';
+const STORAGE_KEY = 'evidence_comparison_markers_v2';
 let allMarkers = {};
 try { allMarkers = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { allMarkers = {}; }
 
@@ -361,6 +423,22 @@ function undo() {
   if (undoStack.length === 0) return;
   markers = undoStack.pop();
   redraw();
+}
+
+// Helper: draw dashed vertical lines for CET-UNet predictions
+function drawCetMarkers(ctx, topY, bottomY, lineWidth) {
+  const c = CASES[idx];
+  const cetTimes = c.cet_unet_times || [];
+  ctx.strokeStyle = CET_LINE_COLOR;
+  ctx.lineWidth = lineWidth;
+  ctx.setLineDash([6, 4]);
+  for (let i = 0; i < cetTimes.length; i++) {
+    const t = cetTimes[i];
+    const x = timeToX(t);
+    if (x < PLOT_LEFT || x > PLOT_RIGHT) continue;
+    ctx.beginPath(); ctx.moveTo(x, topY); ctx.lineTo(x, bottomY); ctx.stroke();
+  }
+  ctx.setLineDash([]);
 }
 
 function drawEEG() {
@@ -435,7 +513,10 @@ function drawEEG() {
   const title = c.patient_id + '  |  ' + c.subtype.toUpperCase() + '  |  gold=' + c.gold_freq.toFixed(2) + ' Hz';
   ctx.fillText(title, EEG_WIDTH / 2, 6);
 
-  // Discharge markers (red vertical lines)
+  // CET-UNet predicted markers (blue-purple dashed, read-only) - draw first so GT is on top
+  drawCetMarkers(ctx, PLOT_TOP, PLOT_BOTTOM, 1.5);
+
+  // GT discharge markers (red solid, editable)
   for (let mi = 0; mi < markers.length; mi++) {
     const t = markers[mi];
     const x = timeToX(t);
@@ -548,7 +629,10 @@ function drawEvidence() {
     ctx.fillText(s + 's', timeToX(s), evBottom + 3);
   }
 
-  // Discharge markers on evidence panel
+  // CET-UNet predicted markers (blue-purple dashed) - draw first
+  drawCetMarkers(ctx, evTop, evBottom, 1.0);
+
+  // GT discharge markers on evidence panel (red solid)
   for (let mi = 0; mi < markers.length; mi++) {
     const t = markers[mi];
     const x = timeToX(t);
@@ -572,11 +656,17 @@ function updateInfoPanel() {
   document.getElementById('info-pid').textContent = c.patient_id;
   document.getElementById('info-subtype').textContent = c.subtype.toUpperCase();
   document.getElementById('info-gold-freq').textContent = c.gold_freq.toFixed(2) + ' Hz';
-  document.getElementById('info-n-discharges').textContent = markers.length;
 
-  const sorted = [...markers].sort((a, b) => a - b);
-  document.getElementById('info-marker-times').textContent =
-    sorted.length > 0 ? sorted.map(t => t.toFixed(2) + 's').join(', ') : 'none';
+  // GT and CET marker counts
+  document.getElementById('info-gt-count').textContent = markers.length;
+  const cetTimes = c.cet_unet_times || [];
+  document.getElementById('info-cet-count').textContent = cetTimes.length;
+
+  // Mode
+  let modeStr = 'Navigate';
+  if (mode === 'add') modeStr = 'Add';
+  else if (mode === 'delete') modeStr = 'Delete';
+  document.getElementById('info-mode').textContent = modeStr;
 
   const badge = document.getElementById('info-subtype-badge');
   badge.textContent = c.subtype.toUpperCase();
@@ -590,16 +680,22 @@ function updateInfoPanel() {
 
 function updateModeIndicator() {
   const el = document.getElementById('mode-indicator');
-  if (mode === 'add') { el.textContent = 'ADD MODE (A) — click to add marker'; el.className = 'mode-add'; }
-  else if (mode === 'delete') { el.textContent = 'DELETE MODE (D) — click near marker to remove'; el.className = 'mode-delete'; }
+  if (mode === 'add') { el.textContent = 'ADD MODE (A) -- click to add marker'; el.className = 'mode-add'; }
+  else if (mode === 'delete') { el.textContent = 'DELETE MODE (D) -- click near marker to remove'; el.className = 'mode-delete'; }
   else { el.textContent = 'NAVIGATE MODE'; el.className = 'mode-nav'; }
+}
+
+function getStatus(pid) {
+  return caseStatus[pid] || 'unchanged';
 }
 
 function autoSave() {
   const c = CASES[idx];
-  allMarkers[c.patient_id] = {
+  const pid = c.patient_id;
+  allMarkers[pid] = {
     times: [...markers].sort((a, b) => a - b),
     original_times: c.discharge_times || [],
+    status: getStatus(pid),
   };
   saveAllMarkers();
 }
@@ -611,6 +707,19 @@ function saveCurrent() {
   el.textContent = 'SAVED';
   el.style.color = '#4f4';
   setTimeout(() => { el.textContent = ''; }, 1000);
+}
+
+function acceptCET() {
+  const c = CASES[idx];
+  const cetTimes = c.cet_unet_times || [];
+  pushUndo();
+  markers = [...cetTimes];
+  caseStatus[c.patient_id] = 'cet_accepted';
+  const el = document.getElementById('save-status');
+  el.textContent = 'CET labels accepted';
+  el.style.color = '#6a5acd';
+  setTimeout(() => { el.textContent = ''; }, 2000);
+  redraw();
 }
 
 function redraw() {
@@ -628,6 +737,9 @@ function show() {
   // Load markers: from localStorage if saved, else from original discharge_times
   if (allMarkers[c.patient_id] && allMarkers[c.patient_id].times) {
     markers = [...allMarkers[c.patient_id].times];
+    if (allMarkers[c.patient_id].status) {
+      caseStatus[c.patient_id] = allMarkers[c.patient_id].status;
+    }
   } else {
     markers = [...(c.discharge_times || [])];
   }
@@ -641,17 +753,22 @@ function exportJSON() {
   const out = {};
   for (const c of CASES) {
     const pid = c.patient_id;
+    const cetTimes = c.cet_unet_times || [];
     if (allMarkers[pid]) {
       out[pid] = {
         patient_id: pid,
-        original_times: allMarkers[pid].original_times || c.discharge_times || [],
-        corrected_times: allMarkers[pid].times,
+        original_gt_times: allMarkers[pid].original_times || c.discharge_times || [],
+        updated_gt_times: allMarkers[pid].times,
+        cet_unet_times: cetTimes,
+        status: allMarkers[pid].status || 'unchanged',
       };
     } else {
       out[pid] = {
         patient_id: pid,
-        original_times: c.discharge_times || [],
-        corrected_times: c.discharge_times || [],
+        original_gt_times: c.discharge_times || [],
+        updated_gt_times: c.discharge_times || [],
+        cet_unet_times: cetTimes,
+        status: 'unchanged',
       };
     }
   }
@@ -662,7 +779,7 @@ function exportJSON() {
   a.click();
 }
 
-// ── Canvas mouse events ──
+// -- Canvas mouse events --
 const eegCanvas = document.getElementById('eeg-canvas');
 const evCanvas = document.getElementById('evidence-canvas');
 
@@ -678,6 +795,7 @@ function handleCanvasClick(e) {
     if (t >= 0 && t <= DURATION) {
       pushUndo();
       markers.push(t);
+      caseStatus[CASES[idx].patient_id] = caseStatus[CASES[idx].patient_id] === 'cet_accepted' ? 'cet_accepted' : 'edited';
       redraw();
     }
   } else if (mode === 'delete') {
@@ -685,6 +803,7 @@ function handleCanvasClick(e) {
     if (mi >= 0) {
       pushUndo();
       markers.splice(mi, 1);
+      caseStatus[CASES[idx].patient_id] = caseStatus[CASES[idx].patient_id] === 'cet_accepted' ? 'cet_accepted' : 'edited';
       hoverMarker = -1;
       redraw();
     }
@@ -711,7 +830,7 @@ eegCanvas.addEventListener('mouseleave', () => {
 evCanvas.addEventListener('click', handleCanvasClick);
 evCanvas.addEventListener('mousemove', handleCanvasMouseMove);
 
-// ── Keyboard events ──
+// -- Keyboard events --
 document.addEventListener('keydown', e => {
   if (e.key === 'a' || e.key === 'A') {
     mode = 'add'; hoverMarker = -1; redraw(); e.preventDefault();
@@ -721,6 +840,9 @@ document.addEventListener('keydown', e => {
   }
   else if (e.key === 'z' || e.key === 'Z') {
     undo(); e.preventDefault();
+  }
+  else if (e.key === 'u' || e.key === 'U') {
+    acceptCET(); e.preventDefault();
   }
   else if (e.key === 'Escape') {
     mode = 'nav'; hoverMarker = -1; redraw(); e.preventDefault();
@@ -760,7 +882,7 @@ show();
     return html
 
 
-# ── Main ──────────────────────────────────────────────────────────────
+# -- Main ----------------------------------------------------------------------
 
 def main():
     print("=" * 72)
@@ -790,9 +912,8 @@ def main():
     unet_models = load_cet_unet_models()
     print(f"  Loaded {len(unet_models)} CET-UNet fold models")
 
-    # Select ~100 cases: mix of LPD and GPD, sorted by gold_standard_freq
-    # Prefer cases with ground_truth review status (MW-reviewed markers)
-    print("\n--- Selecting cases ---")
+    # Select ALL LPD+GPD patients
+    print("\n--- Selecting ALL LPD+GPD cases ---")
     candidates = []
     for _, row in df.iterrows():
         pid = str(row['patient_id'])
@@ -819,42 +940,17 @@ def main():
             'is_gt': is_gt,
         })
 
-    # Split by subtype, prioritize ground_truth, sort by freq, sample evenly
-    lpd_cands = [c for c in candidates if c['subtype'] == 'lpd']
-    gpd_cands = [c for c in candidates if c['subtype'] == 'gpd']
-
-    # Sort each by gold freq
-    lpd_cands.sort(key=lambda x: (-x['is_gt'], x['gold_freq']))
-    gpd_cands.sort(key=lambda x: (-x['is_gt'], x['gold_freq']))
-
-    # Take ~50 of each (or adjust if one subtype has fewer)
-    n_lpd = min(50, len(lpd_cands))
-    n_gpd = min(50, len(gpd_cands))
-    # If one has fewer, give more to the other
-    if n_lpd < 50:
-        n_gpd = min(TARGET_N_CASES - n_lpd, len(gpd_cands))
-    elif n_gpd < 50:
-        n_lpd = min(TARGET_N_CASES - n_gpd, len(lpd_cands))
-
-    # Evenly sample across freq range
-    def sample_evenly(cands, n):
-        if len(cands) <= n:
-            return cands
-        indices = np.linspace(0, len(cands) - 1, n).astype(int)
-        return [cands[i] for i in indices]
-
-    selected_lpd = sample_evenly(lpd_cands, n_lpd)
-    selected_gpd = sample_evenly(gpd_cands, n_gpd)
-    selected = selected_lpd + selected_gpd
-
-    print(f"  LPD: {len(selected_lpd)}, GPD: {len(selected_gpd)}, Total: {len(selected)}")
+    n_lpd = sum(1 for c in candidates if c['subtype'] == 'lpd')
+    n_gpd = sum(1 for c in candidates if c['subtype'] == 'gpd')
+    selected = candidates
+    print(f"  LPD: {n_lpd}, GPD: {n_gpd}, Total: {len(selected)}")
 
     # Sort final selection by gold freq
     selected.sort(key=lambda x: x['gold_freq'])
     selected_pids = {c['pid'] for c in selected}
 
     # Build case data
-    print("\n--- Computing evidence traces (3 methods) ---")
+    print("\n--- Computing evidence traces (3 methods) + CET-UNet peak detection ---")
     DS_LEN = 500  # downsample for HTML size
     nyq = FS / 2.0
     b_lp, a_lp = butter(4, 20.0 / nyq, btype='low')
@@ -911,6 +1007,13 @@ def main():
             print(f"  CET-UNet evidence FAILED for {pid}: {e}")
             unet_evidence = np.zeros(seg.shape[1])
 
+        # --- HPP DP on CET-UNet evidence to get predicted discharge times ---
+        try:
+            cet_unet_times = hpp_dp_discharge_times(unet_evidence, FS, gold)
+        except Exception as e:
+            print(f"  CET-UNet HPP DP FAILED for {pid}: {e}")
+            cet_unet_times = []
+
         # Normalize all to [0, 1]
         def normalize_01(x):
             mn = np.min(x)
@@ -941,6 +1044,7 @@ def main():
             'subtype': subtype,
             'gold_freq': gold,
             'discharge_times': discharge_times,
+            'cet_unet_times': cet_unet_times,
             'eeg_data': downsample(seg_display, DS_LEN),
             'evidence_hpp': downsample(hpp_evidence, DS_LEN),
             'evidence_cet': downsample(cet_evidence, DS_LEN),
@@ -948,10 +1052,15 @@ def main():
         }
         cases_data.append(case)
 
-        if (ci + 1) % 10 == 0:
+        if (ci + 1) % 50 == 0:
             print(f"  Processed {ci + 1}/{len(selected)} cases")
 
     print(f"  Total cases prepared: {len(cases_data)}")
+
+    # Summarize CET-UNet peak detection
+    n_with_cet = sum(1 for c in cases_data if len(c['cet_unet_times']) > 0)
+    avg_cet_peaks = np.mean([len(c['cet_unet_times']) for c in cases_data]) if cases_data else 0
+    print(f"  CET-UNet peaks detected: {n_with_cet}/{len(cases_data)} cases, avg {avg_cet_peaks:.1f} peaks/case")
 
     # Build HTML
     print("\n--- Building HTML viewer ---")
@@ -970,8 +1079,9 @@ def main():
     print(f"  Cases in viewer: {len(cases_data)}")
     n_gt = sum(1 for c in selected if c['is_gt'])
     print(f"  Ground truth (MW-reviewed): {n_gt}")
-    print(f"  Evidence methods: HPP (blue), CET (orange), CET-UNet (green)")
-    print(f"  Interactive markers: Add (A), Delete (D), Undo (Z)")
+    print(f"  Evidence traces: HPP (blue), CET (orange), CET-UNet (green)")
+    print(f"  Marker lines: Red solid = GT (editable), Blue-purple dashed = CET-UNet (read-only)")
+    print(f"  Interactive: Add (A), Delete (D), Undo (Z), Accept CET (U)")
     print(f"  Viewer: {output_path} ({size_mb:.1f} MB)")
     print(f"  Open with: open {output_path}")
     print(f"{'=' * 72}")

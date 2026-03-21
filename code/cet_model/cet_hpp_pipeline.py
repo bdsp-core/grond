@@ -452,15 +452,17 @@ def evaluate_method(method_name, detect_fn, df, segments, gt_cases,
             lat = None
 
         try:
+            # NOTE: freq_estimate=None forces EEG-only ACF estimation
+            # (no gold standard frequency used)
             if cet_models is not None:
                 result = detect_fn(
                     seg, fs=200, subtype=subtype,
-                    freq_estimate=gold_freq, laterality=lat,
+                    freq_estimate=None, laterality=lat,
                     cet_models=cet_models, refine=True)
             else:
                 result = detect_fn(
                     seg, fs=200, subtype=subtype,
-                    freq_estimate=gold_freq, laterality=lat, refine=True)
+                    freq_estimate=None, laterality=lat, refine=True)
         except Exception as e:
             n_failed += 1
             continue

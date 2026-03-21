@@ -375,9 +375,40 @@ def evaluate_peaks(model, channels, targets, patient_ids, val_mask,
         x = torch.from_numpy(ch_data[np.newaxis, np.newaxis, :].astype(np.float32)).to(DEVICE)
         evidence = model(x).squeeze().cpu().numpy()  # (2000,)
 
-        # Estimate expected frequency from GT for min_distance
-        gt_ipis = [gt_times[i+1] - gt_times[i] for i in range(len(gt_times)-1)]
-        expected_period = np.median(gt_ipis)
+        # Estimate frequency from EEG (ACF) — no gold standard used
+        from pd_pointiness_acf import compute_acf_frequency
+        from scipy.signal import butter, filtfilt
+        b_lp, a_lp = butter(4, 20.0 / (fs / 2), btype='low')
+        acf_freqs = []
+        # Use patient's segment to estimate frequency
+        pat_segs = None
+        try:
+            from optimization_harness_v2 import load_dataset
+            if not hasattr(evaluate_peaks, '_segments'):
+                _ds = load_dataset(verbose=False)
+                evaluate_peaks._segments = _ds['segments']
+            pat_segs_list = evaluate_peaks._segments.get(pid, [])
+            if pat_segs_list:
+                seg = pat_segs_list[0]
+                n_ch = min(seg.shape[0], 18)
+                for ch_i in range(n_ch):
+                    try:
+                        sig = filtfilt(b_lp, a_lp, seg[ch_i])
+                    except ValueError:
+                        sig = seg[ch_i]
+                    freq_est, _, _ = compute_acf_frequency(
+                        sig, fs, method='pointiness',
+                        smoothing_sigma=0.02, acf_min_lag=0.4,
+                        acf_peak_threshold=0.10, peak_height_frac=0.3)
+                    if np.isfinite(freq_est):
+                        acf_freqs.append(freq_est)
+        except Exception:
+            pass
+        if acf_freqs:
+            estimated_freq = float(np.clip(np.median(acf_freqs), 0.3, 3.5))
+        else:
+            estimated_freq = 1.0
+        expected_period = 1.0 / estimated_freq
         min_dist = max(20, int(0.3 * expected_period * fs))
 
         # Peak-pick
