@@ -6,14 +6,16 @@ Algorithms for estimating the frequency of periodic discharges (PD) and rhythmic
 
 ## Status
 
-| Task | Metric | N patients | Performance |
-|------|--------|-----------|-------------|
-| PD frequency (LPD + GPD) | Spearman rho | 594 | **0.640** (CNN+Attention) |
-| Discharge timing detection | F1 / freq rho | 593 | **0.795** / **0.935** (HPP) |
-| Subtype classification (LPD vs GPD) | AUC | 594 | **0.931** |
-| Laterality classification (L vs R) | AUC | 143 | **0.959** |
-| Channel-level PD detection | AUC | 815 | **0.870** (CNN+Attention) |
-| RDA frequency (GRDA + LRDA) | Spearman rho | 23 | **0.840** |
+| Task | Metric | N patients | Performance | Input |
+|------|--------|-----------|-------------|-------|
+| PD frequency (LPD + GPD) | Spearman rho | 594 | **0.640** (CNN+Attention) | EEG only |
+| Discharge timing detection | F1 | 593 | **0.640** (HPP, EEG only) | EEG only |
+| Subtype classification (LPD vs GPD) | AUC | 594 | **0.931** | EEG only |
+| Laterality classification (L vs R) | AUC | 143 | **0.959** | EEG only |
+| Channel-level PD detection | AUC | 815 | **0.870** (CNN+Attention) | EEG only |
+| RDA frequency (GRDA + LRDA) | Spearman rho | 23 | **0.840** | EEG only |
+
+**Note**: All metrics use EEG-only input — no gold standard labels are provided as algorithm input. Previous versions reported inflated HPP timing F1=0.795 due to using gold standard frequency as input.
 
 ## Overview
 
@@ -167,7 +169,7 @@ code/
 └── environment.yml                   Conda environment specification
 
 docs/                                 Archived approach review documents (v1-v6)
-APPROACH_REVIEW_v10.md                Current optimization approach and results
+APPROACH_REVIEW_v11.md                Current optimization approach and results
 DESCRIPTION_RULES.md                  Verbal description rules (ACNS 2021)
 QUICKSTART.md                         Getting started guide
 DATASET_INFO.md                       Detailed data access instructions
