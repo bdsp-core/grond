@@ -377,6 +377,142 @@ results/
 └── unified_model_results.html
 ```
 
+## Training Data Inventory (as of 2026-03-21)
+
+### Ground Truth Labels (MW-reviewed)
+
+| Task | N (Ground Truth) | Details |
+|------|-----------------|---------|
+| **Subtype** | 821 | 440 LPD, 163 GPD, 119 GRDA, 99 LRDA |
+| **Laterality** (L/R, LPD) | 156 | 87 left, 69 right (+ 6 bilateral) |
+| **Frequency** | 594 | 425 LPD, 151 GPD, 14 GRDA, 4 LRDA. Range 0.20-4.35 Hz |
+| **Discharge timing** | 593 | 5,643 total discharge events, mean 9.5/case. **Complete.** |
+| **Spatial localization** | 304 | 267 LPD (mean 6.2 ch), 20 GPD (mean 14.8 ch), 13 GRDA, 4 LRDA. 290 pending. |
+
+### Frequency Distribution
+
+| Range | N cases |
+|-------|---------|
+| 0-0.5 Hz | 48 |
+| 0.5-1.0 Hz | 196 |
+| 1.0-1.5 Hz | 228 |
+| 1.5-2.0 Hz | 87 |
+| 2.0-2.5 Hz | 25 |
+| 2.5-3.0 Hz | 4 |
+| 3.0+ Hz | 6 |
+
+### Pseudolabels for Channel-Level Training
+
+In addition to the 304 MW-reviewed spatial labels, we have a much larger set of **pseudolabels** — channel-level PD/non-PD assignments derived from patient-level labels using reasonable assumptions. These are noisier than ground truth but vastly more plentiful and useful for pre-training.
+
+**Current pseudolabel dataset** (built by `build_channel_dataset.py`): 9,310 channels from 815 patients (4,524 positive, 4,786 negative).
+
+#### PD-Positive Pseudolabels (channel has periodic discharges)
+
+| Source | Logic | N channels | Quality |
+|--------|-------|-----------|---------|
+| GPD cases (all channels) | GPDs are generalized → all 18 channels involved. Subsampled to max 6/patient to avoid imbalance. | 978 | **Medium** — most GPD channels do show PDs, but some may be weak. MW review showed mean 14.8/18 channels for GPD. |
+| LPD with human laterality (ipsilateral) | Left LPD → left hemisphere channels positive; right → right hemisphere. | ~1,200 | **Medium-high** — ipsilateral channels usually have PDs, but involvement varies. MW review showed mean 6.2 channels for LPD (not all ipsilateral). |
+| LPD with predicted laterality (GBM, ipsilateral) | Same logic but using GBM-predicted laterality (0.957 AUC) for the 276 unlabeled LPD patients. | ~2,200 | **Medium** — adds noise from laterality prediction errors (~4% wrong side). |
+| LPD with spatial_channels annotation | Expert-annotated region codes (1,419 annotation rows) → precise channel indices via region_channel_map. | ~500 | **High** — direct expert spatial annotation. |
+
+#### PD-Negative Pseudolabels (channel does NOT have periodic discharges)
+
+| Source | Logic | N channels | Quality |
+|--------|-------|-----------|---------|
+| LRDA cases (all channels) | LRDA has rhythmic delta, not periodic discharges. All channels are PD-negative. | ~600 | **High** — LRDA is definitionally not PD. Good "hard negative" (rhythmic but not periodic). |
+| GRDA cases (all channels) | Same reasoning as LRDA. | ~700 | **High** — hard negatives. |
+| LPD contralateral channels | For LPD with known laterality, the opposite hemisphere channels are PD-negative. | ~1,200 | **Medium-high** — usually correct, though some LPDs have bilateral spread. Useful assumption for training. |
+| LPD midline channels (Fz-Cz, Cz-Pz) | For lateralized LPDs, midline channels are excluded (ambiguous). | Excluded | N/A |
+
+#### Upgrading Pseudolabels with MW-Reviewed Ground Truth
+
+Now that MW has reviewed 304 cases with precise per-channel labels, the ground truth **completely replaces** any pseudolabel assumptions for those cases:
+
+1. **For all 304 reviewed cases**: use ONLY MW's selected channels as PD-positive. All other channels are PD-negative. This is true regardless of subtype — even for GPD cases, MW marked specific channels (mean 14.8, not all 18), and even for LPD cases, MW marked specific channels (mean 6.2, not necessarily all ipsilateral). The pseudolabel assumptions (e.g., "all ipsilateral channels are positive") are approximations that MW's review showed are imprecise.
+2. **For the 290 pending cases**: keep pseudolabels as the best available approximation, but flag them as lower confidence.
+3. **Weight ground truth higher** during training (e.g., 2× weight for ground truth channels vs pseudolabel channels).
+4. **Key insight from MW's review**: The CNN's original predictions had only 5% acceptance rate. The main error was over-inclusion — predicting too many channels as involved. MW's corrections consistently reduced the number of involved channels. This means pseudolabels (which also tend to over-include) should be treated as noisy upper bounds, not precise labels.
+
+### RDA Channel Detection — New Pseudolabel Strategy
+
+The same channel-level detection framework can be extended to identify channels containing **rhythmic delta activity (RDA)** — LRDA and GRDA patterns.
+
+#### RDA-Positive Pseudolabels
+
+| Source | Logic | N channels | Quality |
+|--------|-------|-----------|---------|
+| GRDA cases (all channels) | GRDAs are generalized → all channels show RDA. | ~119 × 18 = 2,142 | **Medium** — most GRDA channels show RDA, but intensity varies. Similar to GPD assumption. |
+| LRDA with laterality (ipsilateral) | For LRDA with known laterality, ipsilateral channels are RDA-positive. | Needs laterality labels | **Medium** — LRDA laterality not yet annotated (noted as pending). |
+| LRDA without laterality (all channels) | Conservative: mark all channels as positive. | ~99 × 18 = 1,782 | **Low** — LRDA is lateralized by definition, so contralateral channels should be negative. Only useful as a rough start. |
+
+#### RDA-Negative Pseudolabels
+
+| Source | Logic | N channels | Quality |
+|--------|-------|-----------|---------|
+| LPD cases (all channels) | LPDs have periodic discharges, not rhythmic delta. All channels are RDA-negative. | ~440 × 6 = 2,640 (subsampled) | **High** — PDs and RDA are distinct patterns. |
+| GPD cases (all channels) | Same reasoning. | ~163 × 6 = 978 (subsampled) | **High** |
+| LRDA contralateral channels | If LRDA laterality is known, opposite hemisphere is RDA-negative. | Needs laterality labels | **Medium-high** |
+
+#### What's Needed for RDA Channel Detection
+
+1. **LRDA laterality annotation** — currently pending. MW needs to annotate left/right for the 99 LRDA cases. This enables proper ipsilateral/contralateral split for LRDA pseudolabels.
+2. **Build RDA channel dataset** — parallel to `build_channel_dataset.py` but for RDA detection: `build_rda_channel_dataset.py`
+3. **Train RDA channel detector** — same CNN architecture, just different labels (RDA vs non-RDA instead of PD vs non-PD)
+4. **Joint PD+RDA model** — eventually, a single model that outputs per-channel: P(PD), P(RDA), P(neither). This naturally handles the 4-class subtype problem at the channel level.
+
+### Pseudolabel JSON File
+
+All pseudolabels should be stored in `data/labels/channel_pseudolabels.json`:
+
+```json
+{
+  "patient_id": {
+    "subtype": "lpd",
+    "channels": {
+      "0": {"pd_label": 1, "rda_label": 0, "source": "ipsilateral_human_lat", "confidence": "high"},
+      "1": {"pd_label": 1, "rda_label": 0, "source": "ipsilateral_human_lat", "confidence": "high"},
+      ...
+      "4": {"pd_label": 0, "rda_label": 0, "source": "contralateral_human_lat", "confidence": "medium-high"},
+      ...
+      "16": {"pd_label": null, "rda_label": null, "source": "midline_excluded", "confidence": null}
+    }
+  }
+}
+```
+
+Where `source` tracks provenance:
+- `ground_truth_mw` — MW reviewed (from channel_involvement.json)
+- `ipsilateral_human_lat` — LPD, human laterality label, ipsilateral side
+- `contralateral_human_lat` — LPD, human laterality label, contralateral side
+- `ipsilateral_predicted_lat` — LPD, GBM-predicted laterality
+- `contralateral_predicted_lat` — LPD, GBM-predicted laterality
+- `gpd_all_channels` — GPD, assumed all involved
+- `grda_all_channels` — GRDA, all channels RDA-positive
+- `lrda_all_channels` — LRDA, all channels RDA-positive (crude)
+- `lrda_ipsilateral` — LRDA, ipsilateral (once laterality annotated)
+- `pd_negative_rda_case` — PD cases used as RDA-negatives
+- `rda_negative_pd_case` — RDA cases used as PD-negatives
+- `spatial_annotation` — from annotations.csv spatial_channels
+- `midline_excluded` — Fz-Cz, Cz-Pz excluded for lateralized patterns
+
+And `confidence` enables differential weighting during training:
+- `ground_truth` — 2× weight
+- `high` — 1× weight (strong assumption, e.g., LRDA channels are not PD)
+- `medium-high` — 0.8× weight (usually correct, e.g., contralateral)
+- `medium` — 0.5× weight (reasonable but noisy, e.g., predicted laterality)
+- `low` — 0.3× weight (crude assumption)
+
+### Key Gaps to Address
+
+| Gap | Impact | How to fix |
+|-----|--------|-----------|
+| **Spatial localization: 290 pending** | 49% of cases unreviewed | Retrain CNN with 304 GT labels → better predictions → faster review |
+| **LRDA laterality: 0 labeled** | Can't split LRDA channels properly | MW annotates laterality for 99 LRDA cases (similar workflow to LPD laterality) |
+| **GPD spatial nuance** | Only 20 GPD cases reviewed | Continue review — GPD is mostly bilateral but not always all 18 |
+| **High-frequency (>2 Hz)** | Only 35 cases | Accept as limitation; seizure harvest found some but few true high-freq PDs exist |
+| **Laterality: 278 LPD unlabeled** | Using GBM predictions (4% error) | Acceptable for pseudolabels; could annotate more if needed |
+
 ## Critical Dependencies
 
 1. **HPP discharge marking code** — needs to exist or be built. MW mentioned "hidden point process modeling that we did earlier." Need to locate this code or re-implement.
@@ -386,10 +522,11 @@ results/
 
 ## Success Criteria
 
-| Task | Current best | Target | Metric |
-|------|-------------|--------|--------|
-| Frequency | 0.640 | **0.70+** | Combined Spearman |
-| Subtype | 0.931 | **0.95+** | AUC |
-| Localization | 0.870 | **0.95+** | Channel AUC |
-| Timing | -0.08 | **0.60+** | IPI-freq Spearman |
-| BIPD detection | N/A | **feasible** | Proof of concept |
+| Task | Current best | Target | Metric | Status |
+|------|-------------|--------|--------|--------|
+| Frequency | 0.640 (CNN+Attn) | **0.70+** | Combined Spearman | Active |
+| Subtype | 0.931 (RF 300) | **0.95+** | AUC | Active |
+| Localization | 0.870 (CNN+Attn) / 5% accept rate | **0.90+** | Channel AUC / accept rate | **Needs retrain** |
+| Timing | 0.795 F1, 0.935 freq ρ (HPP) | **0.85+ F1** | F1 / IPI-freq Spearman | Labels complete |
+| RDA detection | N/A | **0.85+** | Channel AUC | New task |
+| BIPD detection | N/A | **feasible** | Proof of concept | Future |
