@@ -248,6 +248,40 @@ Unfreeze everything, train all 4 tasks jointly with reduced LR.
 - The timing labels provide a richer gradient signal for the encoder
 - The frequency head can now be supervised by BOTH gold standard freq AND timing-derived freq
 
+**Phase D: CNN Evidence + HPP Hybrid (after evaluating Phase A-C)**
+
+The CNN encoder learns to produce a per-channel, per-time-step "evidence trace" — a learned version of our handcrafted pointiness+TKEO signal. This evidence trace feeds into the HPP dynamic programming algorithm instead of the handcrafted features.
+
+Rationale: The HPP algorithm already achieves F1=0.795 with handcrafted evidence (pointiness+TKEO). The CNN should produce a strictly better evidence signal because:
+1. It's **case-adaptive** — learns to weight features differently for different morphologies, unlike the fixed 0.6/0.4 weighting
+2. It captures **more than sharpness** — waveform shape, context, cross-channel patterns
+3. It's trained on 593 cases of MW-reviewed discharge times — directly supervised for the task
+
+Meanwhile, the HPP provides structural advantages the CNN can't match:
+1. **Global periodicity enforcement** — the CNN's receptive field is ~400ms; HPP reasons across the full 10 seconds
+2. **Skipped discharge handling** — explicit modeling of missing events
+3. **Active interval detection** — knows where the pattern is "on" vs "off"
+4. **Frequency-informed prior** — uses estimated frequency to constrain expected inter-discharge intervals
+
+Architecture:
+```
+CNN encoder → temporal feature map (18, 64, T)
+    ↓
+Evidence head: Conv1d(64→1) per channel → upsample to 2000 → sigmoid
+    = learned evidence trace E_cnn(t) per channel
+    ↓
+HPP inference: E_cnn(t) replaces handcrafted pointiness+TKEO
+    = DP with periodic prior, skip modeling, active interval detection
+    ↓
+Discharge times t_1, t_2, ... → IPI → frequency
+```
+
+Training options:
+- **Two-stage** (simpler): Train CNN evidence head supervised on MW discharge times (frame-level BCE). Then run HPP inference using CNN evidence. No end-to-end backprop through HPP.
+- **End-to-end** (ambitious): Make HPP differentiable (soft DP / structured prediction). Backprop through the full pipeline. Likely harder to implement but could be more powerful.
+
+Expected outcome: CNN evidence + HPP timing should exceed both HPP-only (F1=0.795) and CNN-only timing (previously F1≈0 with U-Net, but should be much better with clean evidence from the trained CNN). The key question is whether this hybrid also beats the CNN+Attention frequency estimator (Spearman 0.640) by deriving frequency from the more precise IPI measurements.
+
 ### Why Joint Training Helps Each Task
 
 | Task | Benefits from... |
@@ -313,13 +347,35 @@ For a new 10-second EEG segment:
 | 4.5 | Evaluation + comparison with current methods | 1 session |
 | 4.6 | Build comprehensive results viewer | 1 session |
 
-### Sprint 5: BIPD Extension (future)
+### Sprint 5: High-Frequency Case Integration (when seizure harvest completes)
+
+The seizure folder harvest is pulling high-frequency PD candidates (2.5+ Hz) from the SEIZURE/IIIC/SEIZURE_BCH S3 folders (49,935 files). As of 2026-03-21: **526 segments harvested**, including 231 in the 2.5+ Hz range. Harvest is ongoing.
+
+These cases are critical because our current dataset has only 35 cases above 2.0 Hz (6%). The harvested cases will dramatically improve high-frequency estimation.
+
+**When the harvest completes, these cases need full annotation:**
+
+| Step | What | MW effort |
+|------|------|-----------|
+| 5.1 | Add harvested segments to patients.csv, segments.csv, annotations.csv | Automated |
+| 5.2 | **Frequency annotation**: Build freq annotation viewer (like the one used for the first harvest batch). MW labels each case with gold standard frequency. | **~3-4 hours** (526 cases, fast text entry) |
+| 5.3 | **Subtype verification**: Many are from seizure folders — MW reviews to confirm they are actually PDs (LPD/GPD) and not seizures. Use existing misclass reviewer pattern. | **~2-3 hours** |
+| 5.4 | **Laterality annotation** (LPD cases only): Use existing laterality viewer or predict with GBM. | **~1-2 hours** |
+| 5.5 | **Discharge timing**: Run HPP on new cases → MW binary review → corrections. Same iterative workflow as Sprint 1. | **~3-4 hours** |
+| 5.6 | **Spatial localization**: Run CNN channel detector → MW review. | **~1-2 hours** |
+| 5.7 | Retrain unified model with expanded dataset | Automated |
+
+**Expected impact**: With ~230 cases above 2.5 Hz (vs current 10), high-frequency estimation should improve dramatically. The frequency distribution will be much more balanced, reducing mean-shrinkage bias.
+
+**Important caveat**: The FFT-based frequency estimates used for binning during harvest are unreliable (Spearman 0.204 vs MW, as we discovered earlier). The actual frequency distribution of the harvested cases may differ from what the bins suggest — MW's annotation in Step 5.2 will reveal the true distribution.
+
+### Sprint 6: BIPD Extension (future)
 
 | Step | What |
 |------|------|
-| 5.1 | Collect BIPD training cases |
-| 5.2 | Add BIPD detection rule: independent L/R timing patterns |
-| 5.3 | Fine-tune model with BIPD examples |
+| 6.1 | Collect BIPD training cases |
+| 6.2 | Add BIPD detection rule: independent L/R timing patterns |
+| 6.3 | Fine-tune model with BIPD examples |
 
 ## Expected Outcomes
 
