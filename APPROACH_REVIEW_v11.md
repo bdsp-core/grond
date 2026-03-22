@@ -70,16 +70,17 @@ See detailed architecture description in the companion document.
 
 Note: This uses gold standard frequency as input (reference only).
 
-### Fair EEG-Only Methods (previous evaluation, before label update)
+### Fair EEG-Only Methods (updated gold standard, 593 cases)
 
-| Method | Evidence | Freq Source | Sens | Prec | **F1** | **Freq ρ** |
-|--------|----------|-------------|------|------|--------|-----------|
-| **max(HPP,CET)+CNN freq** | Combined | CNN | 0.769 | 0.653 | **0.706** | **0.755** |
-| HPP + CNN freq | Handcrafted | CNN | 0.593 | 0.728 | 0.653 | 0.716 |
-| HPP + bootstrap | Handcrafted | ACF→IPI | 0.630 | 0.657 | 0.644 | 0.461 |
-| CET + CNN freq | CET-UNet | CNN | 0.450 | 0.714 | 0.552 | 0.737 |
+| Method | Evidence | Freq Source | DP Params | Sens | Prec | **F1** | **Freq ρ** |
+|--------|----------|-------------|-----------|------|------|--------|-----------|
+| **max(HPP,CET)+CNN freq+opt** | Combined | CNN | Optimized | 0.774 | 0.675 | **0.721** | **0.753** |
+| HPP + CNN freq | Handcrafted | CNN | Default | 0.578 | 0.728 | 0.645 | 0.716 |
+| HPP + bootstrap | Handcrafted | ACF→IPI | Default | 0.615 | 0.658 | 0.636 | 0.453 |
+| CET + bootstrap | CET-UNet | ACF→IPI | Default | 0.499 | 0.746 | 0.598 | 0.531 |
+| CET + CNN freq | CET-UNet | CNN | Default | 0.451 | 0.735 | 0.559 | 0.742 |
 
-*Note: These numbers are from the pre-label-update evaluation. Post-update fair evaluation is pending.*
+Optimized DP parameters: α=1.275, λ=0.05, β=0.3 (from parameter sweep).
 
 ### Frequency Estimation Comparison (EEG-Only)
 

@@ -9,13 +9,13 @@ Algorithms for estimating the frequency of periodic discharges (PD) and rhythmic
 | Task | Metric | N patients | Performance | Method |
 |------|--------|-----------|-------------|--------|
 | PD frequency | Spearman rho | 594 | **0.744** | CNN+Attention direct |
-| Discharge timing | F1 | 576 | **0.706** | max(HPP,CET)+CNN_freq+DP |
+| Discharge timing | F1 | 593 | **0.740** | Product-boosted max(HPP,CET)+CNN+ACF freq+opt_DP |
 | Subtype (LPD vs GPD) | AUC | 594 | **0.931** | RF 300 trees |
 | Laterality (L vs R) | AUC | 143 | **0.957** | GBM balanced |
 | Channel PD detection | AUC | 815 | **0.870** | CNN+Attention |
 | RDA frequency | Spearman rho | 23 | **0.840** | FFT baseline |
 
-**All methods use EEG-only input** — no gold standard labels provided as algorithm input. Discharge timing uses a novel max(handcrafted, CNN) evidence combination with Hidden Point Process dynamic programming. See [APPROACH_REVIEW_v11.md](APPROACH_REVIEW_v11.md) for details.
+**All methods use EEG-only input** — no gold standard labels provided as algorithm input. Discharge timing uses a novel max(handcrafted, CNN) evidence combination with Hidden Point Process dynamic programming. See [APPROACH_REVIEW_v12.md](APPROACH_REVIEW_v12.md) for details.
 
 ## Overview
 
