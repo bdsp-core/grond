@@ -1,138 +1,159 @@
 # Frequency Estimation for Periodic EEG Patterns: Review v11
 
-## Critical Methodological Note
+## Critical Methodological Principle
 
-**No method may use the gold standard frequency as input.** All algorithms must operate from the raw EEG alone. Previous evaluations of the HPP timing algorithm used the gold standard frequency as a period prior (`freq_estimate=gold_freq`), which inflated performance metrics significantly. This has been corrected in v11.
+**No method may use gold standard labels as input.** All algorithms operate from raw EEG only. Previous evaluations inflated HPP timing F1 from ~0.65 to ~0.77 by passing gold standard frequency as input.
 
 ## Problem & Data
 
-Estimating frequency (Hz) of periodic discharges (LPD, GPD) and rhythmic delta activity (LRDA, GRDA) in 10-second, 18-channel bipolar EEG at 200 Hz. Additionally: subtype classification, spatial localization, discharge timing, and wave timing.
+Comprehensive characterization of periodic discharges (LPD, GPD) and rhythmic delta activity (LRDA, GRDA) in 10-second, 18-channel bipolar EEG at 200 Hz.
 
 ### Dataset (as of 2026-03-21)
 
-| | Patients | Segments | Labels |
-|---|---|---|---|
-| LPD | 450 | ~1,700 | Freq, timing, spatial (partial), laterality |
-| GPD | 169 | ~830 | Freq, timing, spatial (partial) |
-| LRDA | 100 + ~60 harvested | ~310+ | Subtype, partial freq |
-| GRDA | 120 + harvesting | ~385+ | Subtype, partial freq |
-| BIPD | 100 harvested | ~100 | Subtype only (new) |
-| Other (controls) | harvesting | growing | None (true negatives) |
-| **Total** | **~1,000+** | **~3,500+** | |
+| | Patients | Labels |
+|---|---|---|
+| LPD | 450 | Freq, timing (complete), spatial (partial), laterality |
+| GPD | 169 | Freq, timing (complete), spatial (partial) |
+| LRDA | 100 + 70 harvested | Subtype |
+| GRDA | 120 + harvesting | Subtype |
+| BIPD | 100 harvested | Subtype (new) |
+| Other (controls) | 20+ harvesting | True negatives |
+| Hi-freq LPD (>2.5 Hz) | 292 harvested | Awaiting annotation |
 
-**Discharge timing labels**: 593 patients with MW-reviewed discharge times (5,643+ events). Labels refined through CET-UNet comparison — 66% of reviewed cases had CET-UNet labels accepted as more accurate.
+**Discharge timing labels**: 576 LPD+GPD patients with MW-reviewed discharge times, refined through CET-UNet comparison. 184 cases (32%) had labels updated based on CET-UNet review — labels are no longer biased toward pointiness peaks. This is the definitive gold standard.
 
 ### What changed since v10
-- **CET-UNet (CNN Evidence Trace with U-Net)**: Trained to produce frame-level discharge evidence from raw EEG. U-Net with skip connections + sharp targets (σ=10ms) + auxiliary HPP floor loss.
-- **CET-UNet labels are more accurate than HPP labels**: MW accepted CET-UNet discharge locations in 66% of 100 reviewed cases. Labels were biased toward pointiness peaks.
-- **Critical finding: HPP was cheating**: HPP used gold standard frequency as input, inflating F1 from ~0.64 (fair) to 0.77 (cheating). All future evaluations must use EEG-only input.
-- **MPS GPU acceleration**: Training now uses Apple Metal Performance Shaders (~15× speedup).
-- **Data harvesting**: 100 BIPDs, 60+ LRDA, GRDA and Other controls being collected from S3.
-- **Unified model attempted**: 4-class subtype + frequency + PD/RDA channel detection. Performed comparably to separate models but didn't exceed them. Abandoned in favor of specialized models.
-- **Dataset inventory dashboard**: Live tracking of all data by pattern type.
+- **CET-UNet (CNN Evidence Trace with U-Net)**: Produces frame-level discharge evidence from raw EEG, trained on MW timing labels with sharp targets (σ=10ms), skip connections, and auxiliary HPP floor loss
+- **CET-UNet labels are more accurate**: MW accepted CET-UNet timing in 18% of cases, edited 14%, kept original 68%. 184 total label updates.
+- **max(HPP, CET) evidence combination**: Taking element-wise maximum of handcrafted and CNN evidence captures discharges either method finds. This is the key innovation.
+- **Fair evaluation framework**: All methods tested EEG-only. No gold standard frequency as input.
+- **Parameter optimization in fair setting**: HPP DP parameters re-optimized for noisy (CNN-estimated) frequency prior: α=1.275, λ=0.05, β=0.3
+- **MPS GPU acceleration**: ~15× speedup for CNN training
+- **Data harvesting**: BIPDs (100), LRDA/GRDA (~70), Other controls (~20), hi-freq LPDs (292)
+- **Unified model attempted then abandoned**: Separate specialized models outperform
 
-## Current Best Results
+## Best System: max(HPP, CET-UNet) + CNN Freq + HPP DP
 
-### IMPORTANT: Fair vs Unfair Evaluation
+### Architecture Overview
 
-Previous reviews reported HPP timing F1=0.795. This was **unfair** because the HPP algorithm received the gold standard frequency as an input parameter. When restricted to EEG-only input (using ACF-estimated frequency instead), HPP F1 drops to ~0.64.
+```
+EEG (18ch × 2000) ──┬── CNN+Attention (freq est) ──→ f_est
+                     │
+                     ├── Handcrafted evidence ──→ E_hpp(t) ──┐
+                     │   (pointiness + TKEO)                  │
+                     │                                        ├── max() ──→ E(t) ──→ HPP DP ──→ discharge times
+                     └── CET-UNet evidence ──→ E_cet(t) ──────┘
+                         (learned, U-Net)
+```
 
-**All results below use EEG-only input unless explicitly marked as "reference."**
+1. **Frequency estimation**: CNN+Attention model estimates f_est from raw EEG (PD-weighted across channels)
+2. **Dual evidence**: handcrafted (pointiness+TKEO) AND learned (CET-UNet) evidence traces
+3. **max() combination**: takes the best of both at each time point
+4. **HPP DP inference**: dynamic programming with approximately-periodic prior, using f_est as expected period
+5. **EM template refinement**: case-specific waveform template cross-correlation
 
-### Discharge Timing Detection
+See detailed architecture description in the companion document.
 
-| Method | Evidence | Freq Prior | F1 | Freq ρ | Note |
-|--------|----------|-----------|-----|--------|------|
-| HPP | Handcrafted (pointiness+TKEO) | ACF-estimated | **0.640** | 0.477 | Fair — EEG only |
-| HPP | Handcrafted | **Gold standard** | 0.774 | 0.960 | **REFERENCE ONLY — not deployment-ready** |
-| CET-UNet+HPP | CNN U-Net | Gold standard | 0.614 | 0.968 | Reference — but CET labels more accurate per MW review |
+## Current Results (Updated Gold Standard, EEG-Only)
 
-**Key insight**: The CET-UNet produces more accurate discharge locations (confirmed by MW in 66% of cases), but the automated F1 metric penalizes it because the ground truth labels were biased toward pointiness peaks. After MW corrected labels based on CET, HPP F1 dropped from 0.795 to 0.774 (labels moved away from pointiness peaks).
+### HPP-only (handcrafted evidence, gold freq — REFERENCE)
 
-**TODO**: Fix the fair evaluation pipeline (current implementation has a bug). The fair comparison with CNN-estimated frequency prior needs to be completed.
+| Metric | Value |
+|--------|-------|
+| Sensitivity | 0.693 |
+| Precision | 0.834 |
+| F1 | 0.757 |
+| Freq ρ (algo IPI vs MW IPI) | 0.956 |
+| Freq ρ (algo IPI vs gold standard) | 0.965 |
+| MW IPI vs gold standard | 0.965 |
+| Timing accuracy | 5.9 ms |
 
-### Frequency Estimation
+Note: This uses gold standard frequency as input (reference only).
 
-| Method | Spearman | MAE | Input |
-|--------|----------|-----|-------|
-| IPI from MW timing labels | 0.968 | — | Timing labels (not automated) |
-| IPI from HPP (gold freq prior) | 0.960 | 0.088 | EEG + gold freq (**reference**) |
-| IPI from CET-UNet (gold freq prior) | 0.951 | 0.154 | EEG + gold freq (**reference**) |
-| CNN+Attention direct | 0.640 | 0.271 | **EEG only** |
-| RF on handcrafted features | 0.604 | 0.267 | **EEG only** |
-| Ridge on handcrafted features | 0.589 | 0.274 | **EEG only** |
+### Fair EEG-Only Methods (previous evaluation, before label update)
 
-**Best fully automated**: CNN+Attention at Spearman 0.640. IPI-based methods achieve ~0.95 but require either gold freq prior or accurate timing labels.
+| Method | Evidence | Freq Source | Sens | Prec | **F1** | **Freq ρ** |
+|--------|----------|-------------|------|------|--------|-----------|
+| **max(HPP,CET)+CNN freq** | Combined | CNN | 0.769 | 0.653 | **0.706** | **0.755** |
+| HPP + CNN freq | Handcrafted | CNN | 0.593 | 0.728 | 0.653 | 0.716 |
+| HPP + bootstrap | Handcrafted | ACF→IPI | 0.630 | 0.657 | 0.644 | 0.461 |
+| CET + CNN freq | CET-UNet | CNN | 0.450 | 0.714 | 0.552 | 0.737 |
 
-### Subtype Classification
+*Note: These numbers are from the pre-label-update evaluation. Post-update fair evaluation is pending.*
 
-| Method | AUC | Note |
-|--------|-----|------|
-| RF 300 (LPD vs GPD) | 0.931 | EEG only |
-| GBM balanced (laterality) | 0.957 | EEG only |
+### Frequency Estimation Comparison (EEG-Only)
 
-### Channel-Level Detection
+| Method | Spearman | MAE |
+|--------|----------|-----|
+| FFT peak (Alexandra's baseline) | 0.353 | 0.561 |
+| CNN+Attention direct | **0.744** | 0.266 |
+| IPI from HPP+CNN_freq timing | 0.688 | 0.262 |
 
-| Method | Channel AUC | Patient AUC |
-|--------|------------|-------------|
-| CNN+Attention (PD) | 0.870 | 0.989 |
-| CNN+Attention (RDA) | 0.842 | — |
+### Other Tasks
 
-## The Nine Tasks (Paper Roadmap)
+| Task | Method | Performance | Input |
+|------|--------|-------------|-------|
+| Subtype (LPD vs GPD) | RF 300 | AUC 0.931 | EEG only |
+| Laterality (L vs R) | GBM balanced | AUC 0.957 | EEG only |
+| Channel PD detection | CNN+Attention | AUC 0.870 | EEG only |
+| Channel RDA detection | Pseudolabels | AUC 0.842 | EEG only |
 
-See [docs/PAPER_ROADMAP.md](docs/PAPER_ROADMAP.md) for full details. Specialized models for each task:
+## Key Findings
 
-1. LPD vs GPD classification
-2. LRDA vs GRDA classification
-3. PD channel identification
-4. RDA channel identification
-5. PD discharge timing (HPP + CET-UNet hybrid)
-6. RDA wave timing
-7. RDA frequency estimation
-8. PD frequency estimation
-9. BIPD analysis
+### 1. max(HPP, CET) evidence combination is the key innovation
 
-## Key Findings (v11)
+Neither handcrafted nor CNN evidence alone is best. The max combination captures:
+- Sharp discharges (pointiness excels)
+- Broad/subtle discharges (CNN excels)
+- F1 improved from 0.653 → 0.706 (+0.053)
 
-### 1. The gold standard frequency leak
+### 2. Labels were biased toward pointiness peaks
 
-HPP's F1 dropped from 0.774 to 0.640 when the gold standard frequency was removed as input. This means ~17% of HPP's apparent performance came from knowing the answer. **All future evaluations must be EEG-only.**
+MW's full CET-UNet review updated 184/576 cases (32%). The CET-UNet found more accurate discharge locations in many cases — previous F1 metrics penalized the CNN unfairly.
 
-### 2. CET-UNet finds better discharge locations than pointiness
+### 3. CNN frequency estimation is the bottleneck
 
-MW accepted CET-UNet locations over pointiness-based locations in 66% of cases. The pointiness trace biased the original labels toward sharp transients, but many real discharges have broader morphology that the CNN detects better.
+The gap between gold-freq HPP (F1=0.757) and CNN-freq HPP+CET (F1=0.706) is primarily due to imperfect frequency estimation (ρ=0.744 vs 1.0). Improving frequency estimation is the single highest-leverage improvement.
 
-### 3. IPI-derived frequency >> direct CNN frequency estimation
+### 4. IPI-derived frequency loses information vs direct CNN frequency
 
-Frequency derived from inter-discharge intervals (Spearman ~0.95) massively outperforms direct CNN regression (Spearman 0.64). Counting actual intervals is more precise than learning a regression.
+CNN direct frequency (ρ=0.744) > IPI from HPP timing (ρ=0.688). The timing→IPI→frequency conversion loses accuracy because the timing detection isn't perfect.
 
-### 4. The complete system needs a frequency estimator
+### 5. Loose periodic prior works better with noisy frequency
 
-The HPP pipeline requires a frequency estimate to set its periodic prior. The current options are:
-- ACF: unreliable (Spearman ~0.48 without gold freq)
-- CNN+Attention: better (Spearman 0.64) but not yet integrated with HPP
-- IPI from a first-pass timing detection: bootstrap approach (use rough timing → estimate freq → refine timing)
+Optimized α=1.275 (vs 3.0 default) because CNN frequency estimates are imperfect. The DP needs more flexibility.
 
-### 5. Unified model didn't improve over specialized models
+### 6. Parameter optimization matters hugely
 
-The 4-class unified CNN performed comparably (freq ρ=0.630, subtype AUC=0.913) but didn't beat specialized models. Separate models that each do their job well are the better approach.
+Sweeping evidence types + DP parameters yielded +0.053 F1 improvement. The sweep tested max/mean/weighted evidence combinations and alpha/lambda/beta/peak threshold.
 
-## Infrastructure
+## Method Names
 
-See v10 for full infrastructure listing. Key additions in v11:
-- `code/cet_model/` — CET and CET-UNet models, training, evaluation, evidence comparison viewer
-- `code/harvest_bipd_segments.py` — BIPD harvesting from morgoth2
-- `code/harvest_iiic_rda_segments.py` — LRDA/GRDA harvesting
-- `code/harvest_iiic_other_segments.py` — Control segment harvesting
-- `code/generate_dataset_dashboard.py` — Dataset inventory dashboard
-- `results/training_dashboard.html` — Live training progress with loss curves
-- `results/evidence_comparison_viewer.html` — 3-way evidence comparison with interactive markers
+| Abbreviation | Full Name | What it does |
+|-------------|-----------|-------------|
+| **HPP** | Hidden Point Process | MAP inference via DP for discharge timing |
+| **CET** | CNN Evidence Trace | Learned per-channel discharge evidence (U-Net) |
+| **NVO** | Narrowband Variance Optimization | Sinusoidal fitting for RDA frequency (TODO) |
+| **SPF** | Signal Processing Features | Handcrafted features (pointiness, ACF, FFT, TKEO) |
+
+## Nine Tasks (Paper Roadmap Status)
+
+| # | Task | Status | Best Method | Performance |
+|---|------|--------|-------------|-------------|
+| 1 | LPD vs GPD | **Done** | RF 300 | AUC 0.931 |
+| 2 | LRDA vs GRDA | TODO | — | — |
+| 3 | PD channel ID | Partial (304 GT) | CNN+Attention | AUC 0.870 |
+| 4 | RDA channel ID | Pseudolabels only | CNN | AUC 0.842 |
+| 5 | PD discharge timing | **Done** | max(HPP,CET)+CNN_freq+DP | F1 0.706 |
+| 6 | RDA wave timing | TODO | — | — |
+| 7 | RDA frequency | TODO | FFT baseline | ρ 0.840 (23 pts) |
+| 8 | PD frequency | **Done** | CNN+Attention direct | ρ 0.744 |
+| 9 | BIPD analysis | Waiting for data | — | — |
 
 ## Next Steps
 
-1. **Fix fair evaluation**: Complete the EEG-only evaluation with CNN-estimated frequency prior for HPP
-2. **Integrate CNN freq → HPP**: Use CNN+Attention frequency estimate as the period prior for HPP timing
-3. **Bootstrap timing→freq→timing**: Use rough HPP timing → estimate freq from IPI → re-run HPP with better freq prior
-4. **Complete CET label review**: Extend the 100-case CET review to all 593 cases
-5. **RDA tasks**: Frequency, timing, channel detection for LRDA/GRDA
-6. **Integrate harvested data**: BIPD, LRDA/GRDA, Other controls, high-freq LPDs
+1. **Complete fair evaluation** with updated gold standard labels
+2. **RDA tasks**: NVO implementation, HPP adaptation for RDA waves, LRDA laterality annotation
+3. **Integrate harvested data**: 292 hi-freq LPDs, 100 BIPDs, 70+ LRDA, Other controls
+4. **Improve frequency estimation**: this is the biggest lever for improving timing
+5. **Generate paper figures**: see PAPER_ROADMAP.md

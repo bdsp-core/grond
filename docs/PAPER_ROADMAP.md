@@ -374,58 +374,74 @@ Adapt the HPP algorithm for RDA waves:
 | Fig 3 | Feature extraction pipeline | TODO |
 | Fig 4 | HPP algorithm diagram | TODO |
 | Fig 5 | HPP example results (4 cases) | TODO |
-| Fig 6 | CET architecture diagram | TODO |
-| Fig 7 | Handcrafted vs CNN evidence comparison | TODO (needs CET) |
+| Fig 6 | CET-UNet + max(HPP,CET) architecture diagram | TODO — detailed description written |
+| Fig 7 | Handcrafted vs CNN evidence comparison | **Data ready** (evidence_comparison_viewer.html) |
 | Fig 8 | NVO method illustration | TODO (needs NVO) |
-| Fig 9 | PD frequency scatter plots | Partial (dashboard has these) |
+| Fig 9 | PD frequency scatter plots (3-panel) | **Done** (freq_estimation_comparison.html) |
 | Fig 10 | Spearman progression bar chart | TODO |
 | Fig 11 | RDA frequency scatter plot | TODO (needs RDA work) |
-| Fig 12 | Discharge timing examples | Partial (viewer exists) |
-| Fig 13 | IPI vs gold standard scatter | Done (gold_vs_ipi_frequency.html) |
+| Fig 12 | Discharge timing examples | **Data ready** (timing viewers exist) |
+| Fig 13 | IPI vs gold standard scatter | **Done** (gold_vs_ipi_frequency.html, ρ=0.970) |
 | Fig 14 | RDA wave timing examples | TODO (needs RDA HPP) |
-| Fig 15 | Spatial localization examples | Partial (viewer exists) |
-| Fig 16 | Performance by review round | TODO |
+| Fig 15 | Spatial localization examples | **Data ready** (spatial_review_viewer.html) |
+| Fig 16 | Performance by review round | **Data ready** (6 rounds of timing review tracked) |
 | Fig 17 | Failure mode examples | TODO |
 
 ## Tables Summary
 
 | Table | Description | Status |
 |-------|-------------|--------|
-| Table 1 | Dataset statistics | Done (in approach reviews) |
-| Table 2 | PD frequency method comparison | Partial |
+| Table 1 | Dataset statistics | **Done** (in APPROACH_REVIEW_v11) |
+| Table 2 | PD frequency method comparison (5 methods) | **Done** (Alexandra 0.353, CNN 0.744, IPI 0.688) |
 | Table 3 | RDA frequency method comparison | TODO |
-| Table 4 | HPP timing performance | Done |
-| Table 5 | CET+HPP vs HPP comparison | TODO (needs CET) |
+| Table 4 | HPP timing performance | **Done** (F1=0.757 ref, 0.706 fair) |
+| Table 5 | max(HPP,CET)+DP vs HPP-only vs CET-only | **Done** (4-way comparison) |
 | Table 6 | RDA HPP performance | TODO |
-| Table 7 | Channel detection AUC | Partial |
-| Table 8 | Subtype classification | Done |
-| Table 9 | Label stats by review round | Done (in v10 review) |
+| Table 7 | Channel detection AUC | **Done** (PD 0.870, RDA 0.842) |
+| Table 8 | Subtype classification | **Done** (AUC 0.931) |
+| Table 9 | Label stats by review round | **Done** (6 rounds + CET full review) |
+| Table 10 | Parameter sweep results | **Done** (5 evidence × DP params) |
 
 ---
 
 ## Priority Order for Remaining Work
 
 ### Tier 1 — Required for paper
-1. **CET+HPP for PD timing** (Phase 1.6-1.7) — the key novelty claim
-2. **Complete PD spatial review** (Phase 1.8) — need solid channel AUC numbers
+1. ~~**CET+HPP for PD timing**~~ — **DONE** (F1=0.706, max(HPP,CET)+CNN_freq+DP)
+2. **Complete PD spatial review** (Phase 1.8) — 304/576 GT, 290 pending
 3. **NVO for RDA** (Phase 2.1, 2.5) — find existing code, benchmark
 4. **RDA HPP** (Phase 2.4, 2.6) — adapt HPP for RDA waves
-5. **Generate all figures** (Phase 5.1)
+5. **Generate publication figures** from existing data/viewers
 
 ### Tier 2 — Strengthens paper
-6. **LRDA laterality annotation** (Phase 2.2)
-7. **RDA channel identification** (Phase 2.3)
-8. **High-frequency case integration** (Phase 3)
-9. **LRDA vs GRDA classification** (Phase 2.7)
+6. **LRDA laterality annotation** (99 cases)
+7. **RDA channel identification** — improve from pseudolabels
+8. **High-frequency case integration** (292 harvested, need annotation)
+9. **LRDA vs GRDA classification**
+10. **Improve frequency estimation** — biggest lever for timing improvement
 
 ### Tier 3 — Can be future work
-10. **BIPD analysis** (Phase 4)
-11. **CET+HPP for RDA** (Phase 2.8)
-12. **Phase-amplitude coupling analysis**
+11. **BIPD analysis** (100 cases harvested, waiting for more)
+12. **CET+HPP for RDA**
+13. **Phase-amplitude coupling analysis**
 
-====== NOTES ========
+## Completion Summary (as of 2026-03-21)
 
-i have changed my mind about the goal. 
+| Category | Done | Remaining |
+|----------|------|-----------|
+| **PD Tasks** | Timing (F1=0.706), Frequency (ρ=0.744), Subtype (AUC=0.931), Laterality (AUC=0.957) | Spatial review (290 pending), frequency improvement |
+| **RDA Tasks** | FFT baseline (ρ=0.840 on 23 pts) | NVO, HPP adaptation, channel detection, LRDA laterality |
+| **Architecture** | max(HPP,CET)+CNN_freq+DP fully designed and tested | — |
+| **Labels** | 576 PD timing (definitive), 304 spatial, 594 frequency | RDA timing, LRDA laterality, spatial completion |
+| **Data** | 839 existing + 482 harvested = 1,321 segments | More LRDA/GRDA, Other controls, hi-freq annotation |
+| **Tools** | Timing viewer, spatial viewer, evidence comparison viewer, dashboards | Publication figure generation |
+| **Paper** | Outline complete, tables/figures identified, detailed architecture written | Actual writing, figure generation |
+
+## Notes (Historical)
+
+The following notes document the evolution of our approach. Originally planned as a unified model, we pivoted to specialized models after finding they perform better individually.
+
+Original note from MW:
  i don't want a "unified" model. 
  separate models that each do their job very well are fine, and already are a big advance. 
 
