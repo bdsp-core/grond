@@ -1,0 +1,47 @@
+{
+  "results": {
+    "Oracle (HPP+gold freq)": {
+      "f1": 0.6644,
+      "sens": 0.5689,
+      "prec": 0.7986,
+      "freq_rho": 0.9096,
+      "freq_mae": 0.139,
+      "timing_mae": 10.9,
+      "timing_med": 0.0,
+      "n": 582
+    },
+    "HemiCET v2 + DP (C1)": {
+      "f1": 0.889,
+      "sens": 0.921,
+      "prec": 0.8592,
+      "freq_rho": 0.8908,
+      "freq_mae": 0.183,
+      "timing_mae": 1.0,
+      "timing_med": 0.0,
+      "n": 582
+    },
+    "Full 18ch pipeline": {
+      "f1": 0.726,
+      "sens": 0.7217,
+      "prec": 0.7303,
+      "freq_rho": 0.7646,
+      "freq_mae": 0.25,
+      "timing_mae": 17.7,
+      "timing_med": 10.0,
+      "n": 582
+    },
+    "Per-hemi baseline (HPP+CET+DP)": {
+      "f1": 0.7191,
+      "sens": 0.7236,
+      "prec": 0.7146,
+      "freq_rho": 0.778,
+      "freq_mae": 0.253,
+      "timing_mae": 19.4,
+      "timing_med": 10.0,
+      "n": 582
+    }
+  },
+  "expert_ipi_rho": 0.9404603260327509,
+  "expert_ipi_mae": 0.11378753051246439,
+  "n_gold_freq": 662
+}
