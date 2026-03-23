@@ -161,7 +161,7 @@ def main():
 
     # Load discharge times for subtype info
     print("\n--- Loading discharge times ---")
-    hpp_path = LABELS_DIR / 'discharge_times_hpp.json'
+    hpp_path = LABELS_DIR / 'discharge_times.json'
     with open(str(hpp_path)) as f:
         hpp_data = json.load(f)
     print(f"  Loaded HPP data for {len(hpp_data)} patients")

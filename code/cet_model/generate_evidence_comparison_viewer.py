@@ -891,7 +891,7 @@ def main():
 
     # Load discharge times (for MW-reviewed markers)
     print("\n--- Loading discharge times ---")
-    hpp_path = LABELS_DIR / 'discharge_times_hpp.json'
+    hpp_path = LABELS_DIR / 'discharge_times.json'
     with open(str(hpp_path)) as f:
         hpp_results = json.load(f)
     print(f"  Total patients with discharge data: {len(hpp_results)}")

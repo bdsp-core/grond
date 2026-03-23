@@ -157,7 +157,7 @@ def prepare_cet_data():
     segments = dataset['segments']
 
     # Load ground truth discharge times
-    hpp_path = PROJECT_DIR / 'data' / 'labels' / 'discharge_times_hpp.json'
+    hpp_path = PROJECT_DIR / 'data' / 'labels' / 'discharge_times.json'
     with open(str(hpp_path)) as f:
         hpp_data = json.load(f)
 
@@ -465,7 +465,7 @@ def main():
     channels, targets, hpp_evidence, patient_ids, subtypes = prepare_cet_data()
 
     # Load HPP data for evaluation
-    hpp_path = PROJECT_DIR / 'data' / 'labels' / 'discharge_times_hpp.json'
+    hpp_path = PROJECT_DIR / 'data' / 'labels' / 'discharge_times.json'
     with open(str(hpp_path)) as f:
         hpp_data = json.load(f)
     gt_cases = {pid: v for pid, v in hpp_data.items()

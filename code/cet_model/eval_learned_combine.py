@@ -332,7 +332,7 @@ def main():
     df = dataset['df']
     segments = dataset['segments']
 
-    hpp_path = PROJECT_DIR / 'data' / 'labels' / 'discharge_times_hpp.json'
+    hpp_path = PROJECT_DIR / 'data' / 'labels' / 'discharge_times.json'
     with open(str(hpp_path)) as f:
         hpp_data = json.load(f)
     gt_cases = {pid: v for pid, v in hpp_data.items()

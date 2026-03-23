@@ -1,7 +1,7 @@
 """
 Generate interactive HTML timing correction viewer for cases needing review.
 
-Loads discharge_times_hpp.json and includes all cases where review_status
+Loads discharge_times.json and includes all cases where review_status
 is NOT 'ground_truth' (i.e., auto-detected cases that haven't been manually
 verified). MW can add, delete, and move discharge timing markers interactively.
 EEG is rendered in HTML5 canvas for exact coordinate alignment.
@@ -752,7 +752,7 @@ def main():
 
     # ── Load HPP discharge times and filter to auto cases ──
     print("\n--- Loading HPP discharge times ---")
-    hpp_path = LABELS_DIR / 'discharge_times_hpp.json'
+    hpp_path = LABELS_DIR / 'discharge_times.json'
     with open(str(hpp_path)) as f:
         hpp_results = json.load(f)
     print(f"  Loaded HPP results for {len(hpp_results)} patients")

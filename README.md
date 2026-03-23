@@ -8,14 +8,17 @@ Algorithms for estimating the frequency of periodic discharges (PD) and rhythmic
 
 | Task | Metric | N patients | Performance | Method |
 |------|--------|-----------|-------------|--------|
-| PD frequency | Spearman rho | 594 | **0.744** | CNN+Attention direct |
-| Discharge timing | F1 | 593 | **0.740** | Product-boosted max(HPP,CET)+CNN+ACF freq+opt_DP |
+| PD frequency (IPI) | Spearman rho | 581 | **0.819** | HemiCET+DP (8ch) |
+| PD frequency (direct) | Spearman rho | 594 | **0.744** | CNN+Attention direct |
+| Discharge timing | F1 | 675 | **0.717** | Full 18ch pipeline |
+| Discharge timing (hemi) | F1 | 675 | **0.699** | HemiCET+DP (8ch) |
+| Timing accuracy | MAE | 675 | **5.0 ms** (median) | HemiCET+DP (8ch) |
 | Subtype (LPD vs GPD) | AUC | 594 | **0.931** | RF 300 trees |
-| Laterality (L vs R) | AUC | 143 | **0.957** | GBM balanced |
+| Laterality (L vs R) | AUC | 437 | **0.98** | CNN+Attention PD prob |
 | Channel PD detection | AUC | 815 | **0.870** | CNN+Attention |
 | RDA frequency | Spearman rho | 23 | **0.840** | FFT baseline |
 
-**All methods use EEG-only input** — no gold standard labels provided as algorithm input. Discharge timing uses a novel max(handcrafted, CNN) evidence combination with Hidden Point Process dynamic programming. See [APPROACH_REVIEW_v12.md](APPROACH_REVIEW_v12.md) for details.
+**All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [APPROACH_REVIEW_v13.md](APPROACH_REVIEW_v13.md) for details.
 
 ## Overview
 
@@ -50,25 +53,43 @@ aws s3 sync s3://bdsp-opendata-credentialed/iiic-freq3/data/ data/
 This requires AWS credentials with access to the `bdsp-opendata-credentialed` bucket. To request access, visit the [Brain Data Science Platform (BDSP)](https://bdsp.io).
 
 The `data/` directory contains:
-- `eeg/` — ~2,511 .mat files (10s bipolar EEG segments at 200 Hz)
-- `labels/` — `segments.csv`, `annotations.csv` (long-format expert ratings), `patients.csv`
-- `dl_cache/` — CNN model weights and external segment pool
-- `_archive/` — previous round-specific data directories
+- `eeg/` — ~9,600+ .mat files (10s bipolar EEG segments, 18ch at 200 Hz, standardized format)
+- `labels/` — canonical label files (see below)
+- `dl_cache/`, `cet_cache/`, `pd_channel_cache/`, `hemi_cache/` — model weights
+- `_archive/` — raw source annotation files
 
 ### Data Structure
 
 ```
 data/
-├── eeg/              2,241 .mat files (10s segments, 200 Hz, 19 channels)
+├── eeg/                  ~9,600 .mat files (18ch × 2000 samples, keys: data, Fs)
 ├── labels/
-│   ├── segments.csv      Segment registry (segment metadata, file paths)
-│   ├── annotations.csv   Expert ratings (long format: per-segment, per-rater)
-│   └── patients.csv      Patient summary (gold standard freq, laterality, exclusions)
-├── dl_cache/         CNN weights, segment pool
-├── rda_cache/        Precomputed RDA features
-├── templates_*.npy   Template banks for matched filtering
-└── _archive/         Source annotation files (organized by round/task)
+│   ├── patients.csv          Patient registry (2,865 rows: subtype, freq, laterality, exclusions, expert votes)
+│   ├── segments.csv          Segment registry (3,313 rows: segment metadata, file paths)
+│   ├── annotations.csv       Per-rater annotations (3,821 rows)
+│   ├── discharge_times.json  Discharge timing labels (675 ground truth + 21 BIPD awaiting)
+│   ├── list_events_20241129.xlsx  IIIC expert vote data (47,330 segments, 2,562 patients)
+│   └── orphan_eeg_catalog.json   EEG files not yet in patients.csv
+├── cet_cache/            CET-UNet model weights (5-fold)
+├── pd_channel_cache/     CNN+Attention model weights (5-fold)
+├── hemi_cache/           HemiCET model weights + experiment results
+├── dl_cache/             External segment pool
+└── _archive/             Raw source annotation files (by task/round)
 ```
+
+### Current Label Coverage
+
+| Type | Active | Frequency | Discharge Timing | Laterality |
+|------|--------|-----------|-----------------|------------|
+| **LPD** | 437 | 437 ✓ | 437 ✓ | 437 ✓ |
+| **GPD** | 207 | 207 ✓ | 207 ✓ | N/A |
+| **BIPD** | 21 | — | awaiting | N/A |
+| **LRDA** | 99 | 4 | 4 | 0 |
+| **GRDA** | 119 | 14 | 14 | N/A |
+
+LPD and GPD are **fully labeled** with expert-reviewed frequency, discharge timing, and laterality (for LPD). Labels have been through 3 rounds of review using HemiCET model-assisted correction.
+
+An additional ~8,000 IIIC dataset segments (LPD, GPD, LRDA, GRDA) are being downloaded from S3 with IIIC expert vote data for training.
 
 ### Label Management
 

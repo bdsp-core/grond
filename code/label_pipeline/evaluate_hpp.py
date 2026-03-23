@@ -15,7 +15,7 @@ def main():
     df = dataset['df']
     segments = dataset['segments']
 
-    with open('data/labels/discharge_times_hpp.json') as f:
+    with open('data/labels/discharge_times.json') as f:
         hpp = json.load(f)
 
     gt_cases = {pid: v for pid, v in hpp.items() if v.get('review_status') == 'ground_truth'}

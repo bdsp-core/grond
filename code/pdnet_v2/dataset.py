@@ -3,7 +3,7 @@ PDNetV2 Dataset.
 
 Builds a PyTorch Dataset from:
   - EEG segments (18, 2000) at 200 Hz (10 seconds)
-  - Discharge timing labels from discharge_times_hpp.json
+  - Discharge timing labels from discharge_times.json
 
 For each patient with review_status='ground_truth' and >=2 discharge times,
 we use one 10-second EEG segment aligned to the discharge times.
@@ -202,7 +202,7 @@ class PDNetDataset(Dataset):
         Args:
             patient_ids: list of patient IDs to include
             segments_by_patient: dict {pid: [array(18,2000), ...]}
-            hpp_data: dict from discharge_times_hpp.json
+            hpp_data: dict from discharge_times.json
             df_patients: DataFrame with subtype, laterality columns
             augment: bool, whether to apply data augmentation
         """
@@ -481,7 +481,7 @@ if __name__ == '__main__':
     sys.path.insert(0, str(CODE_DIR))
 
     # Quick test
-    with open(str(DATA_DIR / 'labels' / 'discharge_times_hpp.json')) as f:
+    with open(str(DATA_DIR / 'labels' / 'discharge_times.json')) as f:
         hpp_data = json.load(f)
 
     import pandas as pd

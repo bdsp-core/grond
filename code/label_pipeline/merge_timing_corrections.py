@@ -1,5 +1,5 @@
 """
-Merge timing corrections from a browser-exported JSON into discharge_times_hpp.json.
+Merge timing corrections from a browser-exported JSON into discharge_times.json.
 
 Usage:
     conda run -n foe python code/label_pipeline/merge_timing_corrections.py <corrections.json>
@@ -28,7 +28,7 @@ import numpy as np
 from pathlib import Path
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent.parent
-HPP_PATH = PROJECT_DIR / 'data' / 'labels' / 'discharge_times_hpp.json'
+HPP_PATH = PROJECT_DIR / 'data' / 'labels' / 'discharge_times.json'
 
 
 def recompute_stats(times):

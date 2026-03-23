@@ -8,7 +8,7 @@ Reads from:
   - data/labels/harvest_manifest.json
   - data/labels/bipd_harvest_manifest.json  (optional)
   - data/labels/rda_harvest_manifest.json   (optional)
-  - data/labels/discharge_times_hpp.json
+  - data/labels/discharge_times.json
   - data/labels/channel_involvement.json
   - data/labels/annotations.csv
 
@@ -47,7 +47,7 @@ def main():
     harvest = load_json(LABELS / "harvest_manifest.json")
     bipd_harvest = load_json(LABELS / "bipd_harvest_manifest.json")
     rda_harvest = load_json(LABELS / "rda_harvest_manifest.json")
-    discharge_times = load_json(LABELS / "discharge_times_hpp.json")
+    discharge_times = load_json(LABELS / "discharge_times.json")
     channel_inv = load_json(LABELS / "channel_involvement.json")
     annotations = pd.read_csv(LABELS / "annotations.csv") if (LABELS / "annotations.csv").exists() else pd.DataFrame()
 

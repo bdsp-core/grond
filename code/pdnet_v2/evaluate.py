@@ -191,7 +191,7 @@ def main():
     df_patients = pd.read_csv(str(LABELS_DIR / 'patients.csv'))
     df_patients['patient_id'] = df_patients['patient_id'].astype(str)
 
-    with open(str(DATA_DIR / 'labels' / 'discharge_times_hpp.json')) as f:
+    with open(str(DATA_DIR / 'labels' / 'discharge_times.json')) as f:
         hpp_data = json.load(f)
 
     print("\nLoading EEG segments...")

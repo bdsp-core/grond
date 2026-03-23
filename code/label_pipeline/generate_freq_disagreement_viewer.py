@@ -890,7 +890,7 @@ def main():
 
     # ── Load HPP discharge times ──
     print("\n--- Loading HPP discharge times ---")
-    hpp_path = LABELS_DIR / 'discharge_times_hpp.json'
+    hpp_path = LABELS_DIR / 'discharge_times.json'
     with open(str(hpp_path)) as f:
         hpp_results = json.load(f)
     print(f"  Loaded HPP results for {len(hpp_results)} patients")

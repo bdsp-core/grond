@@ -459,7 +459,7 @@ def mark_all_cases():
     segments = dataset['segments']
 
     # Load existing results to preserve ground_truth cases
-    output_path = PROJECT_DIR / 'data' / 'labels' / 'discharge_times_hpp.json'
+    output_path = PROJECT_DIR / 'data' / 'labels' / 'discharge_times.json'
     existing = {}
     if output_path.exists():
         with open(str(output_path)) as f:
@@ -538,7 +538,7 @@ def mark_all_cases():
     # Save results
     out_dir = PROJECT_DIR / 'data' / 'labels'
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / 'discharge_times_hpp.json'
+    out_path = out_dir / 'discharge_times.json'
 
     def json_default(obj):
         if isinstance(obj, (np.integer,)):
