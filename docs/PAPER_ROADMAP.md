@@ -47,21 +47,20 @@ The key innovations are:
 ### Task 5: PD Discharge Timing
 **Goal**: Mark the precise time of each periodic discharge on each involved channel: t_1, t_2, ..., t_K.
 **Context**: Enables IPI-derived frequency estimation (more accurate than FFT/ACF), regularity assessment (ACNS "nearly regular" criterion), and downstream BIPD analysis (comparing timing between hemispheres).
-**Training data**: 593 MW-reviewed cases with discharge times (5,643 total events, mean 9.5/case). Complete ground truth.
-**Current best**: HPP algorithm, F1=0.795, freq Spearman 0.935 vs MW, timing accuracy 2ms.
-**Approach — HPP (Hidden Point Process)**:
-1. Build per-channel evidence signal E(t) from pointiness + TKEO features
-2. Aggregate by subtype (bilateral for GPD, lateralized for LPD)
-3. Detect active interval (where PDs are present)
-4. Extract candidate peaks
-5. Dynamic programming with approximately-periodic prior (allows skipped discharges)
-6. EM template refinement
+**Training data**: 675 MW-reviewed cases with discharge times, refined through 3 rounds of model-assisted review. Complete ground truth for LPD+GPD.
+**Current best**: HemiCET+DP, F1=0.873, freq Spearman 0.885, timing accuracy <1ms median.
+**Approach — HemiCET+DP (current best)**:
+1. HemiCET-UNet (8-channel, one hemisphere) produces evidence trace from raw EEG
+2. CNN+ACF ensemble estimates frequency (0.8×CNN + 0.2×ACF)
+3. DP with approximately-periodic prior finds optimal discharge sequence
+4. EM template refinement
+5. Post-hoc confidence filtering
+For LPD: run on affected hemisphere. For GPD: run on both, keep best. For BIPD: run independently on each hemisphere.
 
-**Approach — CET+HPP (CNN Evidence Trace + HPP)**:
-Train a CNN to output a per-channel, per-time-step discharge evidence signal. This replaces the handcrafted pointiness+TKEO with a learned, case-adaptive evidence trace. The HPP DP inference then operates on the CNN evidence instead of handcrafted features.
-- CNN should produce: high, narrowly concentrated signal at discharge peaks; near-zero signal away from peaks; near-zero on uninvolved channels
-- The CNN's channel-level behavior should be consistent with Task 3 (PD channel identification) — channels identified as uninvolved should not produce discharge evidence
-- Explore: can the CNN evidence trace serve double duty for both timing (Task 5) and channel identification (Task 3)?
+**Approach — Full 18ch pipeline (previous best, F1=0.717)**:
+Product-boosted max(HPP handcrafted, CET-UNet) evidence + CNN+ACF freq + optimized DP. Surpassed by HemiCET approach.
+
+**Key finding**: 8-channel hemisphere input outperforms 18-channel because it avoids noise from the uninvolved hemisphere (LPD) and learns cross-channel patterns within a hemisphere directly.
 
 ### Task 6: RDA Wave Timing
 **Goal**: Mark the timing of each rhythmic delta wave — specifically the onset, peak, and offset of each wave cycle.
@@ -94,26 +93,26 @@ Adapt the HPP algorithm for RDA waves:
 ### Task 8: PD Frequency Estimation
 **Goal**: Estimate the frequency (Hz) of periodic discharges.
 **Context**: Core deliverable. Component of ACNS 2021 description.
-**Training data**: 594 cases with gold standard freq (425 LPD, 151 GPD).
-**Current best**: CNN+Attention Spearman 0.640; HPP IPI-derived freq Spearman 0.935 vs MW timing.
-**Approaches to compare**:
-- (a) Alexandra's original method (Spearman ~0.47 on original dataset)
-- (b) Handcrafted features + Ridge regression (Spearman 0.589)
-- (c) Handcrafted features + RF/GBM (Spearman 0.604)
-- (d) CNN+Attention on single channels (Spearman 0.640)
-- (e) HPP with handcrafted evidence → IPI-derived frequency (Spearman 0.935 vs MW)
-- (f) CET+HPP — CNN evidence + HPP → IPI-derived frequency (expected best)
+**Training data**: 644 cases with gold standard freq (437 LPD, 207 GPD). All complete.
+**Current best**: HemiCET+DP IPI-derived frequency, Spearman 0.885, MAE 0.202 Hz.
+**Approaches compared**:
+- (a) Alexandra's original method (Spearman 0.353)
+- (b) CNN+Attention direct prediction (Spearman 0.744)
+- (c) Full 18ch pipeline IPI (Spearman 0.733)
+- (d) **HemiCET+DP IPI (Spearman 0.885)** ← current best
+**Key finding**: IPI-derived frequency from accurate discharge timing is far more accurate than direct CNN prediction. Label cleanup improved correlation from 0.765→0.885.
 
 ### Task 9: BIPD Analysis
 **Goal**: Detect bilateral independent periodic discharges — LPDs occurring independently on left and right hemispheres with different timing/frequency.
 **Context**: BIPDs have distinct clinical significance from unilateral LPDs or bilateral GPDs.
-**Training data**: Coming soon (MW will provide BIPD collection).
-**Approach**: Use the spatial (Task 3) + timing (Task 5) outputs:
-- If left and right hemisphere channels both show PDs (from Task 3)
-- But the discharge timing sequences are NOT synchronized (from Task 5)
-- And/or the frequencies differ between hemispheres
-- → Flag as BIPD candidate
-**Dependencies**: Requires Tasks 3 and 5 to work well first.
+**Training data**: 21 confirmed BIPD cases (from 198 candidates, 11% yield). Awaiting per-hemisphere timing labels.
+**Approach** (see BIPD_PLAN.md):
+1. Run HemiCET+DP independently on each hemisphere → two timing sequences
+2. Train a classifier on timing sequence pairs to distinguish BIPD from GPD
+3. Use synthetic training data (cross-patient LPD pairs, phase-shifted GPD) to overcome small sample size
+4. Features: phase consistency, frequency ratio, cross-correlation, matched fraction
+5. GBT classifier on ~18 handcrafted features from the two timing sequences
+**Status**: Plan complete, BIPD screener built, 21 cases confirmed. Need per-hemisphere timing labels before implementing classifier.
 
 ---
 
@@ -123,6 +122,7 @@ Adapt the HPP algorithm for RDA waves:
 |-------------|-----------|-------------|
 | **HPP** | Hidden Point Process | MAP inference via DP for discharge/wave timing with periodic prior |
 | **CET** | CNN Evidence Trace | Learned per-channel evidence signal replacing handcrafted features |
+| **HemiCET** | Hemisphere CET | 8-channel CET-UNet for single-hemisphere evidence (current best) |
 | **NVO** | Narrowband Variance Optimization | Sinusoidal template fitting for RDA frequency/phase estimation |
 | **SPF** | Signal Processing Features | Handcrafted features (pointiness, ACF, FFT, TKEO, coherence) |
 
@@ -130,18 +130,21 @@ Adapt the HPP algorithm for RDA waves:
 
 ## Implementation Roadmap
 
-### Phase 1: PD Tasks (Tasks 1, 3, 5, 8) — Mostly complete
+### Phase 1: PD Tasks (Tasks 1, 3, 5, 8) — Complete (except spatial)
 
-| Step | Task | Status | What remains |
-|------|------|--------|-------------|
-| 1.1 | PD frequency (SPF baselines) | Done | 42 experiments, RF best at 0.604 |
-| 1.2 | PD frequency (CNN+Attention) | Done | 0.640 Spearman |
-| 1.3 | PD timing (HPP) | Done | F1=0.795, 593 GT cases |
-| 1.4 | PD channel identification | Partial | 304 GT, 290 pending review. CNN needs calibration. |
-| 1.5 | LPD vs GPD classification | Done | RF AUC 0.931 |
-| **1.6** | **PD timing (CET+HPP)** | **TODO** | Train CNN evidence head, compare with HPP-only |
-| **1.7** | **PD frequency (CET+HPP → IPI)** | **TODO** | Compare IPI-derived freq from CET+HPP vs other methods |
-| **1.8** | **Complete spatial review** | **TODO** | Review remaining 290 cases, retrain channel detector |
+| Step | Task | Status | Result |
+|------|------|--------|--------|
+| 1.1 | PD frequency (SPF baselines) | **Done** | 42 experiments, RF best at 0.604 |
+| 1.2 | PD frequency (CNN+Attention) | **Done** | Spearman 0.744 |
+| 1.3 | PD timing (HPP) | **Done** | Superseded by HemiCET |
+| 1.4 | PD channel identification | Partial | 304 GT, 290 pending review |
+| 1.5 | LPD vs GPD classification | **Done** | RF AUC 0.931 |
+| 1.6 | PD timing (CET+HPP) | **Done** | Full 18ch pipeline F1=0.717 |
+| 1.7 | PD timing (HemiCET+DP) | **Done** | **F1=0.873**, <1ms timing, ρ=0.885 |
+| 1.8 | PD frequency (HemiCET IPI) | **Done** | **Spearman 0.885**, MAE 0.202 Hz |
+| 1.9 | LPD laterality | **Done** | 437/437 complete, 98% model accuracy |
+| 1.10 | Label cleanup (3 rounds) | **Done** | 675 GT cases, 61 corrections, 15 rejections |
+| **1.11** | **Complete spatial review** | **TODO** | 290 cases pending |
 
 ### Phase 2: RDA Tasks (Tasks 2, 4, 6, 7) — Mostly TODO
 
@@ -156,23 +159,25 @@ Adapt the HPP algorithm for RDA waves:
 | **2.7** | **LRDA vs GRDA classification** | **TODO** | Benchmark with laterality features |
 | **2.8** | **RDA timing (CET+HPP)** | **TODO** | CNN evidence for RDA + HPP |
 
-### Phase 3: High-Frequency Integration (Sprint 5)
+### Phase 3: Data Expansion
 
 | Step | What | Status |
 |------|------|--------|
-| 3.1 | Seizure harvest completes | In progress (31%, 278 kept, 2/3 bins full) |
-| 3.2 | Frequency annotation of harvested cases | TODO |
-| 3.3 | Subtype verification | TODO |
-| 3.4 | Discharge timing for new cases | TODO |
-| 3.5 | Retrain all PD models with expanded data | TODO |
+| 3.1 | Hi-freq LPD harvest (>2.5 Hz) | **Done** — 297 harvested, 72 accepted with timing labels |
+| 3.2 | IIIC S3 data download (8,260 segments) | **In progress** — ~5,000 downloaded |
+| 3.3 | Expert vote integration | **Done** — 47,330 segments with IIIC vote data |
+| 3.4 | Retrain HemiCET with expanded data | **Done** — v2 on cleaned labels, F1=0.873 |
+| 3.5 | Self-supervised pretraining on all EEG | TODO |
+| 3.6 | Multi-segment training | TODO |
 
 ### Phase 4: BIPD Analysis (Task 9)
 
 | Step | What | Status |
 |------|------|--------|
-| 4.1 | Receive BIPD training cases from MW | Waiting |
-| 4.2 | Develop BIPD detection rules | TODO |
-| 4.3 | Evaluate on BIPD cases | TODO |
+| 4.1 | BIPD screening | **Done** — 21/198 confirmed |
+| 4.2 | BIPD per-hemisphere timing labels | TODO — labeler built |
+| 4.3 | Synthetic training data generation | TODO — plan in BIPD_PLAN.md |
+| 4.4 | Train BIPD vs GPD classifier | TODO |
 
 ### Phase 5: Paper Writing
 
@@ -193,9 +198,10 @@ Adapt the HPP algorithm for RDA waves:
 
 ### Abstract
 - Problem: PD and RDA characterization is time-consuming and subjective
-- What we did: suite of specialized algorithms for 9 tasks
-- Key results: HPP timing F1=0.795, frequency Spearman 0.94, channel AUC 0.87, etc.
-- Significance: first system to provide discharge-level timing and spatial localization
+- What we did: suite of specialized algorithms for 9 tasks, with iterative human-in-the-loop label refinement
+- Key results: HemiCET+DP timing F1=0.873 (<1ms median accuracy), frequency Spearman 0.885, channel AUC 0.87, laterality 98% accuracy
+- Key innovation: single-hemisphere 8-channel CET-UNet evidence + DP inference outperforms both full 18-channel pipeline and end-to-end neural approaches
+- Significance: first system to provide discharge-level timing and spatial localization with sub-millisecond accuracy
 
 ### 1. Introduction
 - EEG monitoring in ICU
@@ -244,13 +250,20 @@ Adapt the HPP algorithm for RDA waves:
   - **Figure 4**: HPP algorithm diagram — showing evidence signal → candidates → DP path → refined timing
   - **Figure 5**: Example HPP results — 4 cases showing detected discharge times overlaid on EEG, from easy (clear periodic) to difficult (irregular, partial window)
 
-- **3.3 CNN Evidence Trace (CET)**
-  - Architecture: per-channel 1D CNN encoder with temporal attention
-  - Training: supervised on MW-reviewed discharge times
-  - Output: frame-level discharge probability per channel
-  - Integration with HPP: CET replaces handcrafted evidence in the HPP pipeline
-  - **Figure 6**: CET architecture diagram
-  - **Figure 7**: Comparison of handcrafted evidence vs CNN evidence traces for 3 example cases
+- **3.3 HemiCET (Hemisphere CNN Evidence Trace) — current best**
+  - Architecture: 8-channel CET-UNet (takes one hemisphere as input, outputs single evidence trace)
+  - Key innovation: processes all 8 hemisphere channels jointly → learns cross-channel patterns
+  - Training: supervised on 675 expert-reviewed discharge times (3 rounds of model-assisted cleanup)
+  - Output: frame-level discharge evidence for the hemisphere
+  - Integration with HPP DP: evidence → active interval → candidates → DP → EM refine → post-hoc filter
+  - Comparison with per-channel CET + median aggregation: HemiCET is superior (F1=0.873 vs 0.717)
+  - **Figure 6**: HemiCET architecture diagram (8ch input → U-Net → evidence → DP → times)
+  - **Figure 7**: Comparison of handcrafted evidence vs HemiCET evidence for 3 example cases
+
+- **3.3b End-to-end models (investigated but inferior)**
+  - PDNetV2 (18ch U-Net+Transformer, F1=0.460), HemiNet variants (F1=0.60-0.63)
+  - Finding: with ~800 labeled examples, end-to-end models overfit; domain knowledge (DP) is essential
+  - Self-supervised MAE pretraining helped slightly but didn't close the gap
 
 - **3.4 Narrowband Variance Optimization (NVO)** for RDA
   - Sinusoidal template fitting across frequency range
@@ -377,11 +390,11 @@ Adapt the HPP algorithm for RDA waves:
 | Fig 6 | CET-UNet + max(HPP,CET) architecture diagram | TODO — detailed description written |
 | Fig 7 | Handcrafted vs CNN evidence comparison | **Data ready** (evidence_comparison_viewer.html) |
 | Fig 8 | NVO method illustration | TODO (needs NVO) |
-| Fig 9 | PD frequency scatter plots (3-panel) | **Done** (freq_estimation_comparison.html) |
-| Fig 10 | Spearman progression bar chart | TODO |
+| Fig 9 | PD frequency scatter plots (LPD + GPD separate) | **Done** (freq_scatter_hemicet.png, ρ=0.885) |
+| Fig 10 | Label cleanup impact (ρ progression across review rounds) | **Data ready** |
 | Fig 11 | RDA frequency scatter plot | TODO (needs RDA work) |
 | Fig 12 | Discharge timing examples | **Data ready** (timing viewers exist) |
-| Fig 13 | IPI vs gold standard scatter | **Done** (gold_vs_ipi_frequency.html, ρ=0.970) |
+| Fig 13 | IPI vs gold standard scatter | **Updated** (HemiCET ρ=0.885) |
 | Fig 14 | RDA wave timing examples | TODO (needs RDA HPP) |
 | Fig 15 | Spatial localization examples | **Data ready** (spatial_review_viewer.html) |
 | Fig 16 | Performance by review round | **Data ready** (6 rounds of timing review tracked) |
@@ -391,51 +404,55 @@ Adapt the HPP algorithm for RDA waves:
 
 | Table | Description | Status |
 |-------|-------------|--------|
-| Table 1 | Dataset statistics | **Done** (in APPROACH_REVIEW_v11) |
-| Table 2 | PD frequency method comparison (5 methods) | **Done** (Alexandra 0.353, CNN 0.744, IPI 0.688) |
+| Table 1 | Dataset statistics | **Updated** (in APPROACH_REVIEW_v13, 2,865 patients) |
+| Table 2 | PD frequency method comparison | **Updated** (Alexandra 0.353, CNN 0.744, HemiCET IPI 0.885) |
 | Table 3 | RDA frequency method comparison | TODO |
-| Table 4 | HPP timing performance | **Done** (F1=0.757 ref, 0.706 fair) |
-| Table 5 | max(HPP,CET)+DP vs HPP-only vs CET-only | **Done** (4-way comparison) |
+| Table 4 | Full method comparison (F1, timing, freq) | **Done** (3-way: 18ch, per-hemi, HemiCET) |
+| Table 5 | HemiCET+DP vs all alternatives | **Done** (F1=0.873 vs 0.717 18ch vs 0.624 end-to-end) |
 | Table 6 | RDA HPP performance | TODO |
 | Table 7 | Channel detection AUC | **Done** (PD 0.870, RDA 0.842) |
 | Table 8 | Subtype classification | **Done** (AUC 0.931) |
-| Table 9 | Label stats by review round | **Done** (6 rounds + CET full review) |
-| Table 10 | Parameter sweep results | **Done** (5 evidence × DP params) |
+| Table 9 | Label cleanup impact | **Done** (3 review rounds, ρ improved 0.765→0.885) |
+| Table 10 | End-to-end model comparison | **Done** (PDNetV2, HemiNet A/B/D, MAE pretrain) |
 
 ---
 
 ## Priority Order for Remaining Work
 
 ### Tier 1 — Required for paper
-1. ~~**CET+HPP for PD timing**~~ — **DONE** (F1=0.706, max(HPP,CET)+CNN_freq+DP)
-2. **Complete PD spatial review** (Phase 1.8) — 304/576 GT, 290 pending
-3. **NVO for RDA** (Phase 2.1, 2.5) — find existing code, benchmark
-4. **RDA HPP** (Phase 2.4, 2.6) — adapt HPP for RDA waves
-5. **Generate publication figures** from existing data/viewers
+1. ~~**PD timing**~~ — **DONE** (HemiCET+DP F1=0.873)
+2. ~~**PD frequency**~~ — **DONE** (HemiCET IPI ρ=0.885)
+3. ~~**LPD laterality**~~ — **DONE** (437/437, 98% model accuracy)
+4. **Complete PD spatial review** (Phase 1.11) — 290 pending
+5. **NVO for RDA** (Phase 2.1, 2.5) — find existing code, benchmark
+6. **LRDA/GRDA frequency labeling** (200 cases) — build labeling tool
+7. **Generate publication figures** from existing data/viewers
 
 ### Tier 2 — Strengthens paper
-6. **LRDA laterality annotation** (99 cases)
-7. **RDA channel identification** — improve from pseudolabels
-8. **High-frequency case integration** (292 harvested, need annotation)
-9. **LRDA vs GRDA classification**
-10. **Improve frequency estimation** — biggest lever for timing improvement
+8. **LRDA laterality annotation** (99 cases)
+9. **RDA HPP** (Phase 2.4, 2.6) — adapt HPP for RDA waves
+10. **RDA channel identification** — improve from pseudolabels
+11. **LRDA vs GRDA classification**
+12. **HemiCET optimization** — DP params, pretraining, midline channels
+13. **Integrate IIIC S3 data** for pretraining
 
 ### Tier 3 — Can be future work
-11. **BIPD analysis** (100 cases harvested, waiting for more)
-12. **CET+HPP for RDA**
-13. **Phase-amplitude coupling analysis**
+14. **BIPD timing labels + classifier** (21 confirmed cases, plan complete)
+15. **CET+HPP for RDA**
+16. **Phase-amplitude coupling analysis**
+17. **End-to-end model** (when more data available)
 
-## Completion Summary (as of 2026-03-21)
+## Completion Summary (as of 2026-03-23)
 
 | Category | Done | Remaining |
 |----------|------|-----------|
-| **PD Tasks** | Timing (F1=0.706), Frequency (ρ=0.744), Subtype (AUC=0.931), Laterality (AUC=0.957) | Spatial review (290 pending), frequency improvement |
-| **RDA Tasks** | FFT baseline (ρ=0.840 on 23 pts) | NVO, HPP adaptation, channel detection, LRDA laterality |
-| **Architecture** | max(HPP,CET)+CNN_freq+DP fully designed and tested | — |
-| **Labels** | 576 PD timing (definitive), 304 spatial, 594 frequency | RDA timing, LRDA laterality, spatial completion |
-| **Data** | 839 existing + 482 harvested = 1,321 segments | More LRDA/GRDA, Other controls, hi-freq annotation |
-| **Tools** | Timing viewer, spatial viewer, evidence comparison viewer, dashboards | Publication figure generation |
-| **Paper** | Outline complete, tables/figures identified, detailed architecture written | Actual writing, figure generation |
+| **PD Tasks** | Timing (F1=0.873 HemiCET v2), Frequency (ρ=0.885), Subtype (AUC=0.931), Laterality (98% accuracy) | Spatial review (290 pending) |
+| **RDA Tasks** | FFT baseline (ρ=0.840 on 23 pts) | NVO, HPP adaptation, channel detection, LRDA/GRDA labeling |
+| **Architecture** | HemiCET+DP (8ch) surpasses 18ch pipeline; BIPD plan complete | Midline channel experiment, MAE pretraining |
+| **Labels** | 675 PD timing (3× reviewed), 644 frequency, 437 LPD laterality (all complete) | RDA timing/freq (200 cases), BIPD timing (21 cases) |
+| **Data** | 2,865 patients in DB, ~9,600 EEG files, 8,260 IIIC segments downloading | Integrate IIIC data, label RDA |
+| **Tools** | HPP-assisted labeler, laterality labeler, BIPD screener, label review viewer, optimization dashboards | Publication figure generation |
+| **Paper** | Outline complete, all tables/figures identified | Actual writing, figure generation |
 
 ## Notes (Historical)
 

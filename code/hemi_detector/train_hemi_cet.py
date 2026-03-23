@@ -1,12 +1,14 @@
 """
-Train HemiCET (Experiment 5.3) — 8-channel hemisphere CET-UNet.
+Train HemiCET v2 — 8-channel hemisphere CET-UNet (retrain on cleaned labels).
 
 Trains a single-hemisphere evidence model using 5-fold patient-stratified CV.
+v2: 675 GT cases (vs 665 in v1), with 15 bad cases removed and 61 timing
+corrections from 3 review rounds. Models saved to hemi_cet_v2/.
 
 Dataset:
   - LPD: affected hemisphere (from laterality labels)
   - GPD: both hemispheres (2 training examples per patient)
-  ~816 training examples from ~665 GT cases
+  ~816+ training examples from ~675 GT cases
 
 Targets:
   Sharp Gaussian bumps at discharge times (sigma=2 samples = 10ms at 200Hz)
@@ -37,7 +39,7 @@ from optimization_harness_v2 import load_dataset, FS
 from discharge_detector import LEFT_INDICES, RIGHT_INDICES
 from label_pipeline.hpp_discharge_marking import _compute_channel_evidence
 
-SAVE_DIR = PROJECT_DIR / 'data' / 'hemi_cache' / 'hemi_cet'
+SAVE_DIR = PROJECT_DIR / 'data' / 'hemi_cache' / 'hemi_cet_v2'
 SAVE_DIR.mkdir(parents=True, exist_ok=True)
 
 DEVICE = torch.device('mps') if torch.backends.mps.is_available() else torch.device('cpu')
@@ -354,7 +356,7 @@ def evaluate_val_loss(model, loader, device):
 def main():
     t0 = time.time()
     print("=" * 70)
-    print("  HemiCET Training — Experiment 5.3")
+    print("  HemiCET v2 Training — Cleaned Labels (675 GT cases)")
     print("=" * 70)
 
     # Load data
