@@ -14,11 +14,13 @@ Algorithms for estimating the frequency of periodic discharges (PD) and rhythmic
 | Discharge timing (hemi) | F1 | 675 | **0.699** | HemiCET+DP (8ch) |
 | Timing accuracy | MAE | 675 | **5.0 ms** (median) | HemiCET+DP (8ch) |
 | Subtype (LPD vs GPD) | AUC | 594 | **0.931** | RF 300 trees |
+| BIPD vs GPD | AUC | 2,305 | **0.840** | HemiCET+GBT (screening) |
 | Laterality (L vs R) | AUC | 437 | **0.98** | CNN+Attention PD prob |
 | Channel PD detection | AUC | 815 | **0.870** | CNN+Attention |
 | RDA frequency | Spearman rho | 23 | **0.840** | FFT baseline |
+| LRDA freq+laterality | — | 68 | labeled | NVO + expert review |
 
-**All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [APPROACH_REVIEW_v13.md](APPROACH_REVIEW_v13.md) for details.
+**All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [APPROACH_REVIEW_v14.md](APPROACH_REVIEW_v14.md) for details.
 
 ## Overview
 
