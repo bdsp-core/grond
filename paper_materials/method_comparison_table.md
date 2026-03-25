@@ -72,3 +72,34 @@
 | HemiNet + MAE pretrain | 2.3M | 0.620 | Slight improvement |
 
 **Conclusion**: With ~1,000 training examples, end-to-end neural models cannot learn the temporal structure that DP encodes as a prior. The winning strategy is neural evidence generation (HemiCET) + structured inference (DP).
+
+## Spatial Localization: Region Involvement Prediction
+
+### Dataset
+- 466 PD segments (226 LPD, 240 GPD) from 35 patients
+- Gold standard: majority vote of ≥2 expert raters (LB, PH, SZ) across 8 brain regions
+- Regions: LF, RF, LT, RT, LCP, RCP, LO, RO (mean 5.9 involved per segment)
+
+### Method Comparison (Top 10 of 26)
+
+| Rank | Method | Macro F1 | Jaccard | Mean AUC | Extent ρ | Composite |
+|------|--------|----------|---------|----------|----------|-----------|
+| 1 | **Phase coherence (PLV)** | 0.855 | 0.736 | **0.708** | 0.471 | **0.789** |
+| 2 | **Cross-correlation** | 0.848 | 0.736 | **0.721** | 0.232 | **0.789** |
+| 3 | Gradient sharpness | **0.857** | 0.718 | 0.656 | **0.614** | 0.772 |
+| 4 | Subtype default | 0.845 | 0.701 | 0.683 | **0.786** | 0.769 |
+| 5 | Coherence network | 0.847 | **0.736** | 0.619 | — | 0.762 |
+| — | All regions (baseline) | 0.847 | 0.736 | 0.500 | — | 0.733 |
+| — | Random (baseline) | 0.588 | 0.398 | 0.500 | 0.031 | 0.519 |
+
+### Per-Region AUC (Leader: Phase Coherence)
+
+| LF | RF | LT | RT | LCP | RCP | LO | RO |
+|----|----|----|----|----|-----|----|----|
+| 0.705 | 0.798 | 0.695 | 0.713 | 0.616 | 0.747 | 0.639 | 0.753 |
+
+### Key Findings
+
+1. **Cross-channel methods > per-channel features** for spatial localization. Phase-locking value and cross-correlation with a reference channel outperform all signal-based approaches.
+2. **High base rates make F1 easy to saturate** — the "predict all regions" baseline achieves F1=0.847. AUC is the discriminating metric.
+3. **Subtype encodes strong spatial prior** — GPD=bilateral, LPD=ipsilateral explains much of the variance (extent ρ=0.786).

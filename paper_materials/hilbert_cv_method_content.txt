@@ -1,0 +1,15 @@
+M3_HilbertCV Algorithm Pipeline for RDA Frequency Estimation
+
+The algorithm processes a 10-second, 18-channel bipolar EEG segment through five sequential steps:
+
+Step 1 — Prefilter to Delta Band: The raw 18-channel bipolar EEG is bandpass filtered at 0.3–5.0 Hz to remove muscle artifact, fast activity, and DC drift. A tighter bandpass at 0.5–3.5 Hz then isolates the RDA frequency range.
+
+Step 2 — Select Best Channels: Delta power (variance) is computed for each of the 18 channels. The top-3 highest-power channels from the left hemisphere and top-3 from the right hemisphere are selected. This laterality-aware selection ensures LRDA signal is not diluted by quiet contralateral channels.
+
+Step 3 — Hilbert Transform: For each selected channel, the analytic signal z(t) = x(t) + i·H[x(t)] is computed via the Hilbert transform. The instantaneous phase φ(t) = unwrap(angle(z(t))) is extracted, and the instantaneous frequency f_i(t) = dφ/dt / 2π is computed. Values outside 0.3–4.0 Hz are rejected.
+
+Step 4 — Frequency Regularity (CV): For each channel, the coefficient of variation CV = std(f_i) / median(f_i) measures how stable the rhythm is. Low CV means a steady, regular delta frequency — the hallmark of RDA.
+
+Step 5 — Aggregate: The final frequency estimate is the median of per-channel medians. The Q-score = max(0, 1 − 2×CV) maps regularity to [0,1], where 0 = irregular and 1 = perfectly regular RDA.
+
+The pipeline flows left-to-right: Raw EEG → Delta Filter → Channel Selection → Hilbert Transform (phase + frequency) → CV Computation → Q-Score Output.

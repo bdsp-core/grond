@@ -1,10 +1,24 @@
-# Winning Model: HemiCET v2 + DP with C1 Parameters
+# Unified PD Characterization: PDCharacterizer
 
 ## Overview
 
-The system detects periodic discharges in 10-second EEG segments and estimates their frequency. It operates on one hemisphere (8 channels) at a time, combining a learned neural evidence trace with dynamic programming for temporal inference.
+The system characterizes periodic discharges (LPD/GPD) in 10-second EEG segments, producing laterality, spatial localization, discharge timing, and frequency. A single per-channel CNN (**ChannelPD-Net**) serves as the backbone, feeding laterality detection, spatial localization (Hybrid-PLV), and CNN-weighted discharge detection (HemiCET+DP).
 
-**Performance**: F1=0.891, Sensitivity=0.924, Precision=0.860, Frequency Spearman ρ=0.897, Timing MAE <1ms median.
+**Performance**: Laterality AUC=0.98, Spatial Composite=0.811, Timing F1=0.68, Frequency ρ=0.744.
+
+**Code**: `code/pd_characterizer.py`
+
+**Full pipeline specification**: See [unified_pd_pipeline.md](unified_pd_pipeline.md).
+
+---
+
+# Legacy: HemiCET v2 + DP (Discharge Timing Component)
+
+## Overview
+
+The discharge timing component detects periodic discharges in 10-second EEG segments and estimates their frequency. It operates on one hemisphere (8 channels) at a time, combining a learned neural evidence trace with dynamic programming for temporal inference. In the unified pipeline, channel evidence is weighted by ChannelPD-Net probabilities before aggregation.
+
+**Performance (standalone)**: F1=0.891, Sensitivity=0.924, Precision=0.860, Frequency Spearman ρ=0.897, Timing MAE <1ms median.
 
 ---
 

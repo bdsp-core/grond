@@ -6,21 +6,29 @@ Algorithms for estimating the frequency of periodic discharges (PD) and rhythmic
 
 ## Status
 
-| Task | Metric | N patients | Performance | Method |
-|------|--------|-----------|-------------|--------|
-| PD frequency (IPI) | Spearman rho | 581 | **0.819** | HemiCET+DP (8ch) |
-| PD frequency (direct) | Spearman rho | 594 | **0.744** | CNN+Attention direct |
-| Discharge timing | F1 | 675 | **0.717** | Full 18ch pipeline |
-| Discharge timing (hemi) | F1 | 675 | **0.699** | HemiCET+DP (8ch) |
-| Timing accuracy | MAE | 675 | **5.0 ms** (median) | HemiCET+DP (8ch) |
+| Task | Metric | N | Performance | Method |
+|------|--------|---|-------------|--------|
+| **PD Unified Pipeline** | | | | **PDCharacterizer** |
+| PD discharge timing | F1 | 651 | **0.684** | HemiCET+DP (CNN-weighted) |
+| PD frequency (IPI) | Spearman ρ | 500 | **0.681** | CNN+ACF → IPI |
+| PD spatial localization | Composite | 465 | **0.811** | Hybrid-PLV (CNN ref + PLV) |
+| PD spatial localization | Mean AUC | 465 | **0.814** | Hybrid-PLV |
+| Laterality (L vs R) | AUC | 423 | **0.963** | ChannelPD-Net hemisphere |
+| Channel PD detection | AUC | 815 | **0.870** | ChannelPD-Net |
 | Subtype (LPD vs GPD) | AUC | 594 | **0.931** | RF 300 trees |
 | BIPD vs GPD | AUC | 2,305 | **0.840** | HemiCET+GBT (screening) |
-| Laterality (L vs R) | AUC | 437 | **0.98** | CNN+Attention PD prob |
-| Channel PD detection | AUC | 815 | **0.870** | CNN+Attention |
-| RDA frequency | Spearman rho | 23 | **0.840** | FFT baseline |
-| LRDA freq+laterality | — | 68 | labeled | NVO + expert review |
+| **RDA Analysis** | | | | |
+| LRDA vs GRDA | AUC | 496 | **0.870** | GBM (spatial features, MW-corrected labels) |
+| RDA frequency | Spearman ρ | 1,293 | **0.593** | M3_HilbertCV |
+| RDA expert agreement | Spearman ρ | 1,267 | **0.235** | Ensemble Ridge (18 features) |
+| RDA detection | AUC | 2,264 | **0.634** | Ensemble Ridge |
+| RDA freq labels | — | 4,158 | labeled | HilbertCV (auto) + MW (manual) |
 
-**All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [APPROACH_REVIEW_v14.md](APPROACH_REVIEW_v14.md) for details.
+**All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [APPROACH_REVIEW_v15.md](APPROACH_REVIEW_v15.md) for details.
+
+### Unified PD Pipeline (PDCharacterizer)
+
+The PD analysis uses a unified pipeline where a single per-channel CNN (**ChannelPD-Net**) serves triple duty: laterality detection, spatial reference selection, and evidence channel weighting. Laterality detection feeds forward into both downstream modules — constraining the spatial localizer to seed from the ipsilateral hemisphere and restricting the discharge detector to ipsilateral channels. See [paper_materials/unified_pd_pipeline.md](paper_materials/unified_pd_pipeline.md) for full architecture description and figure specification.
 
 ## Overview
 
@@ -55,7 +63,7 @@ aws s3 sync s3://bdsp-opendata-credentialed/iiic-freq3/data/ data/
 This requires AWS credentials with access to the `bdsp-opendata-credentialed` bucket. To request access, visit the [Brain Data Science Platform (BDSP)](https://bdsp.io).
 
 The `data/` directory contains:
-- `eeg/` — ~9,600+ .mat files (10s bipolar EEG segments, 18ch at 200 Hz, standardized format)
+- `eeg/` — ~11,800 .mat files (10s bipolar EEG segments, 18ch at 200 Hz)
 - `labels/` — canonical label files (see below)
 - `dl_cache/`, `cet_cache/`, `pd_channel_cache/`, `hemi_cache/` — model weights
 - `_archive/` — raw source annotation files
@@ -64,14 +72,16 @@ The `data/` directory contains:
 
 ```
 data/
-├── eeg/                  ~9,600 .mat files (18ch × 2000 samples, keys: data, Fs)
+├── eeg/                  ~11,800 .mat files (18ch × 2000 samples @ 200 Hz)
 ├── labels/
-│   ├── patients.csv          Patient registry (2,865 rows: subtype, freq, laterality, exclusions, expert votes)
-│   ├── segments.csv          Segment registry (3,313 rows: segment metadata, file paths)
-│   ├── annotations.csv       Per-rater annotations (3,821 rows)
-│   ├── discharge_times.json  Discharge timing labels (675 ground truth + 21 BIPD awaiting)
-│   ├── list_events_20241129.xlsx  IIIC expert vote data (47,330 segments, 2,562 patients)
-│   └── orphan_eeg_catalog.json   EEG files not yet in patients.csv
+│   ├── segment_labels.csv    Canonical labels — one row per EEG segment (11,817 rows)
+│   ├── annotations.csv       Per-rater detailed annotations (5,160 rows)
+│   ├── segments.csv          File registry: segment_id → mat_file mapping
+│   ├── discharge_times.json  PD per-discharge timing (712 cases)
+│   ├── rda_wave_labels.json  RDA per-wave timing (549 cases)
+│   ├── channel_involvement.json    Spatial ground truth (594 cases)
+│   ├── channel_pseudolabels.json   Channel detection training labels
+│   └── archive_labels/       Raw source files (IIIC votes, deprecated patients.csv, etc.)
 ├── cet_cache/            CET-UNet model weights (5-fold)
 ├── pd_channel_cache/     CNN+Attention model weights (5-fold)
 ├── hemi_cache/           HemiCET model weights + experiment results
@@ -79,125 +89,102 @@ data/
 └── _archive/             Raw source annotation files (by task/round)
 ```
 
-### Current Label Coverage
+### Label System
 
-| Type | Active | Frequency | Discharge Timing | Laterality |
-|------|--------|-----------|-----------------|------------|
-| **LPD** | 437 | 437 ✓ | 437 ✓ | 437 ✓ |
-| **GPD** | 207 | 207 ✓ | 207 ✓ | N/A |
-| **BIPD** | 21 | — | awaiting | N/A |
-| **LRDA** | 99 | 4 | 4 | 0 |
-| **GRDA** | 119 | 14 | 14 | N/A |
+**All labels live at the segment level.** The canonical label file is `segment_labels.csv` — one row per EEG file on disk, consolidating all label sources.
 
-LPD and GPD are **fully labeled** with expert-reviewed frequency, discharge timing, and laterality (for LPD). Labels have been through 3 rounds of review using HemiCET model-assisted correction.
+**`segment_labels.csv`** columns:
 
-An additional ~8,000 IIIC dataset segments (LPD, GPD, LRDA, GRDA) are being downloaded from S3 with IIIC expert vote data for training.
+| Column group | Columns | Description |
+|-------------|---------|-------------|
+| Identity | `mat_file`, `segment_id`, `patient_id` | File and patient identifiers |
+| Subtype | `subtype`, `subtype_source` | Best subtype label and how it was assigned |
+| IIIC votes | `iiic_vote_{other,seizure,lpd,gpd,lrda,grda}`, `iiic_n_votes`, `iiic_plurality`, `iiic_plurality_frac` | Per-segment expert vote vector (195 segments matched) |
+| Frequency | `mw_freq`, `mw_freq_rater`, `auto_freq` | MW-reviewed vs algorithm-assigned frequency |
+| Spatial | `spatial_channels`, `spatial_raters` | Brain region annotations |
+| Laterality | `laterality`, `laterality_rater` | Left/right/bilateral |
+| Exclusion | `excluded`, `exclusion_reason` | Exclusion flags |
+| Audit trail | `subtype_original`, `freq_original`, `laterality_original` | Pre-correction labels (never updated) |
+| Other labels | `has_discharge_timing`, `has_wave_timing`, `has_channel_involvement` | Boolean flags for JSON label files |
+| Provenance | `original_source`, `original_filename`, `annotators` | Where the EEG came from, who annotated it |
 
-### Label Management
+**Supporting files:**
 
-The three files in `data/labels/` are the canonical label set for the project. All analysis code reads from these files. When new annotations are collected, they are integrated into these files following this process:
+- **`annotations.csv`** — Per-segment per-rater annotations (frequency, spatial channels). One row per rater per segment. Includes `mat_file` for direct lookup.
+- **`segments.csv`** — File registry mapping `segment_id` → `mat_file` with physical metadata (montage, sampling rate, provenance).
+- **JSON files** — Specialized per-event label types (discharge timing, wave timing, channel involvement).
 
-**The three canonical label files:**
+**To regenerate `segment_labels.csv`:** Run `python code/data_management/build_segment_labels.py`. This consolidates all sources (segments.csv, annotations.csv, IIIC votes, JSON files) into the single canonical file.
 
-- **`patients.csv`** — One row per patient. Contains: `patient_id`, `subtype`, `subtype_original`, `n_segments`, `n_raters`, `raters`, `gold_standard_freq`, `gold_standard_freq_original`, `excluded`, `exclusion_reason`, `laterality`, `laterality_original`, `subtype_rater`, `laterality_rater`. This is where patient-level labels live (frequency, laterality, exclusion status). See "Label versioning" below for the `_original` vs active column convention.
-- **`annotations.csv`** — One row per segment per rater (long format). Contains: `segment_id`, `patient_id`, `rater`, `frequency_hz`, `no_pd`, `skipped`, `spatial_extent`, `spatial_channels`, `annotation_date`, `annotation_round`, `notes`. This is where individual rater judgments live.
-- **`segments.csv`** — One row per segment. Contains: `segment_id`, `patient_id`, `subtype`, `subtype_source`, `mat_file`, `duration_sec`, `fs`, `n_channels`, `montage`, `original_source`, `original_filename`. This is the segment registry (metadata, not labels).
+**To add new labels:** Add rows to `annotations.csv`, then re-run `build_segment_labels.py`.
 
-**How to add new labels:**
+### Label Coverage
 
-1. Save the raw source annotation file to `data/_archive/<task_name>/` (e.g., `data/_archive/lpd_laterality/lpd_laterality_annotations.csv`). This preserves the original data as received.
-2. Write a script or use inline Python to merge the new annotations into the appropriate canonical file(s):
-   - Patient-level labels (e.g., laterality, exclusions) → add/update columns in `patients.csv`
-   - Per-segment per-rater labels (e.g., frequency ratings) → add rows to `annotations.csv`
-   - New segments → add rows to `segments.csv`
-3. Verify the merge: check row counts, confirm no patients are missing or duplicated, and spot-check values.
-4. Labels that an annotator marked as "skip" should be left blank (not stored as "skip") in the canonical files.
-
-**Existing archive directories** in `data/_archive/`: `canonical_dataset`, `dataset_eeg`, `pd_expert_raw`, `pd_expert_review`, `pd_mw_catchup`, `pd_round1_candidates`, `pd_round2`, `pd_round3`, `pd_round4`, `rda_round1`, `lpd_laterality`, `misclass_review`.
-
-**Current laterality status:** LPD patients are fully annotated (95 left, 75 right, 3 bilateral, 13 skipped). LRDA patients still need laterality annotation.
-
-### Label Versioning
-
-`patients.csv` maintains two versions of each label:
-
-- **Active columns** (`subtype`, `gold_standard_freq`, `laterality`) — the current best ground truth. These get updated when corrections are applied after reviewing algorithm errors. All evaluation code uses these columns.
-- **Original columns** (`subtype_original`, `gold_standard_freq_original`, `laterality_original`) — the annotator's first-pass labels, frozen at the time of initial annotation. These are **never updated**, even when corrections are applied.
-
-This dual-column design supports three types of comparison:
-
-| Comparison | Use case | Columns |
-|-----------|----------|---------|
-| Expert vs expert (IRR) | Inter-rater reliability | `*_original` for each rater |
-| Algorithm vs noisy expert | Fair comparison (algorithm never saw corrections) | algorithm vs `*_original` |
-| Algorithm vs ground truth | Best-available performance metric | algorithm vs active columns |
-
-**Rater provenance** is tracked via `subtype_rater` and `laterality_rater`:
-- `"original"` — label came from the original dataset (folder structure or prior annotation)
-- `"MW"` — label was set or corrected by MW
-- Future raters (e.g., `"SZ"` for Sahar) will be added when their labels arrive
-
-**Correction workflow:**
-
-1. Run `code/generate_misclass_reviewer.py` to build an HTML viewer of algorithm errors
-2. Review cases in the browser, annotating corrections via the buttons/keyboard
-3. Export the corrections CSV from the viewer
-4. Save the CSV to `data/_archive/misclass_review/` with date and rater (e.g., `label_corrections_mw_20260319.csv`)
-5. Run a merge script to apply corrections to the **active columns** in `patients.csv` (the `_original` columns are never touched)
-6. Re-run the evaluation to measure the impact of cleaner labels
+| Label type | Segments |
+|-----------|----------|
+| IIIC per-segment votes | 195 |
+| MW/expert frequency | 3,607 |
+| Auto-assigned frequency | 4,368 |
+| Spatial annotations | 965 |
+| Laterality | 2,674 |
+| Discharge timing | 2,400 |
+| Wave timing | 549 |
+| Channel involvement | 2,228 |
 
 ## Repository Structure
 
 ```
 code/
-├── Signal Processing
-│   ├── pd_pointiness_acf.py          Core SP feature extraction (ACF, pointiness, etc.)
-│   ├── pd_detector/                  Original McGraw et al. PD detector
-│   ├── pd_detector_alternate/        Enhanced PD detector (APD + z-score peak detection)
-│   └── rda_detector/                 RDA detectors (FFT/FOOOF + Hilbert-Huang)
-│
-├── Optimization Frameworks
-│   ├── optimization_harness_v2.py    PD evaluation framework (LOPO cross-validation)
+├── Core Pipelines (root — 16 files, imported by everything)
+│   ├── pd_characterizer.py           Unified PD pipeline (main entry point)
+│   ├── discharge_detector.py         HemiCET+DP discharge detection
+│   ├── pd_pointiness_acf.py          Core signal processing (ACF, pointiness, getBanana)
+│   ├── bipd_detector.py              BIPD vs GPD classification
+│   ├── optimization_harness_v2.py    PD evaluation framework (LOPO CV)
 │   ├── rda_optimization_harness.py   RDA evaluation framework
-│   ├── update_dashboard_v2.py        Regenerate PD optimization dashboard
-│   └── update_rda_dashboard.py       Regenerate RDA optimization dashboard
+│   └── browse_results.py             Interactive EEG browser
 │
-├── Experiment Scripts
-│   ├── exp_t1_*.py                   Feature engineering experiments
-│   ├── exp_t2_*.py                   Model selection experiments (GBM, KNN, etc.)
-│   ├── exp_t3_*.py                   CNN embedding + timing experiments
-│   ├── exp_rda_*.py                  RDA-specific experiments
-│   ├── r3_*.py through r12_*.py      Round-specific experiment scripts
-│   └── run_baselines.py              Baseline method evaluation
+├── models/                           Neural network architectures & training
+│   ├── cet_model/                    CET-UNet (per-channel evidence, 13 files)
+│   ├── hemi_detector/                HemiCET (8-channel hemisphere, 16 files)
+│   ├── pd_channel_detector/          ChannelPD-Net (per-channel PD prob, 12 files)
+│   ├── unified_model/                Unified multi-task model (4 files)
+│   ├── pdnet_v2/                     PDNet v2 architecture (5 files)
+│   └── dl/                           General deep learning utilities (14 files)
 │
-├── Deep Learning (dl/)
-│   ├── model.py                      CNN architecture
-│   ├── train_phase1.py               Phase 1: pretrain on weak labels
-│   ├── train_phase2.py               Phase 2: fine-tune on expert labels
-│   └── evaluate.py                   Evaluation utilities
+├── detectors/                        Pattern-specific detectors
+│   ├── pd_detector/                  Original McGraw et al. PD detector (9 files)
+│   ├── pd_detector_alternate/        Enhanced PD detector (2 files)
+│   └── rda_detector/                 RDA detectors: FFT/FOOOF/Hilbert (6 files)
 │
-├── Visualization & Annotation
-│   ├── browse_results.py             Interactive EEG browser with verbal descriptions
-│   ├── generate_test_images.py       Generate test-case images (25 per pattern)
-│   ├── generate_figures.py           Publication figures
-│   ├── imageGeneration/              EEG plotting utilities
-│   └── generate_*_viewer.py          Annotation review viewers
+├── contests/                         Contest frameworks & methods
+│   ├── rda_contest/                  RDA analysis contest (45 methods, 11 files)
+│   ├── spatial_contest/              PD spatial localization (26 methods, 9 files)
+│   └── lateralization_contest/       LRDA vs GRDA classification (24 files)
 │
-├── Analysis
-│   ├── extract_frequency_spatial_extent.py   Main batch extraction
-│   ├── extract_with_laterality.py            Laterality-enhanced extraction
-│   ├── evaluate_methods.py                   Method comparison
-│   └── irr_analysis_*.ipynb                  Inter-rater reliability notebooks
+├── experiments/                      Historical experiment scripts (60 files)
+│   ├── pd_frequency/                 PD frequency optimization (11 files)
+│   ├── pd_timing/                    PD timing & laterality experiments (6 files)
+│   ├── rda/                          RDA-specific experiments (5 files)
+│   ├── rounds/                       Round-based experiments r3-r12 (27 files)
+│   └── misc/                         One-off experiments (12 files)
 │
-└── environment.yml                   Conda environment specification
+├── generators/                       HTML viewer/dashboard/figure builders (30 files)
+│   ├── labeling/                     Annotation tool generators (9 files)
+│   ├── review/                       Review tool generators (9 files)
+│   ├── dashboards/                   Dashboard generators (3 files)
+│   └── figures/                      Publication figure generators (9 files)
+│
+├── evaluation/                       Evaluation & validation scripts (11 files)
+├── data_management/                  Data harvesting, download, cleanup (16 files)
+├── visualization/                    Plotting & interactive browsing (6 files)
+├── label_pipeline/                   Label management tools (10 files)
+├── archive/                          Superseded scripts (7 files)
+└── imageGeneration/                  EEG plotting utilities (2 files)
 
 docs/                                 Archived approach review documents (v1-v6)
-APPROACH_REVIEW_v11.md                Current approach, results, and system architecture
-DESCRIPTION_RULES.md                  Verbal description rules (ACNS 2021)
-QUICKSTART.md                         Getting started guide
-DATASET_INFO.md                       Detailed data access instructions
-TESTING.md                            Testing guide
-test_case_images/                     100 example images (25 per pattern) + raw EEG
+paper_materials/                      Paper writeup, figures, pipeline specs
+APPROACH_REVIEW_v15.md                Current approach, results, and system architecture
 ```
 
 ## Usage
@@ -208,10 +195,10 @@ test_case_images/                     100 example images (25 per pattern) + raw 
 conda activate foe
 
 # Run a PD frequency experiment
-python code/exp_t1_expanded_features.py
+python code/experiments/pd_frequency/exp_t1_expanded_features.py
 
 # Run an RDA experiment
-python code/exp_rda_task_a.py
+python code/experiments/rda/exp_rda_task_a.py
 
 # Update the optimization dashboard
 python code/update_dashboard_v2.py
@@ -235,25 +222,66 @@ python browse_results.py --event lrda
 
 Controls: arrow keys to navigate, 1-4 to switch pattern types, Q to quit.
 
+### Results Organization
+
+The `results/` directory contains 53 interactive HTML viewers, 6 contest leaderboards, and 267 contest result JSONs, organized by function:
+
+```
+results/
+├── labeling_tools/          17 HTML — interactive annotation tools for MW
+│   ├── pd_timing/           PD discharge timing (hpp_labeler, timing_correction)
+│   ├── pd_frequency/        PD frequency annotation
+│   ├── pd_laterality/       LPD laterality labeling
+│   ├── rda_frequency/       RDA frequency (lrda_labeler, rda_freq_viewer, 7 batch viewers)
+│   ├── rda_waves/           RDA wave timing annotation
+│   └── bipd/                BIPD discharge labeling
+│
+├── review_tools/             8 HTML — label review and correction
+│   ├── pd_review/           Misclassification, timing, spatial, laterality review
+│   └── bipd_review/         BIPD screening and review
+│
+├── dashboards/              12 HTML — monitoring and status
+│   ├── dataset/             Dataset overview, download status, data harvesting
+│   ├── training/            Model training curves, HemiCET optimization
+│   └── results/             PD optimization dashboards
+│
+├── leaderboards/             6 HTML + 267 JSON — contest results
+│   ├── rda_contest/         RDA analysis contest (45 methods)
+│   ├── spatial_contest/     PD spatial localization contest (26 methods)
+│   └── lateralization/      LRDA vs GRDA classification (3 contest rounds)
+│
+├── analysis/                 9 HTML — result visualization
+│   ├── frequency/           Frequency scatter plots, method comparisons
+│   ├── evidence/            HPP vs CET evidence, consistency, timing
+│   └── spatial/             Laterality visualization
+│
+└── archive/                 Old/superseded results and optimization run histories
+```
+
 ### View Dashboards
 
-Results dashboards (when generated) are in `results/`:
-- `optimization_dashboard_v2.html` -- PD optimization results
-- `rda_dashboard.html` -- RDA optimization results
+Key dashboards:
+- `results/dashboards/results/optimization_dashboard_v2.html` — PD optimization results
+- `results/dashboards/dataset/rda_dashboard.html` — RDA data overview
+- `results/leaderboards/rda_contest_leaderboard.html` — RDA analysis contest (45 methods)
+- `results/leaderboards/spatial_contest_leaderboard.html` — Spatial localization contest (26 methods)
 
 ## Algorithm Details
 
-### PD Detectors (LPD/GPD)
+### PD Unified Pipeline (PDCharacterizer)
 
-Best model: CNN+Temporal Attention on raw single-channel waveforms with PD-weighted aggregation (Spearman 0.640 on 594 patients). Best handcrafted: RF 200 trees on 6 SP features (Spearman 0.604).
+Standalone callable: `code/pd_characterizer.py`. A single per-channel CNN (**ChannelPD-Net**) serves as the backbone for all PD tasks:
 
-- `pd_detect` -- Original McGraw et al. detector
-- `pd_detect_alternate (pk_detect='apd')` -- Adaptive peak detection (best)
-- `pd_detect_alternate (pk_detect='zscore')` -- Z-score based
+- **Laterality**: Compare hemisphere mean PD probabilities (AUC = 0.963)
+- **Spatial**: Hybrid-PLV — CNN picks ipsilateral reference channels, PLV finds connected regions (Composite = 0.811)
+- **Timing**: HemiCET+DP — CNN-weighted evidence aggregation + dynamic programming (F1 = 0.684)
+- **Frequency**: CNN+ACF ensemble → IPI-derived (Spearman ρ = 0.681)
+
+Laterality detection feeds forward into both spatial localizer (ipsilateral seed) and discharge detector (hemisphere selection). See `paper_materials/unified_pd_pipeline.md` for full architecture.
 
 ### RDA Detectors (LRDA/GRDA)
 
-Best model: FFT peak frequency (Spearman 0.840).
+Best model: FFT peak frequency (Spearman 0.840). RDA wave timing auto-labeled for 549 cases via bandpass peak detection. HemiCET adaptation for RDA planned.
 
 - `rda1a_fft` -- FFT + FOOOF frequency modeling
 - `rda1b_fft` -- FFT with enhanced peak selection (best)
