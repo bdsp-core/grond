@@ -36,7 +36,10 @@ def main():
     # ── Load all sources ──
 
     seg = pd.read_csv(str(LABELS_DIR / 'segments.csv'), dtype=str)
-    pat = pd.read_csv(str(LABELS_DIR / 'patients.csv'), dtype=str)
+    pat_path = LABELS_DIR / 'patients.csv'
+    if not pat_path.exists():
+        pat_path = LABELS_DIR / 'archive_labels' / 'patients.csv'
+    pat = pd.read_csv(str(pat_path), dtype=str)
     ann = pd.read_csv(str(LABELS_DIR / 'annotations.csv'), dtype=str)
 
     # IIIC per-segment votes
@@ -119,27 +122,39 @@ def main():
         sid = row['segment_id']
         orig_base = str(row['original_filename']).replace('.mat', '') if row['original_filename'] else ''
 
-        # ── IIIC per-segment votes ──
+        # ── Per-segment vote vector ──
+        # Source 1: IIIC crowd votes (matched by original_filename)
+        # Source 2: MW single-rater assignment (from folder/subtype_source)
+        # Both stored in the same format: [other, seizure, lpd, gpd, lrda, grda]
+        cats = ['other', 'seizure', 'lpd', 'gpd', 'lrda', 'grda']
         iiic_votes = iiic_by_filename.get(orig_base)
         if iiic_votes:
-            cats = ['other', 'seizure', 'lpd', 'gpd', 'lrda', 'grda']
             for i, cat in enumerate(cats):
-                row[f'iiic_vote_{cat}'] = iiic_votes[i]
+                row[f'vote_{cat}'] = iiic_votes[i]
             total = sum(iiic_votes)
-            row['iiic_n_votes'] = total
+            row['n_votes'] = total
             winner_idx = max(range(6), key=lambda i: iiic_votes[i])
-            row['iiic_plurality'] = cats[winner_idx]
-            row['iiic_plurality_frac'] = round(iiic_votes[winner_idx] / total, 3) if total > 0 else ''
+            row['plurality'] = cats[winner_idx]
+            row['plurality_frac'] = round(iiic_votes[winner_idx] / total, 3) if total > 0 else ''
+        elif seg_info is not None and seg_info.get('subtype', '') in cats:
+            # No IIIC crowd votes — create a single-vote vector from the folder assignment
+            # This represents MW's single-rater classification
+            assigned_subtype = seg_info['subtype']
+            for cat in cats:
+                row[f'vote_{cat}'] = 1 if cat == assigned_subtype else 0
+            row['n_votes'] = 1
+            row['plurality'] = assigned_subtype
+            row['plurality_frac'] = 1.0
         else:
-            for cat in ['other', 'seizure', 'lpd', 'gpd', 'lrda', 'grda']:
-                row[f'iiic_vote_{cat}'] = ''
-            row['iiic_n_votes'] = ''
-            row['iiic_plurality'] = ''
-            row['iiic_plurality_frac'] = ''
+            for cat in cats:
+                row[f'vote_{cat}'] = ''
+            row['n_votes'] = ''
+            row['plurality'] = ''
+            row['plurality_frac'] = ''
 
         # ── Subtype (best available) ──
         if iiic_votes:
-            row['subtype'] = row['iiic_plurality']
+            row['subtype'] = row['plurality']
             row['subtype_source'] = 'iiic_segment_vote'
         elif seg_info is not None:
             row['subtype'] = seg_info.get('subtype', '')
@@ -226,8 +241,8 @@ def main():
     col_order = [
         'mat_file', 'segment_id', 'patient_id',
         'subtype', 'subtype_source',
-        'iiic_vote_other', 'iiic_vote_seizure', 'iiic_vote_lpd', 'iiic_vote_gpd',
-        'iiic_vote_lrda', 'iiic_vote_grda', 'iiic_n_votes', 'iiic_plurality', 'iiic_plurality_frac',
+        'vote_other', 'vote_seizure', 'vote_lpd', 'vote_gpd',
+        'vote_lrda', 'vote_grda', 'n_votes', 'plurality', 'plurality_frac',
         'mw_freq', 'mw_freq_rater', 'auto_freq',
         'spatial_channels', 'spatial_raters',
         'laterality', 'laterality_rater',
@@ -249,7 +264,7 @@ def main():
     print("  Coverage Summary")
     print(f"{'=' * 50}")
     print(f"Total segments:              {len(df)}")
-    print(f"With IIIC per-segment votes: {(df['iiic_n_votes'] != '').sum()}")
+    print(f"With IIIC per-segment votes: {(df['n_votes'] != '').sum()}")
     print(f"With MW/expert frequency:    {(df['mw_freq'] != '').sum()}")
     print(f"With auto frequency:         {(df['auto_freq'] != '').sum()}")
     print(f"With spatial annotations:    {(df['spatial_channels'] != '').sum()}")
