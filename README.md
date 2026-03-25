@@ -18,13 +18,12 @@ Algorithms for estimating the frequency of periodic discharges (PD) and rhythmic
 | Subtype (LPD vs GPD) | AUC | 594 | **0.931** | RF 300 trees |
 | BIPD vs GPD | AUC | 2,305 | **0.840** | HemiCET+GBT (screening) |
 | **RDA Analysis** | | | | |
-| LRDA vs GRDA | AUC | 496 | **0.870** | GBM (spatial features, MW-corrected labels) |
-| RDA frequency | Spearman ρ | 1,293 | **0.593** | M3_HilbertCV |
-| RDA expert agreement | Spearman ρ | 1,267 | **0.235** | Ensemble Ridge (18 features) |
-| RDA detection | AUC | 2,264 | **0.634** | Ensemble Ridge |
-| RDA freq labels | — | 4,158 | labeled | HilbertCV (auto) + MW (manual) |
+| LRDA vs GRDA | AUC | 5,387 | **0.839** (HQ: 0.878) | Hemisphere envelope asymmetry |
+| RDA frequency | Spearman ρ | 4,547 | **0.667** | Per-hemisphere Hilbert CV |
+| LRDA+GRDA+freq (unified) | AUC / ρ | 5,387 | **0.838 / 0.585** | V12_IterativeRefine |
+| LRDA+GRDA+freq (balanced) | AUC / ρ | 5,387 | **0.814 / 0.636** | V22_EnvAmp_DomHilbert |
 
-**All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [APPROACH_REVIEW_v15.md](APPROACH_REVIEW_v15.md) for details.
+**All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [APPROACH_REVIEW_v16.md](APPROACH_REVIEW_v16.md) for details.
 
 ### Unified PD Pipeline (PDCharacterizer)
 
