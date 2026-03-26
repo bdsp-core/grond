@@ -23,6 +23,7 @@ Algorithms for estimating the frequency of periodic discharges (PD) and rhythmic
 | LRDA+GRDA+freq (unified) | AUC / ρ | 5,387 | **0.838 / 0.586** | V12_IterativeRefine |
 | LRDA+GRDA+freq (balanced) | AUC / ρ | 5,387 | **0.814 / 0.630** | V22_EnvAmp_DomHilbert |
 | RDA freq labels reviewed | — | 993 | MW-reviewed | V22 viewer + MW correction |
+| LRDA laterality reviewed | — | 1,374 | MW-reviewed | 727 left, 308 right, 338 not-LRDA |
 
 **All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [APPROACH_REVIEW_v16.md](APPROACH_REVIEW_v16.md) for details.
 

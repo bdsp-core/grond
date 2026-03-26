@@ -160,10 +160,26 @@ EEG → L/R HemiCET+DP → 21 timing features → GBT → P(BIPD)
 | 9 | BIPD detection | **Done** | HemiCET+GBT | AUC 0.840, Sens 63% |
 | 10 | PD spatial extent | **Done** | PDCharacterizer (Hybrid-PLV) | **Composite 0.811, AUC 0.814** |
 
+### 6. MW Laterality Review (1,374 LRDA segments)
+
+MW reviewed 1,374 LRDA segments across 3 batches using a laterality viewer with symmetric channel layout (L lateral → L parasag → midline → R parasag → R lateral). Cases sorted by V22 laterality index (most left-dominant first, most right-dominant last).
+
+| Batch | Segments | Left | Right | Not LRDA |
+|-------|----------|------|-------|----------|
+| 1 | 500 | 393 | 17 | 89 |
+| 2 | 500 | 303 | 27 | 170 |
+| 3 | 374 | 31 | 264 | 79 |
+| **Total** | **1,374** | **727** | **308** | **338** |
+
+- 338 segments rejected as not-LRDA (excluded from future analysis)
+- 469 LRDA segments still need laterality review (near-bilateral cases)
+- Laterality labels stored in `data/labels/lrda_laterality_batch{1,2,3}.json`
+
 ## Next Steps
 
-1. **LRDA side labeling** — MW reviewing 1,952 LRDA segments for left/right/not-LRDA (viewer built, 4 batches)
-2. **RDA localization** — Adapt PLV spatial method for RDA (which regions are involved)
-3. **RDA wave timing review** — MW to review 549 auto-labeled cases
-4. **Train RhythmiCET** — RDA evidence U-Net from reviewed wave labels
-5. **Paper** — Write up the unified RDA characterization pipeline
+1. **Complete LRDA laterality** — Review remaining 469 segments in bilateral zone
+2. **Re-evaluate lateralization models** — With 1,035 left/right labels, measure side prediction accuracy
+3. **RDA localization** — Adapt PLV spatial method for RDA (which regions are involved)
+4. **RDA wave timing review** — MW to review 549 auto-labeled cases
+5. **Train RhythmiCET** — RDA evidence U-Net from reviewed wave labels
+6. **Paper** — Write up the unified RDA characterization pipeline
