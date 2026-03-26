@@ -1,0 +1,987 @@
+{
+  "sub-I0002150000391_20170424044931": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150000391_20170424044931.mat",
+    "est_freq": null
+  },
+  "sub-I0002150001275_20161010110213": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150001275_20161010110213.mat",
+    "est_freq": null
+  },
+  "sub-I0002150003360_20180403042359": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150003360_20180403042359.mat",
+    "est_freq": null
+  },
+  "sub-I0002150004524_20191130044532": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150004524_20191130044532.mat",
+    "est_freq": null
+  },
+  "sub-I0002150005388_20170121112607": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150005388_20170121112607.mat",
+    "est_freq": null
+  },
+  "sub-I0002150006474_20221127195158": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150006474_20221127195158.mat",
+    "est_freq": null
+  },
+  "sub-I0002150006655_20180520201830": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150006655_20180520201830.mat",
+    "est_freq": null
+  },
+  "sub-I0002150006874_20150622202237": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150006874_20150622202237.mat",
+    "est_freq": null
+  },
+  "sub-I0002150007241_20121125024919": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150007241_20121125024919.mat",
+    "est_freq": null
+  },
+  "sub-I0002150008680_20160205191237": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150008680_20160205191237.mat",
+    "est_freq": null
+  },
+  "sub-I0002150011927_20111116125912": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150011927_20111116125912.mat",
+    "est_freq": null
+  },
+  "sub-I0002150013479_20180607015225": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150013479_20180607015225.mat",
+    "est_freq": null
+  },
+  "sub-I0002150014331_20140512002838": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150014331_20140512002838.mat",
+    "est_freq": null
+  },
+  "sub-I0002150014482_20150426141147": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150014482_20150426141147.mat",
+    "est_freq": null
+  },
+  "sub-I0002150014927_20160510220127": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150014927_20160510220127.mat",
+    "est_freq": null
+  },
+  "sub-I0002150015121_20161206140453": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150015121_20161206140453.mat",
+    "est_freq": null
+  },
+  "sub-I0002150016577_20170217193343": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150016577_20170217193343.mat",
+    "est_freq": null
+  },
+  "sub-I0002150017850_20190424202208": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150017850_20190424202208.mat",
+    "est_freq": null
+  },
+  "sub-I0002150018154_20180902220012": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150018154_20180902220012.mat",
+    "est_freq": null
+  },
+  "sub-I0002150018214_20181026183205": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150018214_20181026183205.mat",
+    "est_freq": null
+  },
+  "sub-I0002150021530_20221216020254": {
+    "subtype": "bipd",
+    "s3_file": "sub-I0002150021530_20221216020254.mat",
+    "est_freq": null
+  },
+  "111449034": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001111449034_20220228015834.mat",
+    "est_freq": null
+  },
+  "111638659": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001111638659_20201020035610.mat",
+    "est_freq": null
+  },
+  "111758640": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001111758640_20191226083926.mat",
+    "est_freq": null
+  },
+  "111867292": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001111867292_20170621122654.mat",
+    "est_freq": null
+  },
+  "111964456": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001111964456_20121209161324.mat",
+    "est_freq": null
+  },
+  "112107833": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001112107833_20171106110236.mat",
+    "est_freq": null
+  },
+  "112169914": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001112169914_20170519161550.mat",
+    "est_freq": null
+  },
+  "112253094": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001112253094_20110605203951.mat",
+    "est_freq": null
+  },
+  "112315576": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001112315576_20180429161711.mat",
+    "est_freq": null
+  },
+  "112340533": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001112340533_20200320141110.mat",
+    "est_freq": null
+  },
+  "112412536": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001112412536_20220823183628.mat",
+    "est_freq": null
+  },
+  "112623695": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001112623695_20170507191233.mat",
+    "est_freq": null
+  },
+  "112773235": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001112773235_20160303031850.mat",
+    "est_freq": null
+  },
+  "112907266": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001112907266_20211001081836.mat",
+    "est_freq": null
+  },
+  "112945009": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001112945009_20110812180728.mat",
+    "est_freq": null
+  },
+  "113006603": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001113006603_20210314143121.mat",
+    "est_freq": null
+  },
+  "113113127": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001113113127_20221110082554.mat",
+    "est_freq": null
+  },
+  "113329761": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001113329761_20190219170917.mat",
+    "est_freq": null
+  },
+  "113348147": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001113348147_20180316170142.mat",
+    "est_freq": null
+  },
+  "113573209": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001113573209_20190927175249.mat",
+    "est_freq": null
+  },
+  "113857947": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001113857947_20151010122756.mat",
+    "est_freq": null
+  },
+  "114209697": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001114209697_20180112092343.mat",
+    "est_freq": null
+  },
+  "114624179": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001114624179_20171127100941.mat",
+    "est_freq": null
+  },
+  "114643102": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001114643102_20210913142833.mat",
+    "est_freq": null
+  },
+  "114940464": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001114940464_20200531163310.mat",
+    "est_freq": null
+  },
+  "115024696": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001115024696_20130519135305.mat",
+    "est_freq": null
+  },
+  "115045952": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001115045952_20200910180214.mat",
+    "est_freq": null
+  },
+  "115373950": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001115373950_20171028155314.mat",
+    "est_freq": null
+  },
+  "115806179": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001115806179_20200316120114.mat",
+    "est_freq": null
+  },
+  "115897194": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001115897194_20200402173137.mat",
+    "est_freq": null
+  },
+  "116032437": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001116032437_20180603112957.mat",
+    "est_freq": null
+  },
+  "116081587": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001116081587_20211014140010.mat",
+    "est_freq": null
+  },
+  "116155904": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001116155904_20170101051122.mat",
+    "est_freq": null
+  },
+  "116255313": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001116255313_20170208151120.mat",
+    "est_freq": null
+  },
+  "116366538": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001116366538_20161021151656.mat",
+    "est_freq": null
+  },
+  "116451660": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001116451660_20170314155209.mat",
+    "est_freq": null
+  },
+  "116453698": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001116453698_20191127055719.mat",
+    "est_freq": null
+  },
+  "116523493": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001116523493_20171126162158.mat",
+    "est_freq": null
+  },
+  "116550531": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001116550531_20201224102121.mat",
+    "est_freq": null
+  },
+  "116652923": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001116652923_20180821230430.mat",
+    "est_freq": null
+  },
+  "116674133": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001116674133_20180124195256.mat",
+    "est_freq": null
+  },
+  "116958145": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001116958145_20211209154750.mat",
+    "est_freq": null
+  },
+  "116963683": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001116963683_20160224110612.mat",
+    "est_freq": null
+  },
+  "117197330": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001117197330_20171020142951.mat",
+    "est_freq": null
+  },
+  "117219230": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001117219230_20140725183608.mat",
+    "est_freq": null
+  },
+  "117292760": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001117292760_20210511180431.mat",
+    "est_freq": null
+  },
+  "117295031": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001117295031_20190114144153.mat",
+    "est_freq": null
+  },
+  "117423987": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001117423987_20170824215610.mat",
+    "est_freq": null
+  },
+  "117461906": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001117461906_20171023092409.mat",
+    "est_freq": null
+  },
+  "117556407": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001117556407_20171021115200.mat",
+    "est_freq": null
+  },
+  "117604806": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001117604806_20220409111840.mat",
+    "est_freq": null
+  },
+  "118008640": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118008640_20170827034659.mat",
+    "est_freq": null
+  },
+  "118048170": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118048170_20200518172255.mat",
+    "est_freq": null
+  },
+  "118083324": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118083324_20211105060042.mat",
+    "est_freq": null
+  },
+  "118120945": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118120945_20191217130845.mat",
+    "est_freq": null
+  },
+  "118202599": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118202599_20170719125606.mat",
+    "est_freq": null
+  },
+  "118226572": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118226572_20161128143934.mat",
+    "est_freq": null
+  },
+  "118246420": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118246420_20180329025351.mat",
+    "est_freq": null
+  },
+  "118355205": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118355205_20201121105710.mat",
+    "est_freq": null
+  },
+  "118550685": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118550685_20201201144207.mat",
+    "est_freq": null
+  },
+  "118629321": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118629321_20131112102316.mat",
+    "est_freq": null
+  },
+  "118782318": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118782318_20210713123033.mat",
+    "est_freq": null
+  },
+  "118810056": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118810056_20180922014739.mat",
+    "est_freq": null
+  },
+  "118820831": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118820831_20211214081346.mat",
+    "est_freq": null
+  },
+  "118852605": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118852605_20170108030028.mat",
+    "est_freq": null
+  },
+  "118860615": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118860615_20200325161356.mat",
+    "est_freq": null
+  },
+  "118974392": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118974392_20150202125947.mat",
+    "est_freq": null
+  },
+  "118974837": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001118974837_20201019113922.mat",
+    "est_freq": null
+  },
+  "119136406": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001119136406_20170616092307.mat",
+    "est_freq": null
+  },
+  "119177354": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001119177354_20110831123722.mat",
+    "est_freq": null
+  },
+  "119368144": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001119368144_20161210233433.mat",
+    "est_freq": null
+  },
+  "119653211": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001119653211_20150217101930.mat",
+    "est_freq": null
+  },
+  "119687212": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001119687212_20160917092525.mat",
+    "est_freq": null
+  },
+  "119810727": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001119810727_20211019193510.mat",
+    "est_freq": null
+  },
+  "119823465": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001119823465_20160804084134.mat",
+    "est_freq": null
+  },
+  "119865122": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001119865122_20171230152051.mat",
+    "est_freq": null
+  },
+  "119983828": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001119983828_20140210074829.mat",
+    "est_freq": null
+  },
+  "120094713": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001120094713_20111220144357.mat",
+    "est_freq": null
+  },
+  "120153202": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001120153202_20160103164044.mat",
+    "est_freq": null
+  },
+  "120187568": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001120187568_20171011070513.mat",
+    "est_freq": null
+  },
+  "120252636": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001120252636_20130421221006.mat",
+    "est_freq": null
+  },
+  "120390182": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001120390182_20170804104803.mat",
+    "est_freq": null
+  },
+  "120409068": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001120409068_20170101143026.mat",
+    "est_freq": null
+  },
+  "120449729": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001120449729_20200810093909.mat",
+    "est_freq": null
+  },
+  "120489620": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001120489620_20171005123605.mat",
+    "est_freq": null
+  },
+  "120565656": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001120565656_20160819153521.mat",
+    "est_freq": null
+  },
+  "120575010": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001120575010_20160712120124.mat",
+    "est_freq": null
+  },
+  "120661994": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001120661994_20180820085125.mat",
+    "est_freq": null
+  },
+  "120686119": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001120686119_20200115140132.mat",
+    "est_freq": null
+  },
+  "120700709": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001120700709_20140212112148.mat",
+    "est_freq": null
+  },
+  "120911685": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001120911685_20141230051106.mat",
+    "est_freq": null
+  },
+  "120980502": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001120980502_20220115122318.mat",
+    "est_freq": null
+  },
+  "121047496": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001121047496_20200915102405.mat",
+    "est_freq": null
+  },
+  "121064207": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001121064207_20160410224949.mat",
+    "est_freq": null
+  },
+  "121289744": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001121289744_20181210112012.mat",
+    "est_freq": null
+  },
+  "121592254": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001121592254_20190905002103.mat",
+    "est_freq": null
+  },
+  "121598511": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001121598511_20160504201916.mat",
+    "est_freq": null
+  },
+  "121627846": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001121627846_20190119081417.mat",
+    "est_freq": null
+  },
+  "121664164": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001121664164_20190419183357.mat",
+    "est_freq": null
+  },
+  "121713112": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001121713112_20130925184607.mat",
+    "est_freq": null
+  },
+  "121806737": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001121806737_20190207193604.mat",
+    "est_freq": null
+  },
+  "121812877": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001121812877_20191121183041.mat",
+    "est_freq": null
+  },
+  "121912744": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001121912744_20180922110208.mat",
+    "est_freq": null
+  },
+  "121958927": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001121958927_20181118091946.mat",
+    "est_freq": null
+  },
+  "122046623": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001122046623_20211214022852.mat",
+    "est_freq": null
+  },
+  "122103106": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001122103106_20161122104939.mat",
+    "est_freq": null
+  },
+  "122152267": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001122152267_20141226012635.mat",
+    "est_freq": null
+  },
+  "122277075": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001122277075_20140426011414.mat",
+    "est_freq": null
+  },
+  "122309174": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001122309174_20190428080912.mat",
+    "est_freq": null
+  },
+  "122358048": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001122358048_20210903193546.mat",
+    "est_freq": null
+  },
+  "122369080": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001122369080_20141017073542.mat",
+    "est_freq": null
+  },
+  "122372759": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0001122372759_20230602011330.mat",
+    "est_freq": null
+  },
+  "sub-S0002111576652_20220912140042": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002111576652_20220912140042.mat",
+    "est_freq": null
+  },
+  "sub-S0002111723294_20190611022408": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002111723294_20190611022408.mat",
+    "est_freq": null
+  },
+  "sub-S0002111931650_20100326142629": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002111931650_20100326142629.mat",
+    "est_freq": null
+  },
+  "sub-S0002112090952_20211218154656": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002112090952_20211218154656.mat",
+    "est_freq": null
+  },
+  "sub-S0002112146827_20221106140222": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002112146827_20221106140222.mat",
+    "est_freq": null
+  },
+  "sub-S0002112280460_20181103022058": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002112280460_20181103022058.mat",
+    "est_freq": null
+  },
+  "sub-S0002112280460_20181103042851": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002112280460_20181103042851.mat",
+    "est_freq": null
+  },
+  "sub-S0002112398157_20220329135612": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002112398157_20220329135612.mat",
+    "est_freq": null
+  },
+  "sub-S0002112596745_20201026161525": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002112596745_20201026161525.mat",
+    "est_freq": null
+  },
+  "sub-S0002112881861_20210502073523": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002112881861_20210502073523.mat",
+    "est_freq": null
+  },
+  "sub-S0002112881861_20210503055450": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002112881861_20210503055450.mat",
+    "est_freq": null
+  },
+  "sub-S0002112913211_20171026111156": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002112913211_20171026111156.mat",
+    "est_freq": null
+  },
+  "sub-S0002113191676_20140108232442": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002113191676_20140108232442.mat",
+    "est_freq": null
+  },
+  "sub-S0002114158376_20141010092832": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002114158376_20141010092832.mat",
+    "est_freq": null
+  },
+  "sub-S0002114203578_20080126105132": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002114203578_20080126105132.mat",
+    "est_freq": null
+  },
+  "sub-S0002114315453_20211020054249": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002114315453_20211020054249.mat",
+    "est_freq": null
+  },
+  "sub-S0002114339824_20200425114545": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002114339824_20200425114545.mat",
+    "est_freq": null
+  },
+  "sub-S0002114339824_20200425175140": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002114339824_20200425175140.mat",
+    "est_freq": null
+  },
+  "sub-S0002114339824_20200425185518": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002114339824_20200425185518.mat",
+    "est_freq": null
+  },
+  "sub-S0002114441364_20180417125043": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002114441364_20180417125043.mat",
+    "est_freq": null
+  },
+  "sub-S0002114475740_20121109114746": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002114475740_20121109114746.mat",
+    "est_freq": null
+  },
+  "sub-S0002115295341_20201024070201": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002115295341_20201024070201.mat",
+    "est_freq": null
+  },
+  "sub-S0002115447214_20100509112240": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002115447214_20100509112240.mat",
+    "est_freq": null
+  },
+  "sub-S0002115917289_20220427184740": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002115917289_20220427184740.mat",
+    "est_freq": null
+  },
+  "sub-S0002115982644_20221118091301": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002115982644_20221118091301.mat",
+    "est_freq": null
+  },
+  "sub-S0002116027748_20210810165619": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002116027748_20210810165619.mat",
+    "est_freq": null
+  },
+  "sub-S0002116243923_20200509025239": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002116243923_20200509025239.mat",
+    "est_freq": null
+  },
+  "sub-S0002116269678_20161015164336": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002116269678_20161015164336.mat",
+    "est_freq": null
+  },
+  "sub-S0002116305837_20190729133951": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002116305837_20190729133951.mat",
+    "est_freq": null
+  },
+  "sub-S0002116321102_20210622122128": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002116321102_20210622122128.mat",
+    "est_freq": null
+  },
+  "sub-S0002116321102_20210622173252": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002116321102_20210622173252.mat",
+    "est_freq": null
+  },
+  "sub-S0002116401023_20161103125421": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002116401023_20161103125421.mat",
+    "est_freq": null
+  },
+  "sub-S0002116444435_20190409050637": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002116444435_20190409050637.mat",
+    "est_freq": null
+  },
+  "sub-S0002116517680_20211024060345": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002116517680_20211024060345.mat",
+    "est_freq": null
+  },
+  "sub-S0002116526757_20200312070643": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002116526757_20200312070643.mat",
+    "est_freq": null
+  },
+  "sub-S0002116526757_20200312143301": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002116526757_20200312143301.mat",
+    "est_freq": null
+  },
+  "sub-S0002116552902_20210616021209": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002116552902_20210616021209.mat",
+    "est_freq": null
+  },
+  "sub-S0002116562451_20070816114137": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002116562451_20070816114137.mat",
+    "est_freq": null
+  },
+  "sub-S0002116954602_20211219180231": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002116954602_20211219180231.mat",
+    "est_freq": null
+  },
+  "sub-S0002117039206_20211115080731": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002117039206_20211115080731.mat",
+    "est_freq": null
+  },
+  "sub-S0002117189302_20210310163523": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002117189302_20210310163523.mat",
+    "est_freq": null
+  },
+  "sub-S0002117205949_20220624114855": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002117205949_20220624114855.mat",
+    "est_freq": null
+  },
+  "sub-S0002117257197_20211105094600": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002117257197_20211105094600.mat",
+    "est_freq": null
+  },
+  "sub-S0002117257197_20211105235531": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002117257197_20211105235531.mat",
+    "est_freq": null
+  },
+  "sub-S0002117257197_20211106054650": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002117257197_20211106054650.mat",
+    "est_freq": null
+  },
+  "sub-S0002117777835_20180108175809": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002117777835_20180108175809.mat",
+    "est_freq": null
+  },
+  "sub-S0002117948402_20200717192022": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002117948402_20200717192022.mat",
+    "est_freq": null
+  },
+  "sub-S0002117948402_20200717225122": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002117948402_20200717225122.mat",
+    "est_freq": null
+  },
+  "sub-S0002118242626_20171115165754": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002118242626_20171115165754.mat",
+    "est_freq": null
+  },
+  "sub-S0002118422672_20211225100526": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002118422672_20211225100526.mat",
+    "est_freq": null
+  },
+  "sub-S0002118494422_20211021143245": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002118494422_20211021143245.mat",
+    "est_freq": null
+  },
+  "sub-S0002119266954_20201028144344": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002119266954_20201028144344.mat",
+    "est_freq": null
+  },
+  "sub-S0002119295943_20160914120745": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002119295943_20160914120745.mat",
+    "est_freq": null
+  },
+  "sub-S0002119898678_20181209175740": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002119898678_20181209175740.mat",
+    "est_freq": null
+  },
+  "sub-S0002120510928_20191003201840": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002120510928_20191003201840.mat",
+    "est_freq": null
+  },
+  "sub-S0002120510928_20191004034521": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002120510928_20191004034521.mat",
+    "est_freq": null
+  },
+  "sub-S0002120536948_20171011114329": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002120536948_20171011114329.mat",
+    "est_freq": null
+  },
+  "sub-S0002120802300_20210215194449": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002120802300_20210215194449.mat",
+    "est_freq": null
+  },
+  "sub-S0002120811077_20220809173035": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002120811077_20220809173035.mat",
+    "est_freq": null
+  },
+  "sub-S0002120816761_20181215184929": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002120816761_20181215184929.mat",
+    "est_freq": null
+  },
+  "sub-S0002120901572_20190515204322": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002120901572_20190515204322.mat",
+    "est_freq": null
+  },
+  "sub-S0002121259217_20130519142039": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002121259217_20130519142039.mat",
+    "est_freq": null
+  },
+  "sub-S0002122225458_20091203103133": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002122225458_20091203103133.mat",
+    "est_freq": null
+  },
+  "sub-S0002122349781_20210117200825": {
+    "subtype": "bipd",
+    "s3_file": "sub-S0002122349781_20210117200825.mat",
+    "est_freq": null
+  }
+}

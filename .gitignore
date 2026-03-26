@@ -1,7 +1,13 @@
-# Data files (large binary files, download separately via BDSP)
-data/
+# Large binary data (EEG .mat files, model weights — download via BDSP)
+data/eeg/
+data/dl_cache/
+data/cet_cache/
+data/pd_channel_cache/
+data/hemi_cache/
+data/rda_cache/
+data/_archive/
 
-# Results (generated)
+# Results (generated HTML/JSON, regenerable)
 results/
 
 # Annotation packages

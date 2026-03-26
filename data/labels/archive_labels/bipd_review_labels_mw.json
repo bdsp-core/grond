@@ -1,0 +1,1700 @@
+{
+  "111330014": {
+    "patient_id": "111330014",
+    "label": "GPD",
+    "prob": 0.107,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 3,
+    "right_n": 7,
+    "left_freq": 0.27,
+    "right_freq": 0.66,
+    "source": "bipd_reviewer_v1"
+  },
+  "111398629": {
+    "patient_id": "111398629",
+    "label": "REJECT",
+    "prob": 0.036,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 12,
+    "right_n": 10,
+    "left_freq": 1.14,
+    "right_freq": 1.03,
+    "source": "bipd_reviewer_v1"
+  },
+  "111944281": {
+    "patient_id": "111944281",
+    "label": "GPD",
+    "prob": 0.089,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 11,
+    "right_n": 8,
+    "left_freq": 1.12,
+    "right_freq": 0.89,
+    "source": "bipd_reviewer_v1"
+  },
+  "112071693": {
+    "patient_id": "112071693",
+    "label": "GPD",
+    "prob": 0.251,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 13,
+    "right_n": 16,
+    "left_freq": 1.48,
+    "right_freq": 1.87,
+    "source": "bipd_reviewer_v1"
+  },
+  "112110098": {
+    "patient_id": "112110098",
+    "label": "GPD",
+    "prob": 0.201,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 13,
+    "right_n": 16,
+    "left_freq": 1.18,
+    "right_freq": 1.55,
+    "source": "bipd_reviewer_v1"
+  },
+  "112139488": {
+    "patient_id": "112139488",
+    "label": "GPD",
+    "prob": 0.514,
+    "model_pred": "BIPD",
+    "original_label": "GPD",
+    "left_n": 10,
+    "right_n": 8,
+    "left_freq": 1.01,
+    "right_freq": 0.93,
+    "source": "bipd_reviewer_v1"
+  },
+  "112329072": {
+    "patient_id": "112329072",
+    "label": "GPD",
+    "prob": 0.331,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 11,
+    "right_n": 11,
+    "left_freq": 1.05,
+    "right_freq": 1.16,
+    "source": "bipd_reviewer_v1"
+  },
+  "112340533": {
+    "patient_id": "112340533",
+    "label": "BIPD",
+    "prob": 0.26,
+    "model_pred": "GPD",
+    "original_label": "BIPD",
+    "left_n": 11,
+    "right_n": 10,
+    "left_freq": 1.1,
+    "right_freq": 1.02,
+    "source": "bipd_reviewer_v1"
+  },
+  "112591683": {
+    "patient_id": "112591683",
+    "label": "BIPD",
+    "prob": 0.641,
+    "model_pred": "BIPD",
+    "original_label": "GPD",
+    "left_n": 12,
+    "right_n": 9,
+    "left_freq": 1.3,
+    "right_freq": 0.86,
+    "source": "bipd_reviewer_v1"
+  },
+  "112807013": {
+    "patient_id": "112807013",
+    "label": "LPD",
+    "prob": 0.627,
+    "model_pred": "BIPD",
+    "original_label": "GPD",
+    "left_n": 10,
+    "right_n": 13,
+    "left_freq": 1.0,
+    "right_freq": 1.23,
+    "source": "bipd_reviewer_v1"
+  },
+  "112899786": {
+    "patient_id": "112899786",
+    "label": "LPD",
+    "prob": 0.169,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 14,
+    "right_n": 12,
+    "left_freq": 1.85,
+    "right_freq": 1.36,
+    "source": "bipd_reviewer_v1"
+  },
+  "112907266": {
+    "patient_id": "112907266",
+    "label": "GPD",
+    "prob": 0.428,
+    "model_pred": "GPD",
+    "original_label": "BIPD",
+    "left_n": 17,
+    "right_n": 13,
+    "left_freq": 1.79,
+    "right_freq": 1.27,
+    "source": "bipd_reviewer_v1"
+  },
+  "112940745": {
+    "patient_id": "112940745",
+    "label": "GPD",
+    "prob": 0.422,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 10,
+    "right_n": 12,
+    "left_freq": 1.09,
+    "right_freq": 1.43,
+    "source": "bipd_reviewer_v1"
+  },
+  "112945009": {
+    "patient_id": "112945009",
+    "label": "GPD",
+    "prob": 0.033,
+    "model_pred": "GPD",
+    "original_label": "BIPD",
+    "left_n": 15,
+    "right_n": 14,
+    "left_freq": 1.53,
+    "right_freq": 1.44,
+    "source": "bipd_reviewer_v1"
+  },
+  "112950356": {
+    "patient_id": "112950356",
+    "label": "LPD",
+    "prob": 0.062,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 11,
+    "right_n": 9,
+    "left_freq": 0.99,
+    "right_freq": 0.87,
+    "source": "bipd_reviewer_v1"
+  },
+  "112954969": {
+    "patient_id": "112954969",
+    "label": "GPD",
+    "prob": 0.037,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 13,
+    "right_n": 11,
+    "left_freq": 1.27,
+    "right_freq": 1.21,
+    "source": "bipd_reviewer_v1"
+  },
+  "112988128": {
+    "patient_id": "112988128",
+    "label": "GPD",
+    "prob": 0.657,
+    "model_pred": "BIPD",
+    "original_label": "GPD",
+    "left_n": 13,
+    "right_n": 19,
+    "left_freq": 1.33,
+    "right_freq": 1.93,
+    "source": "bipd_reviewer_v1"
+  },
+  "113006603": {
+    "patient_id": "113006603",
+    "label": "BIPD",
+    "prob": 0.71,
+    "model_pred": "BIPD",
+    "original_label": "BIPD",
+    "left_n": 14,
+    "right_n": 14,
+    "left_freq": 1.31,
+    "right_freq": 1.41,
+    "source": "bipd_reviewer_v1"
+  },
+  "113068693": {
+    "patient_id": "113068693",
+    "label": "GPD",
+    "prob": 0.146,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 13,
+    "right_n": 13,
+    "left_freq": 1.4,
+    "right_freq": 1.5,
+    "source": "bipd_reviewer_v1"
+  },
+  "113329761": {
+    "patient_id": "113329761",
+    "label": "BIPD",
+    "prob": 0.983,
+    "model_pred": "BIPD",
+    "original_label": "BIPD",
+    "left_n": 13,
+    "right_n": 12,
+    "left_freq": 1.31,
+    "right_freq": 1.14,
+    "source": "bipd_reviewer_v1"
+  },
+  "113798382": {
+    "patient_id": "113798382",
+    "label": "GPD",
+    "prob": 0.654,
+    "model_pred": "BIPD",
+    "original_label": "GPD",
+    "left_n": 16,
+    "right_n": 12,
+    "left_freq": 1.5,
+    "right_freq": 1.18,
+    "source": "bipd_reviewer_v1"
+  },
+  "114100764": {
+    "patient_id": "114100764",
+    "label": "REJECT",
+    "prob": 0.881,
+    "model_pred": "BIPD",
+    "original_label": "GPD",
+    "left_n": 11,
+    "right_n": 13,
+    "left_freq": 1.02,
+    "right_freq": 1.2,
+    "source": "bipd_reviewer_v1"
+  },
+  "114101364": {
+    "patient_id": "114101364",
+    "label": "LPD",
+    "prob": 0.037,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 15,
+    "right_n": 15,
+    "left_freq": 1.59,
+    "right_freq": 1.48,
+    "source": "bipd_reviewer_v1"
+  },
+  "114247764": {
+    "patient_id": "114247764",
+    "label": "GPD",
+    "prob": 0.034,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 16,
+    "right_n": 16,
+    "left_freq": 1.68,
+    "right_freq": 1.74,
+    "source": "bipd_reviewer_v1"
+  },
+  "114393066": {
+    "patient_id": "114393066",
+    "label": "LPD",
+    "prob": 0.261,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 9,
+    "right_n": 14,
+    "left_freq": 0.85,
+    "right_freq": 1.32,
+    "source": "bipd_reviewer_v1"
+  },
+  "114486508": {
+    "patient_id": "114486508",
+    "label": "LPD",
+    "prob": 0.945,
+    "model_pred": "BIPD",
+    "original_label": "GPD",
+    "left_n": 11,
+    "right_n": 5,
+    "left_freq": 1.09,
+    "right_freq": 0.48,
+    "source": "bipd_reviewer_v1"
+  },
+  "114624179": {
+    "patient_id": "114624179",
+    "label": "BIPD",
+    "prob": 0.922,
+    "model_pred": "BIPD",
+    "original_label": "BIPD",
+    "left_n": 12,
+    "right_n": 10,
+    "left_freq": 1.19,
+    "right_freq": 0.95,
+    "source": "bipd_reviewer_v1"
+  },
+  "114829560": {
+    "patient_id": "114829560",
+    "label": "GPD",
+    "prob": 0.303,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 4,
+    "right_n": 9,
+    "left_freq": 0.5,
+    "right_freq": 0.83,
+    "source": "bipd_reviewer_v1"
+  },
+  "114830234": {
+    "patient_id": "114830234",
+    "label": "GPD",
+    "prob": 0.037,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 15,
+    "right_n": 14,
+    "left_freq": 1.5,
+    "right_freq": 1.52,
+    "source": "bipd_reviewer_v1"
+  },
+  "114937952": {
+    "patient_id": "114937952",
+    "label": "REJECT",
+    "prob": 0.463,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 14,
+    "right_n": 15,
+    "left_freq": 1.29,
+    "right_freq": 1.7,
+    "source": "bipd_reviewer_v1"
+  },
+  "115263933": {
+    "patient_id": "115263933",
+    "label": "GPD",
+    "prob": 0.034,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 7,
+    "right_n": 6,
+    "left_freq": 0.62,
+    "right_freq": 0.65,
+    "source": "bipd_reviewer_v1"
+  },
+  "115586985": {
+    "patient_id": "115586985",
+    "label": "BIPD",
+    "prob": 0.246,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 14,
+    "right_n": 17,
+    "left_freq": 1.56,
+    "right_freq": 1.84,
+    "source": "bipd_reviewer_v1"
+  },
+  "116081587": {
+    "patient_id": "116081587",
+    "label": "GPD",
+    "prob": 0.474,
+    "model_pred": "GPD",
+    "original_label": "BIPD",
+    "left_n": 11,
+    "right_n": 12,
+    "left_freq": 1.04,
+    "right_freq": 1.41,
+    "source": "bipd_reviewer_v1"
+  },
+  "116101588": {
+    "patient_id": "116101588",
+    "label": "LPD",
+    "prob": 0.194,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 11,
+    "right_n": 17,
+    "left_freq": 1.05,
+    "right_freq": 1.67,
+    "source": "bipd_reviewer_v1"
+  },
+  "116254595": {
+    "patient_id": "116254595",
+    "label": "GPD",
+    "prob": 0.043,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 16,
+    "right_n": 16,
+    "left_freq": 1.65,
+    "right_freq": 1.67,
+    "source": "bipd_reviewer_v1"
+  },
+  "116679103": {
+    "patient_id": "116679103",
+    "label": "LPD",
+    "prob": 0.424,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 19,
+    "right_n": 14,
+    "left_freq": 1.89,
+    "right_freq": 1.34,
+    "source": "bipd_reviewer_v1"
+  },
+  "116887887": {
+    "patient_id": "116887887",
+    "label": "LPD",
+    "prob": 0.807,
+    "model_pred": "BIPD",
+    "original_label": "GPD",
+    "left_n": 12,
+    "right_n": 10,
+    "left_freq": 1.12,
+    "right_freq": 1.03,
+    "source": "bipd_reviewer_v1"
+  },
+  "117836323": {
+    "patient_id": "117836323",
+    "label": "LPD",
+    "prob": 0.149,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 12,
+    "right_n": 13,
+    "left_freq": 1.16,
+    "right_freq": 1.3,
+    "source": "bipd_reviewer_v1"
+  },
+  "118095402": {
+    "patient_id": "118095402",
+    "label": "GPD",
+    "prob": 0.074,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 14,
+    "right_n": 10,
+    "left_freq": 1.52,
+    "right_freq": 1.07,
+    "source": "bipd_reviewer_v1"
+  },
+  "118299724": {
+    "patient_id": "118299724",
+    "label": "LPD",
+    "prob": 0.06,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 16,
+    "right_n": 15,
+    "left_freq": 1.61,
+    "right_freq": 1.45,
+    "source": "bipd_reviewer_v1"
+  },
+  "118357575": {
+    "patient_id": "118357575",
+    "label": "REJECT",
+    "prob": 0.364,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 18,
+    "right_n": 17,
+    "left_freq": 1.85,
+    "right_freq": 1.71,
+    "source": "bipd_reviewer_v1"
+  },
+  "118472172": {
+    "patient_id": "118472172",
+    "label": "GPD",
+    "prob": 0.042,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 14,
+    "right_n": 16,
+    "left_freq": 1.3,
+    "right_freq": 1.65,
+    "source": "bipd_reviewer_v1"
+  },
+  "118663423": {
+    "patient_id": "118663423",
+    "label": "BIPD",
+    "prob": 0.681,
+    "model_pred": "BIPD",
+    "original_label": "GPD",
+    "left_n": 12,
+    "right_n": 11,
+    "left_freq": 1.34,
+    "right_freq": 1.09,
+    "source": "bipd_reviewer_v1"
+  },
+  "118729569": {
+    "patient_id": "118729569",
+    "label": "GPD",
+    "prob": 0.136,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 13,
+    "right_n": 12,
+    "left_freq": 1.2,
+    "right_freq": 1.22,
+    "source": "bipd_reviewer_v1"
+  },
+  "118894106": {
+    "patient_id": "118894106",
+    "label": "GPD",
+    "prob": 0.425,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 20,
+    "right_n": 18,
+    "left_freq": 2.13,
+    "right_freq": 1.72,
+    "source": "bipd_reviewer_v1"
+  },
+  "118971732": {
+    "patient_id": "118971732",
+    "label": "GPD",
+    "prob": 0.033,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 12,
+    "right_n": 13,
+    "left_freq": 1.24,
+    "right_freq": 1.27,
+    "source": "bipd_reviewer_v1"
+  },
+  "119175196": {
+    "patient_id": "119175196",
+    "label": "GPD",
+    "prob": 0.099,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 6,
+    "right_n": 4,
+    "left_freq": 0.57,
+    "right_freq": 0.38,
+    "source": "bipd_reviewer_v1"
+  },
+  "119213862": {
+    "patient_id": "119213862",
+    "label": "LPD",
+    "prob": 0.055,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 15,
+    "right_n": 12,
+    "left_freq": 1.53,
+    "right_freq": 1.2,
+    "source": "bipd_reviewer_v1"
+  },
+  "119303867": {
+    "patient_id": "119303867",
+    "label": "GPD",
+    "prob": 0.897,
+    "model_pred": "BIPD",
+    "original_label": "GPD",
+    "left_n": 16,
+    "right_n": 12,
+    "left_freq": 1.68,
+    "right_freq": 1.26,
+    "source": "bipd_reviewer_v1"
+  },
+  "119345403": {
+    "patient_id": "119345403",
+    "label": "BIPD",
+    "prob": 0.537,
+    "model_pred": "BIPD",
+    "original_label": "GPD",
+    "left_n": 10,
+    "right_n": 15,
+    "left_freq": 1.26,
+    "right_freq": 1.43,
+    "source": "bipd_reviewer_v1"
+  },
+  "119505627": {
+    "patient_id": "119505627",
+    "label": "GPD",
+    "prob": 0.399,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 15,
+    "right_n": 12,
+    "left_freq": 1.51,
+    "right_freq": 1.08,
+    "source": "bipd_reviewer_v1"
+  },
+  "119653211": {
+    "patient_id": "119653211",
+    "label": "BIPD",
+    "prob": 0.881,
+    "model_pred": "BIPD",
+    "original_label": "BIPD",
+    "left_n": 9,
+    "right_n": 12,
+    "left_freq": 0.83,
+    "right_freq": 1.25,
+    "source": "bipd_reviewer_v1"
+  },
+  "122358048": {
+    "patient_id": "122358048",
+    "label": "BIPD",
+    "prob": 0.918,
+    "model_pred": "BIPD",
+    "original_label": "BIPD",
+    "left_n": 14,
+    "right_n": 12,
+    "left_freq": 1.36,
+    "right_freq": 1.21,
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002120816761_20181215184929": {
+    "patient_id": "sub-S0002120816761_20181215184929",
+    "label": "BIPD",
+    "prob": 0.96,
+    "model_pred": "BIPD",
+    "original_label": "BIPD",
+    "left_n": 9,
+    "right_n": 10,
+    "left_freq": 0.82,
+    "right_freq": 1.13,
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002114339824_20200425175140": {
+    "patient_id": "sub-S0002114339824_20200425175140",
+    "label": "BIPD",
+    "prob": 0.954,
+    "model_pred": "BIPD",
+    "original_label": "BIPD",
+    "left_n": 8,
+    "right_n": 13,
+    "left_freq": 0.79,
+    "right_freq": 1.31,
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002116517680_20211024060345": {
+    "patient_id": "sub-S0002116517680_20211024060345",
+    "label": "LPD",
+    "prob": 0.947,
+    "model_pred": "BIPD",
+    "original_label": "BIPD",
+    "left_n": 13,
+    "right_n": 15,
+    "left_freq": 1.32,
+    "right_freq": 1.54,
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002121259217_20130519142039": {
+    "patient_id": "sub-S0002121259217_20130519142039",
+    "label": "LPD",
+    "prob": 0.896,
+    "model_pred": "BIPD",
+    "original_label": "BIPD",
+    "left_n": 10,
+    "right_n": 9,
+    "left_freq": 1.1,
+    "right_freq": 0.95,
+    "source": "bipd_reviewer_v1"
+  },
+  "abn1967": {
+    "patient_id": "abn1967",
+    "label": "REJECT",
+    "prob": 0.849,
+    "model_pred": "BIPD",
+    "original_label": "GPD",
+    "left_n": 13,
+    "right_n": 13,
+    "left_freq": 1.25,
+    "right_freq": 1.25,
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002120901572_20190515204322": {
+    "patient_id": "sub-S0002120901572_20190515204322",
+    "label": "LPD",
+    "prob": 0.847,
+    "model_pred": "BIPD",
+    "original_label": "BIPD",
+    "left_n": 16,
+    "right_n": 14,
+    "left_freq": 1.71,
+    "right_freq": 1.4,
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150013479_20180607015225": {
+    "patient_id": "sub-I0002150013479_20180607015225",
+    "label": "GPD",
+    "prob": 0.812,
+    "model_pred": "BIPD",
+    "original_label": "BIPD",
+    "left_n": 14,
+    "right_n": 12,
+    "left_freq": 1.5,
+    "right_freq": 1.19,
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002117948402_20200717192022": {
+    "patient_id": "sub-S0002117948402_20200717192022",
+    "label": "BIPD",
+    "prob": 0.396,
+    "model_pred": "GPD",
+    "original_label": "BIPD",
+    "left_n": 11,
+    "right_n": 14,
+    "left_freq": 1.09,
+    "right_freq": 1.44,
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002120510928_20191003201840": {
+    "patient_id": "sub-S0002120510928_20191003201840",
+    "label": "GPD",
+    "prob": 0.214,
+    "model_pred": "GPD",
+    "original_label": "BIPD",
+    "left_n": 8,
+    "right_n": 8,
+    "left_freq": 0.84,
+    "right_freq": 0.83,
+    "source": "bipd_reviewer_v1"
+  },
+  "abn186": {
+    "patient_id": "abn186",
+    "label": "GPD",
+    "prob": 0.186,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 22,
+    "right_n": 20,
+    "left_freq": 2.3,
+    "right_freq": 2.02,
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002114339824_20200425114545": {
+    "patient_id": "sub-S0002114339824_20200425114545",
+    "label": "BIPD",
+    "prob": 0.141,
+    "model_pred": "GPD",
+    "original_label": "BIPD",
+    "left_n": 11,
+    "right_n": 10,
+    "left_freq": 1.04,
+    "right_freq": 1.05,
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002118242626_20171115165754": {
+    "patient_id": "sub-S0002118242626_20171115165754",
+    "label": "GPD",
+    "prob": 0.104,
+    "model_pred": "GPD",
+    "original_label": "BIPD",
+    "left_n": 12,
+    "right_n": 13,
+    "left_freq": 1.18,
+    "right_freq": 1.5,
+    "source": "bipd_reviewer_v1"
+  },
+  "abn4987": {
+    "patient_id": "abn4987",
+    "label": "LPD",
+    "prob": 0.061,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 13,
+    "right_n": 12,
+    "left_freq": 1.3,
+    "right_freq": 1.27,
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002117948402_20200717225122": {
+    "patient_id": "sub-S0002117948402_20200717225122",
+    "label": "GPD",
+    "prob": 0.054,
+    "model_pred": "GPD",
+    "original_label": "BIPD",
+    "left_n": 11,
+    "right_n": 14,
+    "left_freq": 1.1,
+    "right_freq": 1.27,
+    "source": "bipd_reviewer_v1"
+  },
+  "abn2336": {
+    "patient_id": "abn2336",
+    "label": "GPD",
+    "prob": 0.046,
+    "model_pred": "GPD",
+    "original_label": "GPD",
+    "left_n": 20,
+    "right_n": 20,
+    "left_freq": 2.22,
+    "right_freq": 2.2,
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002119210399_20191215002852": {
+    "patient_id": "sub-S0002119210399_20191215002852",
+    "label": "GPD",
+    "prob": 0.011,
+    "model_pred": "GPD",
+    "original_label": "BIPD",
+    "left_n": 0,
+    "right_n": 0,
+    "left_freq": 0,
+    "right_freq": 0,
+    "source": "bipd_reviewer_v1"
+  },
+  "117831375": {
+    "label": "GPD",
+    "patient_id": "117831375",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001114130469_20160622163314": {
+    "label": "BIPD",
+    "patient_id": "sub-S0001114130469_20160622163314",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150006548_20141217111239": {
+    "label": "GPD",
+    "patient_id": "sub-I0002150006548_20141217111239",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150003123_20200705204332": {
+    "label": "REJECT",
+    "patient_id": "sub-I0002150003123_20200705204332",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150018460_20201014154801": {
+    "label": "GPD",
+    "patient_id": "sub-I0002150018460_20201014154801",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002116190635_20221129012230": {
+    "label": "GPD",
+    "patient_id": "sub-S0002116190635_20221129012230",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002118926975_20210226064133": {
+    "label": "GPD",
+    "patient_id": "sub-S0002118926975_20210226064133",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002115315365_20181110135142": {
+    "label": "GPD",
+    "patient_id": "sub-S0002115315365_20181110135142",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001115905585_20150623192928": {
+    "label": "GPD",
+    "patient_id": "sub-S0001115905585_20150623192928",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002112379114_20201115120654": {
+    "label": "GPD",
+    "patient_id": "sub-S0002112379114_20201115120654",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002114186706_20180714062732": {
+    "label": "GPD",
+    "patient_id": "sub-S0002114186706_20180714062732",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150005117_20130203194108": {
+    "label": "GPD",
+    "patient_id": "sub-I0002150005117_20130203194108",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002118494477_20200409191837": {
+    "label": "GPD",
+    "patient_id": "sub-S0002118494477_20200409191837",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150017850_20190424202208": {
+    "label": "REJECT",
+    "patient_id": "sub-I0002150017850_20190424202208",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002116148076_20200410204839": {
+    "label": "GPD",
+    "patient_id": "sub-S0002116148076_20200410204839",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002113242777_20211004204356": {
+    "label": "GPD",
+    "patient_id": "sub-S0002113242777_20211004204356",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002113211663_20220110104204": {
+    "label": "GPD",
+    "patient_id": "sub-S0002113211663_20220110104204",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001120527022_20200228113039": {
+    "label": "GPD",
+    "patient_id": "sub-S0001120527022_20200228113039",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002113701838_20180209132225": {
+    "label": "GPD",
+    "patient_id": "sub-S0002113701838_20180209132225",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001113281624_20131025235654": {
+    "label": "GPD",
+    "patient_id": "sub-S0001113281624_20131025235654",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002117771691_20160706110731": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002117771691_20160706110731",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002111536239_20200311105823": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002111536239_20200311105823",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002115654680_20220830061244": {
+    "label": "GPD",
+    "patient_id": "sub-S0002115654680_20220830061244",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002116476153_20200930133051": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002116476153_20200930133051",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001117836323_20130722125043": {
+    "label": "LPD",
+    "patient_id": "sub-S0001117836323_20130722125043",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001113395259_20130708112150": {
+    "label": "REJECT",
+    "patient_id": "sub-S0001113395259_20130708112150",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002118689693_20201121143720": {
+    "label": "GPD",
+    "patient_id": "sub-S0002118689693_20201121143720",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002112694585_20190709220801": {
+    "label": "GPD",
+    "patient_id": "sub-S0002112694585_20190709220801",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001119028922_20170126212957": {
+    "label": "LPD",
+    "patient_id": "sub-S0001119028922_20170126212957",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002119376034_20180303075647": {
+    "label": "GPD",
+    "patient_id": "sub-S0002119376034_20180303075647",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001115259706_20210410062459": {
+    "label": "REJECT",
+    "patient_id": "sub-S0001115259706_20210410062459",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001111850562_20110922173551": {
+    "label": "GPD",
+    "patient_id": "sub-S0001111850562_20110922173551",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001113737926_20130220054906": {
+    "label": "GPD",
+    "patient_id": "sub-S0001113737926_20130220054906",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002118084871_20070329183227": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002118084871_20070329183227",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002113149433_20190605141907": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002113149433_20190605141907",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002111767453_20161201113104": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002111767453_20161201113104",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002120610836_20200427130639": {
+    "label": "GPD",
+    "patient_id": "sub-S0002120610836_20200427130639",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001111506750_20210916010619": {
+    "label": "GPD",
+    "patient_id": "sub-S0001111506750_20210916010619",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002112280460_20181103004600": {
+    "label": "GPD",
+    "patient_id": "sub-S0002112280460_20181103004600",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001122369080_20141017073542": {
+    "label": "GPD",
+    "patient_id": "sub-S0001122369080_20141017073542",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002117267802_20101008145528": {
+    "label": "GPD",
+    "patient_id": "sub-S0002117267802_20101008145528",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001120924099_20210724011857": {
+    "label": "GPD",
+    "patient_id": "sub-S0001120924099_20210724011857",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001111999308_20130710155817": {
+    "label": "LPD",
+    "patient_id": "sub-S0001111999308_20130710155817",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002113390229_20090501142732": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002113390229_20090501142732",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001111347552_20130716151134": {
+    "label": "GPD",
+    "patient_id": "sub-S0001111347552_20130716151134",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001116899763_20160411063225": {
+    "label": "GPD",
+    "patient_id": "sub-S0001116899763_20160411063225",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002117002830_20210414135035": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002117002830_20210414135035",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001116299360_20220613113430": {
+    "label": "GPD",
+    "patient_id": "sub-S0001116299360_20220613113430",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001118974837_20201019113915": {
+    "label": "GPD",
+    "patient_id": "sub-S0001118974837_20201019113915",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001116892755_20121102171850": {
+    "label": "REJECT",
+    "patient_id": "sub-S0001116892755_20121102171850",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001115362585_20141230031128": {
+    "label": "GPD",
+    "patient_id": "sub-S0001115362585_20141230031128",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001120965269_20171127093759": {
+    "label": "REJECT",
+    "patient_id": "sub-S0001120965269_20171127093759",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002121661721_20180522200913": {
+    "label": "GPD",
+    "patient_id": "sub-S0002121661721_20180522200913",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001121187998_20160816022503": {
+    "label": "GPD",
+    "patient_id": "sub-S0001121187998_20160816022503",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001118852605_20170108030028": {
+    "label": "LPD",
+    "patient_id": "sub-S0001118852605_20170108030028",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001118517220_20121004100321": {
+    "label": "LPD",
+    "patient_id": "sub-S0001118517220_20121004100321",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002120768016_20191009084916": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002120768016_20191009084916",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002111305662_20230317104009": {
+    "label": "GPD",
+    "patient_id": "sub-S0002111305662_20230317104009",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002115749331_20201004222211": {
+    "label": "GPD",
+    "patient_id": "sub-S0002115749331_20201004222211",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002111536616_20180507132008": {
+    "label": "GPD",
+    "patient_id": "sub-S0002111536616_20180507132008",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150010218_20150715115920": {
+    "label": "GPD",
+    "patient_id": "sub-I0002150010218_20150715115920",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002115208242_20090419173232": {
+    "label": "BIPD",
+    "patient_id": "sub-S0002115208242_20090419173232",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002112023704_20140129113802": {
+    "label": "GPD",
+    "patient_id": "sub-S0002112023704_20140129113802",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002113044045_20210112123212": {
+    "label": "GPD",
+    "patient_id": "sub-S0002113044045_20210112123212",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001120228926_20201001124339": {
+    "label": "REJECT",
+    "patient_id": "sub-S0001120228926_20201001124339",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002115115272_20201008184833": {
+    "label": "GPD",
+    "patient_id": "sub-S0002115115272_20201008184833",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001111758640_20191226082413": {
+    "label": "GPD",
+    "patient_id": "sub-S0001111758640_20191226082413",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001119394134_20190623212854": {
+    "label": "GPD",
+    "patient_id": "sub-S0001119394134_20190623212854",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001117902727_20190808173104": {
+    "label": "REJECT",
+    "patient_id": "sub-S0001117902727_20190808173104",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150002093_20161011153852": {
+    "label": "REJECT",
+    "patient_id": "sub-I0002150002093_20161011153852",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002122205040_20131118110240": {
+    "label": "GPD",
+    "patient_id": "sub-S0002122205040_20131118110240",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002114812310_20220610111350": {
+    "label": "GPD",
+    "patient_id": "sub-S0002114812310_20220610111350",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001117697450_20181128091114": {
+    "label": "REJECT",
+    "patient_id": "sub-S0001117697450_20181128091114",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150010212_20221130042417": {
+    "label": "GPD",
+    "patient_id": "sub-I0002150010212_20221130042417",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002121080800_20210104132920": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002121080800_20210104132920",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001111189188_20180610215723": {
+    "label": "GPD",
+    "patient_id": "sub-S0001111189188_20180610215723",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002120995216_20220118182857": {
+    "label": "GPD",
+    "patient_id": "sub-S0002120995216_20220118182857",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001115705370_20131115035118": {
+    "label": "GPD",
+    "patient_id": "sub-S0001115705370_20131115035118",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001114436040_20200705113542": {
+    "label": "GPD",
+    "patient_id": "sub-S0001114436040_20200705113542",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002111976323_20210921222506": {
+    "label": "GPD",
+    "patient_id": "sub-S0002111976323_20210921222506",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001114336744_20210503215733": {
+    "label": "GPD",
+    "patient_id": "sub-S0001114336744_20210503215733",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150017009_20170514165917": {
+    "label": "GPD",
+    "patient_id": "sub-I0002150017009_20170514165917",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001116256612_20200223180249": {
+    "label": "GPD",
+    "patient_id": "sub-S0001116256612_20200223180249",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001113988657_20130228181643": {
+    "label": "GPD",
+    "patient_id": "sub-S0001113988657_20130228181643",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002115975703_20180517122545": {
+    "label": "GPD",
+    "patient_id": "sub-S0002115975703_20180517122545",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002120881227_20180526154544": {
+    "label": "GPD",
+    "patient_id": "sub-S0002120881227_20180526154544",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002113803080_20160425100146": {
+    "label": "GPD",
+    "patient_id": "sub-S0002113803080_20160425100146",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002122282693_20181124190400": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002122282693_20181124190400",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002116196579_20150219133210": {
+    "label": "GPD",
+    "patient_id": "sub-S0002116196579_20150219133210",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002121949400_20211019165152": {
+    "label": "GPD",
+    "patient_id": "sub-S0002121949400_20211019165152",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002116747668_20200404232819": {
+    "label": "GPD",
+    "patient_id": "sub-S0002116747668_20200404232819",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001114525154_20190706140204": {
+    "label": "GPD",
+    "patient_id": "sub-S0001114525154_20190706140204",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002116555912_20070604164204": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002116555912_20070604164204",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002113747686_20190331093306": {
+    "label": "GPD",
+    "patient_id": "sub-S0002113747686_20190331093306",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001114448538_20140114144650": {
+    "label": "REJECT",
+    "patient_id": "sub-S0001114448538_20140114144650",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002120905801_20180928004844": {
+    "label": "GPD",
+    "patient_id": "sub-S0002120905801_20180928004844",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001118439222_20200206073020": {
+    "label": "GPD",
+    "patient_id": "sub-S0001118439222_20200206073020",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002111897337_20210303233426": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002111897337_20210303233426",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001118074762_20170329143335": {
+    "label": "GPD",
+    "patient_id": "sub-S0001118074762_20170329143335",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002114600555_20150103102723": {
+    "label": "GPD",
+    "patient_id": "sub-S0002114600555_20150103102723",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001117629732_20101101141855": {
+    "label": "GPD",
+    "patient_id": "sub-S0001117629732_20101101141855",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150012085_20180929123006": {
+    "label": "GPD",
+    "patient_id": "sub-I0002150012085_20180929123006",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002121898956_20191018180940": {
+    "label": "GPD",
+    "patient_id": "sub-S0002121898956_20191018180940",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001118965615_20211130165431": {
+    "label": "GPD",
+    "patient_id": "sub-S0001118965615_20211130165431",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150001700_20230726185148": {
+    "label": "GPD",
+    "patient_id": "sub-I0002150001700_20230726185148",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001115856096_20210201070344": {
+    "label": "GPD",
+    "patient_id": "sub-S0001115856096_20210201070344",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002113960931_20230317181016": {
+    "label": "GPD",
+    "patient_id": "sub-S0002113960931_20230317181016",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001114941943_20200219131301": {
+    "label": "GPD",
+    "patient_id": "sub-S0001114941943_20200219131301",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150012462_20211210010420": {
+    "label": "REJECT",
+    "patient_id": "sub-I0002150012462_20211210010420",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001118943811_20200419165110": {
+    "label": "GPD",
+    "patient_id": "sub-S0001118943811_20200419165110",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001121513366_20230626111734": {
+    "label": "REJECT",
+    "patient_id": "sub-S0001121513366_20230626111734",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150015220_20190821035432": {
+    "label": "GPD",
+    "patient_id": "sub-I0002150015220_20190821035432",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001121066937_20140617155714": {
+    "label": "GPD",
+    "patient_id": "sub-S0001121066937_20140617155714",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001122103596_20150807121813": {
+    "label": "GPD",
+    "patient_id": "sub-S0001122103596_20150807121813",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002113713841_20170912104556": {
+    "label": "GPD",
+    "patient_id": "sub-S0002113713841_20170912104556",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001121012633_20130916203912": {
+    "label": "REJECT",
+    "patient_id": "sub-S0001121012633_20130916203912",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001111507285_20190219152344": {
+    "label": "GPD",
+    "patient_id": "sub-S0001111507285_20190219152344",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002119220251_20150428101235": {
+    "label": "GPD",
+    "patient_id": "sub-S0002119220251_20150428101235",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002116526757_20200312020032": {
+    "label": "GPD",
+    "patient_id": "sub-S0002116526757_20200312020032",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001122197499_20220208190033": {
+    "label": "GPD",
+    "patient_id": "sub-S0001122197499_20220208190033",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001119125007_20151230080924": {
+    "label": "GPD",
+    "patient_id": "sub-S0001119125007_20151230080924",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002115765859_20151220105137": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002115765859_20151220105137",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002114695412_20160930165700": {
+    "label": "GPD",
+    "patient_id": "sub-S0002114695412_20160930165700",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001113047788_20160801012408": {
+    "label": "REJECT",
+    "patient_id": "sub-S0001113047788_20160801012408",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001111600685_20150522081545": {
+    "label": "GPD",
+    "patient_id": "sub-S0001111600685_20150522081545",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001114830234_20141103235446": {
+    "label": "GPD",
+    "patient_id": "sub-S0001114830234_20141103235446",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002121353688_20210609120805": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002121353688_20210609120805",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002116235375_20200130072011": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002116235375_20200130072011",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150020727_20230829032314": {
+    "label": "REJECT",
+    "patient_id": "sub-I0002150020727_20230829032314",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001113850524_20140914100903": {
+    "label": "GPD",
+    "patient_id": "sub-S0001113850524_20140914100903",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001120300041_20190417075516": {
+    "label": "GPD",
+    "patient_id": "sub-S0001120300041_20190417075516",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150002544_20230405032514": {
+    "label": "GPD",
+    "patient_id": "sub-I0002150002544_20230405032514",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002119650841_20200119200745": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002119650841_20200119200745",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001115606516_20140830232705": {
+    "label": "GPD",
+    "patient_id": "sub-S0001115606516_20140830232705",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002120802300_20210215233452": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002120802300_20210215233452",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150015866_20210912053117": {
+    "label": "GPD",
+    "patient_id": "sub-I0002150015866_20210912053117",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002113855995_20160610081434": {
+    "label": "LPD",
+    "patient_id": "sub-S0002113855995_20160610081434",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002112536146_20220121111216": {
+    "label": "GPD",
+    "patient_id": "sub-S0002112536146_20220121111216",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001117556407_20140526100944": {
+    "label": "REJECT",
+    "patient_id": "sub-S0001117556407_20140526100944",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001118303249_20120806140649": {
+    "label": "REJECT",
+    "patient_id": "sub-S0001118303249_20120806140649",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-I0002150000684_20191227004707": {
+    "label": "GPD",
+    "patient_id": "sub-I0002150000684_20191227004707",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002119566276_20200126124242": {
+    "label": "GPD",
+    "patient_id": "sub-S0002119566276_20200126124242",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002115024580_20210325100753": {
+    "label": "REJECT",
+    "patient_id": "sub-S0002115024580_20210325100753",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0002120756725_20200814060236": {
+    "label": "GPD",
+    "patient_id": "sub-S0002120756725_20200814060236",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  },
+  "sub-S0001115700707_20210408035839": {
+    "label": "GPD",
+    "patient_id": "sub-S0001115700707_20210408035839",
+    "original_label": "GPD",
+    "source": "bipd_reviewer_v1"
+  }
+}

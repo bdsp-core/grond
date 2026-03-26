@@ -1,0 +1,6278 @@
+{
+  "111228901_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111228901_other_seg000.mat",
+      "111228901_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111233135_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111233135_other_seg000.mat",
+      "111233135_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111311033": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "111311033_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "111317668_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111317668_other_seg000.mat",
+      "111317668_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111322785_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111322785_other_seg000.mat",
+      "111322785_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111331666_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111331666_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "111345828_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111345828_other_seg000.mat",
+      "111345828_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111358752_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111358752_other_seg000.mat",
+      "111358752_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111376848_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111376848_other_seg000.mat",
+      "111376848_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111377113_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111377113_other_seg000.mat",
+      "111377113_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111390615_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111390615_other_seg000.mat",
+      "111390615_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111398629_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111398629_other_seg000.mat",
+      "111398629_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111409460": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "111409460_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "111410344_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111410344_other_seg000.mat",
+      "111410344_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111431508": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "111431508_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "111438035_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111438035_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "111459843_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111459843_other_seg000.mat",
+      "111459843_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111527470_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111527470_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "111557252": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "111557252_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "111573876_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111573876_other_seg000.mat",
+      "111573876_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111574799_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111574799_other_seg000.mat",
+      "111574799_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111604561_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111604561_other_seg000.mat",
+      "111604561_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111620717_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111620717_other_seg000.mat",
+      "111620717_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111630617_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111630617_other_seg000.mat",
+      "111630617_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111644367_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111644367_other_seg000.mat",
+      "111644367_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111653185_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111653185_other_seg000.mat",
+      "111653185_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111654290": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "111654290_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "111666045_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111666045_other_seg000.mat",
+      "111666045_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111696263_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111696263_other_seg000.mat",
+      "111696263_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111711377_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111711377_other_seg000.mat",
+      "111711377_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111732106": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "111732106_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "111737948_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111737948_other_seg000.mat",
+      "111737948_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111763954_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111763954_other_seg000.mat",
+      "111763954_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111771293_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111771293_other_seg000.mat",
+      "111771293_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111797529": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "111797529_seg001.mat",
+      "111797529_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "111814286_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111814286_other_seg000.mat",
+      "111814286_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111825368": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "111825368_seg001.mat",
+      "111825368_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "111853198_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111853198_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "111854544_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111854544_other_seg000.mat",
+      "111854544_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111856885_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111856885_other_seg000.mat",
+      "111856885_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111894444": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "111894444_seg001.mat",
+      "111894444_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "111931002_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111931002_other_seg000.mat",
+      "111931002_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111954062_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111954062_other_seg000.mat",
+      "111954062_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111958090_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111958090_other_seg000.mat",
+      "111958090_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111966482_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111966482_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "111986347_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111986347_other_seg000.mat",
+      "111986347_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "111990918_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "111990918_other_seg000.mat",
+      "111990918_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112048732": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "112048732_seg001.mat",
+      "112048732_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "112048732_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112048732_other_seg000.mat",
+      "112048732_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112063659_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112063659_other_seg000.mat",
+      "112063659_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112067477": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "112067477_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "112067477_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112067477_other_seg000.mat",
+      "112067477_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112071693_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112071693_other_seg000.mat",
+      "112071693_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112081011_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112081011_other_seg000.mat",
+      "112081011_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112111925": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "112111925_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "112111925_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112111925_other_seg000.mat",
+      "112111925_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112180222_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112180222_other_seg000.mat",
+      "112180222_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112188865_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112188865_other_seg000.mat",
+      "112188865_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112192419_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112192419_other_seg000.mat",
+      "112192419_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112223406_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112223406_other_seg000.mat",
+      "112223406_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112223440_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112223440_other_seg000.mat",
+      "112223440_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112253094_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112253094_other_seg000.mat",
+      "112253094_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112254652": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "112254652_seg001.mat",
+      "112254652_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "112254652_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112254652_other_seg000.mat",
+      "112254652_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112265826": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "112265826_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "112265826_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112265826_other_seg000.mat",
+      "112265826_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112270073": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "112270073_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "112289437_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112289437_other_seg000.mat",
+      "112289437_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112303445_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112303445_other_seg000.mat",
+      "112303445_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112320308_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112320308_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "112327953": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "112327953_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "112330251_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112330251_other_seg000.mat",
+      "112330251_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112340533": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "112340533_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "112349525_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112349525_other_seg000.mat",
+      "112349525_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112355543_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112355543_other_seg000.mat",
+      "112355543_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112361897_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112361897_other_seg000.mat",
+      "112361897_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112404719_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112404719_other_seg000.mat",
+      "112404719_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112473636_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112473636_other_seg000.mat",
+      "112473636_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112478972_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112478972_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "112484489_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112484489_other_seg000.mat",
+      "112484489_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112495882_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112495882_other_seg000.mat",
+      "112495882_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112503547_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112503547_other_seg000.mat",
+      "112503547_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112516364_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112516364_other_seg000.mat",
+      "112516364_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112532395": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "112532395_seg001.mat",
+      "112532395_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "112532395_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112532395_other_seg000.mat",
+      "112532395_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112556543_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112556543_other_seg000.mat",
+      "112556543_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112570324_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112570324_other_seg000.mat",
+      "112570324_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112590697_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112590697_other_seg000.mat",
+      "112590697_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112670616_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112670616_other_seg000.mat",
+      "112670616_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112726553_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112726553_other_seg000.mat",
+      "112726553_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112734980_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112734980_other_seg000.mat",
+      "112734980_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112745249_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112745249_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "112745775_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112745775_other_seg000.mat",
+      "112745775_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112749675_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112749675_other_seg000.mat",
+      "112749675_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112760940_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112760940_other_seg000.mat",
+      "112760940_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112766056_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112766056_other_seg000.mat",
+      "112766056_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112780133_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112780133_other_seg000.mat",
+      "112780133_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112785016_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112785016_other_seg000.mat",
+      "112785016_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112812669_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112812669_other_seg000.mat",
+      "112812669_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112832961": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "112832961_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "112855570_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112855570_other_seg000.mat",
+      "112855570_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112907266": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "112907266_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "112924503_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112924503_other_seg000.mat",
+      "112924503_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112940745_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112940745_other_seg000.mat",
+      "112940745_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112945009": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "112945009_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "112950356_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112950356_other_seg000.mat",
+      "112950356_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112954969_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112954969_other_seg000.mat",
+      "112954969_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112970535_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112970535_other_seg000.mat",
+      "112970535_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112976653_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112976653_other_seg000.mat",
+      "112976653_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112988128_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112988128_other_seg000.mat",
+      "112988128_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "112988385_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "112988385_other_seg000.mat",
+      "112988385_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113006603": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "113006603_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "113070195_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113070195_other_seg000.mat",
+      "113070195_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113070772_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113070772_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "113126594_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113126594_other_seg000.mat",
+      "113126594_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113170780": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "113170780_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "113170780_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113170780_other_seg000.mat",
+      "113170780_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113202239_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113202239_other_seg000.mat",
+      "113202239_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113214177_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113214177_other_seg000.mat",
+      "113214177_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113230251_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113230251_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "113235464_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113235464_other_seg000.mat",
+      "113235464_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113242869": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "113242869_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "113274160_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113274160_other_seg000.mat",
+      "113274160_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113293921_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113293921_other_seg000.mat",
+      "113293921_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113303024_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113303024_other_seg000.mat",
+      "113303024_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113311198_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113311198_other_seg000.mat",
+      "113311198_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113321343": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "113321343_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "113325402_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113325402_other_seg000.mat",
+      "113325402_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113329761": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "113329761_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "113334813_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113334813_other_seg000.mat",
+      "113334813_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113338971": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "113338971_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "113357565_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113357565_other_seg000.mat",
+      "113357565_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113377533_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113377533_other_seg000.mat",
+      "113377533_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113395308_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113395308_other_seg000.mat",
+      "113395308_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113428349_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113428349_other_seg000.mat",
+      "113428349_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113479458_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113479458_other_seg000.mat",
+      "113479458_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113486629_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113486629_other_seg000.mat",
+      "113486629_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113489508": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "113489508_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "113492685": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "113492685_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "113509262_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113509262_other_seg000.mat",
+      "113509262_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113513065_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113513065_other_seg000.mat",
+      "113513065_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113522370": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "113522370_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "113564007_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113564007_other_seg000.mat",
+      "113564007_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113582207_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113582207_other_seg000.mat",
+      "113582207_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113632957": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "113632957_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "113633025_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113633025_other_seg000.mat",
+      "113633025_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113650077_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113650077_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "113678084_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113678084_other_seg000.mat",
+      "113678084_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113705272_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113705272_other_seg000.mat",
+      "113705272_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113719306_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113719306_other_seg000.mat",
+      "113719306_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113720932_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113720932_other_seg000.mat",
+      "113720932_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113740466_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113740466_other_seg000.mat",
+      "113740466_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113740907_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113740907_other_seg000.mat",
+      "113740907_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113748199_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113748199_other_seg000.mat",
+      "113748199_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113750687_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113750687_other_seg000.mat",
+      "113750687_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113752338_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113752338_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "113771779_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113771779_other_seg000.mat",
+      "113771779_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113798382_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113798382_other_seg000.mat",
+      "113798382_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113815218_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113815218_other_seg000.mat",
+      "113815218_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113815393_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113815393_other_seg000.mat",
+      "113815393_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113844921": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "113844921_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "113853701_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113853701_other_seg000.mat",
+      "113853701_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113882795_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113882795_other_seg000.mat",
+      "113882795_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113944265": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "113944265_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "113953268_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113953268_other_seg000.mat",
+      "113953268_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113955867_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113955867_other_seg000.mat",
+      "113955867_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113986650_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113986650_other_seg000.mat",
+      "113986650_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "113988657_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "113988657_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "114082063": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114082063_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "114082063_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114082063_other_seg000.mat",
+      "114082063_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114089562": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114089562_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "114100764_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114100764_other_seg000.mat",
+      "114100764_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114103460_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114103460_other_seg000.mat",
+      "114103460_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114123118": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114123118_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "114190760_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114190760_other_seg000.mat",
+      "114190760_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114210421_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114210421_other_seg000.mat",
+      "114210421_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114247764_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114247764_other_seg000.mat",
+      "114247764_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114249951_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114249951_other_seg000.mat",
+      "114249951_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114260131_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114260131_other_seg000.mat",
+      "114260131_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114304092_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114304092_other_seg000.mat",
+      "114304092_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114333212_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114333212_other_seg000.mat",
+      "114333212_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114354179": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114354179_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "114354179_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114354179_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "114381330": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114381330_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "114384892_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114384892_other_seg000.mat",
+      "114384892_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114390195_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114390195_other_seg000.mat",
+      "114390195_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114433509_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114433509_other_seg000.mat",
+      "114433509_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114448538_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114448538_other_seg000.mat",
+      "114448538_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114486508_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114486508_other_seg000.mat",
+      "114486508_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114495014_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114495014_other_seg000.mat",
+      "114495014_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114518010": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114518010_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "114518010_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114518010_other_seg000.mat",
+      "114518010_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114526418_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114526418_other_seg000.mat",
+      "114526418_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114593169": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114593169_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "114598637_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114598637_other_seg000.mat",
+      "114598637_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114602560_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114602560_other_seg000.mat",
+      "114602560_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114605879_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114605879_other_seg000.mat",
+      "114605879_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114622284_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114622284_other_seg000.mat",
+      "114622284_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114624179": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114624179_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "114634736_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114634736_other_seg000.mat",
+      "114634736_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114659382_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114659382_other_seg000.mat",
+      "114659382_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114672401_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114672401_other_seg000.mat",
+      "114672401_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114679633": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114679633_seg001.mat",
+      "114679633_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "114679633_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114679633_other_seg000.mat",
+      "114679633_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114692055_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114692055_other_seg000.mat",
+      "114692055_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114740835_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114740835_other_seg000.mat",
+      "114740835_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114750690_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114750690_other_seg000.mat",
+      "114750690_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114760473_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114760473_other_seg000.mat",
+      "114760473_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114774083_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114774083_other_seg000.mat",
+      "114774083_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114778057": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114778057_seg001.mat",
+      "114778057_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "114780261_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114780261_other_seg000.mat",
+      "114780261_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114846532": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114846532_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "114848960": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114848960_seg001.mat",
+      "114848960_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "114848960_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114848960_other_seg000.mat",
+      "114848960_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114850629_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114850629_other_seg000.mat",
+      "114850629_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114851109_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114851109_other_seg000.mat",
+      "114851109_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114865119_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114865119_other_seg000.mat",
+      "114865119_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114880987": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114880987_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "114892705_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114892705_other_seg000.mat",
+      "114892705_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114900141_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114900141_other_seg000.mat",
+      "114900141_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114925655": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114925655_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "114925655_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114925655_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "114937952_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114937952_other_seg000.mat",
+      "114937952_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114938862_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114938862_other_seg000.mat",
+      "114938862_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114948017_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114948017_other_seg000.mat",
+      "114948017_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114952313": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114952313_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "114952727_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114952727_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "114952867_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "114952867_other_seg000.mat",
+      "114952867_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "114974145": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "114974145_seg001.mat",
+      "114974145_seg002.mat",
+      "114974145_seg003.mat",
+      "114974145_seg004.mat"
+    ],
+    "n_segments": 4
+  },
+  "115007936_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115007936_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "115020956": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115020956_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "115020956_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115020956_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "115037171": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115037171_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "115041105": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115041105_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "115045180": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115045180_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "115107185_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115107185_other_seg000.mat",
+      "115107185_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115111045_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115111045_other_seg000.mat",
+      "115111045_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115111303_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115111303_other_seg000.mat",
+      "115111303_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115221148_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115221148_other_seg000.mat",
+      "115221148_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115256999_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115256999_other_seg000.mat",
+      "115256999_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115280615_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115280615_other_seg000.mat",
+      "115280615_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115283672_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115283672_other_seg000.mat",
+      "115283672_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115291103_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115291103_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "115300272_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115300272_other_seg000.mat",
+      "115300272_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115300798": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115300798_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "115301566_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115301566_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "115365077_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115365077_other_seg000.mat",
+      "115365077_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115372505_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115372505_other_seg000.mat",
+      "115372505_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115416041_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115416041_other_seg000.mat",
+      "115416041_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115428657": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115428657_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "115432826_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115432826_other_seg000.mat",
+      "115432826_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115435179_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115435179_other_seg000.mat",
+      "115435179_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115437226_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115437226_other_seg000.mat",
+      "115437226_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115491809_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115491809_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "115504150": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115504150_seg001.mat",
+      "115504150_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "115504150_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115504150_other_seg000.mat",
+      "115504150_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115545964_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115545964_other_seg000.mat",
+      "115545964_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115549647_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115549647_other_seg000.mat",
+      "115549647_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115550555_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115550555_other_seg000.mat",
+      "115550555_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115552705_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115552705_other_seg000.mat",
+      "115552705_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115578250_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115578250_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "115578391_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115578391_other_seg000.mat",
+      "115578391_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115586985_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115586985_other_seg000.mat",
+      "115586985_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115601423_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115601423_other_seg000.mat",
+      "115601423_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115614279": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115614279_seg001.mat",
+      "115614279_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "115614279_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115614279_other_seg000.mat",
+      "115614279_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115633229": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115633229_seg001.mat",
+      "115633229_seg002.mat",
+      "115633229_seg003.mat"
+    ],
+    "n_segments": 3
+  },
+  "115638131_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115638131_other_seg000.mat",
+      "115638131_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115658435_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115658435_other_seg000.mat",
+      "115658435_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115684861_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115684861_other_seg000.mat",
+      "115684861_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115721641": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115721641_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "115733351_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115733351_other_seg000.mat",
+      "115733351_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115743665": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115743665_seg001.mat",
+      "115743665_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "115751822_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115751822_other_seg000.mat",
+      "115751822_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115754475": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115754475_seg001.mat",
+      "115754475_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "115777305_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115777305_other_seg000.mat",
+      "115777305_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115790878_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115790878_other_seg000.mat",
+      "115790878_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115791704": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115791704_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "115849513_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115849513_other_seg000.mat",
+      "115849513_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115858440": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115858440_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "115861457_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115861457_other_seg000.mat",
+      "115861457_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115866325_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115866325_other_seg000.mat",
+      "115866325_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115878716_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115878716_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "115902478_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115902478_other_seg000.mat",
+      "115902478_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115905585_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115905585_other_seg000.mat",
+      "115905585_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115908538_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115908538_other_seg000.mat",
+      "115908538_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "115920343": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115920343_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "115945388": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "115945388_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "115956069_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "115956069_other_seg000.mat",
+      "115956069_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116002749_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116002749_other_seg000.mat",
+      "116002749_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116022127_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116022127_other_seg000.mat",
+      "116022127_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116036574_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116036574_other_seg000.mat",
+      "116036574_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116051233_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116051233_other_seg000.mat",
+      "116051233_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116064158": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "116064158_seg001.mat",
+      "116064158_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "116081587": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "116081587_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "116090222": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "116090222_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "116097328_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116097328_other_seg000.mat",
+      "116097328_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116101588_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116101588_other_seg000.mat",
+      "116101588_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116104999_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116104999_other_seg000.mat",
+      "116104999_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116135404_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116135404_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "116137434_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116137434_other_seg000.mat",
+      "116137434_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116139728_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116139728_other_seg000.mat",
+      "116139728_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116139896_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116139896_other_seg000.mat",
+      "116139896_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116145873": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "116145873_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "116145873_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116145873_other_seg000.mat",
+      "116145873_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116158627": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "116158627_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "116177138_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116177138_other_seg000.mat",
+      "116177138_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116188075_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116188075_other_seg000.mat",
+      "116188075_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116232512_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116232512_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "116239673_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116239673_other_seg000.mat",
+      "116239673_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116254595_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116254595_other_seg000.mat",
+      "116254595_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116263695_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116263695_other_seg000.mat",
+      "116263695_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116292324": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "116292324_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "116369912_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116369912_other_seg000.mat",
+      "116369912_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116423393_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116423393_other_seg000.mat",
+      "116423393_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116433635_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116433635_other_seg000.mat",
+      "116433635_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116448449_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116448449_other_seg000.mat",
+      "116448449_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116468801": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "116468801_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "116481075": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "116481075_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "116482256": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "116482256_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "116482256_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116482256_other_seg000.mat",
+      "116482256_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116486952_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116486952_other_seg000.mat",
+      "116486952_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116516550": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "116516550_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "116521572": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "116521572_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "116526595_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116526595_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "116535575_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116535575_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "116540565_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116540565_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "116544022_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116544022_other_seg000.mat",
+      "116544022_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116572371_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116572371_other_seg000.mat",
+      "116572371_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116618864": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "116618864_seg001.mat",
+      "116618864_seg002.mat",
+      "116618864_seg003.mat",
+      "116618864_seg004.mat"
+    ],
+    "n_segments": 4
+  },
+  "116618864_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116618864_other_seg000.mat",
+      "116618864_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116655529_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116655529_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "116679103_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116679103_other_seg000.mat",
+      "116679103_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116691939_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116691939_other_seg000.mat",
+      "116691939_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116697707_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116697707_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "116710244_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116710244_other_seg000.mat",
+      "116710244_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116711869_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116711869_other_seg000.mat",
+      "116711869_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116713991_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116713991_other_seg000.mat",
+      "116713991_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116794560": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "116794560_seg001.mat",
+      "116794560_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "116794560_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116794560_other_seg000.mat",
+      "116794560_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116821413_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116821413_other_seg000.mat",
+      "116821413_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116850192_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116850192_other_seg000.mat",
+      "116850192_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116857559": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "116857559_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "116872944_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116872944_other_seg000.mat",
+      "116872944_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116876412_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116876412_other_seg000.mat",
+      "116876412_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116881817_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116881817_other_seg000.mat",
+      "116881817_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116887887_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116887887_other_seg000.mat",
+      "116887887_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116890618_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116890618_other_seg000.mat",
+      "116890618_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116892755_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116892755_other_seg000.mat",
+      "116892755_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116912233_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116912233_other_seg000.mat",
+      "116912233_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116920836_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116920836_other_seg000.mat",
+      "116920836_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "116921824": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "116921824_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "116978458_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "116978458_other_seg000.mat",
+      "116978458_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117023980_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117023980_other_seg000.mat",
+      "117023980_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117041943_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117041943_other_seg000.mat",
+      "117041943_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117069047_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117069047_other_seg000.mat",
+      "117069047_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117074171_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117074171_other_seg000.mat",
+      "117074171_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117119770_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117119770_other_seg000.mat",
+      "117119770_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117150088": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "117150088_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "117150088_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117150088_other_seg000.mat",
+      "117150088_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117155971_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117155971_other_seg000.mat",
+      "117155971_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117161684": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117161684_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "117164933_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117164933_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "117193666_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117193666_other_seg000.mat",
+      "117193666_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117208459_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117208459_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "117210578": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "117210578_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "117219230_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117219230_other_seg000.mat",
+      "117219230_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117231268_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117231268_other_seg000.mat",
+      "117231268_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117241128_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117241128_other_seg000.mat",
+      "117241128_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117244438": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "117244438_seg001.mat",
+      "117244438_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "117252068_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117252068_other_seg000.mat",
+      "117252068_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117281040_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117281040_other_seg000.mat",
+      "117281040_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117301366_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117301366_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "117307111_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117307111_other_seg000.mat",
+      "117307111_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117329546_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117329546_other_seg000.mat",
+      "117329546_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117344584_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117344584_other_seg000.mat",
+      "117344584_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117365394_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117365394_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "117372427": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "117372427_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "117397017": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "117397017_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "117403245_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117403245_other_seg000.mat",
+      "117403245_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117413318_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117413318_other_seg000.mat",
+      "117413318_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117478067_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117478067_other_seg000.mat",
+      "117478067_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117479453": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "117479453_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "117511039_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117511039_other_seg000.mat",
+      "117511039_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117520843_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117520843_other_seg000.mat",
+      "117520843_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117525395_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117525395_other_seg000.mat",
+      "117525395_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117530962": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "117530962_seg001.mat",
+      "117530962_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "117530962_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117530962_other_seg000.mat",
+      "117530962_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117554128_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117554128_other_seg000.mat",
+      "117554128_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117561112_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117561112_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "117570284_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117570284_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "117593630_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117593630_other_seg000.mat",
+      "117593630_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117610118": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "117610118_seg001.mat",
+      "117610118_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "117610663_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117610663_other_seg000.mat",
+      "117610663_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117629659_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117629659_other_seg000.mat",
+      "117629659_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117639770_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117639770_other_seg000.mat",
+      "117639770_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117654910": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "117654910_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "117714911_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117714911_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "117755865": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "117755865_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "117766650_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117766650_other_seg000.mat",
+      "117766650_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117775874_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117775874_other_seg000.mat",
+      "117775874_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117834348_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117834348_other_seg000.mat",
+      "117834348_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117845526_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117845526_other_seg000.mat",
+      "117845526_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117853162_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117853162_other_seg000.mat",
+      "117853162_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117885308_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117885308_other_seg000.mat",
+      "117885308_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117892234": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "117892234_seg001.mat",
+      "117892234_seg002.mat",
+      "117892234_seg003.mat",
+      "117892234_seg004.mat"
+    ],
+    "n_segments": 4
+  },
+  "117898389_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117898389_other_seg000.mat",
+      "117898389_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117936577_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117936577_other_seg000.mat",
+      "117936577_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117950642": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "117950642_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "117958433_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117958433_other_seg000.mat",
+      "117958433_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117964827_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117964827_other_seg000.mat",
+      "117964827_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "117984366_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "117984366_other_seg000.mat",
+      "117984366_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118025064_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118025064_other_seg000.mat",
+      "118025064_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118031498": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118031498_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "118034053_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118034053_other_seg000.mat",
+      "118034053_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118052161": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118052161_seg001.mat",
+      "118052161_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "118079071": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118079071_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "118100880_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118100880_other_seg000.mat",
+      "118100880_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118101479": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118101479_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "118109236_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118109236_other_seg000.mat",
+      "118109236_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118132805_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118132805_other_seg000.mat",
+      "118132805_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118168335_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118168335_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "118228584": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118228584_seg001.mat",
+      "118228584_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "118237237_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118237237_other_seg000.mat",
+      "118237237_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118268290_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118268290_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "118280216": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118280216_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "118287927": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118287927_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "118291069_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118291069_other_seg000.mat",
+      "118291069_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118299724_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118299724_other_seg000.mat",
+      "118299724_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118306421_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118306421_other_seg000.mat",
+      "118306421_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118357575_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118357575_other_seg000.mat",
+      "118357575_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118395315": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118395315_seg001.mat",
+      "118395315_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "118395315_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118395315_other_seg000.mat",
+      "118395315_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118402351_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118402351_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "118403877_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118403877_other_seg000.mat",
+      "118403877_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118415620_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118415620_other_seg000.mat",
+      "118415620_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118436066_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118436066_other_seg000.mat",
+      "118436066_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118472172_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118472172_other_seg000.mat",
+      "118472172_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118478754_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118478754_other_seg000.mat",
+      "118478754_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118523854_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118523854_other_seg000.mat",
+      "118523854_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118545020": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118545020_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "118545483": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118545483_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "118575544_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118575544_other_seg000.mat",
+      "118575544_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118647560_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118647560_other_seg000.mat",
+      "118647560_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118680139": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118680139_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "118686136": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118686136_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "118754833": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118754833_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "118757445_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118757445_other_seg000.mat",
+      "118757445_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118768388_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118768388_other_seg000.mat",
+      "118768388_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118805307_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118805307_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "118805598_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118805598_other_seg000.mat",
+      "118805598_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118821700_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118821700_other_seg000.mat",
+      "118821700_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118861836": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118861836_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "118878639": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118878639_seg001.mat",
+      "118878639_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "118879137_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118879137_other_seg000.mat",
+      "118879137_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118883201": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118883201_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "118905512": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118905512_seg001.mat",
+      "118905512_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "118920221": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118920221_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "118971732_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118971732_other_seg000.mat",
+      "118971732_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118979187": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118979187_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "118981195_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118981195_other_seg000.mat",
+      "118981195_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118994021_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "118994021_other_seg000.mat",
+      "118994021_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "118994999": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "118994999_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "119049586_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119049586_other_seg000.mat",
+      "119049586_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119118878": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119118878_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "119125007_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119125007_other_seg000.mat",
+      "119125007_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119163140_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119163140_other_seg000.mat",
+      "119163140_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119171475": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119171475_seg001.mat",
+      "119171475_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "119219929": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119219929_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "119251890_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119251890_other_seg000.mat",
+      "119251890_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119274068_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119274068_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "119275828": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119275828_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "119298572_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119298572_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "119303867_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119303867_other_seg000.mat",
+      "119303867_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119331440_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119331440_other_seg000.mat",
+      "119331440_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119339836_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119339836_other_seg000.mat",
+      "119339836_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119341966_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119341966_other_seg000.mat",
+      "119341966_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119345403_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119345403_other_seg000.mat",
+      "119345403_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119347372_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119347372_other_seg000.mat",
+      "119347372_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119366775_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119366775_other_seg000.mat",
+      "119366775_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119381333_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119381333_other_seg000.mat",
+      "119381333_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119395052_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119395052_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "119415639_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119415639_other_seg000.mat",
+      "119415639_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119482337_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119482337_other_seg000.mat",
+      "119482337_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119535739_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119535739_other_seg000.mat",
+      "119535739_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119550056": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119550056_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "119550056_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119550056_other_seg000.mat",
+      "119550056_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119560745_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119560745_other_seg000.mat",
+      "119560745_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119568823": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119568823_seg001.mat",
+      "119568823_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "119568823_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119568823_other_seg000.mat",
+      "119568823_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119571671_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119571671_other_seg000.mat",
+      "119571671_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119581080_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119581080_other_seg000.mat",
+      "119581080_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119653211": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119653211_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "119659818": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119659818_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "119663160": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119663160_seg001.mat",
+      "119663160_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "119663160_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119663160_other_seg000.mat",
+      "119663160_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119684694": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119684694_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "119684694_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119684694_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "119694086": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119694086_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "119697539": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119697539_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "119736168_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119736168_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "119738076_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119738076_other_seg000.mat",
+      "119738076_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119757583": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119757583_seg001.mat",
+      "119757583_seg002.mat",
+      "119757583_seg003.mat"
+    ],
+    "n_segments": 3
+  },
+  "119757583_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119757583_other_seg000.mat",
+      "119757583_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119761659": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119761659_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "119762301_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119762301_other_seg000.mat",
+      "119762301_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119795274_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119795274_other_seg000.mat",
+      "119795274_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119795775": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119795775_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "119802455_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119802455_other_seg000.mat",
+      "119802455_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119823465_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119823465_other_seg000.mat",
+      "119823465_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119842509": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119842509_seg001.mat",
+      "119842509_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "119860572_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119860572_other_seg000.mat",
+      "119860572_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119865122_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119865122_other_seg000.mat",
+      "119865122_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119894423": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119894423_seg001.mat",
+      "119894423_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "119894969_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119894969_other_seg000.mat",
+      "119894969_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119909399_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119909399_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "119929728": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119929728_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "119943918_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119943918_other_seg000.mat",
+      "119943918_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119959330_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119959330_other_seg000.mat",
+      "119959330_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119967686_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119967686_other_seg000.mat",
+      "119967686_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119968618": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "119968618_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "119978033_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119978033_other_seg000.mat",
+      "119978033_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "119983828_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "119983828_other_seg000.mat",
+      "119983828_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120017285_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120017285_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "120033729": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120033729_seg001.mat",
+      "120033729_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "120035761": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120035761_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120042237_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120042237_other_seg000.mat",
+      "120042237_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120061261_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120061261_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "120064899_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120064899_other_seg000.mat",
+      "120064899_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120082772_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120082772_other_seg000.mat",
+      "120082772_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120094713": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120094713_seg001.mat",
+      "120094713_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "120094713_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120094713_other_seg000.mat",
+      "120094713_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120105436_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120105436_other_seg000.mat",
+      "120105436_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120139318_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120139318_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "120146477_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120146477_other_seg000.mat",
+      "120146477_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120149988": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120149988_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120149988_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120149988_other_seg000.mat",
+      "120149988_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120169089_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120169089_other_seg000.mat",
+      "120169089_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120177161_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120177161_other_seg000.mat",
+      "120177161_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120184508": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120184508_seg001.mat",
+      "120184508_seg002.mat",
+      "120184508_seg003.mat"
+    ],
+    "n_segments": 3
+  },
+  "120187615_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120187615_other_seg000.mat",
+      "120187615_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120195655": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120195655_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120238478_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120238478_other_seg000.mat",
+      "120238478_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120252636": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120252636_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120252636_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120252636_other_seg000.mat",
+      "120252636_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120257599": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120257599_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120259692_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120259692_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "120269248_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120269248_other_seg000.mat",
+      "120269248_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120298138_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120298138_other_seg000.mat",
+      "120298138_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120336611_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120336611_other_seg000.mat",
+      "120336611_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120390182": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120390182_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120406999": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120406999_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120422252_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120422252_other_seg000.mat",
+      "120422252_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120429743_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120429743_other_seg000.mat",
+      "120429743_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120437474_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120437474_other_seg000.mat",
+      "120437474_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120448480": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120448480_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120494002_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120494002_other_seg000.mat",
+      "120494002_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120508658_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120508658_other_seg000.mat",
+      "120508658_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120522841_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120522841_other_seg000.mat",
+      "120522841_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120524369_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120524369_other_seg000.mat",
+      "120524369_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120527446": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120527446_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "120561347": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120561347_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "120568881_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120568881_other_seg000.mat",
+      "120568881_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120600679_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120600679_other_seg000.mat",
+      "120600679_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120606316_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120606316_other_seg000.mat",
+      "120606316_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120609101": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120609101_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120615411_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120615411_other_seg000.mat",
+      "120615411_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120615474": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120615474_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120620158_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120620158_other_seg000.mat",
+      "120620158_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120639677": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120639677_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120640588_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120640588_other_seg000.mat",
+      "120640588_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120678399": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120678399_seg001.mat",
+      "120678399_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "120708229_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120708229_other_seg000.mat",
+      "120708229_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120710363": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120710363_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120771430": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120771430_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120777713_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120777713_other_seg000.mat",
+      "120777713_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120791680_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120791680_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "120804802_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120804802_other_seg000.mat",
+      "120804802_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120810665": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120810665_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120813052_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120813052_other_seg000.mat",
+      "120813052_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120830766": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120830766_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120873416_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120873416_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "120894651": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120894651_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120894651_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120894651_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "120899581_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120899581_other_seg000.mat",
+      "120899581_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120911685": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120911685_seg001.mat",
+      "120911685_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "120911685_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120911685_other_seg000.mat",
+      "120911685_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120938085_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120938085_other_seg000.mat",
+      "120938085_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120940521_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "120940521_other_seg000.mat",
+      "120940521_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "120968171": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120968171_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "120975001": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "120975001_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "121003457_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121003457_other_seg000.mat",
+      "121003457_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121012633_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121012633_other_seg000.mat",
+      "121012633_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121015195": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121015195_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "121025033": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121025033_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "121041552": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121041552_seg001.mat",
+      "121041552_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "121041552_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121041552_other_seg000.mat",
+      "121041552_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121074416_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121074416_other_seg000.mat",
+      "121074416_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121107545_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121107545_other_seg000.mat",
+      "121107545_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121110201_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121110201_other_seg000.mat",
+      "121110201_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121119593_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121119593_other_seg000.mat",
+      "121119593_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121120911": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121120911_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "121123926_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121123926_other_seg000.mat",
+      "121123926_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121130499_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121130499_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "121185693_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121185693_other_seg000.mat",
+      "121185693_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121195646": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121195646_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "121223249": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121223249_seg001.mat",
+      "121223249_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "121223249_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121223249_other_seg000.mat",
+      "121223249_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121228525": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121228525_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "121242513": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121242513_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "121246362_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121246362_other_seg000.mat",
+      "121246362_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121250605_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121250605_other_seg000.mat",
+      "121250605_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121259805": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121259805_seg001.mat",
+      "121259805_seg002.mat",
+      "121259805_seg003.mat"
+    ],
+    "n_segments": 3
+  },
+  "121274388": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121274388_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "121288232": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121288232_seg001.mat",
+      "121288232_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "121288232_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121288232_other_seg000.mat",
+      "121288232_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121291695_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121291695_other_seg000.mat",
+      "121291695_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121298131": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121298131_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "121298232_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121298232_other_seg000.mat",
+      "121298232_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121305525_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121305525_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "121387452": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121387452_seg001.mat",
+      "121387452_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "121396750_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121396750_other_seg000.mat",
+      "121396750_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121406679": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121406679_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "121431082_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121431082_other_seg000.mat",
+      "121431082_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121448513_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121448513_other_seg000.mat",
+      "121448513_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121469215": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121469215_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "121486111_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121486111_other_seg000.mat",
+      "121486111_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121496793_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121496793_other_seg000.mat",
+      "121496793_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121535858": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121535858_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "121542613": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121542613_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "121542613_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121542613_other_seg000.mat",
+      "121542613_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121558523_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121558523_other_seg000.mat",
+      "121558523_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121566365": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121566365_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "121597276_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121597276_other_seg000.mat",
+      "121597276_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121603095": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121603095_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "121668017": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121668017_seg001.mat",
+      "121668017_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "121712117_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121712117_other_seg000.mat",
+      "121712117_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121713086_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121713086_other_seg000.mat",
+      "121713086_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121714009": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121714009_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "121731063": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121731063_seg001.mat",
+      "121731063_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "121731063_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121731063_other_seg000.mat",
+      "121731063_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121732289": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121732289_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "121734508_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121734508_other_seg000.mat",
+      "121734508_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121766925_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121766925_other_seg000.mat",
+      "121766925_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121771965_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121771965_other_seg000.mat",
+      "121771965_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121777871": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121777871_seg001.mat",
+      "121777871_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "121777871_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121777871_other_seg000.mat",
+      "121777871_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121791637_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121791637_other_seg000.mat",
+      "121791637_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121793555": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121793555_seg000.mat",
+      "121793555_seg001.mat",
+      "121793555_seg002.mat"
+    ],
+    "n_segments": 3
+  },
+  "121793555_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121793555_other_seg000.mat",
+      "121793555_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121823505": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121823505_seg001.mat",
+      "121823505_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "121823505_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121823505_other_seg000.mat",
+      "121823505_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121833771_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121833771_other_seg000.mat",
+      "121833771_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121834951_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121834951_other_seg000.mat",
+      "121834951_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121850230_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121850230_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "121862098": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121862098_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "121873688_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121873688_other_seg000.mat",
+      "121873688_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121893202_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121893202_other_seg000.mat",
+      "121893202_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121899890": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121899890_seg001.mat",
+      "121899890_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "121899890_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121899890_other_seg000.mat",
+      "121899890_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121913343": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121913343_seg001.mat",
+      "121913343_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "121923223_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121923223_other_seg000.mat",
+      "121923223_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121928674": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121928674_seg001.mat",
+      "121928674_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "121928674_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121928674_other_seg000.mat",
+      "121928674_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121948667_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121948667_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "121958927": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121958927_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "121959738_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121959738_other_seg000.mat",
+      "121959738_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121961286": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121961286_seg001.mat",
+      "121961286_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "121961286_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121961286_other_seg000.mat",
+      "121961286_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "121989868": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "121989868_seg001.mat",
+      "121989868_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "121989868_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "121989868_other_seg000.mat",
+      "121989868_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122003328_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122003328_other_seg000.mat",
+      "122003328_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122030650": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "122030650_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "122030650_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122030650_other_seg000.mat",
+      "122030650_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122068288_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122068288_other_seg000.mat",
+      "122068288_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122076625_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122076625_other_seg000.mat",
+      "122076625_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122091669": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "122091669_seg001.mat",
+      "122091669_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "122093197": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "122093197_seg001.mat",
+      "122093197_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "122097447": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "122097447_seg001.mat",
+      "122097447_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "122097447_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122097447_other_seg000.mat",
+      "122097447_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122098299_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122098299_other_seg000.mat",
+      "122098299_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122103596_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122103596_other_seg000.mat",
+      "122103596_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122129412_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122129412_other_seg000.mat",
+      "122129412_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122143296_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122143296_other_seg000.mat",
+      "122143296_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122165161": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "122165161_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "122187014": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "122187014_seg001.mat",
+      "122187014_seg002.mat",
+      "122187014_seg003.mat",
+      "122187014_seg004.mat"
+    ],
+    "n_segments": 4
+  },
+  "122187014_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122187014_other_seg000.mat",
+      "122187014_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122203746_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122203746_other_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "122231868_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122231868_other_seg000.mat",
+      "122231868_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122237157": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "122237157_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "122248657_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122248657_other_seg000.mat",
+      "122248657_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122265867": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "122265867_seg001.mat",
+      "122265867_seg002.mat",
+      "122265867_seg003.mat",
+      "122265867_seg004.mat"
+    ],
+    "n_segments": 4
+  },
+  "122265867_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122265867_other_seg000.mat",
+      "122265867_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122277075": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "122277075_seg001.mat",
+      "122277075_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "122277075_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122277075_other_seg000.mat",
+      "122277075_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122281741_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122281741_other_seg000.mat",
+      "122281741_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122282805": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "122282805_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "122316953_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122316953_other_seg000.mat",
+      "122316953_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122319152": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "122319152_seg001.mat"
+    ],
+    "n_segments": 1
+  },
+  "122325150_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122325150_other_seg000.mat",
+      "122325150_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122327443_other": {
+    "in_harvest_manifest": false,
+    "in_patients_csv": false,
+    "mat_files": [
+      "122327443_other_seg000.mat",
+      "122327443_other_seg001.mat"
+    ],
+    "n_segments": 2
+  },
+  "122327724": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "122327724_seg001.mat",
+      "122327724_seg002.mat"
+    ],
+    "n_segments": 2
+  },
+  "122358048": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "122358048_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "122363522": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "122363522_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-I0002150013479_20180607015225": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-I0002150013479_20180607015225_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-I0003175191344_20230920123104": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-I0003175191344_20230920123104_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-I0003175307613_20130823133219": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-I0003175307613_20130823133219_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-S0002112141773_20190417220842": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-S0002112141773_20190417220842_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-S0002114339824_20200425114545": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-S0002114339824_20200425114545_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-S0002114339824_20200425175140": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-S0002114339824_20200425175140_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-S0002116517680_20211024060345": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-S0002116517680_20211024060345_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-S0002117149183_20180917173903": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-S0002117149183_20180917173903_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-S0002117948402_20200717192022": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-S0002117948402_20200717192022_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-S0002117948402_20200717225122": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-S0002117948402_20200717225122_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-S0002118242626_20171115165754": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-S0002118242626_20171115165754_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-S0002119210399_20191215002852": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-S0002119210399_20191215002852_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-S0002120510928_20191003201840": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-S0002120510928_20191003201840_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-S0002120816761_20181215184929": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-S0002120816761_20181215184929_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-S0002120901572_20190515204322": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-S0002120901572_20190515204322_seg000.mat"
+    ],
+    "n_segments": 1
+  },
+  "sub-S0002121259217_20130519142039": {
+    "in_harvest_manifest": true,
+    "in_patients_csv": true,
+    "mat_files": [
+      "sub-S0002121259217_20130519142039_seg000.mat"
+    ],
+    "n_segments": 1
+  }
+}

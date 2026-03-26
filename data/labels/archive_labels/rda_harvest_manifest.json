@@ -1,0 +1,8462 @@
+{
+  "121992402": {
+    "patient_id": "121992402",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121992402_20130410091353.mat",
+    "est_freq": null
+  },
+  "122231868": {
+    "patient_id": "122231868",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122231868_20150301181354.mat",
+    "est_freq": null
+  },
+  "112361918": {
+    "patient_id": "112361918",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      2,
+      1,
+      0,
+      9,
+      0
+    ],
+    "n_experts": 12,
+    "s3_file": "sub-S0001112361918_20140915092233.mat",
+    "est_freq": null
+  },
+  "122237157": {
+    "patient_id": "122237157",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122237157_20150211150737.mat",
+    "est_freq": null
+  },
+  "122237157_seg001": {
+    "patient_id": "122237157",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122237157_20150211151235.mat",
+    "est_freq": null
+  },
+  "114230751": {
+    "patient_id": "114230751",
+    "subtype": "lrda",
+    "expert_votes": [
+      4,
+      0,
+      3,
+      0,
+      5,
+      2
+    ],
+    "n_experts": 14,
+    "s3_file": "sub-S0001114230751_20170818221356.mat",
+    "est_freq": null
+  },
+  "121930933": {
+    "patient_id": "121930933",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121930933_20180927121313.mat",
+    "est_freq": null
+  },
+  "117264190": {
+    "patient_id": "117264190",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117264190_20180807120312.mat",
+    "est_freq": null
+  },
+  "115633229": {
+    "patient_id": "115633229",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      1,
+      0,
+      12,
+      0
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001115633229_20190719143934.mat",
+    "est_freq": null
+  },
+  "115633229_seg001": {
+    "patient_id": "115633229",
+    "subtype": "lrda",
+    "expert_votes": [
+      6,
+      0,
+      0,
+      0,
+      9,
+      1
+    ],
+    "n_experts": 16,
+    "s3_file": "sub-S0001115633229_20190719144734.mat",
+    "est_freq": null
+  },
+  "115633229_seg002": {
+    "patient_id": "115633229",
+    "subtype": "lrda",
+    "expert_votes": [
+      5,
+      0,
+      0,
+      0,
+      8,
+      0
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001115633229_20190719145816.mat",
+    "est_freq": null
+  },
+  "115633229_seg003": {
+    "patient_id": "115633229",
+    "subtype": "lrda",
+    "expert_votes": [
+      4,
+      0,
+      0,
+      0,
+      9,
+      0
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001115633229_20190719145832.mat",
+    "est_freq": null
+  },
+  "119929728": {
+    "patient_id": "119929728",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119929728_20151215204424.mat",
+    "est_freq": null
+  },
+  "119929728_seg001": {
+    "patient_id": "119929728",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119929728_20151215145604.mat",
+    "est_freq": null
+  },
+  "122265867": {
+    "patient_id": "122265867",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      1,
+      0,
+      12,
+      0
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001122265867_20131125192411.mat",
+    "est_freq": null
+  },
+  "122265867_seg001": {
+    "patient_id": "122265867",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122265867_20131125200009.mat",
+    "est_freq": null
+  },
+  "122265867_seg002": {
+    "patient_id": "122265867",
+    "subtype": "lrda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122265867_20131125144605.mat",
+    "est_freq": null
+  },
+  "122265867_seg003": {
+    "patient_id": "122265867",
+    "subtype": "lrda",
+    "expert_votes": [
+      3,
+      0,
+      0,
+      0,
+      12,
+      5
+    ],
+    "n_experts": 20,
+    "s3_file": "sub-S0001122265867_20131126060015.mat",
+    "est_freq": null
+  },
+  "122265867_seg004": {
+    "patient_id": "122265867",
+    "subtype": "lrda",
+    "expert_votes": [
+      3,
+      1,
+      1,
+      3,
+      10,
+      2
+    ],
+    "n_experts": 20,
+    "s3_file": "sub-S0001122265867_20131126061429.mat",
+    "est_freq": null
+  },
+  "120462621": {
+    "patient_id": "120462621",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      6,
+      1,
+      0,
+      9,
+      0
+    ],
+    "n_experts": 16,
+    "s3_file": "sub-S0001120462621_20120108170451.mat",
+    "est_freq": null
+  },
+  "114974145": {
+    "patient_id": "114974145",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114974145_20171215094734.mat",
+    "est_freq": null
+  },
+  "114974145_seg001": {
+    "patient_id": "114974145",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114974145_20171215094548.mat",
+    "est_freq": null
+  },
+  "114974145_seg002": {
+    "patient_id": "114974145",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114974145_20180116212509.mat",
+    "est_freq": null
+  },
+  "114974145_seg003": {
+    "patient_id": "114974145",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114974145_20180116221313.mat",
+    "est_freq": null
+  },
+  "114974145_seg004": {
+    "patient_id": "114974145",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114974145_20180116225645.mat",
+    "est_freq": null
+  },
+  "121899890": {
+    "patient_id": "121899890",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121899890_20180224000014.mat",
+    "est_freq": null
+  },
+  "121899890_seg001": {
+    "patient_id": "121899890",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121899890_20180224015646.mat",
+    "est_freq": null
+  },
+  "121899890_seg002": {
+    "patient_id": "121899890",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121899890_20180225065507.mat",
+    "est_freq": null
+  },
+  "116145873": {
+    "patient_id": "116145873",
+    "subtype": "lrda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116145873_20150121204439.mat",
+    "est_freq": null
+  },
+  "116145873_seg001": {
+    "patient_id": "116145873",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116145873_20150122164611.mat",
+    "est_freq": null
+  },
+  "120606316": {
+    "patient_id": "120606316",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      1,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120606316_20151101133250.mat",
+    "est_freq": null
+  },
+  "120670610": {
+    "patient_id": "120670610",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120670610_20190828121558.mat",
+    "est_freq": null
+  },
+  "114082063": {
+    "patient_id": "114082063",
+    "subtype": "lrda",
+    "expert_votes": [
+      5,
+      0,
+      0,
+      0,
+      8,
+      2
+    ],
+    "n_experts": 15,
+    "s3_file": "sub-S0001114082063_20150316230221.mat",
+    "est_freq": null
+  },
+  "114082063_seg001": {
+    "patient_id": "114082063",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114082063_20150316141717.mat",
+    "est_freq": null
+  },
+  "117405123": {
+    "patient_id": "117405123",
+    "subtype": "lrda",
+    "expert_votes": [
+      3,
+      0,
+      1,
+      0,
+      8,
+      1
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001117405123_20141013162259.mat",
+    "est_freq": null
+  },
+  "122098299": {
+    "patient_id": "122098299",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      1,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122098299_20150617140101.mat",
+    "est_freq": null
+  },
+  "114880987": {
+    "patient_id": "114880987",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114880987_20140102092925.mat",
+    "est_freq": null
+  },
+  "114880987_seg001": {
+    "patient_id": "114880987",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114880987_20140102093921.mat",
+    "est_freq": null
+  },
+  "114385157": {
+    "patient_id": "114385157",
+    "subtype": "lrda",
+    "expert_votes": [
+      5,
+      0,
+      1,
+      0,
+      7,
+      0
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001114385157_20200118130733.mat",
+    "est_freq": null
+  },
+  "120544668": {
+    "patient_id": "120544668",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120544668_20190318121025.mat",
+    "est_freq": null
+  },
+  "114121769": {
+    "patient_id": "114121769",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114121769_20191112181545.mat",
+    "est_freq": null
+  },
+  "121784542": {
+    "patient_id": "121784542",
+    "subtype": "lrda",
+    "expert_votes": [
+      3,
+      1,
+      0,
+      0,
+      10,
+      0
+    ],
+    "n_experts": 14,
+    "s3_file": "sub-S0001121784542_20160920210046.mat",
+    "est_freq": null
+  },
+  "118474985": {
+    "patient_id": "118474985",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118474985_20111202113759.mat",
+    "est_freq": null
+  },
+  "122036915": {
+    "patient_id": "122036915",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122036915_20140916091913.mat",
+    "est_freq": null
+  },
+  "121073437": {
+    "patient_id": "121073437",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121073437_20171202162855.mat",
+    "est_freq": null
+  },
+  "122097447": {
+    "patient_id": "122097447",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      1,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122097447_20140913005925.mat",
+    "est_freq": null
+  },
+  "122097447_seg001": {
+    "patient_id": "122097447",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      1,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122097447_20140913031621.mat",
+    "est_freq": null
+  },
+  "122097447_seg002": {
+    "patient_id": "122097447",
+    "subtype": "lrda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122097447_20140913142510.mat",
+    "est_freq": null
+  },
+  "121486111": {
+    "patient_id": "121486111",
+    "subtype": "lrda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121486111_20130521234843.mat",
+    "est_freq": null
+  },
+  "122253264": {
+    "patient_id": "122253264",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122253264_20150924093811.mat",
+    "est_freq": null
+  },
+  "116892755": {
+    "patient_id": "116892755",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      1,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116892755_20130605200438.mat",
+    "est_freq": null
+  },
+  "121444127": {
+    "patient_id": "121444127",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121444127_20190912133931.mat",
+    "est_freq": null
+  },
+  "120144648": {
+    "patient_id": "120144648",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120144648_20170426144242.mat",
+    "est_freq": null
+  },
+  "119934311": {
+    "patient_id": "119934311",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119934311_20140814165847.mat",
+    "est_freq": null
+  },
+  "119894423": {
+    "patient_id": "119894423",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119894423_20120930135952.mat",
+    "est_freq": null
+  },
+  "119894423_seg001": {
+    "patient_id": "119894423",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119894423_20120930141404.mat",
+    "est_freq": null
+  },
+  "119894423_seg002": {
+    "patient_id": "119894423",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119894423_20121017111821.mat",
+    "est_freq": null
+  },
+  "121714009": {
+    "patient_id": "121714009",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121714009_20200704144123.mat",
+    "est_freq": null
+  },
+  "121714009_seg001": {
+    "patient_id": "121714009",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121714009_20200704152129.mat",
+    "est_freq": null
+  },
+  "115071408": {
+    "patient_id": "115071408",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115071408_20140616113643.mat",
+    "est_freq": null
+  },
+  "121557604": {
+    "patient_id": "121557604",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121557604_20130209170200.mat",
+    "est_freq": null
+  },
+  "120184508": {
+    "patient_id": "120184508",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120184508_20150523115313.mat",
+    "est_freq": null
+  },
+  "120184508_seg001": {
+    "patient_id": "120184508",
+    "subtype": "lrda",
+    "expert_votes": [
+      7,
+      1,
+      4,
+      0,
+      8,
+      0
+    ],
+    "n_experts": 20,
+    "s3_file": "sub-S0001120184508_20150523151915.mat",
+    "est_freq": null
+  },
+  "120184508_seg002": {
+    "patient_id": "120184508",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      1,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120184508_20150524035536.mat",
+    "est_freq": null
+  },
+  "120184508_seg003": {
+    "patient_id": "120184508",
+    "subtype": "lrda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120184508_20150524073656.mat",
+    "est_freq": null
+  },
+  "113979454": {
+    "patient_id": "113979454",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113979454_20190127101627.mat",
+    "est_freq": null
+  },
+  "119757583": {
+    "patient_id": "119757583",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119757583_20141117123015.mat",
+    "est_freq": null
+  },
+  "119757583_seg001": {
+    "patient_id": "119757583",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119757583_20141117132131.mat",
+    "est_freq": null
+  },
+  "119757583_seg002": {
+    "patient_id": "119757583",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119757583_20141118055827.mat",
+    "est_freq": null
+  },
+  "119757583_seg003": {
+    "patient_id": "119757583",
+    "subtype": "lrda",
+    "expert_votes": [
+      5,
+      3,
+      0,
+      0,
+      7,
+      0
+    ],
+    "n_experts": 15,
+    "s3_file": "sub-S0001119757583_20141128100300.mat",
+    "est_freq": null
+  },
+  "114848960": {
+    "patient_id": "114848960",
+    "subtype": "grda",
+    "expert_votes": [
+      6,
+      0,
+      0,
+      10,
+      0,
+      11
+    ],
+    "n_experts": 27,
+    "s3_file": "sub-S0001114848960_20120224094037.mat",
+    "est_freq": null
+  },
+  "114848960_seg001": {
+    "patient_id": "114848960",
+    "subtype": "grda",
+    "expert_votes": [
+      4,
+      0,
+      0,
+      2,
+      0,
+      11
+    ],
+    "n_experts": 17,
+    "s3_file": "sub-S0001114848960_20120224094301.mat",
+    "est_freq": null
+  },
+  "115026355": {
+    "patient_id": "115026355",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115026355_20120428141649.mat",
+    "est_freq": null
+  },
+  "120907798": {
+    "patient_id": "120907798",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120907798_20190325082734.mat",
+    "est_freq": null
+  },
+  "118905512": {
+    "patient_id": "118905512",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118905512_20160115143407.mat",
+    "est_freq": null
+  },
+  "118905512_seg001": {
+    "patient_id": "118905512",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118905512_20160115092837.mat",
+    "est_freq": null
+  },
+  "118905512_seg002": {
+    "patient_id": "118905512",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118905512_20160115103717.mat",
+    "est_freq": null
+  },
+  "117892234": {
+    "patient_id": "117892234",
+    "subtype": "lrda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117892234_20171021114006.mat",
+    "est_freq": null
+  },
+  "117892234_seg001": {
+    "patient_id": "117892234",
+    "subtype": "lrda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117892234_20171022011504.mat",
+    "est_freq": null
+  },
+  "117892234_seg002": {
+    "patient_id": "117892234",
+    "subtype": "lrda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117892234_20171022025424.mat",
+    "est_freq": null
+  },
+  "117892234_seg003": {
+    "patient_id": "117892234",
+    "subtype": "lrda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117892234_20171022030140.mat",
+    "est_freq": null
+  },
+  "117892234_seg004": {
+    "patient_id": "117892234",
+    "subtype": "lrda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117892234_20171022031540.mat",
+    "est_freq": null
+  },
+  "121958927": {
+    "patient_id": "121958927",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121958927_20180206112228.mat",
+    "est_freq": null
+  },
+  "121958927_seg001": {
+    "patient_id": "121958927",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121958927_20180206113226.mat",
+    "est_freq": null
+  },
+  "122327724": {
+    "patient_id": "122327724",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122327724_20111121051835.mat",
+    "est_freq": null
+  },
+  "122187014": {
+    "patient_id": "122187014",
+    "subtype": "lrda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122187014_20150522071932.mat",
+    "est_freq": null
+  },
+  "122187014_seg001": {
+    "patient_id": "122187014",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122187014_20150522150604.mat",
+    "est_freq": null
+  },
+  "122187014_seg002": {
+    "patient_id": "122187014",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122187014_20150522154232.mat",
+    "est_freq": null
+  },
+  "122187014_seg003": {
+    "patient_id": "122187014",
+    "subtype": "lrda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122187014_20150522132654.mat",
+    "est_freq": null
+  },
+  "122187014_seg004": {
+    "patient_id": "122187014",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122187014_20150522133340.mat",
+    "est_freq": null
+  },
+  "121259805": {
+    "patient_id": "121259805",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121259805_20170106102509.mat",
+    "est_freq": null
+  },
+  "121259805_seg001": {
+    "patient_id": "121259805",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121259805_20170106103459.mat",
+    "est_freq": null
+  },
+  "121259805_seg002": {
+    "patient_id": "121259805",
+    "subtype": "lrda",
+    "expert_votes": [
+      2,
+      1,
+      0,
+      0,
+      9,
+      0
+    ],
+    "n_experts": 12,
+    "s3_file": "sub-S0001121259805_20170106232032.mat",
+    "est_freq": null
+  },
+  "121259805_seg003": {
+    "patient_id": "121259805",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121259805_20170106180838.mat",
+    "est_freq": null
+  },
+  "116618864": {
+    "patient_id": "116618864",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116618864_20141219103934.mat",
+    "est_freq": null
+  },
+  "116618864_seg001": {
+    "patient_id": "116618864",
+    "subtype": "lrda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116618864_20141218161310.mat",
+    "est_freq": null
+  },
+  "116618864_seg002": {
+    "patient_id": "116618864",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116618864_20141218164356.mat",
+    "est_freq": null
+  },
+  "116618864_seg003": {
+    "patient_id": "116618864",
+    "subtype": "lrda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116618864_20141218174446.mat",
+    "est_freq": null
+  },
+  "116618864_seg004": {
+    "patient_id": "116618864",
+    "subtype": "lrda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116618864_20141218185142.mat",
+    "est_freq": null
+  },
+  "121111649": {
+    "patient_id": "121111649",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121111649_20191204053257.mat",
+    "est_freq": null
+  },
+  "122364204": {
+    "patient_id": "122364204",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122364204_20130819075544.mat",
+    "est_freq": null
+  },
+  "118878639": {
+    "patient_id": "118878639",
+    "subtype": "lrda",
+    "expert_votes": [
+      7,
+      0,
+      0,
+      0,
+      11,
+      0
+    ],
+    "n_experts": 18,
+    "s3_file": "sub-S0001118878639_20150220212929.mat",
+    "est_freq": null
+  },
+  "118878639_seg001": {
+    "patient_id": "118878639",
+    "subtype": "lrda",
+    "expert_votes": [
+      6,
+      0,
+      0,
+      0,
+      7,
+      0
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001118878639_20150221030741.mat",
+    "est_freq": null
+  },
+  "118878639_seg002": {
+    "patient_id": "118878639",
+    "subtype": "lrda",
+    "expert_votes": [
+      2,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 5,
+    "s3_file": "sub-S0001118878639_20150221104312.mat",
+    "est_freq": null
+  },
+  "121558523": {
+    "patient_id": "121558523",
+    "subtype": "lrda",
+    "expert_votes": [
+      3,
+      1,
+      4,
+      0,
+      10,
+      0
+    ],
+    "n_experts": 18,
+    "s3_file": "sub-S0001121558523_20150428083426.mat",
+    "est_freq": null
+  },
+  "120448480": {
+    "patient_id": "120448480",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120448480_20181007181714.mat",
+    "est_freq": null
+  },
+  "120448480_seg001": {
+    "patient_id": "120448480",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120448480_20181008120737.mat",
+    "est_freq": null
+  },
+  "121224635": {
+    "patient_id": "121224635",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121224635_20180516113714.mat",
+    "est_freq": null
+  },
+  "122030650": {
+    "patient_id": "122030650",
+    "subtype": "grda",
+    "expert_votes": [
+      3,
+      6,
+      0,
+      0,
+      0,
+      10
+    ],
+    "n_experts": 19,
+    "s3_file": "sub-S0001122030650_20130705182901.mat",
+    "est_freq": null
+  },
+  "122030650_seg001": {
+    "patient_id": "122030650",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      3,
+      0
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122030650_20130705182257.mat",
+    "est_freq": null
+  },
+  "119219929": {
+    "patient_id": "119219929",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119219929_20151019173931.mat",
+    "est_freq": null
+  },
+  "119219929_seg001": {
+    "patient_id": "119219929",
+    "subtype": "lrda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      2,
+      1
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119219929_20151020052437.mat",
+    "est_freq": null
+  },
+  "113740466": {
+    "patient_id": "113740466",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113740466_20140317132546.mat",
+    "est_freq": null
+  },
+  "118545483": {
+    "patient_id": "118545483",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118545483_20171026012059.mat",
+    "est_freq": null
+  },
+  "118545483_seg001": {
+    "patient_id": "118545483",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118545483_20171026015131.mat",
+    "est_freq": null
+  },
+  "113560517": {
+    "patient_id": "113560517",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113560517_20130504085935.mat",
+    "est_freq": null
+  },
+  "119694086": {
+    "patient_id": "119694086",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119694086_20160729173920.mat",
+    "est_freq": null
+  },
+  "119694086_seg001": {
+    "patient_id": "119694086",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119694086_20160729181616.mat",
+    "est_freq": null
+  },
+  "111825368": {
+    "patient_id": "111825368",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111825368_20190621134751.mat",
+    "est_freq": null
+  },
+  "111825368_seg001": {
+    "patient_id": "111825368",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111825368_20190621134839.mat",
+    "est_freq": null
+  },
+  "111825368_seg002": {
+    "patient_id": "111825368",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111825368_20190621151145.mat",
+    "est_freq": null
+  },
+  "113805043": {
+    "patient_id": "113805043",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113805043_20161118210349.mat",
+    "est_freq": null
+  },
+  "119275828": {
+    "patient_id": "119275828",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119275828_20180906010425.mat",
+    "est_freq": null
+  },
+  "119275828_seg001": {
+    "patient_id": "119275828",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119275828_20180906011215.mat",
+    "est_freq": null
+  },
+  "115349875": {
+    "patient_id": "115349875",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115349875_20191220144200.mat",
+    "est_freq": null
+  },
+  "120195655": {
+    "patient_id": "120195655",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120195655_20191208111206.mat",
+    "est_freq": null
+  },
+  "120195655_seg001": {
+    "patient_id": "120195655",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120195655_20191208111536.mat",
+    "est_freq": null
+  },
+  "120940521": {
+    "patient_id": "120940521",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120940521_20141203112748.mat",
+    "est_freq": null
+  },
+  "113321343": {
+    "patient_id": "113321343",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113321343_20141224173801.mat",
+    "est_freq": null
+  },
+  "113321343_seg001": {
+    "patient_id": "113321343",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113321343_20141224213217.mat",
+    "est_freq": null
+  },
+  "117147671": {
+    "patient_id": "117147671",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117147671_20110308061051.mat",
+    "est_freq": null
+  },
+  "120842222": {
+    "patient_id": "120842222",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120842222_20170316094819.mat",
+    "est_freq": null
+  },
+  "114303130": {
+    "patient_id": "114303130",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114303130_20190820185036.mat",
+    "est_freq": null
+  },
+  "120968171": {
+    "patient_id": "120968171",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120968171_20200623141940.mat",
+    "est_freq": null
+  },
+  "120968171_seg001": {
+    "patient_id": "120968171",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120968171_20200623082436.mat",
+    "est_freq": null
+  },
+  "111654290": {
+    "patient_id": "111654290",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111654290_20140511080115.mat",
+    "est_freq": null
+  },
+  "111654290_seg001": {
+    "patient_id": "111654290",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111654290_20140511141637.mat",
+    "est_freq": null
+  },
+  "121001537": {
+    "patient_id": "121001537",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121001537_20161227173934.mat",
+    "est_freq": null
+  },
+  "121374669": {
+    "patient_id": "121374669",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121374669_20180507175014.mat",
+    "est_freq": null
+  },
+  "115291874": {
+    "patient_id": "115291874",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115291874_20190501125924.mat",
+    "est_freq": null
+  },
+  "122282805": {
+    "patient_id": "122282805",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122282805_20181111072104.mat",
+    "est_freq": null
+  },
+  "122282805_seg001": {
+    "patient_id": "122282805",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122282805_20181114095337.mat",
+    "est_freq": null
+  },
+  "115614279": {
+    "patient_id": "115614279",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115614279_20121030114528.mat",
+    "est_freq": null
+  },
+  "115614279_seg001": {
+    "patient_id": "115614279",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      1,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115614279_20121030120259.mat",
+    "est_freq": null
+  },
+  "115614279_seg002": {
+    "patient_id": "115614279",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115614279_20121030133337.mat",
+    "est_freq": null
+  },
+  "116857559": {
+    "patient_id": "116857559",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116857559_20180228194032.mat",
+    "est_freq": null
+  },
+  "116857559_seg001": {
+    "patient_id": "116857559",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116857559_20180228221920.mat",
+    "est_freq": null
+  },
+  "122319152": {
+    "patient_id": "122319152",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122319152_20151029065001.mat",
+    "est_freq": null
+  },
+  "122319152_seg001": {
+    "patient_id": "122319152",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122319152_20151029065631.mat",
+    "est_freq": null
+  },
+  "115152514": {
+    "patient_id": "115152514",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115152514_20180530104557.mat",
+    "est_freq": null
+  },
+  "122316953": {
+    "patient_id": "122316953",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122316953_20141207115403.mat",
+    "est_freq": null
+  },
+  "118001069": {
+    "patient_id": "118001069",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118001069_20200416124722.mat",
+    "est_freq": null
+  },
+  "118182677": {
+    "patient_id": "118182677",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118182677_20141031123530.mat",
+    "est_freq": null
+  },
+  "116794560": {
+    "patient_id": "116794560",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116794560_20140626144432.mat",
+    "est_freq": null
+  },
+  "116794560_seg001": {
+    "patient_id": "116794560",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116794560_20140626084504.mat",
+    "est_freq": null
+  },
+  "116794560_seg002": {
+    "patient_id": "116794560",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116794560_20140626134008.mat",
+    "est_freq": null
+  },
+  "114679633": {
+    "patient_id": "114679633",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114679633_20130516003649.mat",
+    "est_freq": null
+  },
+  "114679633_seg001": {
+    "patient_id": "114679633",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114679633_20130515130427.mat",
+    "est_freq": null
+  },
+  "114679633_seg002": {
+    "patient_id": "114679633",
+    "subtype": "grda",
+    "expert_votes": [
+      4,
+      0,
+      0,
+      0,
+      0,
+      7
+    ],
+    "n_experts": 11,
+    "s3_file": "sub-S0001114679633_20130516015419.mat",
+    "est_freq": null
+  },
+  "116368527": {
+    "patient_id": "116368527",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116368527_20171021090655.mat",
+    "est_freq": null
+  },
+  "119842509": {
+    "patient_id": "119842509",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119842509_20151128222952.mat",
+    "est_freq": null
+  },
+  "119842509_seg001": {
+    "patient_id": "119842509",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119842509_20151129011318.mat",
+    "est_freq": null
+  },
+  "119842509_seg002": {
+    "patient_id": "119842509",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119842509_20151129080035.mat",
+    "est_freq": null
+  },
+  "118395789": {
+    "patient_id": "118395789",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118395789_20190912200426.mat",
+    "est_freq": null
+  },
+  "121312704": {
+    "patient_id": "121312704",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121312704_20110507005846.mat",
+    "est_freq": null
+  },
+  "119761659": {
+    "patient_id": "119761659",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119761659_20191128124417.mat",
+    "est_freq": null
+  },
+  "119761659_seg001": {
+    "patient_id": "119761659",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119761659_20191128124817.mat",
+    "est_freq": null
+  },
+  "119066560": {
+    "patient_id": "119066560",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119066560_20190828135229.mat",
+    "est_freq": null
+  },
+  "121223249": {
+    "patient_id": "121223249",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121223249_20170329162343.mat",
+    "est_freq": null
+  },
+  "121223249_seg001": {
+    "patient_id": "121223249",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121223249_20170329162537.mat",
+    "est_freq": null
+  },
+  "121223249_seg002": {
+    "patient_id": "121223249",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121223249_20170329202946.mat",
+    "est_freq": null
+  },
+  "118052161": {
+    "patient_id": "118052161",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118052161_20161130111151.mat",
+    "est_freq": null
+  },
+  "118052161_seg001": {
+    "patient_id": "118052161",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118052161_20161130105727.mat",
+    "est_freq": null
+  },
+  "118052161_seg002": {
+    "patient_id": "118052161",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118052161_20161130105911.mat",
+    "est_freq": null
+  },
+  "120410136": {
+    "patient_id": "120410136",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120410136_20160830190540.mat",
+    "est_freq": null
+  },
+  "117150088": {
+    "patient_id": "117150088",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117150088_20170807172836.mat",
+    "est_freq": null
+  },
+  "117150088_seg001": {
+    "patient_id": "117150088",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117150088_20170807173816.mat",
+    "est_freq": null
+  },
+  "118979187": {
+    "patient_id": "118979187",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118979187_20200307092828.mat",
+    "est_freq": null
+  },
+  "118979187_seg001": {
+    "patient_id": "118979187",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118979187_20200307093002.mat",
+    "est_freq": null
+  },
+  "121961286": {
+    "patient_id": "121961286",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121961286_20130920192028.mat",
+    "est_freq": null
+  },
+  "121961286_seg001": {
+    "patient_id": "121961286",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121961286_20130922083830.mat",
+    "est_freq": null
+  },
+  "121961286_seg002": {
+    "patient_id": "121961286",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121961286_20130922084216.mat",
+    "est_freq": null
+  },
+  "118468842": {
+    "patient_id": "118468842",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118468842_20130221092255.mat",
+    "est_freq": null
+  },
+  "117664435": {
+    "patient_id": "117664435",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117664435_20181113103224.mat",
+    "est_freq": null
+  },
+  "113170780": {
+    "patient_id": "113170780",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113170780_20140706023837.mat",
+    "est_freq": null
+  },
+  "113170780_seg001": {
+    "patient_id": "113170780",
+    "subtype": "grda",
+    "expert_votes": [
+      4,
+      0,
+      0,
+      0,
+      0,
+      9
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001113170780_20140706001933.mat",
+    "est_freq": null
+  },
+  "112532395": {
+    "patient_id": "112532395",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112532395_20131230090330.mat",
+    "est_freq": null
+  },
+  "112532395_seg001": {
+    "patient_id": "112532395",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112532395_20131230113032.mat",
+    "est_freq": null
+  },
+  "112532395_seg002": {
+    "patient_id": "112532395",
+    "subtype": "grda",
+    "expert_votes": [
+      7,
+      0,
+      0,
+      0,
+      3,
+      11
+    ],
+    "n_experts": 21,
+    "s3_file": "sub-S0001112532395_20131226214413.mat",
+    "est_freq": null
+  },
+  "112604014": {
+    "patient_id": "112604014",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112604014_20180902184707.mat",
+    "est_freq": null
+  },
+  "118680139": {
+    "patient_id": "118680139",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118680139_20190503111202.mat",
+    "est_freq": null
+  },
+  "118680139_seg001": {
+    "patient_id": "118680139",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118680139_20190503154224.mat",
+    "est_freq": null
+  },
+  "118101479": {
+    "patient_id": "118101479",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118101479_20200206162733.mat",
+    "est_freq": null
+  },
+  "118101479_seg001": {
+    "patient_id": "118101479",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118101479_20200206072605.mat",
+    "est_freq": null
+  },
+  "119044183": {
+    "patient_id": "119044183",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119044183_20180507142338.mat",
+    "est_freq": null
+  },
+  "121406679": {
+    "patient_id": "121406679",
+    "subtype": "grda",
+    "expert_votes": [
+      6,
+      0,
+      0,
+      0,
+      0,
+      7
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001121406679_20140312070442.mat",
+    "est_freq": null
+  },
+  "121406679_seg001": {
+    "patient_id": "121406679",
+    "subtype": "grda",
+    "expert_votes": [
+      8,
+      0,
+      0,
+      0,
+      0,
+      11
+    ],
+    "n_experts": 19,
+    "s3_file": "sub-S0001121406679_20140312024702.mat",
+    "est_freq": null
+  },
+  "121928674": {
+    "patient_id": "121928674",
+    "subtype": "grda",
+    "expert_votes": [
+      6,
+      0,
+      0,
+      0,
+      0,
+      9
+    ],
+    "n_experts": 15,
+    "s3_file": "sub-S0001121928674_20150531014224.mat",
+    "est_freq": null
+  },
+  "121928674_seg001": {
+    "patient_id": "121928674",
+    "subtype": "grda",
+    "expert_votes": [
+      5,
+      0,
+      0,
+      0,
+      0,
+      8
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001121928674_20150531022220.mat",
+    "est_freq": null
+  },
+  "121928674_seg002": {
+    "patient_id": "121928674",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121928674_20150603110632.mat",
+    "est_freq": null
+  },
+  "116090222": {
+    "patient_id": "116090222",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116090222_20190101005605.mat",
+    "est_freq": null
+  },
+  "116090222_seg001": {
+    "patient_id": "116090222",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116090222_20190101030117.mat",
+    "est_freq": null
+  },
+  "120654371": {
+    "patient_id": "120654371",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120654371_20150423144232.mat",
+    "est_freq": null
+  },
+  "119322840": {
+    "patient_id": "119322840",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119322840_20170919190447.mat",
+    "est_freq": null
+  },
+  "119684694": {
+    "patient_id": "119684694",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119684694_20160911075409.mat",
+    "est_freq": null
+  },
+  "119684694_seg001": {
+    "patient_id": "119684694",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119684694_20160911075455.mat",
+    "est_freq": null
+  },
+  "116217359": {
+    "patient_id": "116217359",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116217359_20181205124816.mat",
+    "est_freq": null
+  },
+  "111702856": {
+    "patient_id": "111702856",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111702856_20160107131414.mat",
+    "est_freq": null
+  },
+  "115989372": {
+    "patient_id": "115989372",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115989372_20191222101848.mat",
+    "est_freq": null
+  },
+  "114917649": {
+    "patient_id": "114917649",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114917649_20161216190627.mat",
+    "est_freq": null
+  },
+  "114778057": {
+    "patient_id": "114778057",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114778057_20160221121635.mat",
+    "est_freq": null
+  },
+  "114778057_seg001": {
+    "patient_id": "114778057",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114778057_20160221115433.mat",
+    "est_freq": null
+  },
+  "114778057_seg002": {
+    "patient_id": "114778057",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114778057_20160222011139.mat",
+    "est_freq": null
+  },
+  "115442820": {
+    "patient_id": "115442820",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115442820_20160719145237.mat",
+    "est_freq": null
+  },
+  "112663486": {
+    "patient_id": "112663486",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112663486_20180131170244.mat",
+    "est_freq": null
+  },
+  "120149988": {
+    "patient_id": "120149988",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120149988_20170730114234.mat",
+    "est_freq": null
+  },
+  "120149988_seg001": {
+    "patient_id": "120149988",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120149988_20170730114452.mat",
+    "est_freq": null
+  },
+  "118165062": {
+    "patient_id": "118165062",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118165062_20160723165829.mat",
+    "est_freq": null
+  },
+  "115104251": {
+    "patient_id": "115104251",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115104251_20111214025326.mat",
+    "est_freq": null
+  },
+  "112327953": {
+    "patient_id": "112327953",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      1,
+      0,
+      4,
+      0,
+      8
+    ],
+    "n_experts": 14,
+    "s3_file": "sub-S0001112327953_20190812120821.mat",
+    "est_freq": null
+  },
+  "112327953_seg001": {
+    "patient_id": "112327953",
+    "subtype": "grda",
+    "expert_votes": [
+      2,
+      1,
+      1,
+      3,
+      1,
+      9
+    ],
+    "n_experts": 17,
+    "s3_file": "sub-S0001112327953_20190812121043.mat",
+    "est_freq": null
+  },
+  "117210578": {
+    "patient_id": "117210578",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117210578_20170819170352.mat",
+    "est_freq": null
+  },
+  "117210578_seg001": {
+    "patient_id": "117210578",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117210578_20170820003324.mat",
+    "est_freq": null
+  },
+  "115960603": {
+    "patient_id": "115960603",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115960603_20150422130902.mat",
+    "est_freq": null
+  },
+  "112111925": {
+    "patient_id": "112111925",
+    "subtype": "grda",
+    "expert_votes": [
+      2,
+      0,
+      0,
+      0,
+      5,
+      6
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001112111925_20130719123147.mat",
+    "est_freq": null
+  },
+  "112111925_seg001": {
+    "patient_id": "112111925",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      2,
+      9
+    ],
+    "n_experts": 12,
+    "s3_file": "sub-S0001112111925_20130719155811.mat",
+    "est_freq": null
+  },
+  "111889707": {
+    "patient_id": "111889707",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111889707_20180615120836.mat",
+    "est_freq": null
+  },
+  "120615474": {
+    "patient_id": "120615474",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120615474_20140106113204.mat",
+    "est_freq": null
+  },
+  "120615474_seg001": {
+    "patient_id": "120615474",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120615474_20140106113716.mat",
+    "est_freq": null
+  },
+  "115020956": {
+    "patient_id": "115020956",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115020956_20160502034632.mat",
+    "est_freq": null
+  },
+  "115020956_seg001": {
+    "patient_id": "115020956",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115020956_20160502040222.mat",
+    "est_freq": null
+  },
+  "116559134": {
+    "patient_id": "116559134",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116559134_20180808125116.mat",
+    "est_freq": null
+  },
+  "113421075": {
+    "patient_id": "113421075",
+    "subtype": "grda",
+    "expert_votes": [
+      3,
+      1,
+      2,
+      0,
+      0,
+      7
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001113421075_20160203034935.mat",
+    "est_freq": null
+  },
+  "112254652": {
+    "patient_id": "112254652",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112254652_20171017012434.mat",
+    "est_freq": null
+  },
+  "112254652_seg001": {
+    "patient_id": "112254652",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112254652_20171017015744.mat",
+    "est_freq": null
+  },
+  "112254652_seg002": {
+    "patient_id": "112254652",
+    "subtype": "grda",
+    "expert_votes": [
+      8,
+      0,
+      0,
+      0,
+      0,
+      10
+    ],
+    "n_experts": 18,
+    "s3_file": "sub-S0001112254652_20171017153606.mat",
+    "est_freq": null
+  },
+  "120830766": {
+    "patient_id": "120830766",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120830766_20190905155647.mat",
+    "est_freq": null
+  },
+  "120830766_seg001": {
+    "patient_id": "120830766",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120830766_20190906080332.mat",
+    "est_freq": null
+  },
+  "118228584": {
+    "patient_id": "118228584",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118228584_20140411001819.mat",
+    "est_freq": null
+  },
+  "118228584_seg001": {
+    "patient_id": "118228584",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118228584_20140411002051.mat",
+    "est_freq": null
+  },
+  "118228584_seg002": {
+    "patient_id": "118228584",
+    "subtype": "grda",
+    "expert_votes": [
+      9,
+      0,
+      0,
+      1,
+      0,
+      10
+    ],
+    "n_experts": 20,
+    "s3_file": "sub-S0001118228584_20140411010005.mat",
+    "est_freq": null
+  },
+  "122086918": {
+    "patient_id": "122086918",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122086918_20161020230646.mat",
+    "est_freq": null
+  },
+  "114925655": {
+    "patient_id": "114925655",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114925655_20160628121823.mat",
+    "est_freq": null
+  },
+  "114925655_seg001": {
+    "patient_id": "114925655",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114925655_20160628124234.mat",
+    "est_freq": null
+  },
+  "115524065": {
+    "patient_id": "115524065",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115524065_20131125020921.mat",
+    "est_freq": null
+  },
+  "117175030": {
+    "patient_id": "117175030",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      1,
+      0,
+      1,
+      0,
+      12
+    ],
+    "n_experts": 14,
+    "s3_file": "sub-S0001117175030_20160531050206.mat",
+    "est_freq": null
+  },
+  "120710363": {
+    "patient_id": "120710363",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120710363_20180118173621.mat",
+    "est_freq": null
+  },
+  "120710363_seg001": {
+    "patient_id": "120710363",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120710363_20180118094223.mat",
+    "est_freq": null
+  },
+  "120537255": {
+    "patient_id": "120537255",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120537255_20130324132750.mat",
+    "est_freq": null
+  },
+  "115920343": {
+    "patient_id": "115920343",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115920343_20171120124700.mat",
+    "est_freq": null
+  },
+  "115920343_seg001": {
+    "patient_id": "115920343",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115920343_20171124095155.mat",
+    "est_freq": null
+  },
+  "112270073": {
+    "patient_id": "112270073",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112270073_20140103085243.mat",
+    "est_freq": null
+  },
+  "112270073_seg001": {
+    "patient_id": "112270073",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112270073_20140103085543.mat",
+    "est_freq": null
+  },
+  "121242513": {
+    "patient_id": "121242513",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121242513_20191229173610.mat",
+    "est_freq": null
+  },
+  "121242513_seg001": {
+    "patient_id": "121242513",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121242513_20191229181022.mat",
+    "est_freq": null
+  },
+  "115747926": {
+    "patient_id": "115747926",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115747926_20180302045100.mat",
+    "est_freq": null
+  },
+  "120975001": {
+    "patient_id": "120975001",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120975001_20160728195123.mat",
+    "est_freq": null
+  },
+  "120975001_seg001": {
+    "patient_id": "120975001",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120975001_20160728200313.mat",
+    "est_freq": null
+  },
+  "121603095": {
+    "patient_id": "121603095",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121603095_20180731222344.mat",
+    "est_freq": null
+  },
+  "121603095_seg001": {
+    "patient_id": "121603095",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121603095_20180801040356.mat",
+    "est_freq": null
+  },
+  "116847985": {
+    "patient_id": "116847985",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      2,
+      0,
+      11
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001116847985_20180108034414.mat",
+    "est_freq": null
+  },
+  "116516550": {
+    "patient_id": "116516550",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116516550_20151210162756.mat",
+    "est_freq": null
+  },
+  "116516550_seg001": {
+    "patient_id": "116516550",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116516550_20151210163124.mat",
+    "est_freq": null
+  },
+  "119872112": {
+    "patient_id": "119872112",
+    "subtype": "grda",
+    "expert_votes": [
+      4,
+      0,
+      0,
+      0,
+      0,
+      10
+    ],
+    "n_experts": 14,
+    "s3_file": "sub-S0001119872112_20180212021807.mat",
+    "est_freq": null
+  },
+  "114153960": {
+    "patient_id": "114153960",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114153960_20151031130305.mat",
+    "est_freq": null
+  },
+  "117372427": {
+    "patient_id": "117372427",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117372427_20160417183133.mat",
+    "est_freq": null
+  },
+  "117372427_seg001": {
+    "patient_id": "117372427",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117372427_20160417204237.mat",
+    "est_freq": null
+  },
+  "121120911": {
+    "patient_id": "121120911",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121120911_20200228034106.mat",
+    "est_freq": null
+  },
+  "121120911_seg001": {
+    "patient_id": "121120911",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121120911_20200228043456.mat",
+    "est_freq": null
+  },
+  "113485253": {
+    "patient_id": "113485253",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113485253_20180818091827.mat",
+    "est_freq": null
+  },
+  "119568823": {
+    "patient_id": "119568823",
+    "subtype": "grda",
+    "expert_votes": [
+      5,
+      0,
+      0,
+      0,
+      1,
+      11
+    ],
+    "n_experts": 17,
+    "s3_file": "sub-S0001119568823_20140616000957.mat",
+    "est_freq": null
+  },
+  "119568823_seg001": {
+    "patient_id": "119568823",
+    "subtype": "grda",
+    "expert_votes": [
+      6,
+      0,
+      0,
+      0,
+      0,
+      11
+    ],
+    "n_experts": 17,
+    "s3_file": "sub-S0001119568823_20140616015235.mat",
+    "est_freq": null
+  },
+  "119568823_seg002": {
+    "patient_id": "119568823",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119568823_20140616015843.mat",
+    "est_freq": null
+  },
+  "117181201": {
+    "patient_id": "117181201",
+    "subtype": "grda",
+    "expert_votes": [
+      2,
+      1,
+      0,
+      0,
+      2,
+      8
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001117181201_20150309145337.mat",
+    "est_freq": null
+  },
+  "114329029": {
+    "patient_id": "114329029",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114329029_20171013034227.mat",
+    "est_freq": null
+  },
+  "116909940": {
+    "patient_id": "116909940",
+    "subtype": "grda",
+    "expert_votes": [
+      5,
+      0,
+      0,
+      0,
+      2,
+      8
+    ],
+    "n_experts": 15,
+    "s3_file": "sub-S0001116909940_20150113013330.mat",
+    "est_freq": null
+  },
+  "118287927": {
+    "patient_id": "118287927",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118287927_20180124052933.mat",
+    "est_freq": null
+  },
+  "118287927_seg001": {
+    "patient_id": "118287927",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118287927_20180124053519.mat",
+    "est_freq": null
+  },
+  "122362195": {
+    "patient_id": "122362195",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122362195_20120424140450.mat",
+    "est_freq": null
+  },
+  "121387452": {
+    "patient_id": "121387452",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121387452_20170617111209.mat",
+    "est_freq": null
+  },
+  "121387452_seg001": {
+    "patient_id": "121387452",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121387452_20170617111833.mat",
+    "est_freq": null
+  },
+  "121387452_seg002": {
+    "patient_id": "121387452",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121387452_20170617123119.mat",
+    "est_freq": null
+  },
+  "113196611": {
+    "patient_id": "113196611",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113196611_20170821140538.mat",
+    "est_freq": null
+  },
+  "122277075": {
+    "patient_id": "122277075",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      1,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122277075_20140425233738.mat",
+    "est_freq": null
+  },
+  "122277075_seg001": {
+    "patient_id": "122277075",
+    "subtype": "grda",
+    "expert_votes": [
+      6,
+      0,
+      0,
+      0,
+      0,
+      7
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001122277075_20140426025742.mat",
+    "est_freq": null
+  },
+  "122277075_seg002": {
+    "patient_id": "122277075",
+    "subtype": "grda",
+    "expert_votes": [
+      4,
+      0,
+      0,
+      3,
+      1,
+      12
+    ],
+    "n_experts": 20,
+    "s3_file": "sub-S0001122277075_20140426034154.mat",
+    "est_freq": null
+  },
+  "115428657": {
+    "patient_id": "115428657",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115428657_20120528140533.mat",
+    "est_freq": null
+  },
+  "115428657_seg001": {
+    "patient_id": "115428657",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115428657_20120528145543.mat",
+    "est_freq": null
+  },
+  "120508658": {
+    "patient_id": "120508658",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      2,
+      0,
+      12
+    ],
+    "n_experts": 15,
+    "s3_file": "sub-S0001120508658_20151005030613.mat",
+    "est_freq": null
+  },
+  "119659818": {
+    "patient_id": "119659818",
+    "subtype": "grda",
+    "expert_votes": [
+      2,
+      0,
+      0,
+      0,
+      0,
+      10
+    ],
+    "n_experts": 12,
+    "s3_file": "sub-S0001119659818_20180919141853.mat",
+    "est_freq": null
+  },
+  "119659818_seg001": {
+    "patient_id": "119659818",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119659818_20180919154511.mat",
+    "est_freq": null
+  },
+  "121015195": {
+    "patient_id": "121015195",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121015195_20151205001735.mat",
+    "est_freq": null
+  },
+  "121015195_seg001": {
+    "patient_id": "121015195",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121015195_20151204180817.mat",
+    "est_freq": null
+  },
+  "122091669": {
+    "patient_id": "122091669",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122091669_20181207055814.mat",
+    "est_freq": null
+  },
+  "122091669_seg001": {
+    "patient_id": "122091669",
+    "subtype": "grda",
+    "expert_votes": [
+      2,
+      3,
+      0,
+      1,
+      0,
+      8
+    ],
+    "n_experts": 14,
+    "s3_file": "sub-S0001122091669_20181209033851.mat",
+    "est_freq": null
+  },
+  "122091669_seg002": {
+    "patient_id": "122091669",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122091669_20181209035243.mat",
+    "est_freq": null
+  },
+  "116075231": {
+    "patient_id": "116075231",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116075231_20140901114225.mat",
+    "est_freq": null
+  },
+  "122246557": {
+    "patient_id": "122246557",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122246557_20190116120518.mat",
+    "est_freq": null
+  },
+  "117397017": {
+    "patient_id": "117397017",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117397017_20150209230810.mat",
+    "est_freq": null
+  },
+  "117397017_seg001": {
+    "patient_id": "117397017",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117397017_20150209230828.mat",
+    "est_freq": null
+  },
+  "120033729": {
+    "patient_id": "120033729",
+    "subtype": "grda",
+    "expert_votes": [
+      5,
+      0,
+      1,
+      0,
+      0,
+      7
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001120033729_20141217171125.mat",
+    "est_freq": null
+  },
+  "120033729_seg001": {
+    "patient_id": "120033729",
+    "subtype": "grda",
+    "expert_votes": [
+      5,
+      0,
+      0,
+      0,
+      1,
+      7
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001120033729_20141217192141.mat",
+    "est_freq": null
+  },
+  "120033729_seg002": {
+    "patient_id": "120033729",
+    "subtype": "grda",
+    "expert_votes": [
+      4,
+      0,
+      3,
+      0,
+      1,
+      9
+    ],
+    "n_experts": 17,
+    "s3_file": "sub-S0001120033729_20141217163623.mat",
+    "est_freq": null
+  },
+  "117421139": {
+    "patient_id": "117421139",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117421139_20150413200705.mat",
+    "est_freq": null
+  },
+  "119605896": {
+    "patient_id": "119605896",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119605896_20190302131755.mat",
+    "est_freq": null
+  },
+  "115039303": {
+    "patient_id": "115039303",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115039303_20190304075425.mat",
+    "est_freq": null
+  },
+  "122327724_seg001": {
+    "patient_id": "122327724",
+    "subtype": "grda",
+    "expert_votes": [
+      4,
+      0,
+      0,
+      0,
+      3,
+      9
+    ],
+    "n_experts": 16,
+    "s3_file": "sub-S0001122327724_20111121061537.mat",
+    "est_freq": null
+  },
+  "122327724_seg002": {
+    "patient_id": "122327724",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      1,
+      11
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001122327724_20111121061803.mat",
+    "est_freq": null
+  },
+  "111513423": {
+    "patient_id": "111513423",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111513423_20160825034638.mat",
+    "est_freq": null
+  },
+  "116468801": {
+    "patient_id": "116468801",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116468801_20180407002917.mat",
+    "est_freq": null
+  },
+  "116468801_seg001": {
+    "patient_id": "116468801",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116468801_20180407015603.mat",
+    "est_freq": null
+  },
+  "115300798": {
+    "patient_id": "115300798",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115300798_20181226032608.mat",
+    "est_freq": null
+  },
+  "115300798_seg001": {
+    "patient_id": "115300798",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115300798_20181226032958.mat",
+    "est_freq": null
+  },
+  "116921824": {
+    "patient_id": "116921824",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116921824_20120603211948.mat",
+    "est_freq": null
+  },
+  "116921824_seg001": {
+    "patient_id": "116921824",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116921824_20120604131804.mat",
+    "est_freq": null
+  },
+  "118920221": {
+    "patient_id": "118920221",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118920221_20190719125400.mat",
+    "est_freq": null
+  },
+  "118920221_seg001": {
+    "patient_id": "118920221",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118920221_20190719134340.mat",
+    "est_freq": null
+  },
+  "117950642": {
+    "patient_id": "117950642",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117950642_20170301174225.mat",
+    "est_freq": null
+  },
+  "117950642_seg001": {
+    "patient_id": "117950642",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117950642_20170301174455.mat",
+    "est_freq": null
+  },
+  "118739266": {
+    "patient_id": "118739266",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118739266_20140531182653.mat",
+    "est_freq": null
+  },
+  "117182044": {
+    "patient_id": "117182044",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      3,
+      1,
+      3,
+      1,
+      8
+    ],
+    "n_experts": 16,
+    "s3_file": "sub-S0001117182044_20090801095957.mat",
+    "est_freq": null
+  },
+  "120954099": {
+    "patient_id": "120954099",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120954099_20160222091652.mat",
+    "est_freq": null
+  },
+  "117479453": {
+    "patient_id": "117479453",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117479453_20190218160654.mat",
+    "est_freq": null
+  },
+  "117479453_seg001": {
+    "patient_id": "117479453",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117479453_20190221180130.mat",
+    "est_freq": null
+  },
+  "115258321": {
+    "patient_id": "115258321",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115258321_20160303124556.mat",
+    "est_freq": null
+  },
+  "113143862": {
+    "patient_id": "113143862",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113143862_20160822063106.mat",
+    "est_freq": null
+  },
+  "121542613": {
+    "patient_id": "121542613",
+    "subtype": "grda",
+    "expert_votes": [
+      6,
+      0,
+      0,
+      0,
+      0,
+      7
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001121542613_20140822111802.mat",
+    "est_freq": null
+  },
+  "121542613_seg001": {
+    "patient_id": "121542613",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      4
+    ],
+    "n_experts": 5,
+    "s3_file": "sub-S0001121542613_20140822133252.mat",
+    "est_freq": null
+  },
+  "120898540": {
+    "patient_id": "120898540",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120898540_20110114200255.mat",
+    "est_freq": null
+  },
+  "116521572": {
+    "patient_id": "116521572",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116521572_20200112015521.mat",
+    "est_freq": null
+  },
+  "116521572_seg001": {
+    "patient_id": "116521572",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116521572_20200111215245.mat",
+    "est_freq": null
+  },
+  "117850387": {
+    "patient_id": "117850387",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117850387_20160923083733.mat",
+    "est_freq": null
+  },
+  "118196572": {
+    "patient_id": "118196572",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118196572_20120615092648.mat",
+    "est_freq": null
+  },
+  "121041552": {
+    "patient_id": "121041552",
+    "subtype": "grda",
+    "expert_votes": [
+      8,
+      0,
+      0,
+      0,
+      0,
+      10
+    ],
+    "n_experts": 18,
+    "s3_file": "sub-S0001121041552_20170116233642.mat",
+    "est_freq": null
+  },
+  "121041552_seg001": {
+    "patient_id": "121041552",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      15
+    ],
+    "n_experts": 15,
+    "s3_file": "sub-S0001121041552_20170118193943.mat",
+    "est_freq": null
+  },
+  "121041552_seg002": {
+    "patient_id": "121041552",
+    "subtype": "grda",
+    "expert_votes": [
+      5,
+      0,
+      0,
+      0,
+      0,
+      13
+    ],
+    "n_experts": 18,
+    "s3_file": "sub-S0001121041552_20170119044806.mat",
+    "est_freq": null
+  },
+  "119153165": {
+    "patient_id": "119153165",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119153165_20190715070136.mat",
+    "est_freq": null
+  },
+  "120257599": {
+    "patient_id": "120257599",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120257599_20140617112501.mat",
+    "est_freq": null
+  },
+  "120257599_seg001": {
+    "patient_id": "120257599",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120257599_20140617112621.mat",
+    "est_freq": null
+  },
+  "114848960_seg002": {
+    "patient_id": "114848960",
+    "subtype": "grda",
+    "expert_votes": [
+      5,
+      0,
+      0,
+      2,
+      0,
+      14
+    ],
+    "n_experts": 21,
+    "s3_file": "sub-S0001114848960_20120224101137.mat",
+    "est_freq": null
+  },
+  "119663160": {
+    "patient_id": "119663160",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119663160_20160110174929.mat",
+    "est_freq": null
+  },
+  "119663160_seg001": {
+    "patient_id": "119663160",
+    "subtype": "grda",
+    "expert_votes": [
+      7,
+      0,
+      0,
+      1,
+      0,
+      12
+    ],
+    "n_experts": 20,
+    "s3_file": "sub-S0001119663160_20160111002808.mat",
+    "est_freq": null
+  },
+  "119663160_seg002": {
+    "patient_id": "119663160",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119663160_20160111022444.mat",
+    "est_freq": null
+  },
+  "115743665": {
+    "patient_id": "115743665",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115743665_20180528172540.mat",
+    "est_freq": null
+  },
+  "115743665_seg001": {
+    "patient_id": "115743665",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115743665_20180528184300.mat",
+    "est_freq": null
+  },
+  "115743665_seg002": {
+    "patient_id": "115743665",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115743665_20180529070634.mat",
+    "est_freq": null
+  },
+  "120035761": {
+    "patient_id": "120035761",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120035761_20110909040321.mat",
+    "est_freq": null
+  },
+  "120035761_seg001": {
+    "patient_id": "120035761",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120035761_20110909155651.mat",
+    "est_freq": null
+  },
+  "112010744": {
+    "patient_id": "112010744",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112010744_20120417164710.mat",
+    "est_freq": null
+  },
+  "113338971": {
+    "patient_id": "113338971",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113338971_20190120020659.mat",
+    "est_freq": null
+  },
+  "113338971_seg001": {
+    "patient_id": "113338971",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113338971_20190119181503.mat",
+    "est_freq": null
+  },
+  "112973462": {
+    "patient_id": "112973462",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112973462_20171010133203.mat",
+    "est_freq": null
+  },
+  "118031498": {
+    "patient_id": "118031498",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118031498_20190327064502.mat",
+    "est_freq": null
+  },
+  "118031498_seg001": {
+    "patient_id": "118031498",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118031498_20190327070546.mat",
+    "est_freq": null
+  },
+  "121130499": {
+    "patient_id": "121130499",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121130499_20161116173230.mat",
+    "est_freq": null
+  },
+  "118310215": {
+    "patient_id": "118310215",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118310215_20150625140559.mat",
+    "est_freq": null
+  },
+  "114012026": {
+    "patient_id": "114012026",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114012026_20160829153744.mat",
+    "est_freq": null
+  },
+  "116068957": {
+    "patient_id": "116068957",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116068957_20161024133350.mat",
+    "est_freq": null
+  },
+  "119909399": {
+    "patient_id": "119909399",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119909399_20190117122417.mat",
+    "est_freq": null
+  },
+  "120399403": {
+    "patient_id": "120399403",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120399403_20200510124313.mat",
+    "est_freq": null
+  },
+  "113529820": {
+    "patient_id": "113529820",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      1,
+      0,
+      3,
+      8
+    ],
+    "n_experts": 12,
+    "s3_file": "sub-S0001113529820_20161201132610.mat",
+    "est_freq": null
+  },
+  "121668017": {
+    "patient_id": "121668017",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121668017_20130130105811.mat",
+    "est_freq": null
+  },
+  "121668017_seg001": {
+    "patient_id": "121668017",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121668017_20130130110329.mat",
+    "est_freq": null
+  },
+  "121668017_seg002": {
+    "patient_id": "121668017",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121668017_20130130110531.mat",
+    "est_freq": null
+  },
+  "120350845": {
+    "patient_id": "120350845",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120350845_20190703020053.mat",
+    "est_freq": null
+  },
+  "117765102": {
+    "patient_id": "117765102",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117765102_20110923081912.mat",
+    "est_freq": null
+  },
+  "112788764": {
+    "patient_id": "112788764",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112788764_20160620140208.mat",
+    "est_freq": null
+  },
+  "116393360": {
+    "patient_id": "116393360",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116393360_20180305040826.mat",
+    "est_freq": null
+  },
+  "118011612": {
+    "patient_id": "118011612",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118011612_20130516040955.mat",
+    "est_freq": null
+  },
+  "119686447": {
+    "patient_id": "119686447",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119686447_20190626162533.mat",
+    "est_freq": null
+  },
+  "111376848": {
+    "patient_id": "111376848",
+    "subtype": "grda",
+    "expert_votes": [
+      4,
+      0,
+      0,
+      1,
+      0,
+      8
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001111376848_20130121004112.mat",
+    "est_freq": null
+  },
+  "122003328": {
+    "patient_id": "122003328",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122003328_20180216233845.mat",
+    "est_freq": null
+  },
+  "116232512": {
+    "patient_id": "116232512",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116232512_20200108181635.mat",
+    "est_freq": null
+  },
+  "121291541": {
+    "patient_id": "121291541",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121291541_20190209060627.mat",
+    "est_freq": null
+  },
+  "121195646": {
+    "patient_id": "121195646",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121195646_20190825062957.mat",
+    "est_freq": null
+  },
+  "121195646_seg001": {
+    "patient_id": "121195646",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121195646_20190825062603.mat",
+    "est_freq": null
+  },
+  "116137022": {
+    "patient_id": "116137022",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116137022_20181217152155.mat",
+    "est_freq": null
+  },
+  "113413403": {
+    "patient_id": "113413403",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113413403_20160905112137.mat",
+    "est_freq": null
+  },
+  "114687559": {
+    "patient_id": "114687559",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114687559_20180908222409.mat",
+    "est_freq": null
+  },
+  "118280216": {
+    "patient_id": "118280216",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118280216_20160905102152.mat",
+    "est_freq": null
+  },
+  "118280216_seg001": {
+    "patient_id": "118280216",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118280216_20160905102310.mat",
+    "est_freq": null
+  },
+  "120810665": {
+    "patient_id": "120810665",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120810665_20160614195958.mat",
+    "est_freq": null
+  },
+  "120810665_seg001": {
+    "patient_id": "120810665",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120810665_20160614200234.mat",
+    "est_freq": null
+  },
+  "119697539": {
+    "patient_id": "119697539",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119697539_20180524145545.mat",
+    "est_freq": null
+  },
+  "119697539_seg001": {
+    "patient_id": "119697539",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119697539_20180528172906.mat",
+    "est_freq": null
+  },
+  "120894651": {
+    "patient_id": "120894651",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120894651_20180922153307.mat",
+    "est_freq": null
+  },
+  "120894651_seg001": {
+    "patient_id": "120894651",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120894651_20180923061953.mat",
+    "est_freq": null
+  },
+  "111894444": {
+    "patient_id": "111894444",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111894444_20161207145735.mat",
+    "est_freq": null
+  },
+  "111894444_seg001": {
+    "patient_id": "111894444",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111894444_20161207173811.mat",
+    "est_freq": null
+  },
+  "111894444_seg002": {
+    "patient_id": "111894444",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111894444_20161208005216.mat",
+    "est_freq": null
+  },
+  "115045180": {
+    "patient_id": "115045180",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115045180_20200127122712.mat",
+    "est_freq": null
+  },
+  "115045180_seg001": {
+    "patient_id": "115045180",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115045180_20200129155940.mat",
+    "est_freq": null
+  },
+  "121989868": {
+    "patient_id": "121989868",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121989868_20150708135600.mat",
+    "est_freq": null
+  },
+  "121989868_seg001": {
+    "patient_id": "121989868",
+    "subtype": "grda",
+    "expert_votes": [
+      6,
+      0,
+      0,
+      0,
+      0,
+      12
+    ],
+    "n_experts": 18,
+    "s3_file": "sub-S0001121989868_20150708173127.mat",
+    "est_freq": null
+  },
+  "121989868_seg002": {
+    "patient_id": "121989868",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121989868_20150708200749.mat",
+    "est_freq": null
+  },
+  "112832961": {
+    "patient_id": "112832961",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112832961_20180502130941.mat",
+    "est_freq": null
+  },
+  "112832961_seg001": {
+    "patient_id": "112832961",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112832961_20180502201125.mat",
+    "est_freq": null
+  },
+  "120771430": {
+    "patient_id": "120771430",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120771430_20191013100352.mat",
+    "est_freq": null
+  },
+  "120771430_seg001": {
+    "patient_id": "120771430",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120771430_20191013100542.mat",
+    "est_freq": null
+  },
+  "111610450": {
+    "patient_id": "111610450",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111610450_20181126001005.mat",
+    "est_freq": null
+  },
+  "117222531": {
+    "patient_id": "117222531",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117222531_20161021035003.mat",
+    "est_freq": null
+  },
+  "113307742": {
+    "patient_id": "113307742",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113307742_20121102124341.mat",
+    "est_freq": null
+  },
+  "119795775": {
+    "patient_id": "119795775",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119795775_20180910201307.mat",
+    "est_freq": null
+  },
+  "119795775_seg001": {
+    "patient_id": "119795775",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119795775_20180910201353.mat",
+    "est_freq": null
+  },
+  "118883201": {
+    "patient_id": "118883201",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118883201_20180626032010.mat",
+    "est_freq": null
+  },
+  "118883201_seg001": {
+    "patient_id": "118883201",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118883201_20180626080748.mat",
+    "est_freq": null
+  },
+  "120678399": {
+    "patient_id": "120678399",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120678399_20130310162812.mat",
+    "est_freq": null
+  },
+  "120678399_seg001": {
+    "patient_id": "120678399",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120678399_20130310171101.mat",
+    "est_freq": null
+  },
+  "120678399_seg002": {
+    "patient_id": "120678399",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120678399_20130310175427.mat",
+    "est_freq": null
+  },
+  "121274388": {
+    "patient_id": "121274388",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121274388_20191124113210.mat",
+    "est_freq": null
+  },
+  "121274388_seg001": {
+    "patient_id": "121274388",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121274388_20191124111500.mat",
+    "est_freq": null
+  },
+  "117917631": {
+    "patient_id": "117917631",
+    "subtype": "grda",
+    "expert_votes": [
+      3,
+      0,
+      0,
+      0,
+      0,
+      10
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001117917631_20171025093314.mat",
+    "est_freq": null
+  },
+  "114699053": {
+    "patient_id": "114699053",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114699053_20170408112916.mat",
+    "est_freq": null
+  },
+  "117755865": {
+    "patient_id": "117755865",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117755865_20140911122840.mat",
+    "est_freq": null
+  },
+  "117755865_seg001": {
+    "patient_id": "117755865",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117755865_20140911135906.mat",
+    "est_freq": null
+  },
+  "117530962": {
+    "patient_id": "117530962",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117530962_20131009200242.mat",
+    "est_freq": null
+  },
+  "117530962_seg001": {
+    "patient_id": "117530962",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117530962_20131010010936.mat",
+    "est_freq": null
+  },
+  "117530962_seg002": {
+    "patient_id": "117530962",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117530962_20131010041634.mat",
+    "est_freq": null
+  },
+  "115754475": {
+    "patient_id": "115754475",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115754475_20130218101159.mat",
+    "est_freq": null
+  },
+  "115754475_seg001": {
+    "patient_id": "115754475",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115754475_20130219001625.mat",
+    "est_freq": null
+  },
+  "115754475_seg002": {
+    "patient_id": "115754475",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115754475_20130219010007.mat",
+    "est_freq": null
+  },
+  "121731063": {
+    "patient_id": "121731063",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121731063_20171013154412.mat",
+    "est_freq": null
+  },
+  "121731063_seg001": {
+    "patient_id": "121731063",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121731063_20171013122042.mat",
+    "est_freq": null
+  },
+  "121731063_seg002": {
+    "patient_id": "121731063",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121731063_20171013195015.mat",
+    "est_freq": null
+  },
+  "115041105": {
+    "patient_id": "115041105",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115041105_20161207165425.mat",
+    "est_freq": null
+  },
+  "115041105_seg001": {
+    "patient_id": "115041105",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115041105_20161207165545.mat",
+    "est_freq": null
+  },
+  "121862098": {
+    "patient_id": "121862098",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121862098_20180411133522.mat",
+    "est_freq": null
+  },
+  "121862098_seg001": {
+    "patient_id": "121862098",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121862098_20180411133918.mat",
+    "est_freq": null
+  },
+  "114846532": {
+    "patient_id": "114846532",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114846532_20141010134845.mat",
+    "est_freq": null
+  },
+  "114846532_seg001": {
+    "patient_id": "114846532",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114846532_20141010135033.mat",
+    "est_freq": null
+  },
+  "113712843": {
+    "patient_id": "113712843",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113712843_20171110195038.mat",
+    "est_freq": null
+  },
+  "120791680": {
+    "patient_id": "120791680",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120791680_20180103152227.mat",
+    "est_freq": null
+  },
+  "118545020": {
+    "patient_id": "118545020",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118545020_20190513110634.mat",
+    "est_freq": null
+  },
+  "118545020_seg001": {
+    "patient_id": "118545020",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118545020_20190513085734.mat",
+    "est_freq": null
+  },
+  "113522370": {
+    "patient_id": "113522370",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113522370_20131119173823.mat",
+    "est_freq": null
+  },
+  "113522370_seg001": {
+    "patient_id": "113522370",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113522370_20131119222505.mat",
+    "est_freq": null
+  },
+  "117244438": {
+    "patient_id": "117244438",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117244438_20191204055500.mat",
+    "est_freq": null
+  },
+  "117244438_seg001": {
+    "patient_id": "117244438",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117244438_20191203230930.mat",
+    "est_freq": null
+  },
+  "117244438_seg002": {
+    "patient_id": "117244438",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117244438_20191205080604.mat",
+    "est_freq": null
+  },
+  "121777871": {
+    "patient_id": "121777871",
+    "subtype": "grda",
+    "expert_votes": [
+      6,
+      1,
+      5,
+      0,
+      0,
+      7
+    ],
+    "n_experts": 19,
+    "s3_file": "sub-S0001121777871_20150817164541.mat",
+    "est_freq": null
+  },
+  "121777871_seg001": {
+    "patient_id": "121777871",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      1,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121777871_20150817172029.mat",
+    "est_freq": null
+  },
+  "121777871_seg002": {
+    "patient_id": "121777871",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121777871_20150818043609.mat",
+    "est_freq": null
+  },
+  "118395315": {
+    "patient_id": "118395315",
+    "subtype": "grda",
+    "expert_votes": [
+      3,
+      0,
+      0,
+      0,
+      2,
+      8
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001118395315_20121029032544.mat",
+    "est_freq": null
+  },
+  "118395315_seg001": {
+    "patient_id": "118395315",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118395315_20121029044910.mat",
+    "est_freq": null
+  },
+  "118395315_seg002": {
+    "patient_id": "118395315",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      1,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118395315_20121029045632.mat",
+    "est_freq": null
+  },
+  "112598410": {
+    "patient_id": "112598410",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112598410_20170109221610.mat",
+    "est_freq": null
+  },
+  "121666046": {
+    "patient_id": "121666046",
+    "subtype": "grda",
+    "expert_votes": [
+      5,
+      0,
+      0,
+      0,
+      0,
+      15
+    ],
+    "n_experts": 20,
+    "s3_file": "sub-S0001121666046_20180505130429.mat",
+    "est_freq": null
+  },
+  "121440358": {
+    "patient_id": "121440358",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121440358_20140309152750.mat",
+    "est_freq": null
+  },
+  "115504150": {
+    "patient_id": "115504150",
+    "subtype": "grda",
+    "expert_votes": [
+      2,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 5,
+    "s3_file": "sub-S0001115504150_20141007160919.mat",
+    "est_freq": null
+  },
+  "115504150_seg001": {
+    "patient_id": "115504150",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115504150_20141007144121.mat",
+    "est_freq": null
+  },
+  "115504150_seg002": {
+    "patient_id": "115504150",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115504150_20141007144257.mat",
+    "est_freq": null
+  },
+  "120639677": {
+    "patient_id": "120639677",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120639677_20150328144843.mat",
+    "est_freq": null
+  },
+  "120639677_seg001": {
+    "patient_id": "120639677",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120639677_20150328153221.mat",
+    "est_freq": null
+  },
+  "113489508": {
+    "patient_id": "113489508",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113489508_20200510160301.mat",
+    "est_freq": null
+  },
+  "113489508_seg001": {
+    "patient_id": "113489508",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113489508_20200510113245.mat",
+    "est_freq": null
+  },
+  "120851458": {
+    "patient_id": "120851458",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120851458_20150130135842.mat",
+    "est_freq": null
+  },
+  "122303156": {
+    "patient_id": "122303156",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122303156_20140611144030.mat",
+    "est_freq": null
+  },
+  "120395062": {
+    "patient_id": "120395062",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120395062_20140806133430.mat",
+    "est_freq": null
+  },
+  "112067477": {
+    "patient_id": "112067477",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112067477_20120328143458.mat",
+    "est_freq": null
+  },
+  "112067477_seg001": {
+    "patient_id": "112067477",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112067477_20120328220512.mat",
+    "est_freq": null
+  },
+  "113844921": {
+    "patient_id": "113844921",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113844921_20121022084458.mat",
+    "est_freq": null
+  },
+  "113844921_seg001": {
+    "patient_id": "113844921",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113844921_20121022091312.mat",
+    "est_freq": null
+  },
+  "116064158": {
+    "patient_id": "116064158",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116064158_20200225181944.mat",
+    "est_freq": null
+  },
+  "116064158_seg001": {
+    "patient_id": "116064158",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116064158_20200225172918.mat",
+    "est_freq": null
+  },
+  "116064158_seg002": {
+    "patient_id": "116064158",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116064158_20200228132232.mat",
+    "est_freq": null
+  },
+  "121822282": {
+    "patient_id": "121822282",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121822282_20101216190024.mat",
+    "est_freq": null
+  },
+  "122097284": {
+    "patient_id": "122097284",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122097284_20180701165028.mat",
+    "est_freq": null
+  },
+  "120406999": {
+    "patient_id": "120406999",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120406999_20190729102209.mat",
+    "est_freq": null
+  },
+  "120406999_seg001": {
+    "patient_id": "120406999",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120406999_20190729104833.mat",
+    "est_freq": null
+  },
+  "118861836": {
+    "patient_id": "118861836",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118861836_20131125115046.mat",
+    "est_freq": null
+  },
+  "118861836_seg001": {
+    "patient_id": "118861836",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118861836_20131125121052.mat",
+    "est_freq": null
+  },
+  "113632957": {
+    "patient_id": "113632957",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113632957_20180415071723.mat",
+    "est_freq": null
+  },
+  "113632957_seg001": {
+    "patient_id": "113632957",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113632957_20180415060845.mat",
+    "est_freq": null
+  },
+  "120882548": {
+    "patient_id": "120882548",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120882548_20140827142630.mat",
+    "est_freq": null
+  },
+  "118118516": {
+    "patient_id": "118118516",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118118516_20160624184824.mat",
+    "est_freq": null
+  },
+  "119968618": {
+    "patient_id": "119968618",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119968618_20190714180101.mat",
+    "est_freq": null
+  },
+  "119968618_seg001": {
+    "patient_id": "119968618",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119968618_20190714192939.mat",
+    "est_freq": null
+  },
+  "120911685": {
+    "patient_id": "120911685",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      1,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120911685_20141229160408.mat",
+    "est_freq": null
+  },
+  "120911685_seg001": {
+    "patient_id": "120911685",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      2,
+      1,
+      1,
+      14
+    ],
+    "n_experts": 18,
+    "s3_file": "sub-S0001120911685_20141229193841.mat",
+    "est_freq": null
+  },
+  "120911685_seg002": {
+    "patient_id": "120911685",
+    "subtype": "grda",
+    "expert_votes": [
+      8,
+      0,
+      1,
+      2,
+      0,
+      11
+    ],
+    "n_experts": 22,
+    "s3_file": "sub-S0001120911685_20141229222349.mat",
+    "est_freq": null
+  },
+  "121025033": {
+    "patient_id": "121025033",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121025033_20200716112552.mat",
+    "est_freq": null
+  },
+  "121025033_seg001": {
+    "patient_id": "121025033",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121025033_20200716112644.mat",
+    "est_freq": null
+  },
+  "111558740": {
+    "patient_id": "111558740",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111558740_20160701182955.mat",
+    "est_freq": null
+  },
+  "116482256": {
+    "patient_id": "116482256",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116482256_20170415163557.mat",
+    "est_freq": null
+  },
+  "116482256_seg001": {
+    "patient_id": "116482256",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116482256_20170415163643.mat",
+    "est_freq": null
+  },
+  "114089562": {
+    "patient_id": "114089562",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114089562_20151230144610.mat",
+    "est_freq": null
+  },
+  "114089562_seg001": {
+    "patient_id": "114089562",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114089562_20151230145746.mat",
+    "est_freq": null
+  },
+  "117700265": {
+    "patient_id": "117700265",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117700265_20191118092445.mat",
+    "est_freq": null
+  },
+  "111409460": {
+    "patient_id": "111409460",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111409460_20160326161012.mat",
+    "est_freq": null
+  },
+  "111409460_seg001": {
+    "patient_id": "111409460",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111409460_20160326162706.mat",
+    "est_freq": null
+  },
+  "121913343": {
+    "patient_id": "121913343",
+    "subtype": "grda",
+    "expert_votes": [
+      2,
+      0,
+      0,
+      0,
+      0,
+      13
+    ],
+    "n_experts": 15,
+    "s3_file": "sub-S0001121913343_20150726095839.mat",
+    "est_freq": null
+  },
+  "121913343_seg001": {
+    "patient_id": "121913343",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121913343_20150726104317.mat",
+    "est_freq": null
+  },
+  "121913343_seg002": {
+    "patient_id": "121913343",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121913343_20150726122521.mat",
+    "est_freq": null
+  },
+  "116405073": {
+    "patient_id": "116405073",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116405073_20191102165352.mat",
+    "est_freq": null
+  },
+  "113882795": {
+    "patient_id": "113882795",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113882795_20141217062233.mat",
+    "est_freq": null
+  },
+  "118898318": {
+    "patient_id": "118898318",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118898318_20190107083051.mat",
+    "est_freq": null
+  },
+  "115459046": {
+    "patient_id": "115459046",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115459046_20171130140219.mat",
+    "est_freq": null
+  },
+  "120609101": {
+    "patient_id": "120609101",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120609101_20150720133943.mat",
+    "est_freq": null
+  },
+  "120609101_seg001": {
+    "patient_id": "120609101",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120609101_20150720141122.mat",
+    "est_freq": null
+  },
+  "113322979": {
+    "patient_id": "113322979",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113322979_20171110153322.mat",
+    "est_freq": null
+  },
+  "122093197": {
+    "patient_id": "122093197",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122093197_20160218133021.mat",
+    "est_freq": null
+  },
+  "122093197_seg001": {
+    "patient_id": "122093197",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122093197_20160219084205.mat",
+    "est_freq": null
+  },
+  "122093197_seg002": {
+    "patient_id": "122093197",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122093197_20160219084751.mat",
+    "est_freq": null
+  },
+  "111726309": {
+    "patient_id": "111726309",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111726309_20170521203402.mat",
+    "est_freq": null
+  },
+  "119171475": {
+    "patient_id": "119171475",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119171475_20171215184217.mat",
+    "est_freq": null
+  },
+  "119171475_seg001": {
+    "patient_id": "119171475",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119171475_20171215222255.mat",
+    "est_freq": null
+  },
+  "119171475_seg002": {
+    "patient_id": "119171475",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119171475_20171216103107.mat",
+    "est_freq": null
+  },
+  "120386026": {
+    "patient_id": "120386026",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120386026_20191227080531.mat",
+    "est_freq": null
+  },
+  "122179644": {
+    "patient_id": "122179644",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001122179644_20171105173435.mat",
+    "est_freq": null
+  },
+  "116666706": {
+    "patient_id": "116666706",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001116666706_20180622081042.mat",
+    "est_freq": null
+  },
+  "115945388": {
+    "patient_id": "115945388",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115945388_20160409105203.mat",
+    "est_freq": null
+  },
+  "115945388_seg001": {
+    "patient_id": "115945388",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115945388_20160409105251.mat",
+    "est_freq": null
+  },
+  "115535833": {
+    "patient_id": "115535833",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115535833_20131010121528.mat",
+    "est_freq": null
+  },
+  "117554128": {
+    "patient_id": "117554128",
+    "subtype": "grda",
+    "expert_votes": [
+      3,
+      0,
+      0,
+      0,
+      0,
+      9
+    ],
+    "n_experts": 12,
+    "s3_file": "sub-S0001117554128_20140215222545.mat",
+    "est_freq": null
+  },
+  "114022549": {
+    "patient_id": "114022549",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114022549_20140809092632.mat",
+    "est_freq": null
+  },
+  "115858440": {
+    "patient_id": "115858440",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115858440_20160624202646.mat",
+    "est_freq": null
+  },
+  "115858440_seg001": {
+    "patient_id": "115858440",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115858440_20160625005916.mat",
+    "est_freq": null
+  },
+  "111797529": {
+    "patient_id": "111797529",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111797529_20200225160841.mat",
+    "est_freq": null
+  },
+  "111797529_seg001": {
+    "patient_id": "111797529",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111797529_20200225175737.mat",
+    "est_freq": null
+  },
+  "111797529_seg002": {
+    "patient_id": "111797529",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001111797529_20200225122807.mat",
+    "est_freq": null
+  },
+  "121732289": {
+    "patient_id": "121732289",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121732289_20190828203120.mat",
+    "est_freq": null
+  },
+  "121732289_seg001": {
+    "patient_id": "121732289",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121732289_20190828203350.mat",
+    "est_freq": null
+  },
+  "121414548": {
+    "patient_id": "121414548",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121414548_20180607055835.mat",
+    "est_freq": null
+  },
+  "112048732": {
+    "patient_id": "112048732",
+    "subtype": "grda",
+    "expert_votes": [
+      4,
+      0,
+      0,
+      1,
+      0,
+      15
+    ],
+    "n_experts": 20,
+    "s3_file": "sub-S0001112048732_20120327162335.mat",
+    "est_freq": null
+  },
+  "112048732_seg001": {
+    "patient_id": "112048732",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112048732_20120327171133.mat",
+    "est_freq": null
+  },
+  "112048732_seg002": {
+    "patient_id": "112048732",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112048732_20120327173209.mat",
+    "est_freq": null
+  },
+  "114518010": {
+    "patient_id": "114518010",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114518010_20170509135113.mat",
+    "est_freq": null
+  },
+  "114518010_seg001": {
+    "patient_id": "114518010",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114518010_20170509135257.mat",
+    "est_freq": null
+  },
+  "115791704": {
+    "patient_id": "115791704",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115791704_20190112132819.mat",
+    "est_freq": null
+  },
+  "115791704_seg001": {
+    "patient_id": "115791704",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001115791704_20190112133155.mat",
+    "est_freq": null
+  },
+  "117654910": {
+    "patient_id": "117654910",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117654910_20190210063612.mat",
+    "est_freq": null
+  },
+  "117654910_seg001": {
+    "patient_id": "117654910",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117654910_20190210092426.mat",
+    "est_freq": null
+  },
+  "112265826": {
+    "patient_id": "112265826",
+    "subtype": "grda",
+    "expert_votes": [
+      4,
+      1,
+      1,
+      0,
+      4,
+      7
+    ],
+    "n_experts": 17,
+    "s3_file": "sub-S0001112265826_20150901143501.mat",
+    "est_freq": null
+  },
+  "112265826_seg001": {
+    "patient_id": "112265826",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112265826_20150901153859.mat",
+    "est_freq": null
+  },
+  "118994999": {
+    "patient_id": "118994999",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118994999_20190204171935.mat",
+    "est_freq": null
+  },
+  "118994999_seg001": {
+    "patient_id": "118994999",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118994999_20190204172027.mat",
+    "est_freq": null
+  },
+  "112448658": {
+    "patient_id": "112448658",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112448658_20150321094952.mat",
+    "est_freq": null
+  },
+  "117719997": {
+    "patient_id": "117719997",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117719997_20181226161205.mat",
+    "est_freq": null
+  },
+  "117610118": {
+    "patient_id": "117610118",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117610118_20191018083556.mat",
+    "est_freq": null
+  },
+  "117610118_seg001": {
+    "patient_id": "117610118",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117610118_20191018191054.mat",
+    "est_freq": null
+  },
+  "117610118_seg002": {
+    "patient_id": "117610118",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001117610118_20191018095018.mat",
+    "est_freq": null
+  },
+  "121469215": {
+    "patient_id": "121469215",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121469215_20140508124953.mat",
+    "est_freq": null
+  },
+  "121469215_seg001": {
+    "patient_id": "121469215",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121469215_20140508130731.mat",
+    "est_freq": null
+  },
+  "114150204": {
+    "patient_id": "114150204",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114150204_20190823113446.mat",
+    "est_freq": null
+  },
+  "113944265": {
+    "patient_id": "113944265",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113944265_20180719054651.mat",
+    "est_freq": null
+  },
+  "113944265_seg001": {
+    "patient_id": "113944265",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113944265_20180719060617.mat",
+    "est_freq": null
+  },
+  "119370941": {
+    "patient_id": "119370941",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119370941_20160826175222.mat",
+    "est_freq": null
+  },
+  "119940439": {
+    "patient_id": "119940439",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119940439_20140328124422.mat",
+    "est_freq": null
+  },
+  "119881010": {
+    "patient_id": "119881010",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119881010_20171007171348.mat",
+    "est_freq": null
+  },
+  "119093113": {
+    "patient_id": "119093113",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001119093113_20200710035748.mat",
+    "est_freq": null
+  },
+  "114381330": {
+    "patient_id": "114381330",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114381330_20140719181831.mat",
+    "est_freq": null
+  },
+  "114381330_seg001": {
+    "patient_id": "114381330",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001114381330_20140719192401.mat",
+    "est_freq": null
+  },
+  "113867581": {
+    "patient_id": "113867581",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001113867581_20140409101011.mat",
+    "est_freq": null
+  },
+  "121288232": {
+    "patient_id": "121288232",
+    "subtype": "grda",
+    "expert_votes": [
+      6,
+      0,
+      0,
+      0,
+      0,
+      7
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001121288232_20140929211809.mat",
+    "est_freq": null
+  },
+  "121288232_seg001": {
+    "patient_id": "121288232",
+    "subtype": "grda",
+    "expert_votes": [
+      5,
+      0,
+      0,
+      1,
+      1,
+      6
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001121288232_20140929230739.mat",
+    "est_freq": null
+  },
+  "121288232_seg002": {
+    "patient_id": "121288232",
+    "subtype": "grda",
+    "expert_votes": [
+      6,
+      0,
+      0,
+      0,
+      0,
+      7
+    ],
+    "n_experts": 13,
+    "s3_file": "sub-S0001121288232_20140929165153.mat",
+    "est_freq": null
+  },
+  "121823505": {
+    "patient_id": "121823505",
+    "subtype": "grda",
+    "expert_votes": [
+      3,
+      0,
+      0,
+      0,
+      3,
+      14
+    ],
+    "n_experts": 20,
+    "s3_file": "sub-S0001121823505_20160129165736.mat",
+    "est_freq": null
+  },
+  "121823505_seg001": {
+    "patient_id": "121823505",
+    "subtype": "grda",
+    "expert_votes": [
+      1,
+      0,
+      0,
+      0,
+      0,
+      2
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121823505_20160129121132.mat",
+    "est_freq": null
+  },
+  "121823505_seg002": {
+    "patient_id": "121823505",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121823505_20160129125952.mat",
+    "est_freq": null
+  },
+  "112452620": {
+    "patient_id": "112452620",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001112452620_20170921041308.mat",
+    "est_freq": null
+  },
+  "118754833": {
+    "patient_id": "118754833",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118754833_20140808152004.mat",
+    "est_freq": null
+  },
+  "118754833_seg001": {
+    "patient_id": "118754833",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001118754833_20140808153716.mat",
+    "est_freq": null
+  },
+  "120017285": {
+    "patient_id": "120017285",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001120017285_20120720183715.mat",
+    "est_freq": null
+  },
+  "121975392": {
+    "patient_id": "121975392",
+    "subtype": "grda",
+    "expert_votes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "n_experts": 3,
+    "s3_file": "sub-S0001121975392_20160314131035.mat",
+    "est_freq": null
+  }
+}
