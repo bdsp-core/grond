@@ -19,9 +19,10 @@ Algorithms for estimating the frequency of periodic discharges (PD) and rhythmic
 | BIPD vs GPD | AUC | 2,305 | **0.840** | HemiCET+GBT (screening) |
 | **RDA Analysis** | | | | |
 | LRDA vs GRDA | AUC | 5,387 | **0.839** (HQ: 0.878) | Hemisphere envelope asymmetry |
-| RDA frequency | Spearman ρ | 4,547 | **0.667** | Per-hemisphere Hilbert CV |
-| LRDA+GRDA+freq (unified) | AUC / ρ | 5,387 | **0.838 / 0.585** | V12_IterativeRefine |
-| LRDA+GRDA+freq (balanced) | AUC / ρ | 5,387 | **0.814 / 0.636** | V22_EnvAmp_DomHilbert |
+| RDA frequency | Spearman ρ | 4,547 | **0.668** | Per-hemisphere Hilbert CV (U11) |
+| LRDA+GRDA+freq (unified) | AUC / ρ | 5,387 | **0.838 / 0.586** | V12_IterativeRefine |
+| LRDA+GRDA+freq (balanced) | AUC / ρ | 5,387 | **0.814 / 0.630** | V22_EnvAmp_DomHilbert |
+| RDA freq labels reviewed | — | 993 | MW-reviewed | V22 viewer + MW correction |
 
 **All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [APPROACH_REVIEW_v16.md](APPROACH_REVIEW_v16.md) for details.
 

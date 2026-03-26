@@ -89,14 +89,25 @@ Simple amplitude/envelope methods dominate. LRDA has asymmetric delta power acro
 
 1. **Clean labels are transformative**: V1 (noisy labels) AUC 0.58 → V4 (clean labels) AUC 0.84. The hemisphere-independent constraint works when labels are correct.
 
-2. **Per-hemisphere Hilbert improves frequency**: Running M3_HilbertCV per-hemisphere and taking the dominant-hemisphere frequency yields ρ=0.667 (vs original 0.593). Isolating the dominant hemisphere removes contralateral noise.
+2. **Per-hemisphere Hilbert improves frequency**: Running M3_HilbertCV per-hemisphere and taking the dominant-hemisphere frequency yields ρ=0.668 (vs original 0.593). Isolating the dominant hemisphere removes contralateral noise.
 
 3. **Lateralization-frequency tradeoff**: Best lateralizers (envelope amplitude) are different from best freq estimators (Hilbert CV). The Pareto frontier:
-   - V12: AUC 0.838, Freq ρ 0.585 (best lateralization)
-   - V22: AUC 0.814, Freq ρ 0.636 (balanced)
-   - V04: AUC 0.803, Freq ρ 0.675 (best frequency)
+   - V12: AUC 0.838, Freq ρ 0.586 (best lateralization)
+   - V22: AUC 0.814, Freq ρ 0.630 (balanced)
+   - V04: AUC 0.803, Freq ρ 0.678 (best frequency)
 
 4. **Iterative refinement works**: V12 first estimates frequency from the dominant hemisphere, then narrows the bandpass to that frequency, then re-computes lateralization on the narrowband signal. This removes non-RDA activity and sharpens lateralization.
+
+### 5. MW Frequency Review (993 segments)
+
+MW reviewed 993 RDA segments (442 LRDA + 551 GRDA, all with ≥3 expert votes) using a frequency review viewer with V22's per-hemisphere estimates as defaults. The viewer shows narrowband-filtered overlay at the estimated frequency for visual confirmation.
+
+- **399 corrections** (MW selected a different frequency than V22 estimated)
+- **594 accepted** (V22 estimate confirmed by MW)
+- **Frequency accuracy**: V22 est_freq matched MW 59% exactly, 85% within 0.25 Hz, 93% within 0.50 Hz
+- All 993 segments now have MW-reviewed frequency AND laterality (left/right/bilateral)
+
+After re-evaluating all 65 methods with MW-corrected frequencies, results were essentially unchanged — confirming V22's frequency estimates were already good. The Pareto frontier methods maintained their positions.
 
 ### RDA Unified Architecture
 
@@ -144,16 +155,15 @@ EEG → L/R HemiCET+DP → 21 timing features → GBT → P(BIPD)
 | 4 | RDA channel ID | Pseudolabels | CNN | AUC 0.842 |
 | 5 | PD discharge timing | **Done** | PDCharacterizer (HemiCET+DP) | **F1 0.684** |
 | 6 | RDA wave timing | **In progress** | Auto-label+review | 549 cases labeled |
-| 7 | RDA frequency | **In progress** | Per-hemi Hilbert CV | **ρ 0.667** (up from 0.593) |
+| 7 | RDA frequency | **Done** | Per-hemi Hilbert CV (U11) | **ρ 0.668** (up from 0.593) |
 | 8 | PD frequency | **Done** | PDCharacterizer (CNN+ACF→IPI) | **ρ 0.681** |
 | 9 | BIPD detection | **Done** | HemiCET+GBT | AUC 0.840, Sens 63% |
 | 10 | PD spatial extent | **Done** | PDCharacterizer (Hybrid-PLV) | **Composite 0.811, AUC 0.814** |
 
 ## Next Steps
 
-1. **Frequency review viewer** — Build viewer with V22's per-hemisphere frequency estimates as defaults, narrowband overlay for quick review/correction by MW
-2. **LRDA side labeling** — Label confirmed LRDA cases as left or right using symmetric channel viewer
-3. **RDA localization** — Adapt PLV spatial method for RDA (which regions are involved)
-4. **RDA wave timing review** — MW to review 549 auto-labeled cases
-5. **Train RhythmiCET** — RDA evidence U-Net from reviewed wave labels
-6. **Paper** — Write up the unified RDA characterization pipeline
+1. **LRDA side labeling** — MW reviewing 1,952 LRDA segments for left/right/not-LRDA (viewer built, 4 batches)
+2. **RDA localization** — Adapt PLV spatial method for RDA (which regions are involved)
+3. **RDA wave timing review** — MW to review 549 auto-labeled cases
+4. **Train RhythmiCET** — RDA evidence U-Net from reviewed wave labels
+5. **Paper** — Write up the unified RDA characterization pipeline
