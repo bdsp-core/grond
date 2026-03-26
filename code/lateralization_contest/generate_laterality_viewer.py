@@ -321,10 +321,22 @@ try {{
     }}
 }} catch(e) {{}}
 function save() {{ localStorage.setItem(KEY, JSON.stringify({{decisions, ts: new Date().toISOString()}})); }}
+// Preload buffer
+const preloadImg = new Image();
+function preload(i) {{
+    if (i < cases.length && images[cases[i].mat_file]) {{
+        preloadImg.src = 'data:image/jpeg;base64,' + images[cases[i].mat_file];
+    }}
+}}
 function show(i) {{
     if (i >= cases.length) {{ showSummary(); return; }}
     const c = cases[i];
-    document.getElementById('eeg-img').src = images[c.mat_file] ? 'data:image/jpeg;base64,' + images[c.mat_file] : '';
+    const img = document.getElementById('eeg-img');
+    if (images[c.mat_file]) {{
+        img.src = 'data:image/jpeg;base64,' + images[c.mat_file];
+    }}
+    // Preload the next image
+    preload(i + 1);
     const n = Object.keys(decisions).length;
     document.getElementById('counter').textContent = n + ' / ' + cases.length;
     document.getElementById('progress-fill').style.width = (n / cases.length * 100) + '%';
