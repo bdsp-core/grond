@@ -382,7 +382,7 @@ Adapt the HPP algorithm for RDA waves:
 
 | Figure | Description | Status |
 |--------|-------------|--------|
-| Fig 1 | EEG examples by pattern type and difficulty | TODO |
+| Fig 1 | EEG examples by pattern type and difficulty | **DONE** (see characterization figures below) |
 | Fig 2 | Annotation tool screenshots | TODO (screenshots exist) |
 | Fig 3 | Feature extraction pipeline | TODO |
 | Fig 4 | HPP algorithm diagram | TODO |
@@ -399,6 +399,20 @@ Adapt the HPP algorithm for RDA waves:
 | Fig 15 | Spatial localization examples | **Data ready** (spatial_review_viewer.html) |
 | Fig 16 | Performance by review round | **Data ready** (6 rounds of timing review tracked) |
 | Fig 17 | Failure mode examples | TODO |
+
+### Completed Characterization Figures
+
+The following publication figures have been generated in `paper_materials/`:
+
+| Figure | File | Status |
+|--------|------|--------|
+| LPD Characterization Examples | `figure_lpd_examples.png` | **DONE** |
+| GPD Characterization Examples | `figure_gpd_examples.png` | **DONE** |
+| LRDA Characterization Examples | `figure_lrda_examples.png` | **DONE** |
+| GRDA Characterization Examples | `figure_grda_examples.png` | **DONE** |
+| Spatial Agreement Analysis | `spatial_agreement.html` / `spatial_agreement_figure.html` | **DONE** |
+
+Each characterization figure shows 3 cases (easy/medium/hard) selected by IIIC crowd vote agreement level. Panels include EEG with discharge markers, MNE spherical spline interpolated topoplots (inferno colormap, per-case normalization), and ACNS 2021 verbal descriptions. Rendered via `paper_materials/render_figures.py`.
 
 ## Tables Summary
 

@@ -753,3 +753,359 @@ class V25_FreqBandEnvRatio(LateralMethod):
         lf, _, _ = _hilbert_freq_cv(_hemi_top_signal(nb, LEFT_CHS, 3)[0])
         rf, _, _ = _hilbert_freq_cv(_hemi_top_signal(nb, RIGHT_CHS, 3)[0])
         return _make_result(best_ls, best_rs, lf, rf)
+
+
+# ═══════════════════════════════════════════════════════════════
+# Strategy G: Dominant-side-only frequency + auto channel selection
+# ═══════════════════════════════════════════════════════════════
+
+class W01_DomOnly_StrictHilbert(LateralMethod):
+    """Envelope lateralization; frequency ONLY from predicted-dominant hemisphere.
+
+    Key difference from V22: frequency is estimated exclusively from the
+    dominant side (not both), and the non-dominant frequency is set to NaN.
+    This prevents contamination from the non-LRDA hemisphere.
+    """
+    name = "W01_DomOnly_StrictHilbert"
+    description = "Envelope amp lat + Hilbert freq strictly from dominant hemi only"
+
+    def _analyze(self, seg_bi):
+        seg_f = self.prefilter(seg_bi)
+        sos = butter(4, [0.5/(FS/2), 3.5/(FS/2)], btype='bandpass', output='sos')
+        seg_n = sosfiltfilt(sos, seg_f, axis=1)
+        ls = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in LEFT_CHS]))
+        rs = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in RIGHT_CHS]))
+        dom_chs = LEFT_CHS if ls >= rs else RIGHT_CHS
+        powers = np.array([np.var(seg_n[ch]) for ch in dom_chs])
+        top3 = dom_chs[np.argsort(powers)[::-1][:3]]
+        freqs = []
+        for ch in top3:
+            f, cv, q = _hilbert_freq_cv(seg_n[ch])
+            if np.isfinite(f):
+                freqs.append(f)
+        dom_freq = float(np.median(freqs)) if freqs else np.nan
+        # Only report dominant side frequency
+        if ls >= rs:
+            return _make_result(ls, rs, dom_freq, np.nan)
+        else:
+            return _make_result(ls, rs, np.nan, dom_freq)
+
+
+class W02_DomOnly_AutoK(LateralMethod):
+    """Auto-select number of channels for frequency based on agreement.
+
+    Instead of fixed top-3, keeps adding channels while they agree on
+    frequency (CV of per-channel estimates < threshold).
+    """
+    name = "W02_DomOnly_AutoK"
+    description = "Envelope lat + auto-K channel selection for dom-side freq"
+
+    def _analyze(self, seg_bi):
+        seg_f = self.prefilter(seg_bi)
+        sos = butter(4, [0.5/(FS/2), 3.5/(FS/2)], btype='bandpass', output='sos')
+        seg_n = sosfiltfilt(sos, seg_f, axis=1)
+        ls = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in LEFT_CHS]))
+        rs = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in RIGHT_CHS]))
+        dom_chs = LEFT_CHS if ls >= rs else RIGHT_CHS
+        # Rank channels by power
+        powers = np.array([np.var(seg_n[ch]) for ch in dom_chs])
+        ranked = dom_chs[np.argsort(powers)[::-1]]
+        # Add channels one at a time while frequency estimates agree
+        ch_freqs = []
+        for ch in ranked:
+            f, cv, q = _hilbert_freq_cv(seg_n[ch])
+            if np.isfinite(f):
+                ch_freqs.append(f)
+                if len(ch_freqs) >= 2:
+                    freq_cv = np.std(ch_freqs) / max(np.mean(ch_freqs), 1e-6)
+                    if freq_cv > 0.3:
+                        ch_freqs.pop()  # remove disagreeing channel
+                        break
+        dom_freq = float(np.median(ch_freqs)) if ch_freqs else np.nan
+        if ls >= rs:
+            return _make_result(ls, rs, dom_freq, np.nan)
+        else:
+            return _make_result(ls, rs, np.nan, dom_freq)
+
+
+class W03_DomOnly_QualityWeighted(LateralMethod):
+    """Frequency from dominant hemi, weighted by Hilbert CV quality score.
+
+    Channels with more stable instantaneous frequency (lower CV) get more weight.
+    """
+    name = "W03_DomOnly_QualityWeighted"
+    description = "Envelope lat + quality-weighted Hilbert freq from dom hemi"
+
+    def _analyze(self, seg_bi):
+        seg_f = self.prefilter(seg_bi)
+        sos = butter(4, [0.5/(FS/2), 3.5/(FS/2)], btype='bandpass', output='sos')
+        seg_n = sosfiltfilt(sos, seg_f, axis=1)
+        ls = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in LEFT_CHS]))
+        rs = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in RIGHT_CHS]))
+        dom_chs = LEFT_CHS if ls >= rs else RIGHT_CHS
+        freqs, weights = [], []
+        for ch in dom_chs:
+            f, cv, q = _hilbert_freq_cv(seg_n[ch])
+            if np.isfinite(f) and q > 0.0:
+                freqs.append(f)
+                weights.append(q)
+        if freqs:
+            dom_freq = float(np.average(freqs, weights=weights))
+        else:
+            dom_freq = np.nan
+        if ls >= rs:
+            return _make_result(ls, rs, dom_freq, np.nan)
+        else:
+            return _make_result(ls, rs, np.nan, dom_freq)
+
+
+class W04_DomOnly_MultiMethod(LateralMethod):
+    """Dominant-side freq using consensus of Hilbert, ACF, and spectral peak.
+
+    Takes median of multiple frequency estimators on the dominant hemisphere.
+    """
+    name = "W04_DomOnly_MultiMethod"
+    description = "Envelope lat + multi-method consensus freq from dom hemi"
+
+    def _analyze(self, seg_bi):
+        seg_f = self.prefilter(seg_bi)
+        sos = butter(4, [0.5/(FS/2), 3.5/(FS/2)], btype='bandpass', output='sos')
+        seg_n = sosfiltfilt(sos, seg_f, axis=1)
+        ls = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in LEFT_CHS]))
+        rs = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in RIGHT_CHS]))
+        dom_chs = LEFT_CHS if ls >= rs else RIGHT_CHS
+        dom_sig, _ = _hemi_top_signal(seg_n, dom_chs, 3)
+        estimates = []
+        f_h, _, _ = _hilbert_freq_cv(dom_sig)
+        if np.isfinite(f_h):
+            estimates.append(f_h)
+        f_a, _ = _acf_freq(dom_sig)
+        if np.isfinite(f_a):
+            estimates.append(f_a)
+        f_s, _ = _spectral_peak(dom_sig)
+        if np.isfinite(f_s):
+            estimates.append(f_s)
+        dom_freq = float(np.median(estimates)) if estimates else np.nan
+        if ls >= rs:
+            return _make_result(ls, rs, dom_freq, np.nan)
+        else:
+            return _make_result(ls, rs, np.nan, dom_freq)
+
+
+class W05_DomOnly_IterRefine(LateralMethod):
+    """Iterative refinement like V12, but frequency strictly from dominant side.
+
+    Two-pass: coarse lateralize → estimate dom freq → narrowband → refined lateralize.
+    Frequency output only from the dominant hemisphere.
+    """
+    name = "W05_DomOnly_IterRefine"
+    description = "Iterative narrowband refinement + strict dom-side freq"
+
+    def _analyze(self, seg_bi):
+        seg_f = self.prefilter(seg_bi)
+        sos = butter(4, [0.5/(FS/2), 3.5/(FS/2)], btype='bandpass', output='sos')
+        seg_n = sosfiltfilt(sos, seg_f, axis=1)
+        # Pass 1: coarse lateralization
+        ls1 = float(np.mean([np.var(seg_n[ch]) for ch in LEFT_CHS]))
+        rs1 = float(np.mean([np.var(seg_n[ch]) for ch in RIGHT_CHS]))
+        dom_chs = LEFT_CHS if ls1 >= rs1 else RIGHT_CHS
+        # Estimate frequency from dominant hemisphere
+        dom_sig, _ = _hemi_top_signal(seg_n, dom_chs, 3)
+        est_freq, _, _ = _hilbert_freq_cv(dom_sig)
+        if not np.isfinite(est_freq):
+            est_freq, _ = _spectral_peak(dom_sig)
+        if not np.isfinite(est_freq):
+            est_freq = 1.5
+        # Pass 2: narrowband at estimated freq
+        bw = 0.4
+        lo = max(est_freq - bw, 0.1)
+        hi = min(est_freq + bw, FS/2 - 0.1)
+        if lo < hi:
+            sos2 = butter(3, [lo/(FS/2), hi/(FS/2)], btype='bandpass', output='sos')
+            seg_nb = sosfiltfilt(sos2, seg_f, axis=1)
+        else:
+            seg_nb = seg_n
+        # Refined lateralization via envelope amplitude
+        ls = float(np.mean([np.mean(np.abs(hilbert(seg_nb[ch]))) for ch in LEFT_CHS]))
+        rs = float(np.mean([np.mean(np.abs(hilbert(seg_nb[ch]))) for ch in RIGHT_CHS]))
+        # Refined frequency from dominant side in narrowband
+        dom_chs2 = LEFT_CHS if ls >= rs else RIGHT_CHS
+        dom_sig2, _ = _hemi_top_signal(seg_nb, dom_chs2, 3)
+        refined_freq, _, _ = _hilbert_freq_cv(dom_sig2)
+        dom_freq = refined_freq if np.isfinite(refined_freq) else est_freq
+        if ls >= rs:
+            return _make_result(ls, rs, dom_freq, np.nan)
+        else:
+            return _make_result(ls, rs, np.nan, dom_freq)
+
+
+class W06_AutoChannel_EnvThreshold(LateralMethod):
+    """Auto-select channels with envelope amplitude above threshold.
+
+    Instead of top-K by power, selects all channels on the dominant side
+    whose envelope amplitude exceeds 50% of the max channel's amplitude.
+    """
+    name = "W06_AutoChannel_EnvThreshold"
+    description = "Auto-select channels by envelope threshold + dom freq"
+
+    def _analyze(self, seg_bi):
+        seg_f = self.prefilter(seg_bi)
+        sos = butter(4, [0.5/(FS/2), 3.5/(FS/2)], btype='bandpass', output='sos')
+        seg_n = sosfiltfilt(sos, seg_f, axis=1)
+        ls = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in LEFT_CHS]))
+        rs = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in RIGHT_CHS]))
+        dom_chs = LEFT_CHS if ls >= rs else RIGHT_CHS
+        # Compute per-channel envelope amplitude
+        envs = {ch: np.mean(np.abs(hilbert(seg_n[ch]))) for ch in dom_chs}
+        max_env = max(envs.values())
+        if max_env < 1e-10:
+            if ls >= rs:
+                return _make_result(ls, rs, np.nan, np.nan)
+            else:
+                return _make_result(ls, rs, np.nan, np.nan)
+        threshold = 0.5 * max_env
+        selected = [ch for ch, env in envs.items() if env >= threshold]
+        if not selected:
+            selected = [max(envs, key=envs.get)]
+        # Frequency from selected channels
+        freqs, weights = [], []
+        for ch in selected:
+            f, cv, q = _hilbert_freq_cv(seg_n[ch])
+            if np.isfinite(f):
+                freqs.append(f)
+                weights.append(envs[ch])
+        if freqs:
+            dom_freq = float(np.average(freqs, weights=weights))
+        else:
+            dom_freq = np.nan
+        if ls >= rs:
+            return _make_result(ls, rs, dom_freq, np.nan)
+        else:
+            return _make_result(ls, rs, np.nan, dom_freq)
+
+
+class W07_AutoChannel_FreqAgreement(LateralMethod):
+    """Select channels on dominant side that agree on frequency.
+
+    Computes per-channel Hilbert freq on all dominant channels, then
+    keeps only those within 1 MAD of the median — robust outlier rejection.
+    """
+    name = "W07_AutoChannel_FreqAgreement"
+    description = "Auto-select channels by freq agreement + dom freq"
+
+    def _analyze(self, seg_bi):
+        seg_f = self.prefilter(seg_bi)
+        sos = butter(4, [0.5/(FS/2), 3.5/(FS/2)], btype='bandpass', output='sos')
+        seg_n = sosfiltfilt(sos, seg_f, axis=1)
+        ls = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in LEFT_CHS]))
+        rs = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in RIGHT_CHS]))
+        dom_chs = LEFT_CHS if ls >= rs else RIGHT_CHS
+        # Get all channel frequencies
+        ch_freqs = {}
+        for ch in dom_chs:
+            f, cv, q = _hilbert_freq_cv(seg_n[ch])
+            if np.isfinite(f):
+                ch_freqs[ch] = f
+        if not ch_freqs:
+            if ls >= rs:
+                return _make_result(ls, rs, np.nan, np.nan)
+            else:
+                return _make_result(ls, rs, np.nan, np.nan)
+        all_f = np.array(list(ch_freqs.values()))
+        med = np.median(all_f)
+        mad = np.median(np.abs(all_f - med))
+        if mad < 0.05:
+            mad = 0.05  # floor to avoid over-filtering
+        # Keep channels within 1.5 MAD of median
+        agreed = {ch: f for ch, f in ch_freqs.items() if abs(f - med) <= 1.5 * mad}
+        if not agreed:
+            agreed = ch_freqs
+        dom_freq = float(np.median(list(agreed.values())))
+        if ls >= rs:
+            return _make_result(ls, rs, dom_freq, np.nan)
+        else:
+            return _make_result(ls, rs, np.nan, dom_freq)
+
+
+class W08_DomOnly_VEFreq(LateralMethod):
+    """Variance-explained frequency estimation on dominant side only.
+
+    Uses sine/cosine fitting across a frequency grid, picking the frequency
+    that best explains variance in the dominant hemisphere signal.
+    """
+    name = "W08_DomOnly_VEFreq"
+    description = "Envelope lat + variance-explained freq from dom hemi"
+
+    def _analyze(self, seg_bi):
+        seg_f = self.prefilter(seg_bi)
+        ls = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in LEFT_CHS]))
+        rs = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in RIGHT_CHS]))
+        dom_chs = LEFT_CHS if ls >= rs else RIGHT_CHS
+        sos = butter(4, [0.5/(FS/2), 3.5/(FS/2)], btype='bandpass', output='sos')
+        seg_n = sosfiltfilt(sos, seg_f, axis=1)
+        dom_sig, _ = _hemi_top_signal(seg_n, dom_chs, 3)
+        dom_freq, ve = _ve_freq(dom_sig)
+        if ls >= rs:
+            return _make_result(ls, rs, dom_freq, np.nan)
+        else:
+            return _make_result(ls, rs, np.nan, dom_freq)
+
+
+class W09_DomOnly_IPIFreq(LateralMethod):
+    """Inter-peak interval frequency on dominant side.
+
+    Detects peaks in the dominant hemisphere signal and estimates frequency
+    from the regularity of inter-peak intervals.
+    """
+    name = "W09_DomOnly_IPIFreq"
+    description = "Envelope lat + IPI freq from dom hemi"
+
+    def _analyze(self, seg_bi):
+        seg_f = self.prefilter(seg_bi)
+        sos = butter(4, [0.5/(FS/2), 3.5/(FS/2)], btype='bandpass', output='sos')
+        seg_n = sosfiltfilt(sos, seg_f, axis=1)
+        ls = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in LEFT_CHS]))
+        rs = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in RIGHT_CHS]))
+        dom_chs = LEFT_CHS if ls >= rs else RIGHT_CHS
+        dom_sig, _ = _hemi_top_signal(seg_n, dom_chs, 3)
+        # IPI frequency
+        peaks, _ = find_peaks(dom_sig, distance=int(FS / 3.5))
+        if len(peaks) >= 3:
+            ipis = np.diff(peaks) / FS
+            dom_freq = float(1.0 / np.median(ipis))
+        else:
+            dom_freq = np.nan
+        if ls >= rs:
+            return _make_result(ls, rs, dom_freq, np.nan)
+        else:
+            return _make_result(ls, rs, np.nan, dom_freq)
+
+
+class W10_DomOnly_EnvPeakFreq(LateralMethod):
+    """Frequency from envelope periodicity on dominant side.
+
+    Computes Hilbert envelope on dominant channels, then finds the
+    periodicity of the envelope itself via ACF.
+    """
+    name = "W10_DomOnly_EnvPeakFreq"
+    description = "Envelope lat + envelope-periodicity freq from dom hemi"
+
+    def _analyze(self, seg_bi):
+        seg_f = self.prefilter(seg_bi)
+        sos = butter(4, [0.5/(FS/2), 3.5/(FS/2)], btype='bandpass', output='sos')
+        seg_n = sosfiltfilt(sos, seg_f, axis=1)
+        ls = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in LEFT_CHS]))
+        rs = float(np.mean([np.mean(np.abs(hilbert(seg_f[ch]))) for ch in RIGHT_CHS]))
+        dom_chs = LEFT_CHS if ls >= rs else RIGHT_CHS
+        # Compute mean envelope across top-3 dom channels
+        dom_sig, top_idx = _hemi_top_signal(seg_n, dom_chs, 3)
+        env = np.abs(hilbert(dom_sig))
+        # ACF of envelope to find periodicity
+        dom_freq, acf_val = _acf_freq(env)
+        if not np.isfinite(dom_freq):
+            # Fallback to Hilbert on raw signal
+            dom_freq, _, _ = _hilbert_freq_cv(dom_sig)
+        if ls >= rs:
+            return _make_result(ls, rs, dom_freq, np.nan)
+        else:
+            return _make_result(ls, rs, np.nan, dom_freq)

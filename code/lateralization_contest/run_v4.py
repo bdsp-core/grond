@@ -64,6 +64,10 @@ BATCHES = {
                  'V19_SpatialCoherenceFreq', 'V20_SVDFreq'],
     'batch13': ['V21_ChannelFreqMatrix', 'V22_EnvAmp_DomHilbert', 'V23_CherryPick',
                  'V24_SoftChannelWeight', 'V25_FreqBandEnvRatio'],
+    'batch14': ['W01_DomOnly_StrictHilbert', 'W02_DomOnly_AutoK', 'W03_DomOnly_QualityWeighted',
+                 'W04_DomOnly_MultiMethod', 'W05_DomOnly_IterRefine'],
+    'batch15': ['W06_AutoChannel_EnvThreshold', 'W07_AutoChannel_FreqAgreement',
+                 'W08_DomOnly_VEFreq', 'W09_DomOnly_IPIFreq', 'W10_DomOnly_EnvPeakFreq'],
     'all': None,
 }
 

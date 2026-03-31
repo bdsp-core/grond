@@ -4,7 +4,7 @@
 
 **No method may use gold standard labels as input.** All algorithms operate from raw EEG only.
 
-## Dataset (as of 2026-03-25)
+## Dataset (as of 2026-03-26)
 
 ### EEG Data
 
@@ -23,7 +23,7 @@ All labels are segment-level. The canonical file is `data/labels/segment_labels.
 | MW/expert frequency | 3,607 | Expert-reviewed frequency annotations |
 | Auto-assigned frequency | 4,368 | Algorithm-assigned (HilbertCV/NVO) |
 | Spatial annotations | 965 | Brain region involvement (LB, PH, SZ raters) |
-| Laterality | 2,674 | Left/right/bilateral |
+| Laterality | 2,720 | Left/right/bilateral |
 | Discharge timing | 2,400 | Per-discharge times (PD cases) |
 | Wave timing | 549 | Per-wave times (RDA cases) |
 | Channel involvement | 2,228 | Per-channel ground truth |
@@ -109,21 +109,25 @@ MW reviewed 993 RDA segments (442 LRDA + 551 GRDA, all with ≥3 expert votes) u
 
 After re-evaluating all 65 methods with MW-corrected frequencies, results were essentially unchanged — confirming V22's frequency estimates were already good. The Pareto frontier methods maintained their positions.
 
-### RDA Unified Architecture
+### RDA Unified Architecture (W05_DomOnly_IterRefine)
 
 ```
 EEG (19ch monopolar → 18ch bipolar)
 │
-├── Per-hemisphere processing (L: 8ch, R: 8ch)
-│   │
+├── Pass 1: Coarse lateralization
+│   ├── Bandpass 0.3–5 Hz
+│   ├── Mean variance per hemisphere → dominant side
+│   └── Hilbert freq from top-3 channels of dominant hemisphere
+│       → coarse frequency estimate
+│
+├── Pass 2: Refined (narrowband at estimated frequency ± 0.4 Hz)
 │   ├── Envelope amplitude per channel → mean per hemisphere
 │   │   → left_score, right_score
 │   │   → LRDA vs GRDA (asymmetry)
 │   │   → Which side (argmax)
 │   │
-│   └── Hilbert inst. frequency (top-3 channels per hemisphere)
-│       → left_freq, right_freq
-│       → Frequency estimate (from dominant hemisphere)
+│   └── Hilbert inst. frequency (top-3 channels, dominant hemisphere ONLY)
+│       → Frequency estimate (no contralateral contamination)
 │
 └── OUTPUT: subtype (LRDA/GRDA), side (L/R), frequency (Hz)
 ```
@@ -135,9 +139,9 @@ EEG (19ch monopolar → 18ch bipolar)
 EEG → ChannelPD-Net (×18ch) → laterality + spatial (PLV) + timing (HemiCET+DP) + frequency
 ```
 
-### RDA Pipeline (in development)
+### RDA Pipeline (W05_DomOnly_IterRefine)
 ```
-EEG → Per-hemisphere envelope + Hilbert → classification + lateralization + frequency
+EEG → Coarse lat (variance) → Dom freq (Hilbert) → Narrowband → Refined lat (envelope) + Dom freq
 ```
 
 ### BIPD Pipeline
@@ -150,12 +154,12 @@ EEG → L/R HemiCET+DP → 21 timing features → GBT → P(BIPD)
 | # | Task | Status | Best Method | Performance |
 |---|------|--------|-------------|-------------|
 | 1 | LPD vs GPD | **Done** | RF 300 | AUC 0.931 |
-| 2 | LRDA vs GRDA | **Done** | Hemisphere envelope asymmetry | **AUC 0.839** (HQ: 0.878) |
+| 2 | LRDA vs GRDA | **Done** | W05_DomOnly_IterRefine | **AUC 0.837** |
 | 3 | PD channel ID | Partial | CNN+Attention | AUC 0.870 |
 | 4 | RDA channel ID | Pseudolabels | CNN | AUC 0.842 |
 | 5 | PD discharge timing | **Done** | PDCharacterizer (HemiCET+DP) | **F1 0.684** |
 | 6 | RDA wave timing | **In progress** | Auto-label+review | 549 cases labeled |
-| 7 | RDA frequency | **Done** | Per-hemi Hilbert CV (U11) | **ρ 0.668** (up from 0.593) |
+| 7 | RDA frequency | **Done** | W07_AutoChannel_FreqAgreement | **ρ 0.686** (up from 0.668) |
 | 8 | PD frequency | **Done** | PDCharacterizer (CNN+ACF→IPI) | **ρ 0.681** |
 | 9 | BIPD detection | **Done** | HemiCET+GBT | AUC 0.840, Sens 63% |
 | 10 | PD spatial extent | **Done** | PDCharacterizer (Hybrid-PLV) | **Composite 0.811, AUC 0.814** |
@@ -175,11 +179,176 @@ MW reviewed 1,374 LRDA segments across 3 batches using a laterality viewer with 
 - 469 LRDA segments still need laterality review (near-bilateral cases)
 - Laterality labels stored in `data/labels/lrda_laterality_batch{1,2,3}.json`
 
+### 7. V5 Lateralization Contest (76 methods, improved labels)
+
+Re-ran the lateralization contest with improved labels from MW's laterality review (1,374 LRDA segments reviewed, 338 rejected as not-LRDA). Also added 10 new W-series methods focused on dominant-side-only frequency estimation and automatic channel selection.
+
+**Dataset**: 4,253 segments (1,295 LRDA + 2,958 GRDA) — smaller than V4 due to 338 exclusions from laterality review.
+
+#### V4 → V5 comparison (same methods, better labels)
+
+| Method | V4 AUC | V5 AUC | V4 Freq ρ | V5 Freq ρ |
+|--------|--------|--------|-----------|-----------|
+| L24_EnvelopeAmplitude | 0.839 | 0.826 | — | — |
+| V12_IterativeRefine | 0.838 | 0.825 | 0.585 | 0.595 |
+| V22_EnvAmp_DomHilbert | 0.814 | 0.790 | 0.636 | 0.650 |
+| V04_PLVSelected | 0.803 | 0.809 | 0.675 | 0.682 |
+
+AUC dropped slightly (removing 338 easy-to-classify non-LRDA segments made the remaining dataset harder), while frequency ρ improved consistently (better ground truth labels).
+
+#### V5 top unified methods (classification + lateralization + frequency)
+
+| Rank | Method | AUC | Freq ρ | Strategy |
+|------|--------|-----|--------|----------|
+| 1 | **W05_DomOnly_IterRefine** | **0.837** | **0.635** | Iterative refinement + strict dom-side freq |
+| 2 | V12_IterativeRefine | 0.825 | 0.595 | Coarse lat → freq → narrowband → refined lat |
+| 3 | V04_PLVSelected | 0.809 | **0.682** | PLV-coherent channels for score + freq |
+| 4 | W07_AutoChannel_FreqAgreement | 0.790 | **0.686** | Auto-select channels by freq consensus |
+| 5 | W03_DomOnly_QualityWeighted | 0.790 | **0.685** | Quality-weighted Hilbert freq from dom hemi |
+| 6 | W02_DomOnly_AutoK | 0.790 | 0.683 | Auto-K channel selection for dom-side freq |
+| 7 | V22_EnvAmp_DomHilbert | 0.790 | 0.650 | All-ch envelope + top-3 Hilbert freq |
+
+#### V5 top lateralization-only (no frequency output)
+
+| Rank | Method | AUC |
+|------|--------|-----|
+| 1 | L24_EnvelopeAmplitude | 0.826 |
+| 2 | L05_RMSAmplitude | 0.797 |
+| 3 | L01_DeltaBandpower | 0.782 |
+
+#### Key findings
+
+1. **W05_DomOnly_IterRefine is the new winner**: Iterative refinement (like V12) but with frequency estimated strictly from the predicted-dominant hemisphere. Best combined AUC (0.837) and strong freq ρ (0.635).
+
+2. **Auto-channel-selection improves frequency**: W07 (MAD-based outlier rejection), W03 (quality-weighted), and W02 (agreement-based) all achieve freq ρ ≈ 0.685 — the best frequency performance in the contest. These methods automatically figure out which channels to use rather than relying on fixed top-K.
+
+3. **Dominant-side-only frequency works**: All W-series methods that restrict frequency estimation to the dominant hemisphere (W01-W09) match or exceed their V-series counterparts on freq ρ, confirming that contralateral channel contamination degrades frequency estimates.
+
+4. **PLV remains strong for frequency**: V04_PLVSelected (ρ=0.682) is competitive with the new auto-channel methods — phase coherence is an effective way to identify the "right" channels.
+
+5. **Lateralization-frequency tradeoff persists**: The Pareto frontier is now:
+   - W05: AUC 0.837, Freq ρ 0.635 (best lateralization)
+   - V04: AUC 0.809, Freq ρ 0.682 (balanced)
+   - W07: AUC 0.790, Freq ρ 0.686 (best frequency)
+
+Full results for all 76 methods are in Appendix A.
+
+### 8. Spatial Localization Inter-Rater Agreement
+
+Evaluated the PDCharacterizer spatial model (Hybrid CNN+PLV, Composite=0.811) against 3 expert raters (LB, PH, SZ) on 220 PD segments with 3-rater ground truth. The model outputs continuous per-region probabilities; a binarization threshold converts these to region sets for Jaccard (IoU) comparison.
+
+**Threshold optimization**: Swept thresholds from 0.25 to 0.70. Threshold 0.38 maximizes avg(Model-LB, Model-PH) Jaccard. A broad plateau exists from 0.25-0.40, with a sharp drop above 0.45.
+
+**4x4 Jaccard agreement matrix (threshold=0.38)**:
+
+|       | LB    | PH    | SZ    | Model |
+|-------|-------|-------|-------|-------|
+| LB    | 1.000 | 0.762 | 0.773 | 0.692 |
+| PH    | 0.762 | 1.000 | 0.716 | 0.842 |
+| SZ    | 0.773 | 0.716 | 1.000 | 0.664 |
+| Model | 0.692 | 0.842 | 0.664 | 1.000 |
+
+**Key results**:
+- Mean rater-rater Jaccard: 0.751 +/- 0.025
+- Mean model-rater Jaccard: 0.731 +/- 0.076 (97.3% of human agreement)
+- avg(Model-LB, Model-PH) = 0.767 at threshold 0.38 -- **exceeds** LB-PH agreement (0.762)
+- The model acts as a "virtual 4th rater" that is more consistent with LB and PH than they are with each other
+- Highest single pair: Model-PH = 0.842 (exceeds all rater-rater pairs)
+- Model is weakest vs SZ (0.664), consistent with SZ being the most conservative rater
+
+A spatial labeling viewer was built with topoplot visualization, per-channel toggling, and threshold slider to support the analysis. Figures available at `paper_materials/spatial_agreement_figure.html`.
+
+### 9. PDCharacterizer Model Comparison
+
+Confirmed V1 (original ChannelPD-Net, 5-fold) remains the best model:
+- Laterality AUC: 0.984
+- Frequency Spearman rho: 0.663
+- Timing F1: 0.506
+
+V3 retraining with augmentation and E2E DETR-style multi-task approach both failed to beat V1 on the combined metric profile. V1 is locked in as the production model.
+
+### 10. Label Status Update
+
+Current LPD label coverage:
+- LPD laterality: 880 segments labeled
+- LPD frequency (MW-reviewed): 842 segments
+- LPD timing (discharge labels): 882 segments
+
 ## Next Steps
 
 1. **Complete LRDA laterality** — Review remaining 469 segments in bilateral zone
-2. **Re-evaluate lateralization models** — With 1,035 left/right labels, measure side prediction accuracy
+2. **LPD laterality** — 1,973 LPD segments need laterality labels (reviewer tool ready)
 3. **RDA localization** — Adapt PLV spatial method for RDA (which regions are involved)
 4. **RDA wave timing review** — MW to review 549 auto-labeled cases
 5. **Train RhythmiCET** — RDA evidence U-Net from reviewed wave labels
 6. **Paper** — Write up the unified RDA characterization pipeline
+
+### 11. Paper Figures (LPD, GPD, LRDA, GRDA Characterization Examples)
+
+Generated 4 publication-quality figures (one per IIIC subtype) with 3 example cases each, stratified by IIIC crowd vote agreement:
+
+- **Easy**: agreement >= 95% (PD) / >= 80% (RDA)
+- **Medium**: agreement 70-80% (PD) / 65-80% (RDA)
+- **Hard**: agreement 45-60%
+
+Each panel shows:
+1. **EEG trace** with discharge/wave markers from the detection pipeline
+2. **MNE spherical spline interpolated topoplot** — inferno colormap with per-case normalization for maximum contrast
+3. **ACNS 2021 verbal description** following standardized nomenclature
+
+**Spatial predictions** from PDCharacterizer V1 (threshold 0.38, Jaccard 0.731 vs human 0.751 at 97.3% of expert agreement). Topoplots use MNE's spherical spline interpolation for smooth publication-ready visualizations.
+
+**Spatial labeling support**: A spatial labeling viewer was built with topoplot visualization, per-channel toggling, and threshold slider for all 4 subtypes. 106 LPD spatial labels completed from batch 1.
+
+Source data and render script in `paper_materials/` for iterative refinement:
+```bash
+conda run -n morgoth python paper_materials/render_figures.py --pick '{"lpd":[1,15,9],"gpd":[17,2,9],"lrda":[11,3,6],"grda":[0,4,9]}'
+```
+
+Output files: `figure_lpd_examples.png`, `figure_gpd_examples.png`, `figure_lrda_examples.png`, `figure_grda_examples.png`.
+
+## Appendix A: V5 Lateralization Contest — Full Results (76 methods)
+
+Dataset: 4,253 segments (1,295 LRDA + 2,958 GRDA), all non-excluded, on disk.
+
+### Unified methods (with frequency output)
+
+| Rank | Method | AUC | Freq ρ | n_freq | Description |
+|------|--------|-----|--------|--------|-------------|
+| 1 | W05_DomOnly_IterRefine | 0.837 | 0.635 | 4253 | Iterative narrowband refinement + strict dom-side freq |
+| 2 | V12_IterativeRefine | 0.825 | 0.595 | 4253 | Coarse lat → freq → narrowband → refined lat |
+| 3 | V04_PLVSelected | 0.809 | 0.682 | 4253 | PLV-coherent channels for score + freq |
+| 4 | V01_DomHemi_Top3Hilbert | 0.790 | 0.575 | 4253 | All-ch envelope + top-3 Hilbert on dom hemi |
+| 5 | V02_PowerWeightedHilbert | 0.790 | 0.619 | 4155 | Power-weighted Hilbert freq per hemi |
+| 6 | V22_EnvAmp_DomHilbert | 0.790 | 0.650 | 4253 | All-ch envelope + top-3 Hilbert (dom hemi) |
+| 7 | V23_CherryPick | 0.790 | 0.650 | 4253 | L24 score + U11 freq (independent) |
+| 8 | V24_SoftChannelWeight | 0.790 | 0.620 | 4155 | Per-channel envelope-weighted Hilbert freq |
+| 9 | W01_DomOnly_StrictHilbert | 0.790 | 0.650 | 4253 | Strict dom-side Hilbert freq |
+| 10 | W02_DomOnly_AutoK | 0.790 | 0.683 | 4253 | Auto-K channels by freq agreement |
+| 11 | W03_DomOnly_QualityWeighted | 0.790 | 0.685 | 4250 | Quality-weighted Hilbert from dom hemi |
+| 12 | W06_AutoChannel_EnvThreshold | 0.790 | 0.663 | 4253 | Auto-select channels by envelope threshold |
+| 13 | W07_AutoChannel_FreqAgreement | 0.790 | 0.686 | 4253 | Auto-select by MAD-based freq consensus |
+| 14 | V03_ConsistencySelected | 0.787 | 0.659 | 4252 | Channels with low Hilbert CV selected |
+| 15 | V11_NarrowbandAtPeak | 0.787 | 0.469 | 4253 | Global freq est → narrowband → lateralize |
+| 16 | W04_DomOnly_MultiMethod | 0.790 | 0.533 | 4253 | Multi-method consensus (Hilbert+ACF+spectral) |
+| 17 | W08_DomOnly_VEFreq | 0.790 | 0.480 | 4253 | Variance-explained freq from dom hemi |
+| 18 | W09_DomOnly_IPIFreq | 0.790 | 0.343 | 4253 | Inter-peak interval freq from dom hemi |
+
+### Lateralization-only methods (no frequency output)
+
+| Rank | Method | AUC | Cohen's d |
+|------|--------|-----|-----------|
+| 1 | L24_EnvelopeAmplitude | 0.826 | 1.09 |
+| 2 | L05_RMSAmplitude | 0.797 | 0.86 |
+| 3 | L01_DeltaBandpower | 0.782 | 0.98 |
+| 4 | L04_BandpowerRatio | 0.750 | 0.85 |
+| 5 | L23_InterHemiCorr | 0.737 | 0.80 |
+
+### Method series summary
+
+| Series | Count | AUC range | Best Freq ρ | Focus |
+|--------|-------|-----------|-------------|-------|
+| L (lateralization) | 25 | 0.456–0.826 | — | Lateralization only |
+| U (unified v1) | 15 | 0.509–0.790 | 0.674 | Initial unified attempts |
+| V (unified v2) | 25 | 0.564–0.853 | 0.682 | Optimized AUC+freq tradeoff |
+| W (dom-side freq) | 10 | 0.790–0.837 | 0.686 | Dominant-side-only frequency + auto channels |

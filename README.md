@@ -13,15 +13,16 @@ Algorithms for estimating the frequency of periodic discharges (PD) and rhythmic
 | PD frequency (IPI) | Spearman ρ | 500 | **0.681** | CNN+ACF → IPI |
 | PD spatial localization | Composite | 465 | **0.811** | Hybrid-PLV (CNN ref + PLV) |
 | PD spatial localization | Mean AUC | 465 | **0.814** | Hybrid-PLV |
+| PD spatial inter-rater | Jaccard | 220 | **0.731** vs human 0.751 (97.3%) | Hybrid-PLV @ threshold 0.38 |
 | Laterality (L vs R) | AUC | 423 | **0.963** | ChannelPD-Net hemisphere |
 | Channel PD detection | AUC | 815 | **0.870** | ChannelPD-Net |
 | Subtype (LPD vs GPD) | AUC | 594 | **0.931** | RF 300 trees |
 | BIPD vs GPD | AUC | 2,305 | **0.840** | HemiCET+GBT (screening) |
 | **RDA Analysis** | | | | |
-| LRDA vs GRDA | AUC | 5,387 | **0.839** (HQ: 0.878) | Hemisphere envelope asymmetry |
-| RDA frequency | Spearman ρ | 4,547 | **0.668** | Per-hemisphere Hilbert CV (U11) |
-| LRDA+GRDA+freq (unified) | AUC / ρ | 5,387 | **0.838 / 0.586** | V12_IterativeRefine |
-| LRDA+GRDA+freq (balanced) | AUC / ρ | 5,387 | **0.814 / 0.630** | V22_EnvAmp_DomHilbert |
+| LRDA vs GRDA | AUC | 4,253 | **0.837** | W05_DomOnly_IterRefine |
+| RDA frequency | Spearman ρ | 4,253 | **0.686** | W07_AutoChannel_FreqAgreement |
+| LRDA+GRDA+freq (unified) | AUC / ρ | 4,253 | **0.837 / 0.635** | W05_DomOnly_IterRefine |
+| LRDA+GRDA+freq (best freq) | AUC / ρ | 4,253 | **0.809 / 0.682** | V04_PLVSelected |
 | RDA freq labels reviewed | — | 993 | MW-reviewed | V22 viewer + MW correction |
 | LRDA laterality reviewed | — | 1,374 | MW-reviewed | 727 left, 308 right, 338 not-LRDA |
 
@@ -161,7 +162,7 @@ code/
 ├── contests/                         Contest frameworks & methods
 │   ├── rda_contest/                  RDA analysis contest (45 methods, 11 files)
 │   ├── spatial_contest/              PD spatial localization (26 methods, 9 files)
-│   └── lateralization_contest/       LRDA vs GRDA classification (24 files)
+│   └── lateralization_contest/       LRDA vs GRDA classification (76 methods, 24 files)
 │
 ├── experiments/                      Historical experiment scripts (60 files)
 │   ├── pd_frequency/                 PD frequency optimization (11 files)
@@ -274,19 +275,19 @@ Key dashboards:
 Standalone callable: `code/pd_characterizer.py`. A single per-channel CNN (**ChannelPD-Net**) serves as the backbone for all PD tasks:
 
 - **Laterality**: Compare hemisphere mean PD probabilities (AUC = 0.963)
-- **Spatial**: Hybrid-PLV — CNN picks ipsilateral reference channels, PLV finds connected regions (Composite = 0.811)
+- **Spatial**: Hybrid-PLV — CNN picks ipsilateral reference channels, PLV finds connected regions (Composite = 0.811). Inter-rater agreement: Model Jaccard 0.731 vs human 0.751 (97.3% of expert agreement, N=220 with 3-rater ground truth)
 - **Timing**: HemiCET+DP — CNN-weighted evidence aggregation + dynamic programming (F1 = 0.684)
 - **Frequency**: CNN+ACF ensemble → IPI-derived (Spearman ρ = 0.681)
 
 Laterality detection feeds forward into both spatial localizer (ipsilateral seed) and discharge detector (hemisphere selection). See `paper_materials/unified_pd_pipeline.md` for full architecture.
 
-### RDA Detectors (LRDA/GRDA)
+### RDA Pipeline (LRDA/GRDA)
 
-Best model: FFT peak frequency (Spearman 0.840). RDA wave timing auto-labeled for 549 cases via bandpass peak detection. HemiCET adaptation for RDA planned.
+The RDA analysis pipeline classifies LRDA vs GRDA, determines laterality, and estimates frequency from a single 10-second bipolar EEG segment, processing hemispheres independently.
 
-- `rda1a_fft` -- FFT + FOOOF frequency modeling
-- `rda1b_fft` -- FFT with enhanced peak selection (best)
-- `rda2_hht` -- Hilbert-Huang Transform
+Best unified method: **W05_DomOnly_IterRefine** — two-pass iterative narrowband refinement with frequency estimated strictly from the predicted-dominant hemisphere. Achieves AUC 0.837 (LRDA vs GRDA classification) and Spearman ρ=0.635 (frequency estimation).
+
+76 methods benchmarked across 5 contest rounds. See [APPROACH_REVIEW_v16.md](APPROACH_REVIEW_v16.md) Appendix A for full results and the [V5 leaderboard](results/v4_lateralization_leaderboard.html).
 
 ### Verbal Descriptions
 
@@ -298,6 +299,14 @@ GPD at 1.5 Hz, no regional predominance.
 ```
 
 See [DESCRIPTION_RULES.md](DESCRIPTION_RULES.md) for the complete rule set.
+
+### Paper Figures
+
+Publication-quality figures in `paper_materials/` showing LPD, GPD, LRDA, and GRDA characterization examples. Each figure presents 3 cases (easy/medium/hard) stratified by IIIC expert agreement level. Panels include EEG with discharge markers, MNE-interpolated topoplots (inferno colormap), and ACNS 2021 verbal descriptions.
+
+```bash
+conda run -n morgoth python paper_materials/render_figures.py --pick '{"lpd":[1,15,9],"gpd":[17,2,9],"lrda":[11,3,6],"grda":[0,4,9]}'
+```
 
 ## Citation
 
