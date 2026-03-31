@@ -20,6 +20,54 @@ mne.set_log_level('ERROR')
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
+# --- Global Matplotlib Styling ---
+matplotlib.rcParams['font.family'] = 'sans-serif'
+matplotlib.rcParams['font.sans-serif'] = ['Arial', 'Helvetica', 'DejaVu Sans', 'Liberation Sans', 'Bitstream Vera Sans']
+
+# --- Font Sizes (Critique Point 2: Increase Font Sizes for Readability Across the Board) ---
+# Base font size for general text (e.g., tick labels, general text)
+# Specific elements will override this with their dedicated constants.
+BASE_FONT_SIZE = 8
+matplotlib.rcParams['font.size'] = BASE_FONT_SIZE
+matplotlib.rcParams['axes.labelsize'] = BASE_FONT_SIZE
+matplotlib.rcParams['xtick.labelsize'] = BASE_FONT_SIZE
+matplotlib.rcParams['ytick.labelsize'] = BASE_FONT_SIZE
+
+CHANNEL_LABEL_FONTSIZE = 10 # Increased from 9 to 10pt
+TIME_AXIS_LABEL_FONTSIZE = 10 # Increased from 9 to 10pt
+TIME_TICK_LABEL_FONTSIZE = 10 # Increased from 9 to 10pt
+VERBAL_DESCRIPTION_FONTSIZE = 10 # Increased from 9 to 10pt
+# TOPOPLOT_ELECTRODE_LABEL_FONTSIZE is removed as electrode labels are removed (Critique Point 5)
+COLORBAR_TICK_LABEL_FONTSIZE = 9 # Increased from 8 to 9pt
+COLORBAR_LABEL_FONTSIZE = 10 # Increased from 9 to 10pt
+DIFFICULTY_BADGE_FONTSIZE = 10 # Increased from 9 to 10pt, bold is already applied
+
+FIGURE_TITLE_FONTSIZE = 12 # Kept at 12pt, within 10-12pt range
+matplotlib.rcParams['figure.titlesize'] = FIGURE_TITLE_FONTSIZE
+
+# --- Spacing Parameters (Critique Point 3: Optimize Vertical Spacing and Layout) ---
+ROW_VSPACE = 0.25 # Reduced from 0.4 for more compact layout
+EEG_TO_TOPO_HSPACE = 0.06 # Spacing between EEG plot and right column
+TOPO_TO_CBAR_WSPACE = 0.05 # Spacing between topoplot and its colorbar
+TOPO_INFO_VSPACE = 0.02 # Vertical spacing between topoplot and info panel
+
+# --- Layout Ratios ---
+EEG_WIDTH_RATIO = 75
+RIGHT_COL_WIDTH_RATIO = 25
+TOPO_HEIGHT_RATIO = 5
+INFO_HEIGHT_RATIO = 2
+
+# --- Figure Title Placement ---
+FIGURE_TITLE_Y_POS = 0.96 # Lowered slightly from 0.98
+
+# --- Difficulty Badge Styling (Critique Point 4: Refine Difficulty Badges) ---
+DIFF_BADGE_COLORS = {
+    'Easy': {'text': '#2a7d2a', 'bg': '#e6ffe6', 'border': '#2a7d2a'},
+    'Medium': {'text': '#b87700', 'bg': '#fff8e6', 'border': '#b87700'},
+    'Hard': {'text': '#c03030', 'bg': '#ffe6e6', 'border': '#c03030'}
+}
+
+
 # ── Channel layout ──────────────────────────────────────────────────────────
 
 BIPOLAR_NAMES = [
@@ -175,15 +223,29 @@ def draw_eeg_panel(ax, case, is_pd):
     ax.set_ylim(y_min_plot, y_max_plot)
     ax.set_facecolor('white')
 
-    # Hemisphere shading
+    # Hemisphere shading — light blue on involved side(s)
+    lat = case.get('gt_lat', case.get('pred_lat', ''))
+    subtype = case.get('subtype', '').lower()
+    shade_color = (100/255, 160/255, 255/255, 0.07)  # light blue
+
+    # Determine which hemispheres to shade
+    if subtype in ('gpd', 'grda'):
+        shade_hemis = {'L', 'R', 'M'}  # bilateral + midline for generalized
+    elif lat in ('left', 'bilateral, left-predominant'):
+        shade_hemis = {'L'}
+    elif lat in ('right', 'bilateral, right-predominant'):
+        shade_hemis = {'R'}
+    elif lat in ('bilateral', 'bilateral/symmetric'):
+        shade_hemis = {'L', 'R'}
+    else:
+        shade_hemis = {'L', 'R'}  # default both if unknown
+
     for i, entry in enumerate(DISPLAY_ORDER):
         if entry['idx'] == -1 or y_positions[i] is None:
             continue
         yp = y_positions[i]
-        if entry['hemi'] == 'L':
-            ax.axhspan(yp - 0.45, yp + 0.45, color=(100/255, 150/255, 255/255, 0.05))
-        elif entry['hemi'] == 'R':
-            ax.axhspan(yp - 0.45, yp + 0.45, color=(255/255, 150/255, 100/255, 0.05))
+        if entry['hemi'] in shade_hemis:
+            ax.axhspan(yp - 0.45, yp + 0.45, color=shade_color)
 
     # Grid lines every 1s
     for sec in range(11):
@@ -192,29 +254,25 @@ def draw_eeg_panel(ax, case, is_pd):
     # Discharge markers (PD only)
     discharge_times = case.get('gt_discharge_times') or case.get('pred_discharge_times') or []
     if is_pd and discharge_times:
-        lat = case.get('gt_lat', case.get('pred_lat', ''))
-        subtype = case.get('subtype', '').lower()
         for dt in discharge_times:
             if subtype == 'gpd':
-                ax.axvline(dt, color='red', linestyle='--', linewidth=0.6, alpha=0.5, zorder=1)
+                ax.axvline(dt, color='red', linestyle='--', linewidth=0.8, alpha=0.7, zorder=1)
             elif subtype == 'lpd':
                 # Markers on involved hemisphere only, partial height
                 if lat in ('left', 'bilateral', 'bilateral, left-predominant'):
-                    # Left channels are in the top portion
                     left_ys = [y_positions[i] for i, e in enumerate(DISPLAY_ORDER)
                                if e['hemi'] == 'L' and y_positions[i] is not None]
                     if left_ys:
                         ax.plot([dt, dt], [min(left_ys) - 0.4, max(left_ys) + 0.4],
-                                color='red', linestyle='--', linewidth=0.6, alpha=0.5, zorder=1)
+                                color='red', linestyle='--', linewidth=0.8, alpha=0.7, zorder=1)
                 if lat in ('right', 'bilateral', 'bilateral, right-predominant'):
                     right_ys = [y_positions[i] for i, e in enumerate(DISPLAY_ORDER)
                                 if e['hemi'] == 'R' and y_positions[i] is not None]
                     if right_ys:
                         ax.plot([dt, dt], [min(right_ys) - 0.4, max(right_ys) + 0.4],
-                                color='red', linestyle='--', linewidth=0.6, alpha=0.5, zorder=1)
-                # If bilateral/symmetric, draw on both
-                if lat in ('bilateral/symmetric',):
-                    ax.axvline(dt, color='red', linestyle='--', linewidth=0.6, alpha=0.5, zorder=1)
+                                color='red', linestyle='--', linewidth=0.8, alpha=0.7, zorder=1)
+                if lat in ('bilateral/symmetric', 'bilateral'):
+                    ax.axvline(dt, color='red', linestyle='--', linewidth=0.8, alpha=0.7, zorder=1)
 
     # Draw EEG traces
     for i, entry in enumerate(DISPLAY_ORDER):
@@ -224,38 +282,46 @@ def draw_eeg_panel(ax, case, is_pd):
         yp = y_positions[i]
         sig = eeg[ch_idx] * z_scale + yp
         ax.plot(t, sig, color='black', linewidth=0.5, zorder=2)
-        # Channel label
-        ax.text(-0.15, yp, entry['name'], fontsize=6, va='center', ha='right',
+        # Channel label (Critique Point 2: Increased font size)
+        ax.text(-0.1, yp, entry['name'], fontsize=CHANNEL_LABEL_FONTSIZE, va='center', ha='right',
                 color='black', clip_on=False)
 
-    # Title info
-    freq = case.get('gt_freq') or case.get('pred_freq', 0)
-    lat = case.get('gt_lat', case.get('pred_lat', '?'))
-    n_discharges = len(discharge_times)
+    # Amplitude scale bar (double-headed arrow, 100 µV)
+    # Verify: z_scale converts µV to plot units. EEG is plotted as: eeg[ch]*z_scale + y_offset
+    # So scale_height = 100 * z_scale = 100 * 0.012 = 1.2 plot units (about 1 channel spacing)
+    from matplotlib.patches import FancyArrowPatch
+    scale_uv = 100.0
+    scale_height = scale_uv * z_scale  # = 1.2 plot units
+    scale_x = 9.3
+    scale_y_bot = y_min_plot + 0.5
+    scale_y_top = scale_y_bot + scale_height
+    scale_y_mid = (scale_y_bot + scale_y_top) / 2
+    # Single double-headed arrow using two FancyArrowPatch
+    arrow_up = FancyArrowPatch((scale_x, scale_y_mid + 0.02), (scale_x, scale_y_top),
+                                arrowstyle='-|>', mutation_scale=10, color='black', lw=1.0, zorder=5)
+    arrow_dn = FancyArrowPatch((scale_x, scale_y_mid - 0.02), (scale_x, scale_y_bot),
+                                arrowstyle='-|>', mutation_scale=10, color='black', lw=1.0, zorder=5)
+    ax.add_patch(arrow_up)
+    ax.add_patch(arrow_dn)
+    ax.text(scale_x + 0.15, scale_y_mid, f'{int(scale_uv)} µV',
+            fontsize=7, va='center', ha='left', color='black')
+
+    # Difficulty badge (Critique Point 2: Increased font size, bold; Critique Point 4: Refined design)
     difficulty = case.get('difficulty', '')
     jaccard = case.get('jaccard') or 0
-    freq = freq or 0
+    
+    dc_config = DIFF_BADGE_COLORS.get(difficulty, {'text': '#333', 'bg': '#f0f0f0', 'border': '#999'})
+    
+    diff_text = f'{difficulty.upper()} (Jaccard={jaccard:.2f})'
+    ax.text(0.99, 0.98, diff_text, transform=ax.transAxes,
+            fontsize=DIFFICULTY_BADGE_FONTSIZE, fontweight='bold',
+            color=dc_config['text'], va='top', ha='right',
+            bbox=dict(boxstyle="round,pad=0.2", fc=dc_config['bg'], ec=dc_config['border'], lw=0.5, alpha=0.7)) # Refined bbox parameters
 
-    diff_colors = {'Easy': '#2a7d2a', 'Medium': '#b87700', 'Hard': '#c03030'}
-    dc = diff_colors.get(difficulty, '#333')
-
-    if is_pd:
-        title_text = f'freq={freq:.2f} Hz | lat={lat} | {n_discharges} discharges'
-    else:
-        title_text = f'lat={lat} | regions={",".join(case.get("gt_regions", []))}'
-
-    ax.set_title(title_text, fontsize=8, pad=2, color='#333')
-
-    # Difficulty label in upper-left
-    diff_text = f'[{difficulty.upper()}] Jaccard={jaccard:.2f}'
-    ax.text(0.01, 0.98, diff_text, transform=ax.transAxes,
-            fontsize=7, fontweight='bold', color=dc, va='top', ha='left',
-            bbox=dict(boxstyle='round,pad=0.2', facecolor='white', edgecolor=dc, alpha=0.8))
-
-    # Time axis
-    ax.set_xlabel('Time (s)', fontsize=7)
+    # Time axis labels (Critique Point 2: Increased font size)
+    ax.set_xlabel('Time (s)', fontsize=TIME_AXIS_LABEL_FONTSIZE)
     ax.set_xticks(range(11))
-    ax.set_xticklabels([str(i) for i in range(11)], fontsize=6)
+    ax.set_xticklabels([str(i) for i in range(11)], fontsize=TIME_TICK_LABEL_FONTSIZE)
     ax.set_yticks([])
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
@@ -264,7 +330,7 @@ def draw_eeg_panel(ax, case, is_pd):
 
 # ── Topoplot panel ──────────────────────────────────────────────────────────
 
-def draw_topoplot(ax, case):
+def draw_topoplot(ax, ax_cbar, case, is_pd):
     """Draw the topoplot using MNE's spherical spline interpolation."""
     import mne
     region_scores = case.get('region_scores', {})
@@ -300,21 +366,31 @@ def draw_topoplot(ax, case):
     # Build 19-element data array in ch_names_orig order
     data = np.array([electrode_scores.get(e, 0.5) for e in ch_names_orig])
 
-    # Per-case normalization: use this case's min/max for full color contrast
-    # Add small padding to avoid identical vmin/vmax
-    vmin = data.min()
-    vmax = data.max()
-    if vmax - vmin < 0.02:
+    # Determine vlim based on subtype for consistent scaling
+    vmin, vmax = None, None
+    if is_pd: # LPD or GPD
+        vmin, vmax = COLOR_SCALE['pd']['vmin'], COLOR_SCALE['pd']['vmax']
+    else: # LRDA or GRDA
+        vmin, vmax = COLOR_SCALE['rda']['vmin'], COLOR_SCALE['rda']['vmax']
+
+    # Ensure vmin/vmax are not identical if data is flat, add small padding
+    if vmax - vmin < 1e-6: # Check for near-zero range
         vmin = max(0, vmin - 0.05)
         vmax = min(1, vmax + 0.05)
 
-    mne.viz.plot_topomap(
+    image, _ = mne.viz.plot_topomap(
         data, info, axes=ax, show=False,
         contours=6, cmap='inferno',
         vlim=(vmin, vmax),
-        sensors=True, names=ch_names_orig,
-        size=3,
+        sensors=True, # Keep sensor dots
+        # names=ch_names_orig, # Removed electrode labels (Critique Point 5: Clarify/Remove Topoplot Numerical Labels)
+        size=3, # This is sensor dot size
     )
+    
+    # Add colorbar (Critique Point 2: Increased font size for colorbar labels)
+    cbar = plt.colorbar(image, cax=ax_cbar, orientation='vertical', label='Score')
+    cbar.ax.tick_params(labelsize=COLORBAR_TICK_LABEL_FONTSIZE) # Colorbar tick labels
+    cbar.set_label('Score', fontsize=COLORBAR_LABEL_FONTSIZE) # Colorbar label
 
 
 # ── Right-side info panel ───────────────────────────────────────────────────
@@ -326,17 +402,14 @@ def draw_info_panel(ax, case):
     ax.set_ylim(0, 1)
 
     verbal = case.get('verbal_description', '')
-    rater_details = case.get('rater_details', {})
-    pred_regions = case.get('pred_regions', [])
 
-    text_parts = []
     if verbal:
-        text_parts.append(verbal)
-
-    full_text = '\n'.join(text_parts)
-    ax.text(0.5, 1.0, full_text, fontsize=5.5, ha='center', va='top',
-            wrap=True, linespacing=1.4, family='monospace',
-            transform=ax.transAxes)
+        # Balance text across ~2 lines by splitting near the middle
+        import textwrap
+        target_width = max(20, len(verbal) // 2 + 5)
+        wrapped = textwrap.fill(verbal, width=target_width)
+        ax.text(0.5, 1.0, wrapped, fontsize=VERBAL_DESCRIPTION_FONTSIZE, ha='center', va='top',
+                linespacing=1.4, transform=ax.transAxes)
 
 
 # ── Main figure assembly ────────────────────────────────────────────────────
@@ -344,28 +417,43 @@ def draw_info_panel(ax, case):
 def render_subtype(subtype, cases, is_pd):
     """Render a 3-row figure for one subtype."""
     n_cases = len(cases)
-    fig = plt.figure(figsize=(18, 8 * n_cases), facecolor='white')
+    # Adjust figure size for increased font sizes and more compact layout
+    fig_width = 18
+    fig_height = 6.5 * n_cases # Adjusted height per case for better spacing (Critique Point 3)
+
+    fig = plt.figure(figsize=(fig_width, fig_height), facecolor='white')
+    
+    # Main Figure Titles (Critique Point 2: Ensure font size is correct; Critique Point 7: Adjusted Y position)
     fig.suptitle(f'{subtype.upper()} Characterization Examples',
-                 fontsize=16, fontweight='bold', y=0.995)
+                 fontsize=FIGURE_TITLE_FONTSIZE, fontweight='bold', y=FIGURE_TITLE_Y_POS)
 
     # 3 rows, each row: [EEG (75%) | topoplot + info (25%)]
     outer_gs = gridspec.GridSpec(n_cases, 2, figure=fig,
-                                 width_ratios=[75, 25],
-                                 hspace=0.25, wspace=0.05,
-                                 left=0.04, right=0.98, top=0.97, bottom=0.02)
+                                 width_ratios=[EEG_WIDTH_RATIO, RIGHT_COL_WIDTH_RATIO],
+                                 hspace=ROW_VSPACE, # Critique Point 3: Optimized vertical spacing
+                                 wspace=EEG_TO_TOPO_HSPACE,
+                                 left=0.04, right=0.98, top=0.95, bottom=0.02)
 
     for row, case in enumerate(cases):
         # EEG panel (left)
         ax_eeg = fig.add_subplot(outer_gs[row, 0])
         draw_eeg_panel(ax_eeg, case, is_pd)
 
-        # Right column: split into topoplot (top) and info (bottom)
-        inner_gs = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=outer_gs[row, 1],
-                                                     height_ratios=[3, 2], hspace=0.05)
-        ax_topo = fig.add_subplot(inner_gs[0])
-        draw_topoplot(ax_topo, case)
+        # Right column: split into topoplot+colorbar (top) and info (bottom)
+        inner_gs_right_col = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=outer_gs[row, 1],
+                                                               height_ratios=[TOPO_HEIGHT_RATIO, INFO_HEIGHT_RATIO],
+                                                               hspace=TOPO_INFO_VSPACE)
 
-        ax_info = fig.add_subplot(inner_gs[1])
+        # Topoplot and Colorbar
+        topoplot_cbar_gs = gridspec.GridSpecFromSubplotSpec(1, 2, subplot_spec=inner_gs_right_col[0],
+                                                             width_ratios=[10, 1], wspace=TOPO_TO_CBAR_WSPACE)
+
+        ax_topo = fig.add_subplot(topoplot_cbar_gs[0])
+        ax_cbar = fig.add_subplot(topoplot_cbar_gs[1]) # Axis for the colorbar
+
+        draw_topoplot(ax_topo, ax_cbar, case, is_pd)
+
+        ax_info = fig.add_subplot(inner_gs_right_col[1])
         draw_info_panel(ax_info, case)
 
     out_path = os.path.join(SCRIPT_DIR, f'figure_{subtype}_examples.png')
