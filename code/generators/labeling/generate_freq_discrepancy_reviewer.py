@@ -1498,6 +1498,7 @@ def build_rda_html(cases_data):
   <div id="header-right">
     <button class="action-btn btn-accept" onclick="acceptModel()">Accept Model <span class="key">Enter</span></button>
     <button class="action-btn btn-keep" onclick="keepMW()">Keep MW <span class="key">Space</span></button>
+    <button class="action-btn" style="border-color:#ff4444; color:#ff4444; background:#3a1a1a;" onclick="rejectCase()">Not RDA <span class="key">X</span></button>
     <button class="export-btn" onclick="exportJSON()">Export <span class="key">E</span></button>
     <span id="save-status"></span>
     <span id="reviewed-count" style="font-size:12px; color:#888;"></span>
@@ -1826,6 +1827,25 @@ function keepMW() {{
   show();
 }}
 
+function rejectCase() {{
+  const c = CASES[idx];
+  allDecisions[c.segment_id] = {{
+    action: 'reject_not_rda',
+    new_freq: null,
+    mw_freq: c.mw_freq,
+    model_freq: c.model_freq,
+    consensus_freq: c.consensus_freq,
+    subtype: c.subtype,
+  }};
+  saveAll();
+  const el = document.getElementById('save-status');
+  el.textContent = 'REJECTED (not RDA)';
+  el.style.color = '#ff4444';
+  setTimeout(() => {{ el.textContent = ''; }}, 2000);
+  idx = Math.min(CASES.length - 1, idx + 1);
+  show();
+}}
+
 function exportJSON() {{
   const out = {{}};
   for (const sid in allDecisions) {{
@@ -1872,6 +1892,8 @@ document.addEventListener('keydown', function(e) {{
     e.preventDefault();
     idx = Math.min(CASES.length - 1, idx + 1);
     show();
+  }} else if (e.key === 'x' || e.key === 'X') {{
+    rejectCase();
   }} else if (e.key === 'n' || e.key === 'N') {{
     showNarrowband = !showNarrowband;
     redraw();

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Generate Fig 6: Frequency scatter plots with quality-filtered labels.
 
+Reads model predictions directly from segment_labels.csv (pdchar_freq_hz, tautan_freq_hz)
+— no model inference needed. Regeneration takes ~2 seconds.
+
 Quality filter includes segments where ANY of:
 1. MW reviewed (rater includes 'MW' in annotations.csv)
 2. LB+PH+SZ all provided frequency labels
@@ -10,7 +13,7 @@ Usage:
     conda run -n morgoth python paper_materials/generate_fig6.py
 """
 
-import sys, json, numpy as np, pandas as pd
+import sys, numpy as np, pandas as pd
 from pathlib import Path
 from scipy.stats import spearmanr
 import matplotlib
@@ -18,15 +21,29 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(PROJECT_DIR / 'code'))
 
-def load_quality_filter():
-    """Build quality filter from annotations + IIIC votes."""
+
+def load_data_and_filter():
+    """Load expert freq + model predictions from segment_labels.csv, apply quality filter."""
     ann = pd.read_csv(PROJECT_DIR / 'data' / 'labels' / 'annotations.csv')
     sl = pd.read_csv(PROJECT_DIR / 'data' / 'labels' / 'segment_labels.csv')
 
-    # Per-segment rater sets
+    # Expert frequency: mean across all raters in annotations.csv
     has_freq = ann[ann.frequency_hz.notna()].copy()
+    has_freq['frequency_hz'] = pd.to_numeric(has_freq['frequency_hz'], errors='coerce')
+    freq_agg = has_freq.groupby('segment_id').agg(
+        mean_freq=('frequency_hz', 'mean'),
+        n_raters=('rater', 'nunique'),
+    ).reset_index()
+    expert_freq = dict(zip(freq_agg.segment_id, zip(freq_agg.mean_freq, freq_agg.n_raters)))
+
+    # Also MW-only from segment_labels
+    for _, row in sl[sl.expert_freq_rater == 'MW'].iterrows():
+        sid = row['mat_file'].replace('.mat', '')
+        if sid not in expert_freq and pd.notna(row.get('expert_freq_hz')):
+            expert_freq[sid] = (float(row['expert_freq_hz']), 1)
+
+    # Per-segment rater sets (for quality filter)
     freq_raters = has_freq.groupby('segment_id').agg(
         raters=('rater', lambda x: set(x)),
     ).reset_index()
@@ -41,57 +58,101 @@ def load_quality_filter():
         if np.isfinite(nv):
             vote_info[sid] = (int(nv), float(pf) if np.isfinite(pf) else 0)
 
-    def passes(sid):
+    def passes_quality(sid):
         raters = rater_info.get(sid, set())
-        # 1. MW reviewed
         if 'MW' in raters:
             return True
-        # 2. LB+PH+SZ all present
         if {'LB', 'PH', 'SZ'}.issubset(raters):
             return True
-        # 3. >=10 votes with >=80% agreement
         nv, pf = vote_info.get(sid, (0, 0))
         if nv >= 10 and pf >= 0.80:
             return True
         return False
 
-    return passes
+    # Build results from segment_labels columns (no inference needed!)
+    results = {sub: [] for sub in ['lpd', 'gpd', 'lrda', 'grda']}
+    for _, row in sl.iterrows():
+        sid = row['mat_file'].replace('.mat', '')
+        subtype = row.get('subtype')
+        if subtype not in results:
+            continue
+        if row.get('excluded') == True:
+            continue
+        pdchar = pd.to_numeric(row.get('pdchar_freq_hz'), errors='coerce')
+        tautan = pd.to_numeric(row.get('tautan_freq_hz'), errors='coerce')
+        if not np.isfinite(pdchar) or not np.isfinite(tautan):
+            continue
+        if sid not in expert_freq:
+            continue
+        gt, n_raters = expert_freq[sid]
+        if not np.isfinite(gt) or gt <= 0:
+            continue
+
+        results[subtype].append({
+            'segment_id': sid,
+            'gt': float(gt),
+            'pred_cnn': float(pdchar),
+            'pred_alex': float(tautan),
+            'n_raters': int(n_raters),
+            'passes_quality': passes_quality(sid),
+        })
+
+    return results
 
 
 def main():
-    data = json.load(open(PROJECT_DIR / 'paper_materials' / 'fig6_frequency_data.json'))
-    passes_quality = load_quality_filter()
+    print("Loading data from segment_labels.csv (no inference needed)...")
+    results = load_data_and_filter()
 
     fig, axes = plt.subplots(2, 4, figsize=(18, 9), facecolor='white')
     subtypes = [('lpd', 'LPD'), ('gpd', 'GPD'), ('lrda', 'LRDA'), ('grda', 'GRDA')]
     method_names = ['PDCharacterizer', 'Signal Proc.\n(Tautan et al.)']
     pred_keys = ['pred_cnn', 'pred_alex']
 
+    # IIIC-standard colors matching the Jing et al. UMAP figure
+    SUBTYPE_COLORS = {
+        'lpd': '#F29030',    # bright warm orange
+        'gpd': '#F0D020',    # warm bright yellow
+        'lrda': '#7CB342',   # olive/lime green
+        'grda': '#81D4FA',   # light sky blue
+    }
+
     for row_idx, (method_name, pred_key) in enumerate(zip(method_names, pred_keys)):
         for col_idx, (sub, label) in enumerate(subtypes):
             ax = axes[row_idx][col_idx]
-            d = data[sub]
-            d_filtered = [x for x in d if passes_quality(x['segment_id'])]
+            d = [x for x in results[sub] if x['passes_quality']]
 
-            if not d_filtered:
+            if not d:
                 ax.text(0.5, 0.5, 'No data', ha='center', va='center', transform=ax.transAxes)
                 continue
 
-            multi = [x for x in d_filtered if x['n_raters'] >= 3]
-            single = [x for x in d_filtered if x['n_raters'] < 3]
+            multi = [x for x in d if x['n_raters'] >= 3]
+            single = [x for x in d if x['n_raters'] < 3]
+            base_color = SUBTYPE_COLORS[sub]
 
+            # Add jitter to prevent overplotting
+            rng = np.random.RandomState(42)
+            jitter_scale = 0.05
+
+            # Single-rater: circles, subtype color, opaque
             if single:
-                ax.scatter([x['gt'] for x in single], [x[pred_key] for x in single],
-                           alpha=0.25, s=12, color='#aaaaaa', edgecolors='none',
+                gt_j = np.array([x['gt'] for x in single]) + rng.uniform(-jitter_scale, jitter_scale, len(single))
+                pr_j = np.array([x[pred_key] for x in single]) + rng.uniform(-jitter_scale, jitter_scale, len(single))
+                ax.scatter(gt_j, pr_j,
+                           alpha=1.0, s=25, color=base_color, edgecolors='none',
+                           marker='o',
                            label=f'1-2 raters (n={len(single)})')
+            # Multi-rater: stars, opaque, no border
             if multi:
-                color = '#e74c3c' if sub in ('lpd', 'lrda') else '#3498db'
-                ax.scatter([x['gt'] for x in multi], [x[pred_key] for x in multi],
-                           alpha=0.5, s=20, color=color, edgecolors='none',
+                gt_j = np.array([x['gt'] for x in multi]) + rng.uniform(-jitter_scale, jitter_scale, len(multi))
+                pr_j = np.array([x[pred_key] for x in multi]) + rng.uniform(-jitter_scale, jitter_scale, len(multi))
+                ax.scatter(gt_j, pr_j,
+                           alpha=1.0, s=60, color='black', edgecolors='none',
+                           marker='*',
                            label=f'\u22653 raters (n={len(multi)})')
 
-            gt = [x['gt'] for x in d_filtered]
-            pred = [x[pred_key] for x in d_filtered]
+            gt = [x['gt'] for x in d]
+            pred = [x[pred_key] for x in d]
             rho, _ = spearmanr(gt, pred)
             mae = np.mean(np.abs(np.array(gt) - np.array(pred)))
 
@@ -101,7 +162,7 @@ def main():
             if row_idx == 1: ax.set_xlabel('Expert Frequency (Hz)', fontsize=9)
             if col_idx == 0: ax.set_ylabel('Predicted Frequency (Hz)', fontsize=9)
             if row_idx == 0:
-                ax.set_title(f'{label} (n={len(d_filtered)})\n\u03c1={rho:.3f}, MAE={mae:.3f}', fontsize=11, fontweight='bold')
+                ax.set_title(f'{label} (n={len(d)})\n\u03c1={rho:.3f}, MAE={mae:.3f}', fontsize=11, fontweight='bold')
             else:
                 ax.set_title(f'\u03c1={rho:.3f}, MAE={mae:.3f}', fontsize=10)
             ax.legend(fontsize=6, loc='upper left')
@@ -117,13 +178,13 @@ def main():
     print(f'Saved {out}')
 
     for sub, label in subtypes:
-        d_f = [x for x in data[sub] if passes_quality(x['segment_id'])]
-        if not d_f: continue
-        gt = [x['gt'] for x in d_f]
-        pc = [x['pred_cnn'] for x in d_f]
+        d = [x for x in results[sub] if x['passes_quality']]
+        if not d: continue
+        gt = [x['gt'] for x in d]
+        pc = [x['pred_cnn'] for x in d]
         rho, _ = spearmanr(gt, pc)
         mae = np.mean(np.abs(np.array(gt) - np.array(pc)))
-        print(f'  {label}: {len(d_f)}/{len(data[sub])} pass filter, PDChar rho={rho:.3f} MAE={mae:.3f}')
+        print(f'  {label}: {len(d)}/{len(results[sub])} pass filter, PDChar rho={rho:.3f} MAE={mae:.3f}')
 
 
 if __name__ == '__main__':
