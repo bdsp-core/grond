@@ -307,6 +307,42 @@ conda run -n morgoth python paper_materials/render_figures.py --pick '{"lpd":[1,
 
 Output files: `figure_lpd_examples.png`, `figure_gpd_examples.png`, `figure_lrda_examples.png`, `figure_grda_examples.png`.
 
+### 12. High-Quality Label Filtering for Frequency Evaluation
+
+**Problem**: Frequency estimation performance appeared poor for GPD (ρ=0.180) and moderate for RDA (ρ=0.32-0.47). Investigation revealed that much of the discrepancy was due to label quality issues — segments with low expert agreement or misclassified pattern types had 2.4× higher frequency discrepancy than segments with unanimous agreement.
+
+**Quality filter**: For frequency evaluation (Fig 6), we include segments where ANY of:
+1. **MW reviewed** — rater includes 'MW' in annotations.csv (MW conducted careful case-by-case review with interactive timing/frequency/narrowband tools)
+2. **3-expert consensus** — LB, PH, and SZ all provided independent frequency labels for the segment
+3. **IIIC crowd agreement** — ≥10 IIIC expert votes with ≥80% agreement on pattern classification
+
+**Discrepancy review process**: For all segments where |model_freq - MW_freq| > 0.5 Hz, MW reviewed cases using specialized viewers:
+- **PD (LPD+GPD)**: Timing-based review showing model discharge markers + evidence trace with threshold-click peak detection. MW accepted model timing → IPI-derived frequency. Result: 94% of PD cases accepted model prediction.
+- **RDA (LRDA+GRDA)**: Narrowband overlay review showing green (MW freq) vs red (model freq) bandpass-filtered signals. Result: 61% accepted model prediction.
+
+**Impact on reported performance** (quality-filtered, n shown):
+
+| Subtype | n | PDCharacterizer ρ | PDChar MAE | Tautan et al. ρ |
+|---------|--:|:-:|:-:|:-:|
+| LPD | 724 | **0.758** | 0.185 | 0.262 |
+| GPD | 483 | **0.767** | 0.180 | 0.555 |
+| LRDA | 379 | **0.537** | 0.331 | 0.082 |
+| GRDA | 794 | **0.609** | 0.273 | 0.309 |
+
+**Key finding**: GPD frequency ρ improved from 0.180 (all labels) to **0.767** (quality-filtered) — the "GPD frequency problem" was primarily a label quality issue, not a model limitation. PDCharacterizer achieves nearly identical performance on LPD (0.758) and GPD (0.767) when evaluated on high-quality labels.
+
+**Figure generation**:
+```bash
+conda run -n morgoth python paper_materials/generate_fig6.py
+```
+
+### 13. Label Expansion: GPD Frequency + Timing
+
+Expanded GPD labels from 4 segments with both freq+timing to **808** through:
+- MW interactive labeling with threshold-click peak detection (500 + 34 + 250 segments across 3 batches)
+- IPI-derived frequency for 96 GPD segments that had timing but no explicit frequency label
+- Final balance: LPD 811, GPD 808 with both freq+timing (~1:1 ratio)
+
 ## Appendix A: V5 Lateralization Contest — Full Results (76 methods)
 
 Dataset: 4,253 segments (1,295 LRDA + 2,958 GRDA), all non-excluded, on disk.

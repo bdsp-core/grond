@@ -82,16 +82,19 @@ def main():
             lat_review.update(batch['decisions'])
             print(f"Laterality review loaded: archive_labels/{batch_file.name} ({len(batch['decisions'])} decisions)")
 
-    # LPD lat+timing+freq review results (segment_id -> {laterality, selected_freq, global_times, ...})
+    # Lat+timing+freq review results (segment_id -> {laterality, selected_freq, global_times, ...})
+    # Matches both *_lat_timing_*_results*.json and *_freq_timing_*_results*.json
     lat_timing_review = {}
-    for search_dir in [LABELS_DIR, LABELS_DIR / 'archive_labels']:
-        for rf in sorted(search_dir.glob('*_lat_timing_*_results*.json')):
-            data = _load_json(rf)
-            # Keys are segment_ids (without .mat)
-            for sid, entry in data.items():
-                if isinstance(entry, dict) and 'laterality' in entry:
-                    lat_timing_review[sid] = entry
-            print(f"Lat+timing review loaded: {rf.name} ({len(data)} entries)")
+    for search_dir in [LABELS_DIR, LABELS_DIR / 'archive_labels', LABELS_DIR / 'gpd_labels']:
+        if not search_dir.exists():
+            continue
+        for pattern in ['*_lat_timing_*_results*.json', '*_freq_timing_*_results*.json']:
+            for rf in sorted(search_dir.glob(pattern)):
+                data = _load_json(rf)
+                for sid, entry in data.items():
+                    if isinstance(entry, dict) and ('laterality' in entry or 'selected_freq' in entry):
+                        lat_timing_review[sid] = entry
+                print(f"Lat+timing review loaded: {rf.name} ({len(data)} entries)")
 
     # ── Handle EEG files not in segments.csv ──
     eeg_files_set = set(f for f in os.listdir(str(EEG_DIR)) if f.endswith('.mat'))

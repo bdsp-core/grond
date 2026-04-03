@@ -342,6 +342,66 @@ def main():
             channel_scores, region_scores, predicted_regions, confidence = \
                 predict_spatial_rda(seg)
 
+        # Compute CSD topography at discharge peaks (for PD only)
+        csd_electrode_scores = None
+        if is_pd and mono_raw is not None:
+            try:
+                import mne
+                mne.set_log_level('ERROR')
+                pc = _get_pd_characterizer()
+                result = pc.characterize(seg, subtype=subtype)
+                discharge_times = result.get('discharge_times', [])
+
+                # Extract peak-to-trough voltage at each discharge
+                # This captures the discharge waveform amplitude, matching what bipolar shows
+                mono_19 = mono_raw[:19, :2000].astype(float)
+                # Re-reference to average first
+                mono_19 = mono_19 - np.mean(mono_19, axis=0, keepdims=True)
+
+                peak_amplitudes = []
+                half_win = int(0.15 * FS)  # 150ms window for peak-to-trough
+                for t in discharge_times:
+                    s = int(t * FS)
+                    s_start = max(0, s - half_win)
+                    s_end = min(mono_19.shape[1], s + half_win)
+                    if s_end - s_start < 10:
+                        continue
+                    window = mono_19[:, s_start:s_end]
+                    # Peak-to-trough amplitude per channel
+                    amp = np.max(window, axis=1) - np.min(window, axis=1)
+                    peak_amplitudes.append(amp)
+
+                if len(peak_amplitudes) >= 2:
+                    mean_topo = np.mean(peak_amplitudes, axis=0)  # (19,)
+                else:
+                    # Fallback: use full-segment peak-to-trough
+                    from scipy.signal import detrend as sp_detrend
+                    mono_det = sp_detrend(mono_19, axis=1)
+                    mean_topo = np.max(mono_det, axis=1) - np.min(mono_det, axis=1)
+
+                # Apply CSD via MNE
+                ch_names_orig = ['Fp1','F3','C3','P3','F7','T3','T5','O1','Fz','Cz','Pz',
+                                 'Fp2','F4','C4','P4','F8','T4','T6','O2']
+                name_map_mne = {'T3':'T7','T4':'T8','T5':'P7','T6':'P8'}
+                mne_names = [name_map_mne.get(n, n) for n in ch_names_orig]
+                info_mne = mne.create_info(ch_names=mne_names, sfreq=FS, ch_types='eeg')
+                montage_mne = mne.channels.make_standard_montage('standard_1020')
+                info_mne.set_montage(montage_mne)
+
+                evoked = mne.EvokedArray(mean_topo.reshape(19, 1), info_mne, tmin=0)
+                evoked_csd = mne.preprocessing.compute_current_source_density(evoked)
+                csd_vals = np.abs(evoked_csd.data[:, 0])  # absolute CSD
+
+                # Normalize to [0, 1]
+                if csd_vals.max() > 0:
+                    csd_norm = (csd_vals / csd_vals.max()).tolist()
+                else:
+                    csd_norm = [0.0] * 19
+                csd_electrode_scores = {ch_names_orig[i]: round(csd_norm[i], 4) for i in range(19)}
+            except Exception as e:
+                print(f"  CSD failed: {e}")
+                csd_electrode_scores = None
+
         case = {
             'patient_id': str(row['patient_id']),
             'segment_id': str(mat_file).replace('.mat', ''),
@@ -353,6 +413,7 @@ def main():
             'confidence': round(confidence, 4),
             'eeg_data': downsample(seg_display, 1000),
             'mono_data': downsample(mono_display, 1000) if mono_display is not None else None,
+            'csd_electrode_scores': csd_electrode_scores,
         }
         cases_data.append(case)
 
@@ -507,6 +568,10 @@ def build_html(cases_data, subtype, batch_num, n_batches):
     <canvas id="eeg-canvas"></canvas>
   </div>
   <div id="spatial-panel">
+    <div id="topo-toggle" style="text-align:center; padding:4px; background:#222; border-bottom:1px solid #333;">
+      <button id="btn-cnn-plv" onclick="setTopoMode('cnn')" style="padding:3px 10px; font-size:11px; font-family:monospace; cursor:pointer; background:#1a3a1a; color:#44cc88; border:1px solid #44cc88; border-radius:3px; margin-right:4px;">CNN+PLV</button>
+      <button id="btn-csd" onclick="setTopoMode('csd')" style="padding:3px 10px; font-size:11px; font-family:monospace; cursor:pointer; background:#222; color:#888; border:1px solid #555; border-radius:3px;">CSD at Peak</button>
+    </div>
     <div id="topo-container">
       <canvas id="topo-canvas"></canvas>
     </div>
@@ -967,17 +1032,26 @@ function drawTopoplot() {{
   const cy = TOPO_SIZE / 2;
   const headR = TOPO_SIZE * 0.40;
 
-  // Compute per-electrode scores from bipolar channel scores
+  // Compute per-electrode scores — either from CNN+PLV (bipolar) or CSD (monopolar)
   const electrodeScores = {{}};
   const electrodeNames = Object.keys(ELECTRODE_POS);
-  for (const ename of electrodeNames) {{
-    let maxScore = 0;
-    for (let bi = 0; bi < BIPOLAR_ELECTRODES.length; bi++) {{
-      if (BIPOLAR_ELECTRODES[bi].includes(ename)) {{
-        maxScore = Math.max(maxScore, c.channel_scores[bi] || 0);
-      }}
+
+  if (topoMode === 'csd' && c.csd_electrode_scores) {{
+    // CSD mode: use precomputed CSD electrode scores (already 19-channel monopolar)
+    for (const ename of electrodeNames) {{
+      electrodeScores[ename] = c.csd_electrode_scores[ename] || 0;
     }}
-    electrodeScores[ename] = maxScore;
+  }} else {{
+    // CNN+PLV mode: derive from bipolar channel scores
+    for (const ename of electrodeNames) {{
+      let maxScore = 0;
+      for (let bi = 0; bi < BIPOLAR_ELECTRODES.length; bi++) {{
+        if (BIPOLAR_ELECTRODES[bi].includes(ename)) {{
+          maxScore = Math.max(maxScore, c.channel_scores[bi] || 0);
+        }}
+      }}
+      electrodeScores[ename] = maxScore;
+    }}
   }}
 
   // Compute min/max for normalization (use full range of this case's scores)
@@ -1088,7 +1162,8 @@ function drawTopoplot() {{
   ctx.font = 'bold 12px Consolas, Monaco, monospace';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
-  ctx.fillText('Channel Involvement', cx, 4);
+  const topoTitle = topoMode === 'csd' ? 'CSD at Discharge Peak' : 'CNN+PLV Involvement';
+  ctx.fillText(topoTitle, cx, 4);
 }}
 
 function updateInfo() {{
@@ -1109,6 +1184,20 @@ function redraw() {{
   updateRegionButtons();
   updateInfo();
   updateVerbalDescription();
+}}
+
+// ── Topoplot mode toggle (CNN+PLV vs CSD) ──
+let topoMode = 'cnn';  // 'cnn' or 'csd'
+
+function setTopoMode(mode) {{
+  topoMode = mode;
+  document.getElementById('btn-cnn-plv').style.background = mode === 'cnn' ? '#1a3a1a' : '#222';
+  document.getElementById('btn-cnn-plv').style.color = mode === 'cnn' ? '#44cc88' : '#888';
+  document.getElementById('btn-cnn-plv').style.borderColor = mode === 'cnn' ? '#44cc88' : '#555';
+  document.getElementById('btn-csd').style.background = mode === 'csd' ? '#1a2a3a' : '#222';
+  document.getElementById('btn-csd').style.color = mode === 'csd' ? '#4488cc' : '#888';
+  document.getElementById('btn-csd').style.borderColor = mode === 'csd' ? '#4488cc' : '#555';
+  drawTopoplot();
 }}
 
 // ── Threshold slider ──

@@ -191,282 +191,253 @@ Adapt the HPP algorithm for RDA waves:
 
 ---
 
-## Paper Outline
+## Paper Outline (Revised 2026-03-31)
+
+### Framing
+
+The paper presents **PDCharacterizer** — a unified pipeline that characterizes periodic and rhythmic EEG patterns in a single pass: laterality, spatial localization, discharge/wave timing, and frequency estimation. The pipeline combines CNNs for feature extraction with dynamic programming for temporal structure, achieving near-expert-level performance across all tasks.
 
 ### Title
-"Comprehensive Automated Characterization of Periodic and Rhythmic EEG Patterns: Discharge Timing, Spatial Localization, and Frequency Estimation"
+"PDCharacterizer: Automated Lateralization, Spatial Localization, Timing, and Frequency Estimation for Periodic and Rhythmic EEG Patterns"
 
 ### Abstract
-- Problem: PD and RDA characterization is time-consuming and subjective
-- What we did: suite of specialized algorithms for 9 tasks, with iterative human-in-the-loop label refinement
-- Key results: HemiCET+DP timing F1=0.873 (<1ms median accuracy), frequency Spearman 0.885, channel AUC 0.87, laterality 98% accuracy
-- Key innovation: single-hemisphere 8-channel CET-UNet evidence + DP inference outperforms both full 18-channel pipeline and end-to-end neural approaches
-- Significance: first system to provide discharge-level timing and spatial localization with sub-millisecond accuracy
+- Problem: Characterizing PD/RDA properties (laterality, spatial extent, frequency, timing) is subjective and time-consuming
+- What we did: unified pipeline (PDCharacterizer) combining ChannelPD-Net + Hybrid CNN+PLV + HemiCET+DP, trained with iterative human-in-the-loop label refinement
+- Key results: Lat AUC 0.984, Freq ρ 0.663, Timing F1 0.506, Spatial Jaccard 0.731 (97.3% of human agreement)
+- Key innovation: single-hemisphere CET-UNet evidence + DP inference; spatial localization matching expert inter-rater reliability
+- Significance: first system to jointly characterize all properties of periodic and rhythmic patterns with quantitative performance benchmarks against multi-rater expert annotations
 
 ### 1. Introduction
-- EEG monitoring in ICU
-- ACNS 2021 terminology for periodic and rhythmic patterns
-- Current limitations: frequency estimation is crude, no discharge-level timing, spatial localization is qualitative
-- What this paper contributes
+- EEG monitoring in ICU; prevalence and significance of periodic/rhythmic patterns
+- ACNS 2021 terminology: laterality, spatial localization, frequency, timing
+- Current limitations: manual characterization is subjective, no discharge-level timing, spatial localization is qualitative
+- What this paper contributes: a unified automated system with expert-level performance
 
 ### 2. Data and Annotations
-- **2.1 Dataset overview** — 839 patients, 4 pattern types, data sources
-- **2.2 Annotation framework** — description of the multi-layer label system:
-  - Patient-level: subtype, frequency, laterality
-  - Channel-level: PD/RDA involvement per channel
-  - Discharge-level: precise timing of each discharge/wave
-- **2.3 Active learning annotation tools** — HTML-based interactive viewers for:
-  - Binary review (correct/incorrect with C/I keyboard shortcuts)
-  - Interactive marker editing (canvas-based, click-to-add/delete/move)
-  - Frequency annotation (text input with live IPI feedback)
-  - Spatial review (click channels to toggle involvement)
-  - Iterative refinement workflow: algorithm auto-labels → human binary review → human correction → retrain → repeat
-- **2.4 Pseudolabel framework** — leveraging patient-level labels to create channel-level training data:
-  - LPD laterality → ipsilateral/contralateral channel labels
-  - GPD → all channels (with caveats from MW review)
-  - LRDA/GRDA as cross-pattern negatives
-  - Confidence weighting for differential training signal
-- **Figure 1**: Example EEG segments showing range of difficulty for each pattern type (LPD, GPD, LRDA, GRDA), from obvious to subtle. 8-panel figure.
-- **Figure 2**: Annotation tool screenshots — timing correction viewer, spatial review viewer, frequency disagreement viewer.
-- **Table 1**: Dataset statistics — patients, segments, label types, counts per category.
+- **2.1 Dataset** — 12,983 active segments across 4 subtypes (LPD, GPD, LRDA, GRDA), 3 data sources (IIIC crowd-labeled, MW-labeled, expert dataset)
+- **2.2 Multi-layer annotation framework** — IIIC crowd votes (≥10 experts for 3,731 segments), expert frequency/laterality/spatial labels, discharge timing labels
+- **2.3 Active learning tools** — HTML-based interactive viewers for laterality+timing+frequency (combined labeler), spatial localization (topoplot + per-channel toggling), iterative model-assisted review
+- **2.4 Pseudolabel framework** — leveraging patient-level labels for channel-level training
+- **Figure 1**: LPD characterization examples — easy/medium/hard (EEG + topoplot + verbal description) — **DONE**
+- **Figure 2**: GPD characterization examples — **DONE**
+- **Table 1**: Dataset statistics by subtype — segments, patients, label coverage for each label type (pattern class, laterality, frequency, spatial, timing) with multi-rater counts
 
 ### 3. Methods
 
-- **3.1 Signal processing features (SPF)**
-  - Pointiness trace computation
-  - ACF frequency estimation
-  - FFT, TKEO, coherence features
-  - Laterality index and hemisphere energy ratio
-  - **Figure 3**: Feature extraction pipeline diagram
+- **3.1 PDCharacterizer pipeline overview**
+  - **Figure 3**: System diagram — EEG input → ChannelPD-Net (per-channel PD probability) → laterality + spatial (Hybrid CNN+PLV) → discharge timing (HemiCET+DP) → frequency (IPI) → ACNS verbal description
+  - Single-pass inference; all components use the same 18-channel bipolar EEG input
+  - **Table 2**: Component summary — architecture, parameters, training data, role
 
-- **3.2 Hidden Point Process (HPP) algorithm**
-  - Problem formulation: MAP inference over latent discharge sequence
-  - Evidence signal construction (per-channel, class-aware aggregation)
-  - Active interval detection
-  - Candidate peak extraction
-  - Dynamic programming with approximately-periodic prior
-  - Skip modeling (allowing 1-3 missed discharges)
-  - EM template refinement
-  - **Figure 4**: HPP algorithm diagram — showing evidence signal → candidates → DP path → refined timing
-  - **Figure 5**: Example HPP results — 4 cases showing detected discharge times overlaid on EEG, from easy (clear periodic) to difficult (irregular, partial window)
+- **3.2 ChannelPD-Net** — per-channel PD detection + frequency estimation
+  - 1D CNN+Attention architecture (4 conv blocks + attention pooling)
+  - Multi-task: PD probability + log-frequency per channel
+  - 5-fold patient-stratified CV, trained on curated 815-patient dataset
 
-- **3.3 HemiCET (Hemisphere CNN Evidence Trace) — current best**
-  - Architecture: 8-channel CET-UNet (takes one hemisphere as input, outputs single evidence trace)
-  - Key innovation: processes all 8 hemisphere channels jointly → learns cross-channel patterns
-  - Training: supervised on 675 expert-reviewed discharge times (3 rounds of model-assisted cleanup)
-  - Output: frame-level discharge evidence for the hemisphere
-  - Integration with HPP DP: evidence → active interval → candidates → DP → EM refine → post-hoc filter
-  - Comparison with per-channel CET + median aggregation: HemiCET is superior (F1=0.873 vs 0.717)
-  - **Figure 6**: HemiCET architecture diagram (8ch input → U-Net → evidence → DP → times)
-  - **Figure 7**: Comparison of handcrafted evidence vs HemiCET evidence for 3 example cases
+- **3.3 Spatial localization** — Hybrid CNN+PLV
+  - Phase-locking value with CNN-weighted reference channels
+  - Combined score: 50% CNN probability + 50% PLV
+  - Threshold optimization (0.38) using 3-rater inter-rater agreement analysis
+  - Region mapping: 8 canonical regions (LF, RF, LT, RT, LCP, RCP, LO, RO) + midline
+  - ACNS 2021 verbal description generation
 
-- **3.3b End-to-end models (investigated but inferior)**
-  - PDNetV2 (18ch U-Net+Transformer, F1=0.460), HemiNet variants (F1=0.60-0.63)
-  - Finding: with ~800 labeled examples, end-to-end models overfit; domain knowledge (DP) is essential
-  - Self-supervised MAE pretraining helped slightly but didn't close the gap
+- **3.4 Discharge timing** — HemiCET+DP
+  - HemiCET: 8-channel CET-UNet (one hemisphere → frame-level evidence)
+  - Dual evidence: product-boosted max(HPP handcrafted, CET learned)
+  - Dynamic programming with approximately-periodic prior (α=1.275, skip tolerance)
+  - EM template refinement + post-hoc confidence filtering
+  - Frequency: 1/median(IPI) from detected discharge times
 
-- **3.4 Narrowband Variance Optimization (NVO)** for RDA
-  - Sinusoidal template fitting across frequency range
-  - Variance-explained criterion
-  - Phase estimation → wave onset/peak/offset timing
-  - **Figure 8**: NVO method illustration — raw EEG, fitted sinusoid, extracted wave markers
+- **3.5 RDA lateralization** — signal processing contest
+  - V5 lateralization contest: 76 methods compared
+  - Winner: W05_DomOnly_IterRefine (two-pass envelope amplitude + Hilbert frequency)
+  - Best unified AUC 0.837, Freq ρ 0.635
 
-- **3.5 Channel identification models**
-  - CNN architecture for per-channel PD/RDA detection
-  - Pseudolabel training with confidence weighting
-  - Fine-tuning with ground truth labels
-  - Threshold calibration
-
-- **3.6 Classification models**
-  - LPD vs GPD: feature-based (RF/GBM)
-  - LRDA vs GRDA: similar approach
-  - Role of Morgoth as upstream classifier
-
-- **3.7 Optimization framework**
-  - "Contest of agents" approach
-  - Live dashboard for tracking experiments
-  - LOPO cross-validation methodology
-  - Bootstrap confidence intervals
+- **3.6 Optimization framework**
+  - "Contest of agents" approach: systematic comparison of many algorithm variants
+  - Live leaderboards for tracking experiments
+  - Patient-stratified cross-validation throughout
 
 ### 4. Results
 
-- **4.1 PD Frequency Estimation**
-  - **Table 2**: Comparison of all methods (Alexandra's original, SPF+Ridge, SPF+RF, CNN+Attention, HPP, CET+HPP)
-  - **Figure 9**: Scatter plots — gold standard vs predicted frequency for best method, colored by subtype (LPD green, GPD blue), separate panels for LPD and GPD
-  - **Figure 10**: Spearman progression across method iterations (bar chart)
+- **4.1 Lateralization**
+  - PD: Lat AUC 0.984, Accuracy 95.0% (n=880)
+  - RDA: Lat AUC 0.837 (V5 contest, n=4,253)
+  - **Table 3**: Lateralization performance by subtype
 
-- **4.2 RDA Frequency Estimation**
-  - **Table 3**: Comparison (Alexandra's FFT, NVO, HPP, CET+HPP)
-  - **Figure 11**: Scatter plot for RDA frequency
+- **4.2 Spatial localization**
+  - Model Jaccard 0.731 vs human inter-rater 0.751 (97.3%)
+  - At threshold 0.38: avg(Model-LB, Model-PH) = 0.767, exceeding LB-PH = 0.762
+  - **Figure 4**: Spatial inter-rater agreement — 4×4 Jaccard matrix + bar plot + threshold sweep — **DONE**
+  - **Table 4**: Per-rater pairwise Jaccard agreements
 
-- **4.3 Discharge Timing Detection**
-  - **Table 4**: HPP performance (sensitivity, precision, F1, timing accuracy)
-  - **Table 5**: CET+HPP vs HPP-only comparison
-  - **Figure 12**: Example discharge timing results — 4 cases with discharge markers overlaid on EEG
-  - **Figure 13**: IPI-derived frequency vs gold standard scatter plot (ρ=0.970)
+- **4.3 Frequency estimation**
+  - **Quality-filtered evaluation** (MW-reviewed OR 3-expert consensus OR ≥80% IIIC agreement):
+    - LPD: ρ=0.758, MAE=0.185 Hz (n=724)
+    - GPD: ρ=0.767, MAE=0.180 Hz (n=483)
+    - LRDA: ρ=0.537, MAE=0.331 Hz (n=379)
+    - GRDA: ρ=0.609, MAE=0.273 Hz (n=794)
+  - Label quality analysis: segments with <60% expert agreement have 2.4× higher discrepancy than those with 100% agreement
+  - Discrepancy review: MW reviewed all |model - MW| > 0.5 Hz cases; 94% of PD and 61% of RDA accepted model over original MW label
+  - **Figure 6**: 2×4 frequency scatter (PDCharacterizer vs Tautan et al., 4 subtypes) — **DONE**
+  - **Table 5**: Frequency method comparison with quality-filtered labels
 
-- **4.4 RDA Wave Timing**
-  - **Table 6**: HPP-RDA performance metrics
-  - **Figure 14**: Example RDA wave timing — onset/peak/offset markers
+- **4.4 Discharge timing**
+  - F1 0.506, Sensitivity 0.545, Precision 0.472, Timing MAE 25.4 ms (n=882)
+  - **Figure 6**: LRDA/GRDA characterization examples — **DONE**
+  - **Table 6**: Timing performance metrics
 
-- **4.5 Spatial Localization**
-  - **Table 7**: Channel-level PD/RDA detection AUC
-  - **Figure 15**: Example spatial localization results — EEG with channels colored by predicted involvement
-  - Comparison with expert spatial annotations
-
-- **4.6 Subtype Classification**
-  - **Table 8**: LPD vs GPD, LRDA vs GRDA classification metrics
-  - Confusion matrices
-
-- **4.7 BIPD Detection** (if data available)
-  - Proof of concept results
-
-- **4.8 Iterative label improvement analysis**
-  - **Figure 16**: How algorithm performance improved across review rounds (timing F1 by round)
-  - **Table 9**: Label statistics per review round
+- **4.5 Unified PDCharacterizer evaluation**
+  - All metrics on the same test set (expanded labels: 880 lat, 842 freq, 882 timing)
+  - Preprocessing optimization contest: 10 variants tested, baseline wins
+  - V1 confirmed best vs V3 retrained and E2E DETR attempt
+  - **Table 7**: Unified comparison — V1 vs V3 vs preprocessing variants
 
 ### 5. Discussion
 
 - **5.1 Key findings**
-  - HPP + structural priors outperform pure learned approaches for timing
-  - CET+HPP hybrid combines CNN's pattern recognition with HPP's structural reasoning
-  - Pseudolabels enable training with limited ground truth
-  - Active learning dramatically reduces annotation effort
+  - Unified pipeline achieves near-expert-level performance across all characterization tasks
+  - Spatial localization matches expert inter-rater reliability (model as "virtual 4th rater")
+  - Domain knowledge (DP) essential — end-to-end approaches failed with current data size
+  - Curated training data quality > quantity (V1 on 815 patients > V2 on 8,060)
 
-- **5.2 PD detection orthogonality finding**
-  - PD probability does not predict frequency estimation accuracy
-  - Implications for model design
+- **5.2 Methodological contributions**
+  - "Contest of agents" approach for systematic algorithm comparison
+  - Active learning HTML tools for efficient expert annotation
+  - Pseudolabel framework enabling channel-level training from patient-level labels
 
-- **5.3 Failure modes and limitations**
-  - **Figure 17**: Algorithm failure cases — 4 examples with commentary:
-    - Very slow PDs (< 0.3 Hz) — few training examples, hard to distinguish from background
-    - Variable morphology — discharges that change shape across the segment
-    - Bilateral LPDs with asymmetric involvement — spatial localization ambiguity
-    - Transition patterns — PDs evolving into seizure or vice versa
-  - High-frequency gap (few cases > 2.5 Hz)
-  - LRDA classification weakness
-  - Label noise in gold standard frequency
+- **5.3 Limitations**
+  - Timing F1 (0.506) lower than early benchmarks (0.873) on expanded harder test set
+  - RDA spatial localization not yet validated (single-rater labels only)
+  - BIPD detection not yet implemented (21 confirmed cases, plan only)
+  - End-to-end model needs >1000 labeled examples to compete
 
 - **5.4 Comparison with prior work**
-  - Tautan et al. 2025 (our prior paper)
-  - Other automated PD/RDA characterization methods
-  - What's new: discharge-level timing, channel-level spatial labels, HPP algorithm
+  - Tautan et al. 2025; other PD/RDA characterization methods
+  - Novel: first system jointly characterizing all properties with expert-level benchmarks
 
-- **5.5 Clinical implications**
-  - Real-time ICU monitoring support
-  - Standardized quantitative descriptions
-  - Foundation for BIPD detection
-
-- **5.6 Future directions**
-  - BIPD analysis
-  - Phase-amplitude coupling (fast activity at specific RDA phase)
-  - Longitudinal tracking (pattern evolution over time)
-  - Integration with clinical outcome prediction
+- **5.5 Clinical implications and future directions**
+  - Real-time ICU monitoring support; standardized quantitative ACNS descriptions
+  - Future: BIPD analysis, RDA wave timing, phase-amplitude coupling, longitudinal tracking
 
 ### 6. Conclusions
 
 ### Supplementary Material
 
-- **Suppl. Figure S1-S8**: Extended EEG examples for each task (5 per task, showing range of difficulty)
-- **Suppl. Figure S9**: Full optimization dashboard screenshot
-- **Suppl. Figure S10**: All 42+ experiment results from the "contest of agents"
-- **Suppl. Table S1**: Complete experiment results table (all methods × all metrics)
-- **Suppl. Table S2**: Pseudolabel statistics by source and confidence level
-- **Suppl. Table S3**: Per-fold cross-validation results
+- **Figure S1**: HPP algorithm diagram — evidence → candidates → DP path → refined timing
+- **Figure S2**: HemiCET architecture diagram (8ch → U-Net → evidence → DP → times)
+- **Figure S3**: Comparison of handcrafted vs HemiCET evidence (3 example cases)
+- **Figure S4**: Annotation tool screenshots (timing viewer, spatial viewer, frequency viewer)
+- **Figure S5**: Feature extraction pipeline diagram
+- **Figure S6**: Performance by review round (iterative label improvement)
+- **Figure S7**: Failure mode examples (4 cases with commentary)
+- **Figure S8**: Full contest leaderboards (lateralization 76 methods, spatial 30 methods, preprocessing 10 variants)
+- **Figure S9**: End-to-end DETR model training curves (showing overfitting)
+- **Figure S10**: V1 vs V3 vs preprocessing optimization results
+- **Table S1**: Complete experiment results (all methods × all metrics)
+- **Table S2**: Label coverage by subtype (from label_status_report)
+- **Table S3**: Pseudolabel statistics by source and confidence
+- **Table S4**: Per-fold cross-validation results
+- **Table S5**: RDA lateralization contest full results (76 methods)
 - **Suppl. Methods**: Detailed CNN architectures, hyperparameters, training procedures
-- **Suppl. Code**: GitHub repository link with all code, viewers, and reproducibility instructions
+- **Suppl. Code**: GitHub repository with all code, viewers, and reproducibility instructions
 
 ---
 
-## Figures Summary
+## Main Figures Summary (6 figures)
 
-| Figure | Description | Status |
-|--------|-------------|--------|
-| Fig 1 | EEG examples by pattern type and difficulty | **DONE** (see characterization figures below) |
-| Fig 2 | Annotation tool screenshots | TODO (screenshots exist) |
-| Fig 3 | Feature extraction pipeline | TODO |
-| Fig 4 | HPP algorithm diagram | TODO |
-| Fig 5 | HPP example results (4 cases) | TODO |
-| Fig 6 | CET-UNet + max(HPP,CET) architecture diagram | TODO — detailed description written |
-| Fig 7 | Handcrafted vs CNN evidence comparison | **Data ready** (evidence_comparison_viewer.html) |
-| Fig 8 | NVO method illustration | TODO (needs NVO) |
-| Fig 9 | PD frequency scatter plots (LPD + GPD separate) | **Done** (freq_scatter_hemicet.png, ρ=0.885) |
-| Fig 10 | Label cleanup impact (ρ progression across review rounds) | **Data ready** |
-| Fig 11 | RDA frequency scatter plot | TODO (needs RDA work) |
-| Fig 12 | Discharge timing examples | **Data ready** (timing viewers exist) |
-| Fig 13 | IPI vs gold standard scatter | **Updated** (HemiCET ρ=0.885) |
-| Fig 14 | RDA wave timing examples | TODO (needs RDA HPP) |
-| Fig 15 | Spatial localization examples | **Data ready** (spatial_review_viewer.html) |
-| Fig 16 | Performance by review round | **Data ready** (6 rounds of timing review tracked) |
-| Fig 17 | Failure mode examples | TODO |
+| Figure | Description | Status | File |
+|--------|-------------|--------|------|
+| Fig 1 | LPD characterization examples (easy/med/hard) | **DONE** | `figure_lpd_examples.png` |
+| Fig 2 | GPD characterization examples | **DONE** | `figure_gpd_examples.png` |
+| Fig 3 | PDCharacterizer system diagram | TODO | — |
+| Fig 4 | Spatial inter-rater agreement (4×4 matrix + bars + sweep) | **DONE** | `spatial_agreement.html` |
+| Fig 5 | Spatial inter-rater agreement (4 subtypes, both models) | **DONE** | `fig5_spatial_agreement.png` |
+| Fig 6 | Frequency scatter (2×4: PDChar vs Tautan, quality-filtered) | **DONE** | `fig6_frequency_scatter.png` |
 
-### Completed Characterization Figures
+Each characterization figure shows 3 cases selected by IIIC crowd vote agreement (Easy ≥95%/80%, Medium 70-80%, Hard 45-60%). Panels: 18-channel bipolar EEG with discharge markers + hemisphere shading, MNE spherical spline topoplot (inferno, per-case normalized), ACNS 2021 verbal description.
 
-The following publication figures have been generated in `paper_materials/`:
+Rendered via: `conda run -n morgoth python paper_materials/render_figures.py --pick '{"lpd":[1,15,9],"gpd":[17,2,9],"lrda":[11,3,6],"grda":[0,4,9]}'`
 
-| Figure | File | Status |
-|--------|------|--------|
-| LPD Characterization Examples | `figure_lpd_examples.png` | **DONE** |
-| GPD Characterization Examples | `figure_gpd_examples.png` | **DONE** |
-| LRDA Characterization Examples | `figure_lrda_examples.png` | **DONE** |
-| GRDA Characterization Examples | `figure_grda_examples.png` | **DONE** |
-| Spatial Agreement Analysis | `spatial_agreement.html` / `spatial_agreement_figure.html` | **DONE** |
+Optimized via 3-round Gemini critic loop (`paper_materials/optimize_figures.py`).
 
-Each characterization figure shows 3 cases (easy/medium/hard) selected by IIIC crowd vote agreement level. Panels include EEG with discharge markers, MNE spherical spline interpolated topoplots (inferno colormap, per-case normalization), and ACNS 2021 verbal descriptions. Rendered via `paper_materials/render_figures.py`.
-
-## Tables Summary
+## Main Tables Summary (7 tables)
 
 | Table | Description | Status |
 |-------|-------------|--------|
-| Table 1 | Dataset statistics | **Updated** (in APPROACH_REVIEW_v13, 2,865 patients) |
-| Table 2 | PD frequency method comparison | **Updated** (Alexandra 0.353, CNN 0.744, HemiCET IPI 0.885) |
-| Table 3 | RDA frequency method comparison | TODO |
-| Table 4 | Full method comparison (F1, timing, freq) | **Done** (3-way: 18ch, per-hemi, HemiCET) |
-| Table 5 | HemiCET+DP vs all alternatives | **Done** (F1=0.873 vs 0.717 18ch vs 0.624 end-to-end) |
-| Table 6 | RDA HPP performance | TODO |
-| Table 7 | Channel detection AUC | **Done** (PD 0.870, RDA 0.842) |
-| Table 8 | Subtype classification | **Done** (AUC 0.931) |
-| Table 9 | Label cleanup impact | **Done** (3 review rounds, ρ improved 0.765→0.885) |
-| Table 10 | End-to-end model comparison | **Done** (PDNetV2, HemiNet A/B/D, MAE pretrain) |
+| Table 1 | Dataset statistics by subtype (segments, patients, label coverage, multi-rater counts) | Can generate from label_status_report.py |
+| Table 2 | PDCharacterizer component summary (architecture, params, training data, role) | TODO |
+| Table 3 | Lateralization performance by subtype (PD AUC 0.984, RDA AUC 0.837) | **Data ready** |
+| Table 4 | Spatial inter-rater Jaccard matrix (LB, PH, SZ, Model) | **DONE** |
+| Table 5 | Frequency method comparison (Alexandra → CNN+ACF → HemiCET IPI) | **Data ready** |
+| Table 6 | Discharge timing metrics (F1, Sens, Prec, MAE) | **Data ready** |
+| Table 7 | Unified V1 vs V3 vs preprocessing variants comparison | **Data ready** |
+
+## Supplementary Figures (S1–S10)
+
+| Figure | Description | Status |
+|--------|-------------|--------|
+| S1 | HPP algorithm diagram (evidence → DP → timing) | TODO |
+| S2 | HemiCET architecture (8ch → U-Net → evidence → DP → times) | TODO |
+| S3 | Handcrafted vs HemiCET evidence comparison (3 cases) | **Data ready** |
+| S4 | Annotation tool screenshots (timing, spatial, frequency viewers) | TODO (screenshots exist) |
+| S5 | Feature extraction pipeline diagram | TODO |
+| S6 | Performance by review round (iterative label improvement) | **Data ready** |
+| S7 | Failure mode examples (4 cases with commentary) | TODO |
+| S8 | Contest leaderboards (lateralization 76 methods, spatial 30, preprocessing 10) | **Data ready** |
+| S9 | E2E DETR training curves (showing overfitting) | **DONE** (e2e_training_curves.html) |
+| S10 | V1 vs V3 vs preprocessing optimization results | **Data ready** |
+
+## Supplementary Tables (S1–S5)
+
+| Table | Description | Status |
+|-------|-------------|--------|
+| S1 | Complete experiment results (all methods × all metrics) | **Data ready** |
+| S2 | Label coverage by subtype (full report from label_status_report) | Can generate |
+| S3 | Pseudolabel statistics by source and confidence | Partial |
+| S4 | Per-fold CV results | **Data ready** |
+| S5 | RDA lateralization contest full results (76 methods) | **DONE** |
 
 ---
 
 ## Priority Order for Remaining Work
 
 ### Tier 1 — Required for paper
-1. ~~**PD timing**~~ — **DONE** (HemiCET+DP F1=0.873)
-2. ~~**PD frequency**~~ — **DONE** (HemiCET IPI ρ=0.885)
-3. ~~**LPD laterality**~~ — **DONE** (437/437, 98% model accuracy)
-4. **Complete PD spatial review** (Phase 1.11) — 290 pending
-5. **NVO for RDA** (Phase 2.1, 2.5) — find existing code, benchmark
-6. **LRDA/GRDA frequency labeling** (200 cases) — build labeling tool
-7. **Generate publication figures** from existing data/viewers
+1. ~~**PD timing**~~ — **DONE** (PDCharacterizer V1 F1=0.506 on expanded test set)
+2. ~~**PD frequency**~~ — **DONE** (quality-filtered: LPD ρ=0.758, GPD ρ=0.767)
+3. ~~**LPD laterality**~~ — **DONE** (AUC 0.984, 95% accuracy on 880 segments)
+4. ~~**Spatial localization**~~ — **DONE** (Jaccard 0.731, 97.3% of human; threshold optimized)
+5. ~~**Publication figures**~~ — **DONE** (Figs 1-2 characterization, Fig 5 spatial, Fig 6 frequency)
+6. ~~**Frequency label review**~~ — **DONE** (313 PD + 299 RDA discrepancies reviewed, labels corrected)
+7. ~~**GPD labeling expansion**~~ — **DONE** (808 GPD with freq+timing, balanced with 811 LPD)
+8. **System diagram figure** (Fig 4) — PDCharacterizer pipeline overview
+9. **Write methods + results sections** — using outline above
 
 ### Tier 2 — Strengthens paper
-8. **LRDA laterality annotation** (99 cases)
-9. **RDA HPP** (Phase 2.4, 2.6) — adapt HPP for RDA waves
-10. **RDA channel identification** — improve from pseudolabels
-11. **LRDA vs GRDA classification**
-12. **HemiCET optimization** — DP params, pretraining, midline channels
-13. **Integrate IIIC S3 data** for pretraining
+10. **RDA spatial labeling** — no multi-rater labels yet, PLV-based predictions ready
+11. **RDA wave timing** — adapt HPP for RDA (design doc exists)
+12. **LRDA/GRDA frequency expansion** — only 3 cases with ≥10 votes have expert freq
+13. **Failure mode examples** (Fig S7) — select and annotate
+14. **Algorithm diagrams** (Fig S1, S2) — HPP and HemiCET architecture
 
-### Tier 3 — Can be future work
-14. **BIPD timing labels + classifier** (21 confirmed cases, plan complete)
-15. **CET+HPP for RDA**
-16. **Phase-amplitude coupling analysis**
-17. **End-to-end model** (when more data available)
+### Tier 3 — Future work
+15. **BIPD timing + classifier** (21 confirmed cases, plan complete)
+16. **End-to-end differentiable model** (plan at docs/PLAN_end_to_end_pdcharacterizer.md; needs >1000 labeled examples)
+17. **Phase-amplitude coupling analysis**
+18. **Longitudinal pattern tracking**
 
-## Completion Summary (as of 2026-03-23)
+## Completion Summary (as of 2026-03-31)
 
 | Category | Done | Remaining |
 |----------|------|-----------|
-| **PD Tasks** | Timing (F1=0.873 HemiCET v2), Frequency (ρ=0.885), Subtype (AUC=0.931), Laterality (98% accuracy) | Spatial review (290 pending) |
-| **RDA Tasks** | FFT baseline (ρ=0.840 on 23 pts) | NVO, HPP adaptation, channel detection, LRDA/GRDA labeling |
-| **Architecture** | HemiCET+DP (8ch) surpasses 18ch pipeline; BIPD plan complete | Midline channel experiment, MAE pretraining |
-| **Labels** | 675 PD timing (3× reviewed), 644 frequency, 437 LPD laterality (all complete) | RDA timing/freq (200 cases), BIPD timing (21 cases) |
-| **Data** | 2,865 patients in DB, ~9,600 EEG files, 8,260 IIIC segments downloading | Integrate IIIC data, label RDA |
-| **Tools** | HPP-assisted labeler, laterality labeler, BIPD screener, label review viewer, optimization dashboards | Publication figure generation |
-| **Paper** | Outline complete, all tables/figures identified | Actual writing, figure generation |
+| **PD Characterization** | PDCharacterizer V1: Lat AUC 0.984, Freq ρ 0.663, Timing F1 0.506, Spatial Jaccard 0.731 | System diagram figure |
+| **RDA Characterization** | V5 lateralization contest (76 methods, AUC 0.837, Freq ρ 0.635) | Spatial labels, wave timing, freq labels |
+| **Spatial Localization** | Inter-rater analysis (model=97.3% of human), threshold 0.38 optimized, 106 LPD labels | ~1750 LPD + 1034 GPD spatial labeling |
+| **Labels** | 880 lat, 842 freq, 882 timing, 106 spatial (LPD); 1,214 lat (LRDA) | GPD/LRDA/GRDA spatial; RDA timing/freq expansion |
+| **Model Evaluation** | V1 confirmed best; V3 retrained (worse); E2E DETR (failed); 10 preprocessing variants tested | — |
+| **Figures** | 4 characterization PNGs (DONE), spatial agreement (DONE), Gemini-optimized | System diagram, freq scatter, supplementary figures |
+| **Paper** | Revised outline complete, figures plan finalized | Writing, remaining figures/tables |
+| **Tools** | Spatial labeler (topoplot+per-channel), lat+timing labeler, label status/ingest scripts, figure optimization loop | — |
 
 ## Notes (Historical)
 
