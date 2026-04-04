@@ -26,7 +26,7 @@ LABELS_DIR = PROJECT_DIR / 'data' / 'labels'
 
 FS = 200
 PD_THRESHOLD = 0.62   # Optimized for PD (PDCharacterizer channel_probs)
-RDA_THRESHOLD = 0.30  # Optimized for RDA (RDA-PLV channel_scores) post SZ cleanup
+RDA_THRESHOLD = 0.15  # Optimized for RDA (PLV×Amp) post SZ cleanup
 
 MONO_CHANNELS = [
     'Fp1', 'F3', 'C3', 'P3', 'F7', 'T3', 'T5', 'O1', 'Fz', 'Cz',
@@ -149,7 +149,7 @@ def main():
                 if not np.isfinite(freq) or freq <= 0:
                     seg['pred_ours'] = np.nan
                 else:
-                    result = rda_spatial_extent(bipolar[:18], freq, threshold=RDA_THRESHOLD)
+                    result = rda_spatial_extent(bipolar[:18], freq, threshold=RDA_THRESHOLD, metric='plv_amp')
                     seg['pred_ours'] = float(result['spatial_extent'])
         except Exception:
             seg['pred_ours'] = np.nan

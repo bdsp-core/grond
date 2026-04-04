@@ -130,19 +130,27 @@ def compute_channel_metrics(seg_bi, freq_hz):
     for ch in range(n_ch):
         plv[ch] = _compute_plv(phases[ch], ref_phase)
 
-    return {'ve': ve, 'snr': snr, 'plv': plv}
+    # Amplitude-weighted PLV: PLV × (channel narrowband envelope / max envelope)
+    # This downweights contralateral channels that are phase-locked via volume
+    # conduction but have low-amplitude delta compared to the dominant side.
+    nb_amp = np.array([np.mean(np.abs(analytic[ch])) for ch in range(n_ch)])
+    max_amp = np.max(nb_amp) if np.max(nb_amp) > 1e-10 else 1.0
+    amp_ratio = nb_amp / max_amp
+    plv_amp = plv * amp_ratio
+
+    return {'ve': ve, 'snr': snr, 'plv': plv, 'plv_amp': plv_amp,
+            'nb_amplitude': nb_amp, 'amp_ratio': amp_ratio}
 
 
-def rda_spatial_extent(seg_bi, freq_hz, threshold=0.62, metric='plv',
+def rda_spatial_extent(seg_bi, freq_hz, threshold=0.15, metric='plv_amp',
                        blend_weights=None, relative_threshold=None):
     """Estimate RDA spatial extent from bipolar EEG.
 
-    Evaluated on 211 LRDA/GRDA segments against 3-rater ground truth.
-    Best approaches (sorted by MAE vs mean-expert spatial extent):
-        - PLV mean (continuous):  MAE=0.178, r=0.479
-        - PLV relative thr=0.70: MAE=0.209, r=0.487
-        - PLV threshold=0.62:    MAE=0.215, r=0.485, best ICC
-        - VE+PLV 0.5/0.5 thr=0.35: MAE=0.219, r=0.506, best ICC delta +0.006
+    Evaluated on 208 LRDA/GRDA segments against 3-rater ground truth.
+    Best approach: PLV×Amplitude at threshold=0.15.
+        - PLV×Amp (T=0.15): MAE=0.126, r=0.672 (LRDA r=0.568, GRDA MAE=0.121)
+        - PLV only (T=0.32): MAE=0.196, r=0.373 (LRDA r=0.040 — no laterality)
+    Amplitude weighting downweights contralateral volume-conducted signals.
 
     Parameters
     ----------
@@ -181,12 +189,15 @@ def rda_spatial_extent(seg_bi, freq_hz, threshold=0.62, metric='plv',
         scores = metrics['snr']
     elif metric == 'plv':
         scores = metrics['plv']
+    elif metric == 'plv_amp':
+        scores = metrics['plv_amp']
     elif metric == 'blend':
         if blend_weights is None:
             blend_weights = {'ve': 0.5, 'plv': 0.5}
         scores = (blend_weights.get('ve', 0) * metrics['ve'] +
                   blend_weights.get('snr', 0) * metrics['snr'] +
-                  blend_weights.get('plv', 0) * metrics['plv'])
+                  blend_weights.get('plv', 0) * metrics['plv'] +
+                  blend_weights.get('plv_amp', 0) * metrics['plv_amp'])
     else:
         raise ValueError(f"Unknown metric: {metric}")
 

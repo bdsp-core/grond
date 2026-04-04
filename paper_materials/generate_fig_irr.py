@@ -464,7 +464,7 @@ def run_rda_plv_spatial(mat_files, sl, mode='threshold'):
     mat_files : list of str
     sl : DataFrame with 'mat_file' and 'pdchar_freq_hz' columns
     mode : 'threshold' or 'continuous'
-        'threshold' uses spatial_extent (binary at threshold=0.30, optimized post SZ cleanup)
+        'threshold' uses spatial_extent (PLV×Amp at threshold=0.15)
         'continuous' uses spatial_extent_continuous (mean PLV)
 
     Returns
@@ -492,7 +492,7 @@ def run_rda_plv_spatial(mat_files, sl, mode='threshold'):
 
         try:
             bipolar = mono_to_bipolar(mono)
-            result = rda_spatial_extent(bipolar[:18], freq_hz, threshold=0.30)
+            result = rda_spatial_extent(bipolar[:18], freq_hz, threshold=0.15, metric='plv_amp')
             if mode == 'continuous':
                 se = result['spatial_extent_continuous']
             else:
@@ -872,21 +872,11 @@ def main():
     rda_spat_ee = compute_all_metrics_spatial(rda_spat_matrix, None, categorize_spatial)
     rda_spat_tautan = compute_all_metrics_spatial(rda_spat_matrix, rda_tautan_spat, categorize_spatial)
 
-    # RDA-PLV: compare threshold vs continuous, pick best ICC
-    rda_spat_plv_thr = compute_all_metrics_spatial(rda_spat_matrix, rda_plv_spat_thr, categorize_spatial)
-    rda_spat_plv_cont = compute_all_metrics_spatial(rda_spat_matrix, rda_plv_spat_cont, categorize_spatial)
-
-    icc_thr = rda_spat_plv_thr.get('ea_icc', np.nan)
-    icc_cont = rda_spat_plv_cont.get('ea_icc', np.nan)
-    if np.isfinite(icc_thr) and (not np.isfinite(icc_cont) or icc_thr >= icc_cont):
-        rda_spat_plv = rda_spat_plv_thr
-        rda_plv_spat_best = rda_plv_spat_thr
-        plv_mode_chosen = 'threshold'
-    else:
-        rda_spat_plv = rda_spat_plv_cont
-        rda_plv_spat_best = rda_plv_spat_cont
-        plv_mode_chosen = 'continuous'
-    print(f"  RDA-PLV mode chosen: {plv_mode_chosen} (thr ICC={icc_thr:.3f}, cont ICC={icc_cont:.3f})")
+    # RDA-PLV: use threshold mode (PLV×Amp at T=0.15)
+    rda_spat_plv = compute_all_metrics_spatial(rda_spat_matrix, rda_plv_spat_thr, categorize_spatial)
+    rda_plv_spat_best = rda_plv_spat_thr
+    plv_mode_chosen = 'threshold'
+    print(f"  RDA-PLV mode: {plv_mode_chosen} (ICC={rda_spat_plv.get('ea_icc', np.nan):.3f})")
 
     print(f"  ee-IRR: ICC={rda_spat_ee['ee_icc']:.3f} [{rda_spat_ee['ee_icc_ci'][0]:.3f}, {rda_spat_ee['ee_icc_ci'][1]:.3f}], PA={rda_spat_ee['ee_pa']:.1f}%")
     print(f"  ea-IRR (Tautan): ICC={rda_spat_tautan.get('ea_icc', np.nan):.3f}, PA={rda_spat_tautan.get('ea_pa', np.nan):.1f}%, MAE={rda_spat_tautan.get('ea_mae', np.nan):.3f}")
