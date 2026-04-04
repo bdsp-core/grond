@@ -43,7 +43,7 @@ OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 # ── Constants ──
 EXPERTS = ['LB', 'PH', 'SZ', 'MW']
-SPATIAL_THRESHOLD = 0.38
+SPATIAL_THRESHOLD = 0.62  # Optimized via threshold sweep (generate_threshold_sweep.py)
 
 # Subtype colors
 COLORS = {
