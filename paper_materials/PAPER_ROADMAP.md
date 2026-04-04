@@ -37,12 +37,19 @@ The key innovations are:
 - Fine-tune on MW-reviewed ground truth + expert spatial annotations (Peter Hadar, Laura Basovic, Sahar Zafar)
 - Threshold calibration to match MW's channel inclusion rate (mean 6.2 for LPD, 14.8 for GPD)
 
-### Task 4: RDA Channel Identification
-**Goal**: Same as Task 3 but for rhythmic delta activity.
-**Context**: Enables spatial localization of LRDA/GRDA patterns.
-**Training data**: Pseudolabels only so far (GRDA all channels positive, LRDA all channels positive as crude approximation). Need LRDA laterality annotations to improve.
-**Current best**: 0.842 channel AUC (from unified model, pseudolabels only).
-**Approach**: Same as Task 3 but with RDA labels. Key need: annotate LRDA laterality (99 cases) to enable proper ipsilateral/contralateral pseudolabel split.
+### Task 4: RDA Spatial Extent
+**Goal**: For each of 18 bipolar EEG channels, determine whether it contains rhythmic delta activity. Report spatial extent as fraction of involved channels.
+**Context**: Enables spatial localization of LRDA/GRDA patterns. Component of ACNS 2021 description.
+**Training data**: 211 LRDA/GRDA segments with 3-rater (LB, PH, SZ) spatial_extent ground truth.
+**Current best**: RDA-PLV (phase coherence), ICC 0.371 matching expert-expert ICC 0.373. MAE 0.215.
+**Approach — RDA-PLV** (`code/rda_spatial_extent.py`):
+1. Get frequency estimate from W05
+2. Bandpass at estimated_freq ± 0.4 Hz (narrowband)
+3. Identify dominant hemisphere (highest narrowband variance)
+4. Compute reference signal: mean of top-3 narrowband channels on dominant side
+5. Per-channel PLV: phase coherence with reference → 18 channel scores
+6. Threshold (0.62) → binary involvement → spatial extent = count/18
+**Key finding**: PLV (phase coherence) dominates over VE and SNR. Algorithm agreement with experts (ICC 0.371) matches expert-expert agreement (0.373).
 
 ### Task 5: PD Discharge Timing
 **Goal**: Mark the precise time of each periodic discharge on each involved channel: t_1, t_2, ..., t_K.
@@ -82,13 +89,13 @@ Adapt the HPP algorithm for RDA waves:
 ### Task 7: RDA Frequency Estimation
 **Goal**: Estimate the frequency (Hz) of rhythmic delta activity.
 **Context**: Component of ACNS 2021 standardized description.
-**Training data**: 14 GRDA + 4 LRDA with gold standard freq (very sparse). Need more.
-**Current best**: FFT peak frequency, Spearman 0.840 on 23 patients (from v7).
-**Approaches to compare**:
-- (a) Alexandra's original method (FFT/FOOOF)
-- (b) NVO — narrowband variance optimization
-- (c) HPP with handcrafted evidence → IPI-derived frequency
-- (d) CET+HPP — CNN evidence + HPP → IPI-derived frequency
+**Training data**: 556 LRDA + 1,281 GRDA with MW-reviewed frequency labels. 68 with 3-expert frequency.
+**Current best**: W05_DomOnly_IterRefine (Hilbert + iterative narrowband), ICC 0.860 matching expert-expert ICC 0.852. Fig 6: LRDA ρ=0.617, GRDA ρ=0.689.
+**Approach — W05**:
+1. Bandpass 0.5-3.5 Hz, coarse lateralization via variance
+2. Hilbert instantaneous frequency from top-3 channels of dominant hemisphere
+3. Narrowband at estimated freq ± 0.4 Hz
+4. Refined lateralization via envelope amplitude + refined Hilbert frequency
 
 ### Task 8: PD Frequency Estimation
 **Goal**: Estimate the frequency (Hz) of periodic discharges.
@@ -146,18 +153,16 @@ Adapt the HPP algorithm for RDA waves:
 | 1.10 | Label cleanup (3 rounds) | **Done** | 675 GT cases, 61 corrections, 15 rejections |
 | **1.11** | **Complete spatial review** | **TODO** | 290 cases pending |
 
-### Phase 2: RDA Tasks (Tasks 2, 4, 6, 7) — Mostly TODO
+### Phase 2: RDA Tasks (Tasks 2, 4, 6, 7) — Mostly Done
 
-| Step | Task | Status | What remains |
-|------|------|--------|-------------|
-| **2.1** | **Find NVO code** | **TODO** | Locate existing narrowband sinusoidal fitting code |
-| **2.2** | **LRDA laterality annotation** | **TODO** | MW annotates 99 LRDA cases |
-| **2.3** | **RDA channel identification** | Partial | 0.842 AUC from pseudolabels. Need LRDA laterality for better pseudolabels. |
-| **2.4** | **RDA wave timing (HPP)** | **TODO** | Adapt HPP for RDA waves (onset/peak/offset markers) |
-| **2.5** | **RDA frequency (NVO)** | **TODO** | Benchmark NVO against FFT baseline |
-| **2.6** | **RDA frequency (HPP → IPI)** | **TODO** | Compare with NVO |
-| **2.7** | **LRDA vs GRDA classification** | **TODO** | Benchmark with laterality features |
-| **2.8** | **RDA timing (CET+HPP)** | **TODO** | CNN evidence for RDA + HPP |
+| Step | Task | Status | Result |
+|------|------|--------|--------|
+| 2.1 | LRDA vs GRDA classification | **Done** | W05_DomOnly_IterRefine, AUC 0.837 |
+| 2.2 | LRDA laterality annotation | **Done** | 1,374 LRDA segments reviewed (3 batches) |
+| 2.3 | RDA spatial extent | **Done** | RDA-PLV, ICC 0.371 = expert ICC 0.373 |
+| 2.4 | RDA frequency (W05/W07) | **Done** | W05 ICC 0.860 = expert ICC 0.852; W07 ρ=0.686 |
+| 2.5 | RDA frequency labeling | **Done** | 453 new LRDA/GRDA labels from MW review |
+| **2.6** | **RDA wave timing** | **TODO** | 549 cases labeled, need automated method |
 
 ### Phase 3: Data Expansion
 
@@ -248,10 +253,15 @@ The paper presents **PDCharacterizer** — a unified pipeline that characterizes
   - EM template refinement + post-hoc confidence filtering
   - Frequency: 1/median(IPI) from detected discharge times
 
-- **3.5 RDA lateralization** — signal processing contest
+- **3.5 RDA lateralization + frequency** — signal processing contest
   - V5 lateralization contest: 76 methods compared
-  - Winner: W05_DomOnly_IterRefine (two-pass envelope amplitude + Hilbert frequency)
-  - Best unified AUC 0.837, Freq ρ 0.635
+  - Best lateralization: W05_DomOnly_IterRefine (two-pass envelope amplitude + Hilbert frequency), AUC 0.837
+  - Best frequency: W07_AutoChannel_FreqAgreement (MAD-based channel selection + Hilbert), ρ 0.686
+
+- **3.6 RDA spatial extent** — RDA-PLV
+  - Per-channel PLV coherence with dominant-hemisphere reference signal at estimated frequency
+  - Analogous to PLV refinement in PD spatial pipeline
+  - Threshold optimization (0.62) against 3-rater ground truth (211 segments)
 
 - **3.6 Optimization framework**
   - "Contest of agents" approach: systematic comparison of many algorithm variants
@@ -273,14 +283,20 @@ The paper presents **PDCharacterizer** — a unified pipeline that characterizes
 
 - **4.3 Frequency estimation**
   - **Quality-filtered evaluation** (MW-reviewed OR 3-expert consensus OR ≥80% IIIC agreement):
-    - LPD: ρ=0.758, MAE=0.185 Hz (n=724)
-    - GPD: ρ=0.767, MAE=0.180 Hz (n=483)
-    - LRDA: ρ=0.537, MAE=0.331 Hz (n=379)
-    - GRDA: ρ=0.609, MAE=0.273 Hz (n=794)
+    - LPD: ρ=0.736, MAE=0.192 Hz (n=727)
+    - GPD: ρ=0.760, MAE=0.184 Hz (n=484)
+    - LRDA: ρ=0.617, MAE=0.265 Hz (n=519)
+    - GRDA: ρ=0.689, MAE=0.221 Hz (n=1107)
   - Label quality analysis: segments with <60% expert agreement have 2.4× higher discrepancy than those with 100% agreement
   - Discrepancy review: MW reviewed all |model - MW| > 0.5 Hz cases; 94% of PD and 61% of RDA accepted model over original MW label
   - **Figure 6**: 2×4 frequency scatter (PDCharacterizer vs Tautan et al., 4 subtypes) — **DONE**
+  - **Figure IRR**: Inter-rater reliability comparison (ICC/PA bars) — expert-expert vs expert-algorithm for frequency and spatial extent, all 4 subtypes — **DONE**
   - **Table 5**: Frequency method comparison with quality-filtered labels
+
+- **4.X RDA spatial localization**
+  - RDA-PLV method: per-channel phase coherence with dominant hemisphere reference
+  - ICC 0.371 matching expert-expert ICC 0.373 (n=211)
+  - MAE 0.215, better than some expert-expert pairs (LB vs SZ MAE=0.484)
 
 - **4.4 Discharge timing**
   - F1 0.506, Sensitivity 0.545, Precision 0.472, Timing MAE 25.4 ms (n=882)

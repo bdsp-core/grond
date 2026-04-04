@@ -21,12 +21,13 @@ Algorithms for estimating the frequency of periodic discharges (PD) and rhythmic
 | **RDA Analysis** | | | | |
 | LRDA vs GRDA | AUC | 4,253 | **0.837** | W05_DomOnly_IterRefine |
 | RDA frequency | Spearman ρ | 4,253 | **0.686** | W07_AutoChannel_FreqAgreement |
+| RDA frequency | ICC | 68 | **0.860** (expert 0.852) | W05_DomOnly_IterRefine |
+| RDA spatial extent | ICC | 211 | **0.371** (expert 0.373) | RDA-PLV (phase coherence) |
 | LRDA+GRDA+freq (unified) | AUC / ρ | 4,253 | **0.837 / 0.635** | W05_DomOnly_IterRefine |
-| LRDA+GRDA+freq (best freq) | AUC / ρ | 4,253 | **0.809 / 0.682** | V04_PLVSelected |
-| RDA freq labels reviewed | — | 993 | MW-reviewed | V22 viewer + MW correction |
+| RDA freq labels reviewed | — | 1,446 | MW-reviewed | W05 viewer + MW review |
 | LRDA laterality reviewed | — | 1,374 | MW-reviewed | 727 left, 308 right, 338 not-LRDA |
 
-**All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [APPROACH_REVIEW_v16.md](APPROACH_REVIEW_v16.md) for details.
+**All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [APPROACH_REVIEW_v17.md](APPROACH_REVIEW_v17.md) for details.
 
 ### Unified PD Pipeline (PDCharacterizer)
 
