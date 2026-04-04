@@ -2,7 +2,7 @@
 Generate IRR comparison figure: expert-expert vs expert-algorithm reliability.
 
 Computes ICC(3,1), Percentage Agreement, and MAE for frequency and spatial extent.
-Compares 3 expert raters (LB, PH, SZ) with PDCharacterizer (W05) and Tautan et al.
+Compares 4 expert raters (LB, PH, SZ, MW) with PDCharacterizer (W05) and Tautan et al.
 
 Layout: 2x4 subplot
   Row 1: RDA (LRDA + GRDA)
@@ -42,7 +42,7 @@ OUT_PATH = PROJECT_DIR / 'paper_materials' / 'figures' / 'fig_irr_comparison.png
 OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 # ── Constants ──
-EXPERTS = ['LB', 'PH', 'SZ']
+EXPERTS = ['LB', 'PH', 'SZ', 'MW']
 SPATIAL_THRESHOLD = 0.38
 
 # Subtype colors
@@ -89,11 +89,15 @@ def compute_icc31(ratings_matrix):
     """
     Compute ICC(3,1) — two-way mixed, single measures, consistency.
 
-    ratings_matrix: (n_subjects, n_raters) numpy array.
-    Returns ICC value.
+    ratings_matrix: (n_subjects, n_raters) numpy array. May contain NaN.
+    Drops rows with any NaN before computing. Returns NaN if < 10 complete rows.
     """
+    # Drop rows with any NaN
+    complete = ~np.isnan(ratings_matrix).any(axis=1)
+    ratings_matrix = ratings_matrix[complete]
+
     n, k = ratings_matrix.shape
-    if n < 2 or k < 2:
+    if n < 10 or k < 2:
         return np.nan
 
     # Grand mean
@@ -132,11 +136,18 @@ def compute_icc31(ratings_matrix):
 
 
 def compute_icc31_ci(ratings_matrix, alpha=0.05):
-    """Compute ICC(3,1) with confidence interval using F-distribution."""
+    """Compute ICC(3,1) with confidence interval using F-distribution.
+
+    Drops rows with any NaN before computing. Returns NaN if < 10 complete rows.
+    """
     from scipy.stats import f as fdist
 
+    # Drop rows with any NaN
+    complete = ~np.isnan(ratings_matrix).any(axis=1)
+    ratings_matrix = ratings_matrix[complete]
+
     n, k = ratings_matrix.shape
-    if n < 2 or k < 2:
+    if n < 10 or k < 2:
         return np.nan, np.nan, np.nan
 
     grand_mean = np.nanmean(ratings_matrix)
@@ -185,29 +196,35 @@ def categorize_spatial(extent):
 
 def compute_pa(ratings_matrix, categorize_fn):
     """
-    Compute percentage agreement.
+    Compute percentage agreement with NaN handling.
 
-    ratings_matrix: (n_subjects, n_raters)
+    ratings_matrix: (n_subjects, n_raters) — may contain NaN
     categorize_fn: function to categorize continuous values into bins
 
-    PA = mean over all rater pairs of (N_agree / N_total) * 100
+    PA = mean over all rater pairs of (N_agree_in_pair / N_valid_in_pair) * 100
+    Skip pairs with < 5 valid segments.
     """
     n, k = ratings_matrix.shape
     if n < 1 or k < 2:
         return np.nan
 
-    # Categorize all values
-    cat_matrix = np.zeros_like(ratings_matrix, dtype=int)
+    # Categorize all values (NaN stays as -1 sentinel)
+    cat_matrix = np.full_like(ratings_matrix, -1, dtype=int)
     for i in range(n):
         for j in range(k):
-            cat_matrix[i, j] = categorize_fn(ratings_matrix[i, j])
+            if np.isfinite(ratings_matrix[i, j]):
+                cat_matrix[i, j] = categorize_fn(ratings_matrix[i, j])
 
-    # Compute pairwise agreement
+    # Compute pairwise agreement, only using segments where both raters have data
     n_pairs = 0
     total_agreement = 0
     for r1, r2 in combinations(range(k), 2):
-        agree = np.sum(cat_matrix[:, r1] == cat_matrix[:, r2])
-        total_agreement += agree / n
+        both_valid = (cat_matrix[:, r1] >= 0) & (cat_matrix[:, r2] >= 0)
+        n_valid = both_valid.sum()
+        if n_valid < 5:
+            continue
+        agree = np.sum(cat_matrix[both_valid, r1] == cat_matrix[both_valid, r2])
+        total_agreement += agree / n_valid
         n_pairs += 1
 
     if n_pairs == 0:
@@ -245,8 +262,9 @@ def load_data():
 
 def get_expert_frequency_matrix(ann, subtypes):
     """
-    Build (n_segments, 3) matrix of expert frequency ratings.
-    Returns matrix, segment info (mat_file, subtype).
+    Build (n_segments, n_experts) matrix of expert frequency ratings.
+    Returns matrix (with NaN where raters didn't label), mat_files list.
+    Only includes segments with at least 2 raters having data.
     """
     mask = (ann['rater'].isin(EXPERTS) &
             ann['frequency_hz'].notna() &
@@ -257,8 +275,14 @@ def get_expert_frequency_matrix(ann, subtypes):
     pivot = sub.pivot_table(index='mat_file', columns='rater',
                            values='frequency_hz', aggfunc='first')
 
-    # Keep only segments with all 3 raters
-    pivot = pivot.dropna(subset=EXPERTS)
+    # Ensure all expert columns exist (some may be missing entirely)
+    for exp in EXPERTS:
+        if exp not in pivot.columns:
+            pivot[exp] = np.nan
+
+    # Keep only segments with at least 2 raters having data
+    n_valid = pivot[EXPERTS].notna().sum(axis=1)
+    pivot = pivot[n_valid >= 2]
 
     matrix = pivot[EXPERTS].values
     mat_files = pivot.index.tolist()
@@ -268,8 +292,9 @@ def get_expert_frequency_matrix(ann, subtypes):
 
 def get_expert_spatial_matrix(ann, subtypes):
     """
-    Build (n_segments, 3) matrix of expert spatial extent ratings.
-    Returns matrix, mat_files list.
+    Build (n_segments, n_experts) matrix of expert spatial extent ratings.
+    Returns matrix (with NaN where raters didn't label), mat_files list.
+    Only includes segments with at least 2 raters having data.
     """
     mask = (ann['rater'].isin(EXPERTS) &
             ann['spatial_extent'].notna() &
@@ -279,7 +304,14 @@ def get_expert_spatial_matrix(ann, subtypes):
     pivot = sub.pivot_table(index='mat_file', columns='rater',
                            values='spatial_extent', aggfunc='first')
 
-    pivot = pivot.dropna(subset=EXPERTS)
+    # Ensure all expert columns exist
+    for exp in EXPERTS:
+        if exp not in pivot.columns:
+            pivot[exp] = np.nan
+
+    # Keep only segments with at least 2 raters having data
+    n_valid = pivot[EXPERTS].notna().sum(axis=1)
+    pivot = pivot[n_valid >= 2]
 
     matrix = pivot[EXPERTS].values
     mat_files = pivot.index.tolist()
@@ -482,10 +514,10 @@ def get_cached_algo_freq(sl, mat_files, column):
 def compute_all_metrics_freq(expert_matrix, algo_values, categorize_fn):
     """
     Compute ICC, PA, MAE for frequency.
-    expert_matrix: (n, 3)
+    expert_matrix: (n, n_experts) — may contain NaN
     algo_values: (n,) or None
     """
-    # Expert-expert
+    # Expert-expert (ICC drops NaN rows internally, PA handles NaN pairwise)
     ee_icc, ee_ci_lo, ee_ci_hi = compute_icc31_ci(expert_matrix)
     ee_pa = compute_pa(expert_matrix, categorize_fn)
 
@@ -497,10 +529,11 @@ def compute_all_metrics_freq(expert_matrix, algo_values, categorize_fn):
     }
 
     if algo_values is not None:
-        # Expert+Algorithm: add as 4th column
+        # Expert+Algorithm: add algo as extra column
         valid = np.isfinite(algo_values)
         if valid.sum() >= 10:
             combined = np.column_stack([expert_matrix[valid], algo_values[valid].reshape(-1, 1)])
+            # ICC will internally drop rows with any NaN; PA handles NaN pairwise
             ea_icc, ea_ci_lo, ea_ci_hi = compute_icc31_ci(combined)
             ea_pa = compute_pa(combined, categorize_fn)
             ea_mae = compute_mae(expert_mean[valid], algo_values[valid])
@@ -649,7 +682,7 @@ def main():
     print("\n── Frequency: PD (LPD + GPD) ──")
     pd_freq_matrix, pd_freq_mats = get_expert_frequency_matrix(ann, ['lpd', 'gpd'])
     pd_freq_subtypes = get_subtypes_for_mats(sl, pd_freq_mats)
-    print(f"  PD freq segments with 3 experts: {len(pd_freq_mats)}")
+    print(f"  PD freq segments with >=2 experts: {len(pd_freq_mats)}")
 
     # Get cached algo frequencies for PD
     pd_pdchar_freq = get_cached_algo_freq(sl, pd_freq_mats, 'pdchar_freq_hz')
@@ -658,7 +691,7 @@ def main():
     print("\n── Frequency: RDA (LRDA + GRDA) ──")
     rda_freq_matrix, rda_freq_mats = get_expert_frequency_matrix(ann, ['lrda', 'grda'])
     rda_freq_subtypes = get_subtypes_for_mats(sl, rda_freq_mats)
-    print(f"  RDA freq segments with 3 experts: {len(rda_freq_mats)}")
+    print(f"  RDA freq segments with >=2 experts: {len(rda_freq_mats)}")
 
     # Get cached algo frequencies for RDA
     rda_pdchar_freq = get_cached_algo_freq(sl, rda_freq_mats, 'pdchar_freq_hz')  # W05
@@ -670,12 +703,12 @@ def main():
     print("\n── Spatial: PD (LPD + GPD) ──")
     pd_spat_matrix, pd_spat_mats = get_expert_spatial_matrix(ann, ['lpd', 'gpd'])
     pd_spat_subtypes = get_subtypes_for_mats(sl, pd_spat_mats)
-    print(f"  PD spatial segments with 3 experts: {len(pd_spat_mats)}")
+    print(f"  PD spatial segments with >=2 experts: {len(pd_spat_mats)}")
 
     print("\n── Spatial: RDA (LRDA + GRDA) ──")
     rda_spat_matrix, rda_spat_mats = get_expert_spatial_matrix(ann, ['lrda', 'grda'])
     rda_spat_subtypes = get_subtypes_for_mats(sl, rda_spat_mats)
-    print(f"  RDA spatial segments with 3 experts: {len(rda_spat_mats)}")
+    print(f"  RDA spatial segments with >=2 experts: {len(rda_spat_mats)}")
 
     # ──────────────────────────────────────────────────────────────
     # RUN MODEL INFERENCE FOR SPATIAL EXTENT
