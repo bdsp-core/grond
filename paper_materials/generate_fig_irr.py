@@ -85,78 +85,92 @@ BIPOLAR_PAIRS = [
 # Statistical functions
 # ═══════════════════════════════════════════════════════════════════
 
+def _icc31_on_complete(ratings_matrix):
+    """Core ICC(3,1) on a complete (no NaN) matrix. Returns NaN if < 10 rows or < 2 cols."""
+    n, k = ratings_matrix.shape
+    if n < 10 or k < 2:
+        return np.nan
+
+    grand_mean = np.mean(ratings_matrix)
+    subj_means = np.mean(ratings_matrix, axis=1)
+    rater_means = np.mean(ratings_matrix, axis=0)
+
+    BSS = k * np.sum((subj_means - grand_mean) ** 2)
+    BRS = n * np.sum((rater_means - grand_mean) ** 2)
+    TSS = np.sum((ratings_matrix - grand_mean) ** 2)
+    ESS = TSS - BSS - BRS
+
+    df_subjects = n - 1
+    df_error = (n - 1) * (k - 1)
+
+    BMS = BSS / df_subjects
+    EMS = ESS / df_error
+
+    return (BMS - EMS) / (BMS + (k - 1) * EMS)
+
+
+def _find_best_rater_subset(ratings_matrix, min_rows=10):
+    """Find the largest subset of raters with >= min_rows complete cases.
+
+    Tries all raters first, then drops raters with most NaN one at a time.
+    Returns (sub_matrix, col_indices) or (None, None) if no valid subset.
+    """
+    n, k = ratings_matrix.shape
+    cols = list(range(k))
+
+    # Try all columns first
+    complete = ~np.isnan(ratings_matrix[:, cols]).any(axis=1)
+    if complete.sum() >= min_rows:
+        return ratings_matrix[np.ix_(complete, cols)], cols
+
+    # Progressively drop the rater with most NaN in incomplete rows
+    remaining = list(cols)
+    while len(remaining) >= 2:
+        sub = ratings_matrix[:, remaining]
+        complete = ~np.isnan(sub).any(axis=1)
+        if complete.sum() >= min_rows:
+            return sub[complete], remaining
+
+        # Find rater with most NaN and drop
+        nan_counts = np.isnan(sub).sum(axis=0)
+        worst = remaining[np.argmax(nan_counts)]
+        remaining.remove(worst)
+
+    return None, None
+
+
 def compute_icc31(ratings_matrix):
     """
     Compute ICC(3,1) — two-way mixed, single measures, consistency.
 
     ratings_matrix: (n_subjects, n_raters) numpy array. May contain NaN.
-    Drops rows with any NaN before computing. Returns NaN if < 10 complete rows.
+    Finds the best subset of raters with >= 10 complete rows.
     """
-    # Drop rows with any NaN
-    complete = ~np.isnan(ratings_matrix).any(axis=1)
-    ratings_matrix = ratings_matrix[complete]
-
-    n, k = ratings_matrix.shape
-    if n < 10 or k < 2:
+    sub, cols = _find_best_rater_subset(ratings_matrix, min_rows=10)
+    if sub is None:
         return np.nan
-
-    # Grand mean
-    grand_mean = np.nanmean(ratings_matrix)
-
-    # Subject means (row means)
-    subj_means = np.nanmean(ratings_matrix, axis=1)
-
-    # Rater means (column means)
-    rater_means = np.nanmean(ratings_matrix, axis=0)
-
-    # Between-subjects sum of squares
-    BSS = k * np.sum((subj_means - grand_mean) ** 2)
-
-    # Between-raters sum of squares
-    BRS = n * np.sum((rater_means - grand_mean) ** 2)
-
-    # Total sum of squares
-    TSS = np.sum((ratings_matrix - grand_mean) ** 2)
-
-    # Error sum of squares (residual)
-    ESS = TSS - BSS - BRS
-
-    # Degrees of freedom
-    df_subjects = n - 1
-    df_error = (n - 1) * (k - 1)
-
-    # Mean squares
-    BMS = BSS / df_subjects
-    EMS = ESS / df_error
-
-    # ICC(3,1) = (BMS - EMS) / (BMS + (k-1)*EMS)
-    icc = (BMS - EMS) / (BMS + (k - 1) * EMS)
-
-    return icc
+    return _icc31_on_complete(sub)
 
 
 def compute_icc31_ci(ratings_matrix, alpha=0.05):
     """Compute ICC(3,1) with confidence interval using F-distribution.
 
-    Drops rows with any NaN before computing. Returns NaN if < 10 complete rows.
+    Finds the best subset of raters with >= 10 complete rows.
     """
     from scipy.stats import f as fdist
 
-    # Drop rows with any NaN
-    complete = ~np.isnan(ratings_matrix).any(axis=1)
-    ratings_matrix = ratings_matrix[complete]
-
-    n, k = ratings_matrix.shape
-    if n < 10 or k < 2:
+    sub, cols = _find_best_rater_subset(ratings_matrix, min_rows=10)
+    if sub is None:
         return np.nan, np.nan, np.nan
 
-    grand_mean = np.nanmean(ratings_matrix)
-    subj_means = np.nanmean(ratings_matrix, axis=1)
-    rater_means = np.nanmean(ratings_matrix, axis=0)
+    n, k = sub.shape
+    grand_mean = np.mean(sub)
+    subj_means = np.mean(sub, axis=1)
+    rater_means = np.mean(sub, axis=0)
 
     BSS = k * np.sum((subj_means - grand_mean) ** 2)
     BRS = n * np.sum((rater_means - grand_mean) ** 2)
-    TSS = np.sum((ratings_matrix - grand_mean) ** 2)
+    TSS = np.sum((sub - grand_mean) ** 2)
     ESS = TSS - BSS - BRS
 
     df_subjects = n - 1
@@ -167,7 +181,6 @@ def compute_icc31_ci(ratings_matrix, alpha=0.05):
 
     icc = (BMS - EMS) / (BMS + (k - 1) * EMS)
 
-    # F-ratio for CI
     F_val = BMS / EMS
     FL = F_val / fdist.ppf(1 - alpha / 2, df_subjects, df_error)
     FU = F_val / fdist.ppf(alpha / 2, df_subjects, df_error)
@@ -585,6 +598,35 @@ def compute_pa_by_subtype(expert_matrix, algo_values, subtypes, categorize_fn, t
     return results
 
 
+def compute_icc_by_subtype(expert_matrix, algo_values, subtypes, target_subtypes):
+    """Compute ICC split by subtype. Returns dict[subtype -> {ee_icc, ee_ci, ea_icc, ea_ci}]."""
+    results = {}
+    subtypes = np.array(subtypes)
+
+    for st in target_subtypes:
+        mask = subtypes == st
+        if mask.sum() < 5:
+            results[st] = {'ee_icc': np.nan, 'ee_icc_ci': (np.nan, np.nan),
+                           'ea_icc': np.nan, 'ea_icc_ci': (np.nan, np.nan)}
+            continue
+
+        ee_icc, ee_lo, ee_hi = compute_icc31_ci(expert_matrix[mask])
+
+        ea_icc, ea_lo, ea_hi = np.nan, np.nan, np.nan
+        if algo_values is not None:
+            valid = mask & np.isfinite(algo_values)
+            if valid.sum() >= 10:
+                combined = np.column_stack([expert_matrix[valid], algo_values[valid].reshape(-1, 1)])
+                ea_icc, ea_lo, ea_hi = compute_icc31_ci(combined)
+
+        results[st] = {
+            'ee_icc': ee_icc, 'ee_icc_ci': (ee_lo, ee_hi),
+            'ea_icc': ea_icc, 'ea_icc_ci': (ea_lo, ea_hi),
+        }
+
+    return results
+
+
 # ═══════════════════════════════════════════════════════════════════
 # Plotting
 # ═══════════════════════════════════════════════════════════════════
@@ -612,6 +654,48 @@ def plot_icc_bars(ax, values, labels, ci_list=None, title='', ylabel='ICC(3,1)',
 
     ax.set_xticks(x)
     ax.set_xticklabels(labels, fontsize=8, rotation=15, ha='right')
+    ax.set_ylabel(ylabel, fontsize=9)
+    ax.set_title(title, fontsize=10, fontweight='bold')
+    ax.set_ylim(0, 1.05)
+    ax.axhline(0.75, color='gray', linestyle='--', alpha=0.4, linewidth=0.8)
+    ax.axhline(0.5, color='gray', linestyle=':', alpha=0.3, linewidth=0.8)
+    ax.grid(axis='y', alpha=0.2)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+
+
+def plot_icc_bars_by_subtype(ax, icc_data, subtypes_order, group_labels, title='', ylabel='ICC(3,1)'):
+    """
+    Plot ICC bars split by subtype, same layout as PA bars.
+
+    icc_data: dict[group_label -> dict[subtype -> icc_value]]
+    """
+    n_groups = len(group_labels)
+    n_subtypes = len(subtypes_order)
+
+    bar_width = 0.15
+    group_width = n_subtypes * bar_width + 0.05
+
+    for g_idx, g_label in enumerate(group_labels):
+        for s_idx, st in enumerate(subtypes_order):
+            x = g_idx * (group_width + 0.15) + s_idx * bar_width
+            val = icc_data[g_label].get(st, np.nan)
+            if np.isfinite(val):
+                ax.bar(x, val, width=bar_width, color=COLORS[st],
+                       edgecolor='black', linewidth=0.6, zorder=3)
+                ax.text(x, val + 0.02, f'{val:.2f}', ha='center', va='bottom',
+                       fontsize=6, fontweight='bold')
+            else:
+                ax.bar(x, 0, width=bar_width, color='lightgray',
+                       edgecolor='black', linewidth=0.6, zorder=3, hatch='//')
+
+    group_centers = []
+    for g_idx in range(n_groups):
+        center = g_idx * (group_width + 0.15) + (n_subtypes - 1) * bar_width / 2
+        group_centers.append(center)
+
+    ax.set_xticks(group_centers)
+    ax.set_xticklabels(group_labels, fontsize=7.5, rotation=15, ha='right')
     ax.set_ylabel(ylabel, fontsize=9)
     ax.set_title(title, fontsize=10, fontweight='bold')
     ax.set_ylim(0, 1.05)
@@ -821,21 +905,25 @@ def main():
     fig, axes = plt.subplots(2, 4, figsize=(18, 8))
     fig.subplots_adjust(hspace=0.45, wspace=0.35, left=0.06, right=0.96, top=0.90, bottom=0.12)
 
+    # ── Compute ICC by subtype ──
+    rda_freq_icc_pdchar_sub = compute_icc_by_subtype(rda_freq_matrix, rda_pdchar_freq, rda_freq_subtypes, ['lrda', 'grda'])
+    rda_freq_icc_tautan_sub = compute_icc_by_subtype(rda_freq_matrix, rda_tautan_freq, rda_freq_subtypes, ['lrda', 'grda'])
+    rda_freq_icc_ee_sub = compute_icc_by_subtype(rda_freq_matrix, None, rda_freq_subtypes, ['lrda', 'grda'])
+
+    rda_spat_icc_tautan_sub = compute_icc_by_subtype(rda_spat_matrix, rda_tautan_spat, rda_spat_subtypes, ['lrda', 'grda'])
+    rda_spat_icc_plv_sub = compute_icc_by_subtype(rda_spat_matrix, rda_plv_spat_best, rda_spat_subtypes, ['lrda', 'grda'])
+    rda_spat_icc_ee_sub = compute_icc_by_subtype(rda_spat_matrix, None, rda_spat_subtypes, ['lrda', 'grda'])
+
     # ── Row 0: RDA ──
-    # (A) RDA Frequency ICC
-    rda_icc_vals = [
-        rda_freq_ee['ee_icc'],
-        rda_freq_pdchar.get('ea_icc', np.nan),
-        rda_freq_tautan.get('ea_icc', np.nan),
-    ]
-    rda_icc_cis = [
-        rda_freq_ee['ee_icc_ci'],
-        rda_freq_pdchar.get('ea_icc_ci', (np.nan, np.nan)),
-        rda_freq_tautan.get('ea_icc_ci', (np.nan, np.nan)),
-    ]
-    rda_icc_labels = ['Annotators', 'Ann. & W05', 'Ann. & Tautan']
-    plot_icc_bars(axes[0, 0], rda_icc_vals, rda_icc_labels, rda_icc_cis,
-                  title=f'RDA Frequency ICC (n={len(rda_freq_mats)})')
+    # (A) RDA Frequency ICC by subtype
+    rda_freq_icc_data = {
+        'Annotators': {st: rda_freq_icc_ee_sub[st]['ee_icc'] for st in ['lrda', 'grda']},
+        'Ann. & W05': {st: rda_freq_icc_pdchar_sub[st]['ea_icc'] for st in ['lrda', 'grda']},
+        'Ann. & Tautan': {st: rda_freq_icc_tautan_sub[st]['ea_icc'] for st in ['lrda', 'grda']},
+    }
+    plot_icc_bars_by_subtype(axes[0, 0], rda_freq_icc_data, ['lrda', 'grda'],
+                              ['Annotators', 'Ann. & W05', 'Ann. & Tautan'],
+                              title=f'RDA Frequency ICC')
 
     # (B) RDA Frequency PA by subtype
     rda_freq_pa_data = {
@@ -847,48 +935,46 @@ def main():
                             ['Annotators', 'Ann. & W05', 'Ann. & Tautan'],
                             title=f'RDA Frequency PA')
 
-    # (C) RDA Spatial ICC — includes RDA-PLV (Ours)
-    rda_spat_icc_vals = [
-        rda_spat_ee['ee_icc'],
-        rda_spat_tautan.get('ea_icc', np.nan),
-        rda_spat_plv.get('ea_icc', np.nan),
-    ]
-    rda_spat_icc_cis = [
-        rda_spat_ee['ee_icc_ci'],
-        rda_spat_tautan.get('ea_icc_ci', (np.nan, np.nan)),
-        rda_spat_plv.get('ea_icc_ci', (np.nan, np.nan)),
-    ]
-    rda_spat_icc_labels = ['Annotators', 'Ann. & Tautan', 'Ann. & Ours']
-    rda_spat_icc_colors = [BAR_COLORS['ee'], BAR_COLORS['tautan'], BAR_COLORS['ours']]
-    plot_icc_bars(axes[0, 2], rda_spat_icc_vals, rda_spat_icc_labels, rda_spat_icc_cis,
-                  title=f'RDA Spatial ICC (n={len(rda_spat_mats)})',
-                  bar_colors=rda_spat_icc_colors)
+    # (C) RDA Spatial ICC by subtype — includes RDA-PLV (Ours)
+    rda_spat_icc_data = {
+        'Annotators': {st: rda_spat_icc_ee_sub[st]['ee_icc'] for st in ['lrda', 'grda']},
+        'Ann. & Ours': {st: rda_spat_icc_plv_sub[st]['ea_icc'] for st in ['lrda', 'grda']},
+        'Ann. & Tautan': {st: rda_spat_icc_tautan_sub[st]['ea_icc'] for st in ['lrda', 'grda']},
+    }
+    plot_icc_bars_by_subtype(axes[0, 2], rda_spat_icc_data, ['lrda', 'grda'],
+                              ['Annotators', 'Ann. & Ours', 'Ann. & Tautan'],
+                              title=f'RDA Spatial ICC')
 
     # (D) RDA Spatial PA by subtype — includes RDA-PLV (Ours)
     rda_spat_pa_data = {
         'Annotators': {st: rda_spat_pa_ee_sub[st]['ee_pa'] for st in ['lrda', 'grda']},
-        'Ann. & Tautan': {st: rda_spat_pa_tautan_sub[st]['ea_pa'] for st in ['lrda', 'grda']},
         'Ann. & Ours': {st: rda_spat_pa_plv_sub[st]['ea_pa'] for st in ['lrda', 'grda']},
+        'Ann. & Tautan': {st: rda_spat_pa_tautan_sub[st]['ea_pa'] for st in ['lrda', 'grda']},
     }
     plot_pa_bars_by_subtype(axes[0, 3], rda_spat_pa_data, ['lrda', 'grda'],
-                            ['Annotators', 'Ann. & Tautan', 'Ann. & Ours'],
+                            ['Annotators', 'Ann. & Ours', 'Ann. & Tautan'],
                             title=f'RDA Spatial PA')
 
     # ── Row 1: PD ──
     # (A) PD Frequency ICC
-    pd_icc_vals = [
-        pd_freq_ee['ee_icc'],
-        pd_freq_pdchar.get('ea_icc', np.nan),
-        pd_freq_tautan.get('ea_icc', np.nan),
-    ]
-    pd_icc_cis = [
-        pd_freq_ee['ee_icc_ci'],
-        pd_freq_pdchar.get('ea_icc_ci', (np.nan, np.nan)),
-        pd_freq_tautan.get('ea_icc_ci', (np.nan, np.nan)),
-    ]
-    pd_icc_labels = ['Annotators', 'Ann. & PDChar', 'Ann. & Tautan']
-    plot_icc_bars(axes[1, 0], pd_icc_vals, pd_icc_labels, pd_icc_cis,
-                  title=f'PD Frequency ICC (n={len(pd_freq_mats)})')
+    # ── Compute PD ICC by subtype ──
+    pd_freq_icc_pdchar_sub = compute_icc_by_subtype(pd_freq_matrix, pd_pdchar_freq, pd_freq_subtypes, ['lpd', 'gpd'])
+    pd_freq_icc_tautan_sub = compute_icc_by_subtype(pd_freq_matrix, pd_tautan_freq, pd_freq_subtypes, ['lpd', 'gpd'])
+    pd_freq_icc_ee_sub = compute_icc_by_subtype(pd_freq_matrix, None, pd_freq_subtypes, ['lpd', 'gpd'])
+
+    pd_spat_icc_pdchar_sub = compute_icc_by_subtype(pd_spat_matrix, pd_pdchar_spat, pd_spat_subtypes, ['lpd', 'gpd'])
+    pd_spat_icc_tautan_sub = compute_icc_by_subtype(pd_spat_matrix, pd_tautan_spat, pd_spat_subtypes, ['lpd', 'gpd'])
+    pd_spat_icc_ee_sub = compute_icc_by_subtype(pd_spat_matrix, None, pd_spat_subtypes, ['lpd', 'gpd'])
+
+    # (A) PD Frequency ICC by subtype
+    pd_freq_icc_data = {
+        'Annotators': {st: pd_freq_icc_ee_sub[st]['ee_icc'] for st in ['lpd', 'gpd']},
+        'Ann. & PDChar': {st: pd_freq_icc_pdchar_sub[st]['ea_icc'] for st in ['lpd', 'gpd']},
+        'Ann. & Tautan': {st: pd_freq_icc_tautan_sub[st]['ea_icc'] for st in ['lpd', 'gpd']},
+    }
+    plot_icc_bars_by_subtype(axes[1, 0], pd_freq_icc_data, ['lpd', 'gpd'],
+                              ['Annotators', 'Ann. & PDChar', 'Ann. & Tautan'],
+                              title=f'PD Frequency ICC')
 
     # (B) PD Frequency PA by subtype
     pd_freq_pa_data = {
@@ -900,20 +986,15 @@ def main():
                             ['Annotators', 'Ann. & PDChar', 'Ann. & Tautan'],
                             title=f'PD Frequency PA')
 
-    # (C) PD Spatial ICC
-    pd_spat_icc_vals = [
-        pd_spat_ee['ee_icc'],
-        pd_spat_pdchar.get('ea_icc', np.nan),
-        pd_spat_tautan.get('ea_icc', np.nan),
-    ]
-    pd_spat_icc_cis = [
-        pd_spat_ee['ee_icc_ci'],
-        pd_spat_pdchar.get('ea_icc_ci', (np.nan, np.nan)),
-        pd_spat_tautan.get('ea_icc_ci', (np.nan, np.nan)),
-    ]
-    pd_spat_icc_labels = ['Annotators', 'Ann. & PDChar', 'Ann. & Tautan']
-    plot_icc_bars(axes[1, 2], pd_spat_icc_vals, pd_spat_icc_labels, pd_spat_icc_cis,
-                  title=f'PD Spatial ICC (n={len(pd_spat_mats)})')
+    # (C) PD Spatial ICC by subtype
+    pd_spat_icc_data = {
+        'Annotators': {st: pd_spat_icc_ee_sub[st]['ee_icc'] for st in ['lpd', 'gpd']},
+        'Ann. & PDChar': {st: pd_spat_icc_pdchar_sub[st]['ea_icc'] for st in ['lpd', 'gpd']},
+        'Ann. & Tautan': {st: pd_spat_icc_tautan_sub[st]['ea_icc'] for st in ['lpd', 'gpd']},
+    }
+    plot_icc_bars_by_subtype(axes[1, 2], pd_spat_icc_data, ['lpd', 'gpd'],
+                              ['Annotators', 'Ann. & PDChar', 'Ann. & Tautan'],
+                              title=f'PD Spatial ICC')
 
     # (D) PD Spatial PA by subtype
     pd_spat_pa_data = {
