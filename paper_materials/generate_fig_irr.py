@@ -464,7 +464,7 @@ def run_rda_plv_spatial(mat_files, sl, mode='threshold'):
     mat_files : list of str
     sl : DataFrame with 'mat_file' and 'pdchar_freq_hz' columns
     mode : 'threshold' or 'continuous'
-        'threshold' uses spatial_extent (binary at threshold=0.62)
+        'threshold' uses spatial_extent (binary at threshold=0.30, optimized post SZ cleanup)
         'continuous' uses spatial_extent_continuous (mean PLV)
 
     Returns
@@ -492,7 +492,7 @@ def run_rda_plv_spatial(mat_files, sl, mode='threshold'):
 
         try:
             bipolar = mono_to_bipolar(mono)
-            result = rda_spatial_extent(bipolar[:18], freq_hz, threshold=0.62)
+            result = rda_spatial_extent(bipolar[:18], freq_hz, threshold=0.30)
             if mode == 'continuous':
                 se = result['spatial_extent_continuous']
             else:
