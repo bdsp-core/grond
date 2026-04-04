@@ -80,7 +80,7 @@ def load_data_and_filter():
             continue
         pdchar = pd.to_numeric(row.get('pdchar_freq_hz'), errors='coerce')
         tautan = pd.to_numeric(row.get('tautan_freq_hz'), errors='coerce')
-        if not np.isfinite(pdchar) or not np.isfinite(tautan):
+        if not np.isfinite(pdchar):
             continue
         if sid not in expert_freq:
             continue
@@ -92,7 +92,7 @@ def load_data_and_filter():
             'segment_id': sid,
             'gt': float(gt),
             'pred_cnn': float(pdchar),
-            'pred_alex': float(tautan),
+            'pred_alex': float(tautan) if np.isfinite(tautan) else np.nan,
             'n_raters': int(n_raters),
             'passes_quality': passes_quality(sid),
         })
@@ -120,7 +120,9 @@ def main():
     for row_idx, (method_name, pred_key) in enumerate(zip(method_names, pred_keys)):
         for col_idx, (sub, label) in enumerate(subtypes):
             ax = axes[row_idx][col_idx]
-            d = [x for x in results[sub] if x['passes_quality']]
+            d_all = [x for x in results[sub] if x['passes_quality']]
+            # Filter to points with finite prediction for this method
+            d = [x for x in d_all if np.isfinite(x[pred_key])]
 
             if not d:
                 ax.text(0.5, 0.5, 'No data', ha='center', va='center', transform=ax.transAxes)
