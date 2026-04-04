@@ -76,17 +76,24 @@ def main():
     ann = ann[ann.excluded != True]
     sl = sl[sl.excluded != True]
 
-    # Build expert spatial extent: mean across LB/PH/SZ
-    spat = ann[ann.spatial_extent.notna() & ann.rater.isin(['LB', 'PH', 'SZ'])].copy()
+    # Build per-rater spatial extent lookup
+    RATERS = ['LB', 'PH', 'SZ']
+    RATER_COLORS = {'LB': '#2196F3', 'PH': '#E91E63', 'SZ': '#4CAF50'}  # blue, pink, green
+    RATER_MARKERS = {'LB': 'o', 'PH': 's', 'SZ': '^'}
+
+    spat = ann[ann.spatial_extent.notna() & ann.rater.isin(RATERS)].copy()
     spat['spatial_extent'] = pd.to_numeric(spat['spatial_extent'], errors='coerce')
-    spat_agg = spat.groupby('mat_file').agg(
-        mean_spat=('spatial_extent', 'mean'),
-        n_raters=('rater', 'nunique'),
-    ).reset_index()
+
+    # Per-rater per-segment lookup
+    rater_lookup = {}  # mat_file -> {rater: spatial_extent}
+    for _, row in spat.iterrows():
+        mf = row['mat_file']
+        if mf not in rater_lookup:
+            rater_lookup[mf] = {}
+        rater_lookup[mf][row['rater']] = float(row['spatial_extent'])
 
     # Require at least 2 raters
-    spat_agg = spat_agg[spat_agg.n_raters >= 2]
-    gt_lookup = dict(zip(spat_agg.mat_file, zip(spat_agg.mean_spat, spat_agg.n_raters)))
+    rater_lookup = {mf: d for mf, d in rater_lookup.items() if len(d) >= 2}
 
     # Map subtypes
     sub_lookup = dict(zip(sl.mat_file, sl.subtype))
@@ -94,17 +101,15 @@ def main():
 
     # Collect qualifying segments
     segments = []
-    for mf, (gt, nr) in gt_lookup.items():
+    for mf, rater_vals in rater_lookup.items():
         sub = sub_lookup.get(mf)
         if sub not in ('lpd', 'gpd', 'lrda', 'grda'):
-            continue
-        if not np.isfinite(gt):
             continue
         segments.append({
             'mat_file': mf,
             'subtype': sub,
-            'gt': float(gt),
-            'n_raters': int(nr),
+            'rater_vals': rater_vals,  # {rater: spatial_extent}
+            'gt_mean': float(np.mean(list(rater_vals.values()))),
             'freq_hz': float(freq_lookup.get(mf, np.nan)),
         })
 
@@ -178,36 +183,32 @@ def main():
                 ax.text(0.5, 0.5, 'No data', ha='center', va='center', transform=ax.transAxes)
                 continue
 
-            multi = [x for x in d if x['n_raters'] >= 3]
-            single = [x for x in d if x['n_raters'] < 3]
-            base_color = SUBTYPE_COLORS[sub]
-
             rng = np.random.RandomState(42)
-            jitter_scale = 0.02
+            jitter_scale = 0.015
 
-            if single:
-                gt_j = np.array([x['gt'] for x in single]) + rng.uniform(-jitter_scale, jitter_scale, len(single))
-                pr_j = np.array([x[pred_key] for x in single]) + rng.uniform(-jitter_scale, jitter_scale, len(single))
-                ax.scatter(gt_j, pr_j, alpha=1.0, s=25, color=base_color, edgecolors='none',
-                           marker='o', label=f'2 raters (n={len(single)})')
+            # Plot per-rater dots: each segment gets up to 3 dots (one per expert)
+            n_dots = 0
+            for rater in RATERS:
+                gt_vals, pr_vals = [], []
+                for x in d:
+                    if rater in x['rater_vals']:
+                        gt_vals.append(x['rater_vals'][rater])
+                        pr_vals.append(x[pred_key])
+                if not gt_vals:
+                    continue
+                gt_j = np.array(gt_vals) + rng.uniform(-jitter_scale, jitter_scale, len(gt_vals))
+                pr_j = np.array(pr_vals) + rng.uniform(-jitter_scale, jitter_scale, len(pr_vals))
+                ax.scatter(gt_j, pr_j, alpha=0.7, s=18,
+                           color=RATER_COLORS[rater], edgecolors='none',
+                           marker=RATER_MARKERS[rater], zorder=2,
+                           label=f'{rater} (n={len(gt_vals)})')
+                n_dots += len(gt_vals)
 
-            if multi:
-                gt_j = np.array([x['gt'] for x in multi]) + rng.uniform(-jitter_scale, jitter_scale, len(multi))
-                pr_j = np.array([x[pred_key] for x in multi]) + rng.uniform(-jitter_scale, jitter_scale, len(multi))
-                ax.scatter(gt_j, pr_j, alpha=1.0, s=60, color='black', edgecolors='none',
-                           marker='*', zorder=3,
-                           label=f'3 raters (n={len(multi)})')
-
-            # Colored circles behind for all points (for consistent subtype color)
-            gt_all = np.array([x['gt'] for x in d]) + rng.uniform(-jitter_scale, jitter_scale, len(d))
-            pr_all = np.array([x[pred_key] for x in d]) + rng.uniform(-jitter_scale, jitter_scale, len(d))
-            ax.scatter(gt_all, pr_all, alpha=0.6, s=20, color=base_color, edgecolors='none',
-                       marker='o', zorder=1)
-
-            gt = np.array([x['gt'] for x in d])
+            # Compute stats using mean expert GT vs prediction
+            gt_mean = np.array([x['gt_mean'] for x in d])
             pred = np.array([x[pred_key] for x in d])
-            rho, _ = spearmanr(gt, pred)
-            mae = np.mean(np.abs(gt - pred))
+            rho, _ = spearmanr(gt_mean, pred)
+            mae = np.mean(np.abs(gt_mean - pred))
 
             ax.plot([0, 1], [0, 1], 'k--', alpha=0.3, linewidth=1)
             ax.set_xlim(0, 1); ax.set_ylim(0, 1); ax.set_aspect('equal')
@@ -234,7 +235,7 @@ def main():
     for sub, label in subtypes:
         d = [s for s in segments if s['subtype'] == sub and np.isfinite(s.get('pred_ours', np.nan))]
         if not d: continue
-        gt = np.array([x['gt'] for x in d])
+        gt = np.array([x['gt_mean'] for x in d])
         pr = np.array([x['pred_ours'] for x in d])
         rho, _ = spearmanr(gt, pr)
         mae = np.mean(np.abs(gt - pr))
