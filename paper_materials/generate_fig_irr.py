@@ -712,7 +712,7 @@ def plot_pa_bars_by_subtype(ax, pa_data, subtypes_order, group_labels, title='',
 
     pa_data: dict[group_label -> dict[subtype -> PA]]
     subtypes_order: list of subtypes
-    group_labels: list of group names (e.g., ['Annotators', 'Ann. & W05', 'Ann. & Tautan'])
+    group_labels: list of group names (e.g., ['Annotators', 'Ann. & Ours', 'Ann. & Tautan'])
     """
     n_groups = len(group_labels)
     n_subtypes = len(subtypes_order)
@@ -918,21 +918,21 @@ def main():
     # (A) RDA Frequency ICC by subtype
     rda_freq_icc_data = {
         'Annotators': {st: rda_freq_icc_ee_sub[st]['ee_icc'] for st in ['lrda', 'grda']},
-        'Ann. & W05': {st: rda_freq_icc_pdchar_sub[st]['ea_icc'] for st in ['lrda', 'grda']},
+        'Ann. & Ours': {st: rda_freq_icc_pdchar_sub[st]['ea_icc'] for st in ['lrda', 'grda']},
         'Ann. & Tautan': {st: rda_freq_icc_tautan_sub[st]['ea_icc'] for st in ['lrda', 'grda']},
     }
     plot_icc_bars_by_subtype(axes[0, 0], rda_freq_icc_data, ['lrda', 'grda'],
-                              ['Annotators', 'Ann. & W05', 'Ann. & Tautan'],
+                              ['Annotators', 'Ann. & Ours', 'Ann. & Tautan'],
                               title=f'RDA Frequency ICC')
 
     # (B) RDA Frequency PA by subtype
     rda_freq_pa_data = {
         'Annotators': {st: rda_freq_pa_ee_sub[st]['ee_pa'] for st in ['lrda', 'grda']},
-        'Ann. & W05': {st: rda_freq_pa_pdchar_sub[st]['ea_pa'] for st in ['lrda', 'grda']},
+        'Ann. & Ours': {st: rda_freq_pa_pdchar_sub[st]['ea_pa'] for st in ['lrda', 'grda']},
         'Ann. & Tautan': {st: rda_freq_pa_tautan_sub[st]['ea_pa'] for st in ['lrda', 'grda']},
     }
     plot_pa_bars_by_subtype(axes[0, 1], rda_freq_pa_data, ['lrda', 'grda'],
-                            ['Annotators', 'Ann. & W05', 'Ann. & Tautan'],
+                            ['Annotators', 'Ann. & Ours', 'Ann. & Tautan'],
                             title=f'RDA Frequency PA')
 
     # (C) RDA Spatial ICC by subtype — includes RDA-PLV (Ours)
