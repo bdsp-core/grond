@@ -1,0 +1,3986 @@
+{
+  "abn1047_seg000": {
+    "action": "accept",
+    "freq": 1.5748031496062997,
+    "model_freq": 1.527,
+    "subtype": "lpd",
+    "mat_file": "abn1047_seg000.mat",
+    "patient_id": "abn1047"
+  },
+  "abn1047_seg001": {
+    "action": "accept",
+    "freq": 1.8691588785046755,
+    "model_freq": 1.835,
+    "subtype": "lpd",
+    "mat_file": "abn1047_seg001.mat",
+    "patient_id": "abn1047"
+  },
+  "abn1047_seg002": {
+    "action": "accept",
+    "freq": 1.6666666666666665,
+    "model_freq": 1.575,
+    "subtype": "lpd",
+    "mat_file": "abn1047_seg002.mat",
+    "patient_id": "abn1047"
+  },
+  "abn1047_seg003": {
+    "action": "accept",
+    "freq": 2,
+    "model_freq": 1.923,
+    "subtype": "lpd",
+    "mat_file": "abn1047_seg003.mat",
+    "patient_id": "abn1047"
+  },
+  "abn1047_seg004": {
+    "action": "accept",
+    "freq": 1.5267175572519078,
+    "model_freq": 1.626,
+    "subtype": "lpd",
+    "mat_file": "abn1047_seg004.mat",
+    "patient_id": "abn1047"
+  },
+  "abn1047_seg005": {
+    "action": "accept",
+    "freq": 1.492537313432836,
+    "model_freq": 1.538,
+    "subtype": "lpd",
+    "mat_file": "abn1047_seg005.mat",
+    "patient_id": "abn1047"
+  },
+  "abn1047_seg006": {
+    "action": "accept",
+    "freq": 1.4388489208633088,
+    "model_freq": 1.408,
+    "subtype": "lpd",
+    "mat_file": "abn1047_seg006.mat",
+    "patient_id": "abn1047"
+  },
+  "abn1047_seg007": {
+    "action": "accept",
+    "freq": 1.0526315789473684,
+    "model_freq": 1.198,
+    "subtype": "lpd",
+    "mat_file": "abn1047_seg007.mat",
+    "patient_id": "abn1047"
+  },
+  "abn1047_seg008": {
+    "action": "accept",
+    "freq": 1.1976047904191611,
+    "model_freq": 1.19,
+    "subtype": "lpd",
+    "mat_file": "abn1047_seg008.mat",
+    "patient_id": "abn1047"
+  },
+  "abn1047_seg009": {
+    "action": "accept",
+    "freq": 1.2903225806451606,
+    "model_freq": 1.29,
+    "subtype": "lpd",
+    "mat_file": "abn1047_seg009.mat",
+    "patient_id": "abn1047"
+  },
+  "abn11960_seg000": {
+    "action": "accept",
+    "freq": 0.8438818565400845,
+    "model_freq": 1,
+    "subtype": "lpd",
+    "mat_file": "abn11960_seg000.mat",
+    "patient_id": "abn11960"
+  },
+  "abn11960_seg001": {
+    "action": "accept",
+    "freq": 0.9433962264150939,
+    "model_freq": 1.117,
+    "subtype": "lpd",
+    "mat_file": "abn11960_seg001.mat",
+    "patient_id": "abn11960"
+  },
+  "abn12400_seg001": {
+    "action": "accept",
+    "freq": 1.36986301369863,
+    "model_freq": 1.515,
+    "subtype": "lpd",
+    "mat_file": "abn12400_seg001.mat",
+    "patient_id": "abn12400"
+  },
+  "abn12400_seg002": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 0.889,
+    "subtype": "lpd",
+    "mat_file": "abn12400_seg002.mat",
+    "patient_id": "abn12400"
+  },
+  "abn12400_seg003": {
+    "action": "accept",
+    "freq": 1.3793103448275852,
+    "model_freq": 1.316,
+    "subtype": "lpd",
+    "mat_file": "abn12400_seg003.mat",
+    "patient_id": "abn12400"
+  },
+  "abn12400_seg004": {
+    "action": "accept",
+    "freq": 0.9478672985781993,
+    "model_freq": 1.114,
+    "subtype": "lpd",
+    "mat_file": "abn12400_seg004.mat",
+    "patient_id": "abn12400"
+  },
+  "abn12400_seg005": {
+    "action": "accept",
+    "freq": 0.9160839160839156,
+    "model_freq": 1.242,
+    "subtype": "lpd",
+    "mat_file": "abn12400_seg005.mat",
+    "patient_id": "abn12400"
+  },
+  "abn12400_seg006": {
+    "action": "accept",
+    "freq": 1.2422360248447202,
+    "model_freq": 1.325,
+    "subtype": "lpd",
+    "mat_file": "abn12400_seg006.mat",
+    "patient_id": "abn12400"
+  },
+  "abn12400_seg007": {
+    "action": "accept",
+    "freq": 0.7197802197802199,
+    "model_freq": 1.481,
+    "subtype": "lpd",
+    "mat_file": "abn12400_seg007.mat",
+    "patient_id": "abn12400"
+  },
+  "abn12400_seg008": {
+    "action": "accept",
+    "freq": 1.5873015873015877,
+    "model_freq": 1.399,
+    "subtype": "lpd",
+    "mat_file": "abn12400_seg008.mat",
+    "patient_id": "abn12400"
+  },
+  "abn12400_seg009": {
+    "action": "accept",
+    "freq": 1.7094017094017095,
+    "model_freq": 1.515,
+    "subtype": "lpd",
+    "mat_file": "abn12400_seg009.mat",
+    "patient_id": "abn12400"
+  },
+  "abn12400_seg010": {
+    "action": "accept",
+    "freq": 1.5873015873015865,
+    "model_freq": 1.515,
+    "subtype": "lpd",
+    "mat_file": "abn12400_seg010.mat",
+    "patient_id": "abn12400"
+  },
+  "abn12459_seg001": {
+    "action": "accept",
+    "freq": 1.6949152542372885,
+    "model_freq": 1.66,
+    "subtype": "lpd",
+    "mat_file": "abn12459_seg001.mat",
+    "patient_id": "abn12459"
+  },
+  "abn12459_seg002": {
+    "action": "accept",
+    "freq": 1.492537313432836,
+    "model_freq": 1.515,
+    "subtype": "lpd",
+    "mat_file": "abn12459_seg002.mat",
+    "patient_id": "abn12459"
+  },
+  "abn12459_seg003": {
+    "action": "accept",
+    "freq": 1.4705882352941182,
+    "model_freq": 1.408,
+    "subtype": "lpd",
+    "mat_file": "abn12459_seg003.mat",
+    "patient_id": "abn12459"
+  },
+  "abn13729_seg000": {
+    "action": "accept",
+    "freq": 0.7547169811320754,
+    "model_freq": 0.778,
+    "subtype": "lpd",
+    "mat_file": "abn13729_seg000.mat",
+    "patient_id": "abn13729"
+  },
+  "abn13729_seg001": {
+    "action": "accept",
+    "freq": 0.806451612903226,
+    "model_freq": 0.778,
+    "subtype": "lpd",
+    "mat_file": "abn13729_seg001.mat",
+    "patient_id": "abn13729"
+  },
+  "abn13729_seg002": {
+    "action": "accept",
+    "freq": 0.8438818565400846,
+    "model_freq": 0.99,
+    "subtype": "lpd",
+    "mat_file": "abn13729_seg002.mat",
+    "patient_id": "abn13729"
+  },
+  "abn13729_seg003": {
+    "action": "accept",
+    "freq": 0.4464285714285714,
+    "model_freq": 0.772,
+    "subtype": "lpd",
+    "mat_file": "abn13729_seg003.mat",
+    "patient_id": "abn13729"
+  },
+  "abn13729_seg005": {
+    "action": "accept",
+    "freq": 1.3513513513513509,
+    "model_freq": 1.153,
+    "subtype": "lpd",
+    "mat_file": "abn13729_seg005.mat",
+    "patient_id": "abn13729"
+  },
+  "abn13729_seg006": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.02,
+    "subtype": "lpd",
+    "mat_file": "abn13729_seg006.mat",
+    "patient_id": "abn13729"
+  },
+  "abn13729_seg007": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.026,
+    "subtype": "lpd",
+    "mat_file": "abn13729_seg007.mat",
+    "patient_id": "abn13729"
+  },
+  "abn13729_seg008": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.026,
+    "subtype": "lpd",
+    "mat_file": "abn13729_seg008.mat",
+    "patient_id": "abn13729"
+  },
+  "abn1383_seg000": {
+    "action": "accept",
+    "freq": 1.2048192771084336,
+    "model_freq": 1.258,
+    "subtype": "lpd",
+    "mat_file": "abn1383_seg000.mat",
+    "patient_id": "abn1383"
+  },
+  "abn1383_seg001": {
+    "action": "accept",
+    "freq": 1.1976047904191618,
+    "model_freq": 1.201,
+    "subtype": "lpd",
+    "mat_file": "abn1383_seg001.mat",
+    "patient_id": "abn1383"
+  },
+  "abn1383_seg002": {
+    "action": "accept",
+    "freq": 1.2987012987012987,
+    "model_freq": 1.254,
+    "subtype": "lpd",
+    "mat_file": "abn1383_seg002.mat",
+    "patient_id": "abn1383"
+  },
+  "abn1383_seg004": {
+    "action": "accept",
+    "freq": 1.0989010989010999,
+    "model_freq": 0.995,
+    "subtype": "lpd",
+    "mat_file": "abn1383_seg004.mat",
+    "patient_id": "abn1383"
+  },
+  "abn1762_seg001": {
+    "action": "accept",
+    "freq": 1.6528925619834705,
+    "model_freq": 1.481,
+    "subtype": "lpd",
+    "mat_file": "abn1762_seg001.mat",
+    "patient_id": "abn1762"
+  },
+  "abn1762_seg002": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.042,
+    "subtype": "lpd",
+    "mat_file": "abn1762_seg002.mat",
+    "patient_id": "abn1762"
+  },
+  "abn1762_seg003": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.216,
+    "subtype": "lpd",
+    "mat_file": "abn1762_seg003.mat",
+    "patient_id": "abn1762"
+  },
+  "abn1762_seg004": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.356,
+    "subtype": "lpd",
+    "mat_file": "abn1762_seg004.mat",
+    "patient_id": "abn1762"
+  },
+  "abn1762_seg005": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.266,
+    "subtype": "lpd",
+    "mat_file": "abn1762_seg005.mat",
+    "patient_id": "abn1762"
+  },
+  "abn1762_seg006": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.117,
+    "subtype": "lpd",
+    "mat_file": "abn1762_seg006.mat",
+    "patient_id": "abn1762"
+  },
+  "abn2747_seg001": {
+    "action": "accept",
+    "freq": 0.8355293955995673,
+    "model_freq": 1.29,
+    "subtype": "lpd",
+    "mat_file": "abn2747_seg001.mat",
+    "patient_id": "abn2747"
+  },
+  "abn2747_seg002": {
+    "action": "accept",
+    "freq": 1.7100049375611073,
+    "model_freq": 1.724,
+    "subtype": "lpd",
+    "mat_file": "abn2747_seg002.mat",
+    "patient_id": "abn2747"
+  },
+  "abn2747_seg003": {
+    "action": "accept",
+    "freq": 2.040816326530613,
+    "model_freq": 1.961,
+    "subtype": "lpd",
+    "mat_file": "abn2747_seg003.mat",
+    "patient_id": "abn2747"
+  },
+  "abn2747_seg004": {
+    "action": "accept",
+    "freq": 1.980198019801977,
+    "model_freq": 1.835,
+    "subtype": "lpd",
+    "mat_file": "abn2747_seg004.mat",
+    "patient_id": "abn2747"
+  },
+  "abn2747_seg005": {
+    "action": "accept",
+    "freq": 1.7500158954846772,
+    "model_freq": 1.852,
+    "subtype": "lpd",
+    "mat_file": "abn2747_seg005.mat",
+    "patient_id": "abn2747"
+  },
+  "abn2747_seg006": {
+    "action": "accept",
+    "freq": 1.6122084794781855,
+    "model_freq": 1.423,
+    "subtype": "lpd",
+    "mat_file": "abn2747_seg006.mat",
+    "patient_id": "abn2747"
+  },
+  "abn2747_seg007": {
+    "action": "accept",
+    "freq": 1.4084507042253522,
+    "model_freq": 1.282,
+    "subtype": "lpd",
+    "mat_file": "abn2747_seg007.mat",
+    "patient_id": "abn2747"
+  },
+  "abn2747_seg008": {
+    "action": "accept",
+    "freq": 1.3071895424836606,
+    "model_freq": 1.384,
+    "subtype": "lpd",
+    "mat_file": "abn2747_seg008.mat",
+    "patient_id": "abn2747"
+  },
+  "abn2947_seg000": {
+    "action": "accept",
+    "freq": 2.0202020202020234,
+    "model_freq": 1.818,
+    "subtype": "lpd",
+    "mat_file": "abn2947_seg000.mat",
+    "patient_id": "abn2947"
+  },
+  "abn2947_seg001": {
+    "action": "accept",
+    "freq": 2.0618556701030912,
+    "model_freq": 1.762,
+    "subtype": "lpd",
+    "mat_file": "abn2947_seg001.mat",
+    "patient_id": "abn2947"
+  },
+  "abn2947_seg003": {
+    "action": "accept",
+    "freq": 1.6393442622950836,
+    "model_freq": 1.681,
+    "subtype": "lpd",
+    "mat_file": "abn2947_seg003.mat",
+    "patient_id": "abn2947"
+  },
+  "abn2947_seg004": {
+    "action": "accept",
+    "freq": 1.5748031496062997,
+    "model_freq": 1.6,
+    "subtype": "lpd",
+    "mat_file": "abn2947_seg004.mat",
+    "patient_id": "abn2947"
+  },
+  "abn2947_seg005": {
+    "action": "accept",
+    "freq": 1.8691588785046724,
+    "model_freq": 1.724,
+    "subtype": "lpd",
+    "mat_file": "abn2947_seg005.mat",
+    "patient_id": "abn2947"
+  },
+  "abn2947_seg006": {
+    "action": "accept",
+    "freq": 1.515151515151515,
+    "model_freq": 1.613,
+    "subtype": "lpd",
+    "mat_file": "abn2947_seg006.mat",
+    "patient_id": "abn2947"
+  },
+  "abn2947_seg007": {
+    "action": "accept",
+    "freq": 1.7699115044247775,
+    "model_freq": 1.818,
+    "subtype": "lpd",
+    "mat_file": "abn2947_seg007.mat",
+    "patient_id": "abn2947"
+  },
+  "abn2947_seg008": {
+    "action": "accept",
+    "freq": 1.8348623853211012,
+    "model_freq": 1.77,
+    "subtype": "lpd",
+    "mat_file": "abn2947_seg008.mat",
+    "patient_id": "abn2947"
+  },
+  "abn2947_seg009": {
+    "action": "accept",
+    "freq": 1.6806722689075624,
+    "model_freq": 1.653,
+    "subtype": "lpd",
+    "mat_file": "abn2947_seg009.mat",
+    "patient_id": "abn2947"
+  },
+  "abn2947_seg010": {
+    "action": "accept",
+    "freq": 1.2718446601941746,
+    "model_freq": 1.569,
+    "subtype": "lpd",
+    "mat_file": "abn2947_seg010.mat",
+    "patient_id": "abn2947"
+  },
+  "abn2947_seg011": {
+    "action": "accept",
+    "freq": 1.65289256198347,
+    "model_freq": 1.754,
+    "subtype": "lpd",
+    "mat_file": "abn2947_seg011.mat",
+    "patient_id": "abn2947"
+  },
+  "abn2947_seg012": {
+    "action": "accept",
+    "freq": 1.1764705882352935,
+    "model_freq": 1.351,
+    "subtype": "lpd",
+    "mat_file": "abn2947_seg012.mat",
+    "patient_id": "abn2947"
+  },
+  "abn2947_seg013": {
+    "action": "accept",
+    "freq": 0.9950248756218902,
+    "model_freq": 1.32,
+    "subtype": "lpd",
+    "mat_file": "abn2947_seg013.mat",
+    "patient_id": "abn2947"
+  },
+  "abn2947_seg014": {
+    "action": "accept",
+    "freq": 1.4705882352941182,
+    "model_freq": 1.444,
+    "subtype": "lpd",
+    "mat_file": "abn2947_seg014.mat",
+    "patient_id": "abn2947"
+  },
+  "abn2947_seg015": {
+    "action": "accept",
+    "freq": 1.9801980198019797,
+    "model_freq": 1.887,
+    "subtype": "lpd",
+    "mat_file": "abn2947_seg015.mat",
+    "patient_id": "abn2947"
+  },
+  "abn4987_seg000": {
+    "action": "accept",
+    "freq": 1.3157894736842102,
+    "model_freq": 1.198,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg000.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg001": {
+    "action": "accept",
+    "freq": 1.3245033112582782,
+    "model_freq": 1.29,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg001.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg002": {
+    "action": "accept",
+    "freq": 1.3071895424836593,
+    "model_freq": 1.274,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg002.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg003": {
+    "action": "accept",
+    "freq": 1.25,
+    "model_freq": 1.254,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg003.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg004": {
+    "action": "accept",
+    "freq": 1.2903225806451606,
+    "model_freq": 1.25,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg004.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg005": {
+    "action": "accept",
+    "freq": 1.3071895424836606,
+    "model_freq": 1.32,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg005.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg006": {
+    "action": "accept",
+    "freq": 1.3071895424836606,
+    "model_freq": 1.274,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg006.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg007": {
+    "action": "accept",
+    "freq": 1.4084507042253522,
+    "model_freq": 1.212,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg007.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg008": {
+    "action": "accept",
+    "freq": 1.273885350318471,
+    "model_freq": 1.235,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg008.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg009": {
+    "action": "accept",
+    "freq": 1.2738853503184726,
+    "model_freq": 1.316,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg009.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg010": {
+    "action": "accept",
+    "freq": 1.3333333333333348,
+    "model_freq": 1.266,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg010.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg011": {
+    "action": "accept",
+    "freq": 1.3513513513513509,
+    "model_freq": 1.356,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg011.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg012": {
+    "action": "accept",
+    "freq": 1.30718954248366,
+    "model_freq": 1.347,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg012.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg013": {
+    "action": "accept",
+    "freq": 1.3333333333333333,
+    "model_freq": 1.361,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg013.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg014": {
+    "action": "accept",
+    "freq": 1.3071895424836621,
+    "model_freq": 1.361,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg014.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg015": {
+    "action": "accept",
+    "freq": 1.379310344827587,
+    "model_freq": 1.274,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg015.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg016": {
+    "action": "accept",
+    "freq": 1.257861635220126,
+    "model_freq": 1.274,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg016.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg017": {
+    "action": "accept",
+    "freq": 1.2422360248447208,
+    "model_freq": 1.307,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg017.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg018": {
+    "action": "accept",
+    "freq": 1.2578616352201253,
+    "model_freq": 1.333,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg018.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg019": {
+    "action": "accept",
+    "freq": 1.3605442176870743,
+    "model_freq": 1.389,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg019.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg020": {
+    "action": "accept",
+    "freq": 1.3422818791946307,
+    "model_freq": 1.351,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg020.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg021": {
+    "action": "accept",
+    "freq": 1.2738853503184715,
+    "model_freq": 1.266,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg021.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg022": {
+    "action": "accept",
+    "freq": 1.282051282051283,
+    "model_freq": 1.342,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg022.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg023": {
+    "action": "accept",
+    "freq": 1.2903225806451606,
+    "model_freq": 1.274,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg023.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg024": {
+    "action": "accept",
+    "freq": 1.2903225806451615,
+    "model_freq": 1.29,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg024.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg025": {
+    "action": "accept",
+    "freq": 1.3157894736842108,
+    "model_freq": 1.311,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg025.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg026": {
+    "action": "accept",
+    "freq": 1.2499999999999996,
+    "model_freq": 1.223,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg026.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg028": {
+    "action": "accept",
+    "freq": 1.3245033112582767,
+    "model_freq": 1.294,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg028.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg029": {
+    "action": "accept",
+    "freq": 1.273885350318471,
+    "model_freq": 1.286,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg029.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg030": {
+    "action": "accept",
+    "freq": 1.298701298701298,
+    "model_freq": 1.266,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg030.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg031": {
+    "action": "accept",
+    "freq": 1.2987012987012991,
+    "model_freq": 1.32,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg031.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg032": {
+    "action": "accept",
+    "freq": 1.3157894736842108,
+    "model_freq": 1.356,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg032.mat",
+    "patient_id": "abn4987"
+  },
+  "abn4987_seg033": {
+    "action": "accept",
+    "freq": 1.3422818791946307,
+    "model_freq": 1.333,
+    "subtype": "lpd",
+    "mat_file": "abn4987_seg033.mat",
+    "patient_id": "abn4987"
+  },
+  "abn5053_seg000": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.146,
+    "subtype": "lpd",
+    "mat_file": "abn5053_seg000.mat",
+    "patient_id": "abn5053"
+  },
+  "abn5053_seg001": {
+    "action": "accept",
+    "freq": 1.398601398601399,
+    "model_freq": 1.384,
+    "subtype": "lpd",
+    "mat_file": "abn5053_seg001.mat",
+    "patient_id": "abn5053"
+  },
+  "abn5053_seg002": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.187,
+    "subtype": "lpd",
+    "mat_file": "abn5053_seg002.mat",
+    "patient_id": "abn5053"
+  },
+  "abn5053_seg003": {
+    "action": "accept",
+    "freq": 1.4814814814814798,
+    "model_freq": 1.562,
+    "subtype": "lpd",
+    "mat_file": "abn5053_seg003.mat",
+    "patient_id": "abn5053"
+  },
+  "abn5053_seg004": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.008,
+    "subtype": "lpd",
+    "mat_file": "abn5053_seg004.mat",
+    "patient_id": "abn5053"
+  },
+  "abn5053_seg005": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.802,
+    "subtype": "lpd",
+    "mat_file": "abn5053_seg005.mat",
+    "patient_id": "abn5053"
+  },
+  "abn5053_seg006": {
+    "action": "accept",
+    "freq": 1.129310344827585,
+    "model_freq": 1.429,
+    "subtype": "lpd",
+    "mat_file": "abn5053_seg006.mat",
+    "patient_id": "abn5053"
+  },
+  "abn5053_seg007": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.17,
+    "subtype": "lpd",
+    "mat_file": "abn5053_seg007.mat",
+    "patient_id": "abn5053"
+  },
+  "abn5053_seg009": {
+    "action": "accept",
+    "freq": 1.212121212121212,
+    "model_freq": 1.13,
+    "subtype": "lpd",
+    "mat_file": "abn5053_seg009.mat",
+    "patient_id": "abn5053"
+  },
+  "abn5053_seg012": {
+    "action": "accept",
+    "freq": 0.43234323432343236,
+    "model_freq": 0.95,
+    "subtype": "lpd",
+    "mat_file": "abn5053_seg012.mat",
+    "patient_id": "abn5053"
+  },
+  "abn5891_seg000": {
+    "action": "accept",
+    "freq": 0.6605423006918019,
+    "model_freq": 1.351,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg000.mat",
+    "patient_id": "abn5891"
+  },
+  "abn5891_seg001": {
+    "action": "accept",
+    "freq": 0.5943064534422139,
+    "model_freq": 1.307,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg001.mat",
+    "patient_id": "abn5891"
+  },
+  "abn5891_seg002": {
+    "action": "accept",
+    "freq": 0.4683813565318324,
+    "model_freq": 1.46,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg002.mat",
+    "patient_id": "abn5891"
+  },
+  "abn5891_seg003": {
+    "action": "accept",
+    "freq": 0.5796460176991151,
+    "model_freq": 1.681,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg003.mat",
+    "patient_id": "abn5891"
+  },
+  "abn5891_seg004": {
+    "action": "accept",
+    "freq": 1.4598540145985428,
+    "model_freq": 1.418,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg004.mat",
+    "patient_id": "abn5891"
+  },
+  "abn5891_seg005": {
+    "action": "accept",
+    "freq": 1.4388489208633097,
+    "model_freq": 1.379,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg005.mat",
+    "patient_id": "abn5891"
+  },
+  "abn5891_seg006": {
+    "action": "accept",
+    "freq": 1.1428571428571428,
+    "model_freq": 1.235,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg006.mat",
+    "patient_id": "abn5891"
+  },
+  "abn5891_seg007": {
+    "action": "accept",
+    "freq": 1.2195121951219507,
+    "model_freq": 1.19,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg007.mat",
+    "patient_id": "abn5891"
+  },
+  "abn5891_seg008": {
+    "action": "accept",
+    "freq": 1.6,
+    "model_freq": 1.493,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg008.mat",
+    "patient_id": "abn5891"
+  },
+  "abn5891_seg009": {
+    "action": "accept",
+    "freq": 1.6260162601626011,
+    "model_freq": 1.626,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg009.mat",
+    "patient_id": "abn5891"
+  },
+  "abn5891_seg011": {
+    "action": "accept",
+    "freq": 1.379310344827586,
+    "model_freq": 1.278,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg011.mat",
+    "patient_id": "abn5891"
+  },
+  "abn5891_seg012": {
+    "action": "accept",
+    "freq": 1.459854014598541,
+    "model_freq": 1.282,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg012.mat",
+    "patient_id": "abn5891"
+  },
+  "abn5891_seg013": {
+    "action": "accept",
+    "freq": 1.2658227848101264,
+    "model_freq": 1.307,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg013.mat",
+    "patient_id": "abn5891"
+  },
+  "abn5891_seg014": {
+    "action": "accept",
+    "freq": 1.3645833333333344,
+    "model_freq": 1.316,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg014.mat",
+    "patient_id": "abn5891"
+  },
+  "abn5891_seg015": {
+    "action": "accept",
+    "freq": 1.2422360248447202,
+    "model_freq": 1.481,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg015.mat",
+    "patient_id": "abn5891"
+  },
+  "abn5891_seg016": {
+    "action": "accept",
+    "freq": 1.2422360248447206,
+    "model_freq": 1.13,
+    "subtype": "lpd",
+    "mat_file": "abn5891_seg016.mat",
+    "patient_id": "abn5891"
+  },
+  "abn6077_seg000": {
+    "action": "accept",
+    "freq": 1.6806722689075637,
+    "model_freq": 1.527,
+    "subtype": "lpd",
+    "mat_file": "abn6077_seg000.mat",
+    "patient_id": "abn6077"
+  },
+  "abn6077_seg001": {
+    "action": "accept",
+    "freq": 1.5748031496062997,
+    "model_freq": 1.6,
+    "subtype": "lpd",
+    "mat_file": "abn6077_seg001.mat",
+    "patient_id": "abn6077"
+  },
+  "abn6077_seg002": {
+    "action": "accept",
+    "freq": 1.5384615384615377,
+    "model_freq": 1.238,
+    "subtype": "lpd",
+    "mat_file": "abn6077_seg002.mat",
+    "patient_id": "abn6077"
+  },
+  "abn6077_seg003": {
+    "action": "accept",
+    "freq": 1.5873015873015899,
+    "model_freq": 1.575,
+    "subtype": "lpd",
+    "mat_file": "abn6077_seg003.mat",
+    "patient_id": "abn6077"
+  },
+  "abn6077_seg005": {
+    "action": "accept",
+    "freq": 1.6528925619834722,
+    "model_freq": 1.695,
+    "subtype": "lpd",
+    "mat_file": "abn6077_seg005.mat",
+    "patient_id": "abn6077"
+  },
+  "abn6077_seg006": {
+    "action": "accept",
+    "freq": 1.2269938650306749,
+    "model_freq": 1.22,
+    "subtype": "lpd",
+    "mat_file": "abn6077_seg006.mat",
+    "patient_id": "abn6077"
+  },
+  "emu111_seg001": {
+    "action": "accept",
+    "freq": 1.0395833333333322,
+    "model_freq": 1.418,
+    "subtype": "lpd",
+    "mat_file": "emu111_seg001.mat",
+    "patient_id": "emu111"
+  },
+  "emu156_seg000": {
+    "action": "accept",
+    "freq": 1.848148148148147,
+    "model_freq": 1.869,
+    "subtype": "lpd",
+    "mat_file": "emu156_seg000.mat",
+    "patient_id": "emu156"
+  },
+  "emu156_seg002": {
+    "action": "accept",
+    "freq": 1.3333333333333333,
+    "model_freq": 1.13,
+    "subtype": "lpd",
+    "mat_file": "emu156_seg002.mat",
+    "patient_id": "emu156"
+  },
+  "emu156_seg003": {
+    "action": "accept",
+    "freq": 2.0468750000000004,
+    "model_freq": 1.299,
+    "subtype": "lpd",
+    "mat_file": "emu156_seg003.mat",
+    "patient_id": "emu156"
+  },
+  "emu156_seg004": {
+    "action": "accept",
+    "freq": 2.0618556701030935,
+    "model_freq": 1.887,
+    "subtype": "lpd",
+    "mat_file": "emu156_seg004.mat",
+    "patient_id": "emu156"
+  },
+  "emu156_seg005": {
+    "action": "accept",
+    "freq": 1.3245033112582782,
+    "model_freq": 1.246,
+    "subtype": "lpd",
+    "mat_file": "emu156_seg005.mat",
+    "patient_id": "emu156"
+  },
+  "emu246_seg001": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 2.041,
+    "subtype": "lpd",
+    "mat_file": "emu246_seg001.mat",
+    "patient_id": "emu246"
+  },
+  "emu246_seg002": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 2.051,
+    "subtype": "lpd",
+    "mat_file": "emu246_seg002.mat",
+    "patient_id": "emu246"
+  },
+  "emu246_seg003": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 2.02,
+    "subtype": "lpd",
+    "mat_file": "emu246_seg003.mat",
+    "patient_id": "emu246"
+  },
+  "emu247_seg000": {
+    "action": "accept",
+    "freq": 1.1494252873563218,
+    "model_freq": 0.926,
+    "subtype": "lpd",
+    "mat_file": "emu247_seg000.mat",
+    "patient_id": "emu247"
+  },
+  "emu278_seg000": {
+    "action": "accept",
+    "freq": 0.8163265306122451,
+    "model_freq": 0.995,
+    "subtype": "lpd",
+    "mat_file": "emu278_seg000.mat",
+    "patient_id": "emu278"
+  },
+  "emu278_seg002": {
+    "action": "accept",
+    "freq": 0.8163265306122448,
+    "model_freq": 0.816,
+    "subtype": "lpd",
+    "mat_file": "emu278_seg002.mat",
+    "patient_id": "emu278"
+  },
+  "emu375_seg000": {
+    "action": "accept",
+    "freq": 1.96181205540996,
+    "model_freq": 0.926,
+    "subtype": "lpd",
+    "mat_file": "emu375_seg000.mat",
+    "patient_id": "emu375"
+  },
+  "emu375_seg001": {
+    "action": "accept",
+    "freq": 2.4259259259259256,
+    "model_freq": 1.27,
+    "subtype": "lpd",
+    "mat_file": "emu375_seg001.mat",
+    "patient_id": "emu375"
+  },
+  "emu375_seg002": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 0.909,
+    "subtype": "lpd",
+    "mat_file": "emu375_seg002.mat",
+    "patient_id": "emu375"
+  },
+  "emu70_seg000": {
+    "action": "accept",
+    "freq": 1.11731843575419,
+    "model_freq": 1.258,
+    "subtype": "lpd",
+    "mat_file": "emu70_seg000.mat",
+    "patient_id": "emu70"
+  },
+  "emu70_seg001": {
+    "action": "accept",
+    "freq": 1.111111111111111,
+    "model_freq": 1.22,
+    "subtype": "lpd",
+    "mat_file": "emu70_seg001.mat",
+    "patient_id": "emu70"
+  },
+  "emu70_seg002": {
+    "action": "accept",
+    "freq": 1.2987012987012991,
+    "model_freq": 1.351,
+    "subtype": "lpd",
+    "mat_file": "emu70_seg002.mat",
+    "patient_id": "emu70"
+  },
+  "emu70_seg004": {
+    "action": "accept",
+    "freq": 1.379310344827587,
+    "model_freq": 1.408,
+    "subtype": "lpd",
+    "mat_file": "emu70_seg004.mat",
+    "patient_id": "emu70"
+  },
+  "emu70_seg005": {
+    "action": "accept",
+    "freq": 1.3422818791946307,
+    "model_freq": 1.227,
+    "subtype": "lpd",
+    "mat_file": "emu70_seg005.mat",
+    "patient_id": "emu70"
+  },
+  "emu70_seg006": {
+    "action": "accept",
+    "freq": 1.360544217687075,
+    "model_freq": 1.053,
+    "subtype": "lpd",
+    "mat_file": "emu70_seg006.mat",
+    "patient_id": "emu70"
+  },
+  "emu70_seg007": {
+    "action": "accept",
+    "freq": 1.4924522927940742,
+    "model_freq": 1.102,
+    "subtype": "lpd",
+    "mat_file": "emu70_seg007.mat",
+    "patient_id": "emu70"
+  },
+  "emu70_seg008": {
+    "action": "accept",
+    "freq": 1.9486798066195594,
+    "model_freq": 1.058,
+    "subtype": "lpd",
+    "mat_file": "emu70_seg008.mat",
+    "patient_id": "emu70"
+  },
+  "emu70_seg009": {
+    "action": "accept",
+    "freq": 1.257861635220126,
+    "model_freq": 1.29,
+    "subtype": "lpd",
+    "mat_file": "emu70_seg009.mat",
+    "patient_id": "emu70"
+  },
+  "pat0036_seg000": {
+    "action": "accept",
+    "freq": 1.1494252873563218,
+    "model_freq": 1.159,
+    "subtype": "lpd",
+    "mat_file": "pat0036_seg000.mat",
+    "patient_id": "pat0036"
+  },
+  "pat0036_seg001": {
+    "action": "accept",
+    "freq": 1.0989010989010988,
+    "model_freq": 1.274,
+    "subtype": "lpd",
+    "mat_file": "pat0036_seg001.mat",
+    "patient_id": "pat0036"
+  },
+  "pat0036_seg002": {
+    "action": "accept",
+    "freq": 1.995999999999997,
+    "model_freq": 1.379,
+    "subtype": "lpd",
+    "mat_file": "pat0036_seg002.mat",
+    "patient_id": "pat0036"
+  },
+  "pat0036_seg003": {
+    "action": "accept",
+    "freq": 1.1494252873563218,
+    "model_freq": 1.338,
+    "subtype": "lpd",
+    "mat_file": "pat0036_seg003.mat",
+    "patient_id": "pat0036"
+  },
+  "pat0036_seg004": {
+    "action": "accept",
+    "freq": 1.0204081632653057,
+    "model_freq": 1.09,
+    "subtype": "lpd",
+    "mat_file": "pat0036_seg004.mat",
+    "patient_id": "pat0036"
+  },
+  "pat0036_seg005": {
+    "action": "accept",
+    "freq": 1.2121212121212122,
+    "model_freq": 1.266,
+    "subtype": "lpd",
+    "mat_file": "pat0036_seg005.mat",
+    "patient_id": "pat0036"
+  },
+  "pat0036_seg006": {
+    "action": "accept",
+    "freq": 1.2820512820512802,
+    "model_freq": 1.258,
+    "subtype": "lpd",
+    "mat_file": "pat0036_seg006.mat",
+    "patient_id": "pat0036"
+  },
+  "pat0036_seg007": {
+    "action": "accept",
+    "freq": 1.459854014598541,
+    "model_freq": 1.399,
+    "subtype": "lpd",
+    "mat_file": "pat0036_seg007.mat",
+    "patient_id": "pat0036"
+  },
+  "pat0036_seg008": {
+    "action": "accept",
+    "freq": 1.3157894736842093,
+    "model_freq": 1.342,
+    "subtype": "lpd",
+    "mat_file": "pat0036_seg008.mat",
+    "patient_id": "pat0036"
+  },
+  "pat0036_seg010": {
+    "action": "accept",
+    "freq": 1.3422818791946307,
+    "model_freq": 1.208,
+    "subtype": "lpd",
+    "mat_file": "pat0036_seg010.mat",
+    "patient_id": "pat0036"
+  },
+  "pat0036_seg011": {
+    "action": "accept",
+    "freq": 1.4705882352941182,
+    "model_freq": 1.449,
+    "subtype": "lpd",
+    "mat_file": "pat0036_seg011.mat",
+    "patient_id": "pat0036"
+  },
+  "pat0036_seg012": {
+    "action": "accept",
+    "freq": 1.6393442622950811,
+    "model_freq": 1.449,
+    "subtype": "lpd",
+    "mat_file": "pat0036_seg012.mat",
+    "patient_id": "pat0036"
+  },
+  "pat0036_seg013": {
+    "action": "accept",
+    "freq": 1.3333333333333333,
+    "model_freq": 1.361,
+    "subtype": "lpd",
+    "mat_file": "pat0036_seg013.mat",
+    "patient_id": "pat0036"
+  },
+  "pat0045_seg000": {
+    "action": "accept",
+    "freq": 1.5873015873015877,
+    "model_freq": 2.02,
+    "subtype": "lpd",
+    "mat_file": "pat0045_seg000.mat",
+    "patient_id": "pat0045"
+  },
+  "pat0045_seg001": {
+    "action": "accept",
+    "freq": 1.273885350318471,
+    "model_freq": 1.333,
+    "subtype": "lpd",
+    "mat_file": "pat0045_seg001.mat",
+    "patient_id": "pat0045"
+  },
+  "pat0045_seg002": {
+    "action": "accept",
+    "freq": 1.3333333333333333,
+    "model_freq": 1.316,
+    "subtype": "lpd",
+    "mat_file": "pat0045_seg002.mat",
+    "patient_id": "pat0045"
+  },
+  "pat0045_seg003": {
+    "action": "accept",
+    "freq": 1.5037593984962394,
+    "model_freq": 1.487,
+    "subtype": "lpd",
+    "mat_file": "pat0045_seg003.mat",
+    "patient_id": "pat0045"
+  },
+  "pat0048_seg000": {
+    "action": "accept",
+    "freq": 1.5267175572519078,
+    "model_freq": 1.606,
+    "subtype": "lpd",
+    "mat_file": "pat0048_seg000.mat",
+    "patient_id": "pat0048"
+  },
+  "pat0048_seg001": {
+    "action": "accept",
+    "freq": 1.5037593984962416,
+    "model_freq": 1.538,
+    "subtype": "lpd",
+    "mat_file": "pat0048_seg001.mat",
+    "patient_id": "pat0048"
+  },
+  "pat0048_seg002": {
+    "action": "accept",
+    "freq": 1.4705882352941173,
+    "model_freq": 1.509,
+    "subtype": "lpd",
+    "mat_file": "pat0048_seg002.mat",
+    "patient_id": "pat0048"
+  },
+  "pat0048_seg003": {
+    "action": "accept",
+    "freq": 1.4388489208633106,
+    "model_freq": 1.481,
+    "subtype": "lpd",
+    "mat_file": "pat0048_seg003.mat",
+    "patient_id": "pat0048"
+  },
+  "pat0048_seg004": {
+    "action": "accept",
+    "freq": 1.204819277108435,
+    "model_freq": 1.242,
+    "subtype": "lpd",
+    "mat_file": "pat0048_seg004.mat",
+    "patient_id": "pat0048"
+  },
+  "pat0048_seg005": {
+    "action": "accept",
+    "freq": 1.204819277108434,
+    "model_freq": 1.266,
+    "subtype": "lpd",
+    "mat_file": "pat0048_seg005.mat",
+    "patient_id": "pat0048"
+  },
+  "pat0048_seg006": {
+    "action": "accept",
+    "freq": 1.3422818791946323,
+    "model_freq": 1.299,
+    "subtype": "lpd",
+    "mat_file": "pat0048_seg006.mat",
+    "patient_id": "pat0048"
+  },
+  "pat0048_seg007": {
+    "action": "accept",
+    "freq": 1.3789473684210527,
+    "model_freq": 1.342,
+    "subtype": "lpd",
+    "mat_file": "pat0048_seg007.mat",
+    "patient_id": "pat0048"
+  },
+  "pat0048_seg008": {
+    "action": "accept",
+    "freq": 1.42857142857143,
+    "model_freq": 1.408,
+    "subtype": "lpd",
+    "mat_file": "pat0048_seg008.mat",
+    "patient_id": "pat0048"
+  },
+  "pat0048_seg010": {
+    "action": "accept",
+    "freq": 1.5037593984962405,
+    "model_freq": 1.639,
+    "subtype": "lpd",
+    "mat_file": "pat0048_seg010.mat",
+    "patient_id": "pat0048"
+  },
+  "pat0048_seg011": {
+    "action": "accept",
+    "freq": 1.6260162601626011,
+    "model_freq": 1.681,
+    "subtype": "lpd",
+    "mat_file": "pat0048_seg011.mat",
+    "patient_id": "pat0048"
+  },
+  "pat0048_seg012": {
+    "action": "accept",
+    "freq": 1.3245033112582767,
+    "model_freq": 1.156,
+    "subtype": "lpd",
+    "mat_file": "pat0048_seg012.mat",
+    "patient_id": "pat0048"
+  },
+  "pat0048_seg013": {
+    "action": "accept",
+    "freq": 0.9852216748768468,
+    "model_freq": 0.995,
+    "subtype": "lpd",
+    "mat_file": "pat0048_seg013.mat",
+    "patient_id": "pat0048"
+  },
+  "pat0048_seg014": {
+    "action": "accept",
+    "freq": 0.9708737864077672,
+    "model_freq": 1.023,
+    "subtype": "lpd",
+    "mat_file": "pat0048_seg014.mat",
+    "patient_id": "pat0048"
+  },
+  "pat0068_seg000": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.413,
+    "subtype": "lpd",
+    "mat_file": "pat0068_seg000.mat",
+    "patient_id": "pat0068"
+  },
+  "pat0068_seg001": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.212,
+    "subtype": "lpd",
+    "mat_file": "pat0068_seg001.mat",
+    "patient_id": "pat0068"
+  },
+  "pat0068_seg002": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.504,
+    "subtype": "lpd",
+    "mat_file": "pat0068_seg002.mat",
+    "patient_id": "pat0068"
+  },
+  "pat0068_seg003": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.325,
+    "subtype": "lpd",
+    "mat_file": "pat0068_seg003.mat",
+    "patient_id": "pat0068"
+  },
+  "pat0068_seg005": {
+    "action": "accept",
+    "freq": 1.3367346938775508,
+    "model_freq": 1.316,
+    "subtype": "lpd",
+    "mat_file": "pat0068_seg005.mat",
+    "patient_id": "pat0068"
+  },
+  "pat0068_seg006": {
+    "action": "accept",
+    "freq": 1.6,
+    "model_freq": 1.444,
+    "subtype": "lpd",
+    "mat_file": "pat0068_seg006.mat",
+    "patient_id": "pat0068"
+  },
+  "pat0068_seg007": {
+    "action": "accept",
+    "freq": 1.5873015873015888,
+    "model_freq": 1.449,
+    "subtype": "lpd",
+    "mat_file": "pat0068_seg007.mat",
+    "patient_id": "pat0068"
+  },
+  "pat0068_seg008": {
+    "action": "accept",
+    "freq": 1.6,
+    "model_freq": 1.563,
+    "subtype": "lpd",
+    "mat_file": "pat0068_seg008.mat",
+    "patient_id": "pat0068"
+  },
+  "pat0068_seg009": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.471,
+    "subtype": "lpd",
+    "mat_file": "pat0068_seg009.mat",
+    "patient_id": "pat0068"
+  },
+  "pat0068_seg010": {
+    "action": "accept",
+    "freq": 1.1428571428571428,
+    "model_freq": 0.924,
+    "subtype": "lpd",
+    "mat_file": "pat0068_seg010.mat",
+    "patient_id": "pat0068"
+  },
+  "pat0068_seg011": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.042,
+    "subtype": "lpd",
+    "mat_file": "pat0068_seg011.mat",
+    "patient_id": "pat0068"
+  },
+  "pat0068_seg012": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.156,
+    "subtype": "lpd",
+    "mat_file": "pat0068_seg012.mat",
+    "patient_id": "pat0068"
+  },
+  "pat0068_seg013": {
+    "action": "accept",
+    "freq": 1.369863013698631,
+    "model_freq": 1.365,
+    "subtype": "lpd",
+    "mat_file": "pat0068_seg013.mat",
+    "patient_id": "pat0068"
+  },
+  "pat0078_seg000": {
+    "action": "accept",
+    "freq": 0.9312304232234212,
+    "model_freq": 1.266,
+    "subtype": "lpd",
+    "mat_file": "pat0078_seg000.mat",
+    "patient_id": "pat0078"
+  },
+  "pat0078_seg001": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.429,
+    "subtype": "lpd",
+    "mat_file": "pat0078_seg001.mat",
+    "patient_id": "pat0078"
+  },
+  "pat0078_seg002": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.384,
+    "subtype": "lpd",
+    "mat_file": "pat0078_seg002.mat",
+    "patient_id": "pat0078"
+  },
+  "pat0078_seg003": {
+    "action": "accept",
+    "freq": 0.8911564625850331,
+    "model_freq": 1.351,
+    "subtype": "lpd",
+    "mat_file": "pat0078_seg003.mat",
+    "patient_id": "pat0078"
+  },
+  "pat0078_seg004": {
+    "action": "accept",
+    "freq": 0.9980000000000001,
+    "model_freq": 1.159,
+    "subtype": "lpd",
+    "mat_file": "pat0078_seg004.mat",
+    "patient_id": "pat0078"
+  },
+  "pat0078_seg005": {
+    "action": "accept",
+    "freq": 1.2500000000000002,
+    "model_freq": 1.235,
+    "subtype": "lpd",
+    "mat_file": "pat0078_seg005.mat",
+    "patient_id": "pat0078"
+  },
+  "pat0078_seg006": {
+    "action": "accept",
+    "freq": 1.2269938650306755,
+    "model_freq": 1.166,
+    "subtype": "lpd",
+    "mat_file": "pat0078_seg006.mat",
+    "patient_id": "pat0078"
+  },
+  "pat0078_seg007": {
+    "action": "accept",
+    "freq": 0.7751937984496123,
+    "model_freq": 0.837,
+    "subtype": "lpd",
+    "mat_file": "pat0078_seg007.mat",
+    "patient_id": "pat0078"
+  },
+  "pat0078_seg008": {
+    "action": "accept",
+    "freq": 1.3422818791946307,
+    "model_freq": 1.212,
+    "subtype": "lpd",
+    "mat_file": "pat0078_seg008.mat",
+    "patient_id": "pat0078"
+  },
+  "pat0078_seg010": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.786,
+    "subtype": "lpd",
+    "mat_file": "pat0078_seg010.mat",
+    "patient_id": "pat0078"
+  },
+  "pat0089_seg000": {
+    "action": "accept",
+    "freq": 1.5384615384615388,
+    "model_freq": 1.399,
+    "subtype": "lpd",
+    "mat_file": "pat0089_seg000.mat",
+    "patient_id": "pat0089"
+  },
+  "pat0089_seg001": {
+    "action": "accept",
+    "freq": 1.379310344827587,
+    "model_freq": 1.37,
+    "subtype": "lpd",
+    "mat_file": "pat0089_seg001.mat",
+    "patient_id": "pat0089"
+  },
+  "pat0089_seg003": {
+    "action": "accept",
+    "freq": 1.2195121951219507,
+    "model_freq": 1.14,
+    "subtype": "lpd",
+    "mat_file": "pat0089_seg003.mat",
+    "patient_id": "pat0089"
+  },
+  "pat0089_seg004": {
+    "action": "accept",
+    "freq": 1.5625000000000009,
+    "model_freq": 1.399,
+    "subtype": "lpd",
+    "mat_file": "pat0089_seg004.mat",
+    "patient_id": "pat0089"
+  },
+  "pat0089_seg005": {
+    "action": "accept",
+    "freq": 1.5267175572519098,
+    "model_freq": 1.439,
+    "subtype": "lpd",
+    "mat_file": "pat0089_seg005.mat",
+    "patient_id": "pat0089"
+  },
+  "pat0089_seg006": {
+    "action": "accept",
+    "freq": 0.7277979943887329,
+    "model_freq": 1.55,
+    "subtype": "lpd",
+    "mat_file": "pat0089_seg006.mat",
+    "patient_id": "pat0089"
+  },
+  "pat0089_seg007": {
+    "action": "accept",
+    "freq": 1.5873015873015877,
+    "model_freq": 1.527,
+    "subtype": "lpd",
+    "mat_file": "pat0089_seg007.mat",
+    "patient_id": "pat0089"
+  },
+  "pat0089_seg008": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.504,
+    "subtype": "lpd",
+    "mat_file": "pat0089_seg008.mat",
+    "patient_id": "pat0089"
+  },
+  "pat0089_seg009": {
+    "action": "accept",
+    "freq": 1.5624999999999998,
+    "model_freq": 1.55,
+    "subtype": "lpd",
+    "mat_file": "pat0089_seg009.mat",
+    "patient_id": "pat0089"
+  },
+  "pat0089_seg010": {
+    "action": "accept",
+    "freq": 1.587301587301587,
+    "model_freq": 1.724,
+    "subtype": "lpd",
+    "mat_file": "pat0089_seg010.mat",
+    "patient_id": "pat0089"
+  },
+  "pat0090_seg001": {
+    "action": "accept",
+    "freq": 1.5384615384615397,
+    "model_freq": 1.509,
+    "subtype": "lpd",
+    "mat_file": "pat0090_seg001.mat",
+    "patient_id": "pat0090"
+  },
+  "pat0090_seg002": {
+    "action": "accept",
+    "freq": 1.6129032258064513,
+    "model_freq": 1.575,
+    "subtype": "lpd",
+    "mat_file": "pat0090_seg002.mat",
+    "patient_id": "pat0090"
+  },
+  "pat0090_seg003": {
+    "action": "accept",
+    "freq": 1.5267175572519098,
+    "model_freq": 1.55,
+    "subtype": "lpd",
+    "mat_file": "pat0090_seg003.mat",
+    "patient_id": "pat0090"
+  },
+  "pat0090_seg004": {
+    "action": "accept",
+    "freq": 1.6129032258064513,
+    "model_freq": 1.563,
+    "subtype": "lpd",
+    "mat_file": "pat0090_seg004.mat",
+    "patient_id": "pat0090"
+  },
+  "pat0090_seg005": {
+    "action": "accept",
+    "freq": 1.5999999999999996,
+    "model_freq": 1.575,
+    "subtype": "lpd",
+    "mat_file": "pat0090_seg005.mat",
+    "patient_id": "pat0090"
+  },
+  "pat0090_seg006": {
+    "action": "accept",
+    "freq": 1.5503875968992258,
+    "model_freq": 1.6,
+    "subtype": "lpd",
+    "mat_file": "pat0090_seg006.mat",
+    "patient_id": "pat0090"
+  },
+  "pat0090_seg007": {
+    "action": "accept",
+    "freq": 1.5037593984962385,
+    "model_freq": 1.653,
+    "subtype": "lpd",
+    "mat_file": "pat0090_seg007.mat",
+    "patient_id": "pat0090"
+  },
+  "pat0090_seg008": {
+    "action": "accept",
+    "freq": 1.5384615384615377,
+    "model_freq": 1.594,
+    "subtype": "lpd",
+    "mat_file": "pat0090_seg008.mat",
+    "patient_id": "pat0090"
+  },
+  "pat0090_seg009": {
+    "action": "accept",
+    "freq": 1.6129032258064537,
+    "model_freq": 1.6,
+    "subtype": "lpd",
+    "mat_file": "pat0090_seg009.mat",
+    "patient_id": "pat0090"
+  },
+  "pat0103_seg000": {
+    "action": "accept",
+    "freq": 1.5267175572519083,
+    "model_freq": 1.533,
+    "subtype": "lpd",
+    "mat_file": "pat0103_seg000.mat",
+    "patient_id": "pat0103"
+  },
+  "pat0103_seg001": {
+    "action": "accept",
+    "freq": 1.0317667322349182,
+    "model_freq": 1.515,
+    "subtype": "lpd",
+    "mat_file": "pat0103_seg001.mat",
+    "patient_id": "pat0103"
+  },
+  "pat0103_seg002": {
+    "action": "accept",
+    "freq": 1.4492753623188401,
+    "model_freq": 1.22,
+    "subtype": "lpd",
+    "mat_file": "pat0103_seg002.mat",
+    "patient_id": "pat0103"
+  },
+  "pat0103_seg004": {
+    "action": "accept",
+    "freq": 1.2903225806451615,
+    "model_freq": 1.235,
+    "subtype": "lpd",
+    "mat_file": "pat0103_seg004.mat",
+    "patient_id": "pat0103"
+  },
+  "pat0103_seg005": {
+    "action": "accept",
+    "freq": 1.3888888888888886,
+    "model_freq": 1.316,
+    "subtype": "lpd",
+    "mat_file": "pat0103_seg005.mat",
+    "patient_id": "pat0103"
+  },
+  "pat0103_seg006": {
+    "action": "accept",
+    "freq": 1.298701298701298,
+    "model_freq": 1.307,
+    "subtype": "lpd",
+    "mat_file": "pat0103_seg006.mat",
+    "patient_id": "pat0103"
+  },
+  "pat0103_seg007": {
+    "action": "accept",
+    "freq": 1.3422818791946307,
+    "model_freq": 1.394,
+    "subtype": "lpd",
+    "mat_file": "pat0103_seg007.mat",
+    "patient_id": "pat0103"
+  },
+  "pat0103_seg008": {
+    "action": "accept",
+    "freq": 1.3071895424836593,
+    "model_freq": 1.311,
+    "subtype": "lpd",
+    "mat_file": "pat0103_seg008.mat",
+    "patient_id": "pat0103"
+  },
+  "pat0103_seg009": {
+    "action": "accept",
+    "freq": 1.2903225806451621,
+    "model_freq": 1.282,
+    "subtype": "lpd",
+    "mat_file": "pat0103_seg009.mat",
+    "patient_id": "pat0103"
+  },
+  "pat0103_seg010": {
+    "action": "accept",
+    "freq": 1.1627906976744182,
+    "model_freq": 1.282,
+    "subtype": "lpd",
+    "mat_file": "pat0103_seg010.mat",
+    "patient_id": "pat0103"
+  },
+  "pat0106_seg000": {
+    "action": "accept",
+    "freq": 1.050268580133087,
+    "model_freq": 1.003,
+    "subtype": "lpd",
+    "mat_file": "pat0106_seg000.mat",
+    "patient_id": "pat0106"
+  },
+  "pat0106_seg001": {
+    "action": "accept",
+    "freq": 1.428571428571429,
+    "model_freq": 1.563,
+    "subtype": "lpd",
+    "mat_file": "pat0106_seg001.mat",
+    "patient_id": "pat0106"
+  },
+  "pat0106_seg002": {
+    "action": "accept",
+    "freq": 1.724137931034485,
+    "model_freq": 1.695,
+    "subtype": "lpd",
+    "mat_file": "pat0106_seg002.mat",
+    "patient_id": "pat0106"
+  },
+  "pat0106_seg004": {
+    "action": "accept",
+    "freq": 0.9132420091324199,
+    "model_freq": 1.064,
+    "subtype": "lpd",
+    "mat_file": "pat0106_seg004.mat",
+    "patient_id": "pat0106"
+  },
+  "pat0111_seg000": {
+    "action": "accept",
+    "freq": 0.8603448275862083,
+    "model_freq": 1.365,
+    "subtype": "lpd",
+    "mat_file": "pat0111_seg000.mat",
+    "patient_id": "pat0111"
+  },
+  "abn186_seg001": {
+    "action": "accept",
+    "freq": 1.2242990654205606,
+    "model_freq": 1.639,
+    "subtype": "gpd",
+    "mat_file": "abn186_seg001.mat",
+    "patient_id": "abn186"
+  },
+  "abn186_seg002": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.299,
+    "subtype": "gpd",
+    "mat_file": "abn186_seg002.mat",
+    "patient_id": "abn186"
+  },
+  "abn186_seg003": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.084,
+    "subtype": "gpd",
+    "mat_file": "abn186_seg003.mat",
+    "patient_id": "abn186"
+  },
+  "abn186_seg004": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 0.971,
+    "subtype": "gpd",
+    "mat_file": "abn186_seg004.mat",
+    "patient_id": "abn186"
+  },
+  "abn186_seg005": {
+    "action": "accept",
+    "freq": 0.6866547856169408,
+    "model_freq": 1.058,
+    "subtype": "gpd",
+    "mat_file": "abn186_seg005.mat",
+    "patient_id": "abn186"
+  },
+  "abn186_seg006": {
+    "action": "accept",
+    "freq": 1.3422818791946314,
+    "model_freq": 1.166,
+    "subtype": "gpd",
+    "mat_file": "abn186_seg006.mat",
+    "patient_id": "abn186"
+  },
+  "abn186_seg007": {
+    "action": "accept",
+    "freq": 0.36429872495446264,
+    "model_freq": 1.22,
+    "subtype": "gpd",
+    "mat_file": "abn186_seg007.mat",
+    "patient_id": "abn186"
+  },
+  "abn186_seg008": {
+    "action": "accept",
+    "freq": 0.5970149253731343,
+    "model_freq": 1.156,
+    "subtype": "gpd",
+    "mat_file": "abn186_seg008.mat",
+    "patient_id": "abn186"
+  },
+  "abn186_seg009": {
+    "action": "reject",
+    "freq": null,
+    "model_freq": 1.262,
+    "subtype": "gpd",
+    "mat_file": "abn186_seg009.mat",
+    "patient_id": "abn186"
+  },
+  "abn2147_seg000": {
+    "action": "accept",
+    "freq": 1.3245033112582782,
+    "model_freq": 1.55,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg000.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg001": {
+    "action": "accept",
+    "freq": 1.3071895424836606,
+    "model_freq": 1.46,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg001.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg002": {
+    "action": "accept",
+    "freq": 1.6528925619834711,
+    "model_freq": 1.695,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg002.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg003": {
+    "action": "accept",
+    "freq": 1.5624999999999987,
+    "model_freq": 1.449,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg003.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg004": {
+    "action": "accept",
+    "freq": 1.3071895424836606,
+    "model_freq": 1.136,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg004.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg005": {
+    "action": "accept",
+    "freq": 1.1560693641618494,
+    "model_freq": 1.37,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg005.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg006": {
+    "action": "accept",
+    "freq": 1.3245033112582782,
+    "model_freq": 1.413,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg006.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg007": {
+    "action": "accept",
+    "freq": 1.3157894736842108,
+    "model_freq": 1.46,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg007.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg008": {
+    "action": "accept",
+    "freq": 1.6949152542372885,
+    "model_freq": 1.702,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg008.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg009": {
+    "action": "accept",
+    "freq": 1.4184397163120568,
+    "model_freq": 1.423,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg009.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg010": {
+    "action": "accept",
+    "freq": 0.9240740740740743,
+    "model_freq": 1.681,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg010.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg011": {
+    "action": "accept",
+    "freq": 1.16046511627907,
+    "model_freq": 1.639,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg011.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg012": {
+    "action": "accept",
+    "freq": 1.298701298701298,
+    "model_freq": 1.258,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg012.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg013": {
+    "action": "accept",
+    "freq": 1.273885350318471,
+    "model_freq": 1.127,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg013.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg014": {
+    "action": "accept",
+    "freq": 1,
+    "model_freq": 0.98,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg014.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg015": {
+    "action": "accept",
+    "freq": 1.5151515151515158,
+    "model_freq": 1.471,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg015.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg016": {
+    "action": "accept",
+    "freq": 1.273885350318471,
+    "model_freq": 1.356,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg016.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg017": {
+    "action": "accept",
+    "freq": 1.360544217687075,
+    "model_freq": 1.408,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg017.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg018": {
+    "action": "accept",
+    "freq": 1.6129032258064513,
+    "model_freq": 1.674,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg018.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg019": {
+    "action": "accept",
+    "freq": 1.0928961748633879,
+    "model_freq": 1.227,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg019.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg020": {
+    "action": "accept",
+    "freq": 1.324503311258278,
+    "model_freq": 1.212,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg020.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg021": {
+    "action": "accept",
+    "freq": 0.8888888888888888,
+    "model_freq": 1,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg021.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg022": {
+    "action": "accept",
+    "freq": 0.8547008547008548,
+    "model_freq": 0.926,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg022.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg023": {
+    "action": "accept",
+    "freq": 1.4492753623188397,
+    "model_freq": 1.46,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg023.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg024": {
+    "action": "accept",
+    "freq": 1.5037593984962405,
+    "model_freq": 1.449,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg024.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg025": {
+    "action": "accept",
+    "freq": 1.5037593984962405,
+    "model_freq": 1.487,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg025.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg026": {
+    "action": "accept",
+    "freq": 1.5384615384615388,
+    "model_freq": 1.408,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg026.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg027": {
+    "action": "accept",
+    "freq": 1.5037593984962385,
+    "model_freq": 1.504,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg027.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg028": {
+    "action": "accept",
+    "freq": 1.2269938650306749,
+    "model_freq": 1.439,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg028.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg029": {
+    "action": "accept",
+    "freq": 1.06951871657754,
+    "model_freq": 1.325,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg029.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg030": {
+    "action": "accept",
+    "freq": 1.2422360248447206,
+    "model_freq": 1.471,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg030.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg031": {
+    "action": "accept",
+    "freq": 1.5748031496062986,
+    "model_freq": 1.646,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg031.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg032": {
+    "action": "accept",
+    "freq": 1.6393442622950811,
+    "model_freq": 1.747,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg032.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg033": {
+    "action": "accept",
+    "freq": 1.6260162601626016,
+    "model_freq": 1.695,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg033.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg034": {
+    "action": "accept",
+    "freq": 1.1363636363636365,
+    "model_freq": 1.389,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg034.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg035": {
+    "action": "accept",
+    "freq": 1.1428571428571428,
+    "model_freq": 1.282,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg035.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg036": {
+    "action": "accept",
+    "freq": 1.0695187165775406,
+    "model_freq": 1.026,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg036.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg037": {
+    "action": "accept",
+    "freq": 1.0989010989010988,
+    "model_freq": 1.208,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg037.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg038": {
+    "action": "accept",
+    "freq": 1.176470588235294,
+    "model_freq": 1.316,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg038.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg039": {
+    "action": "accept",
+    "freq": 1.1976047904191618,
+    "model_freq": 1.242,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg039.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg040": {
+    "action": "accept",
+    "freq": 1.0869565217391306,
+    "model_freq": 1.093,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg040.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg041": {
+    "action": "accept",
+    "freq": 1.1976047904191618,
+    "model_freq": 1.136,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg041.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg042": {
+    "action": "accept",
+    "freq": 0.8928571428571428,
+    "model_freq": 1.026,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg042.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg043": {
+    "action": "accept",
+    "freq": 1.5384615384615377,
+    "model_freq": 1.521,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg043.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg044": {
+    "action": "accept",
+    "freq": 1.0050251256281408,
+    "model_freq": 1.081,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg044.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg045": {
+    "action": "accept",
+    "freq": 1.2987012987012987,
+    "model_freq": 1.515,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg045.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg046": {
+    "action": "accept",
+    "freq": 1.204819277108435,
+    "model_freq": 1.556,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg046.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg047": {
+    "action": "accept",
+    "freq": 1.4184397163120566,
+    "model_freq": 1.544,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg047.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg048": {
+    "action": "accept",
+    "freq": 1.4084507042253522,
+    "model_freq": 1.29,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg048.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg049": {
+    "action": "accept",
+    "freq": 1.0309278350515467,
+    "model_freq": 1.07,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg049.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg050": {
+    "action": "accept",
+    "freq": 1.2269938650306755,
+    "model_freq": 1.361,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg050.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg051": {
+    "action": "accept",
+    "freq": 1.0309278350515465,
+    "model_freq": 1.216,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg051.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg052": {
+    "action": "accept",
+    "freq": 0.9302325581395348,
+    "model_freq": 1.22,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg052.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg053": {
+    "action": "accept",
+    "freq": 0.7142857142857141,
+    "model_freq": 0.832,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg053.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg054": {
+    "action": "accept",
+    "freq": 1.0416666666666667,
+    "model_freq": 1.067,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg054.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg055": {
+    "action": "accept",
+    "freq": 1.398601398601399,
+    "model_freq": 1.399,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg055.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg056": {
+    "action": "accept",
+    "freq": 1.36986301369863,
+    "model_freq": 1.307,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg056.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg057": {
+    "action": "accept",
+    "freq": 1.1049723756906085,
+    "model_freq": 1.325,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg057.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg058": {
+    "action": "accept",
+    "freq": 1.3071895424836606,
+    "model_freq": 1.504,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg058.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg059": {
+    "action": "accept",
+    "freq": 1.0416666666666667,
+    "model_freq": 1.361,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg059.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg060": {
+    "action": "accept",
+    "freq": 1.0416666666666665,
+    "model_freq": 1.365,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg060.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg061": {
+    "action": "accept",
+    "freq": 1.2269938650306749,
+    "model_freq": 1.389,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg061.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg062": {
+    "action": "accept",
+    "freq": 1.0416666666666667,
+    "model_freq": 1.311,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg062.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg063": {
+    "action": "accept",
+    "freq": 1.6393442622950811,
+    "model_freq": 1.626,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg063.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg064": {
+    "action": "accept",
+    "freq": 1.8018018018018027,
+    "model_freq": 1.653,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg064.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg065": {
+    "action": "accept",
+    "freq": 0.9661835748792269,
+    "model_freq": 1.375,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg065.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg066": {
+    "action": "accept",
+    "freq": 0.8910714285714284,
+    "model_freq": 1.6,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg066.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg067": {
+    "action": "accept",
+    "freq": 0.8754385964912277,
+    "model_freq": 1.6,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg067.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg068": {
+    "action": "accept",
+    "freq": 1.42857142857143,
+    "model_freq": 1.6,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg068.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg069": {
+    "action": "accept",
+    "freq": 1.4184397163120566,
+    "model_freq": 1.606,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg069.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg070": {
+    "action": "accept",
+    "freq": 1.4084507042253522,
+    "model_freq": 1.439,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg070.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg071": {
+    "action": "accept",
+    "freq": 2.626315789473677,
+    "model_freq": 1.653,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg071.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg072": {
+    "action": "accept",
+    "freq": 1.5503875968992238,
+    "model_freq": 1.709,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg072.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg073": {
+    "action": "accept",
+    "freq": 0.9980000000000003,
+    "model_freq": 1.633,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg073.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg074": {
+    "action": "accept",
+    "freq": 1.1976047904191618,
+    "model_freq": 1.299,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg074.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg075": {
+    "action": "accept",
+    "freq": 1.1604651162790691,
+    "model_freq": 1.439,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg075.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg076": {
+    "action": "accept",
+    "freq": 1.4492753623188417,
+    "model_freq": 1.439,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg076.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg077": {
+    "action": "accept",
+    "freq": 1.4705882352941182,
+    "model_freq": 1.465,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg077.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg078": {
+    "action": "accept",
+    "freq": 1.515151515151515,
+    "model_freq": 1.681,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg078.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg079": {
+    "action": "accept",
+    "freq": 1.4676470588235295,
+    "model_freq": 1.493,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg079.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg080": {
+    "action": "accept",
+    "freq": 1.01010101010101,
+    "model_freq": 1.361,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg080.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg081": {
+    "action": "accept",
+    "freq": 1.1363636363636365,
+    "model_freq": 1.347,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg081.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg082": {
+    "action": "accept",
+    "freq": 1.8181818181818188,
+    "model_freq": 1.633,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg082.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg083": {
+    "action": "accept",
+    "freq": 1.8181818181818181,
+    "model_freq": 1.66,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg083.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg084": {
+    "action": "accept",
+    "freq": 1.290322580645161,
+    "model_freq": 1.46,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg084.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg085": {
+    "action": "accept",
+    "freq": 1.398601398601399,
+    "model_freq": 1.626,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg085.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg086": {
+    "action": "accept",
+    "freq": 1.4705882352941182,
+    "model_freq": 1.521,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg086.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg087": {
+    "action": "accept",
+    "freq": 1.4492753623188408,
+    "model_freq": 1.449,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg087.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg088": {
+    "action": "accept",
+    "freq": 1.3605442176870743,
+    "model_freq": 1.515,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg088.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg089": {
+    "action": "accept",
+    "freq": 1.1695906432748533,
+    "model_freq": 1.408,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg089.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg090": {
+    "action": "accept",
+    "freq": 1.162790697674417,
+    "model_freq": 1.183,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg090.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg091": {
+    "action": "accept",
+    "freq": 1.1363636363636365,
+    "model_freq": 1.351,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg091.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg092": {
+    "action": "accept",
+    "freq": 0.9569377990430623,
+    "model_freq": 1.258,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg092.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg093": {
+    "action": "accept",
+    "freq": 1.0617021276595737,
+    "model_freq": 1.27,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg093.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg094": {
+    "action": "accept",
+    "freq": 1.4814814814814818,
+    "model_freq": 1.587,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg094.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg095": {
+    "action": "accept",
+    "freq": 1.6260162601626011,
+    "model_freq": 1.724,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg095.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg096": {
+    "action": "accept",
+    "freq": 1.265822784810128,
+    "model_freq": 1.361,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg096.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg097": {
+    "action": "accept",
+    "freq": 1.0471204188481675,
+    "model_freq": 1.266,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg097.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg098": {
+    "action": "accept",
+    "freq": 1.4492753623188408,
+    "model_freq": 1.413,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg098.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg099": {
+    "action": "accept",
+    "freq": 1.3888888888888886,
+    "model_freq": 1.361,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg099.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg100": {
+    "action": "accept",
+    "freq": 1.388888888888889,
+    "model_freq": 1.786,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg100.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg101": {
+    "action": "accept",
+    "freq": 1.7094017094017089,
+    "model_freq": 1.754,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg101.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg102": {
+    "action": "accept",
+    "freq": 1.785714285714284,
+    "model_freq": 1.556,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg102.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg103": {
+    "action": "accept",
+    "freq": 1.3422818791946307,
+    "model_freq": 1.361,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg103.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg104": {
+    "action": "accept",
+    "freq": 1.2987012987012987,
+    "model_freq": 1.235,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg104.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg105": {
+    "action": "accept",
+    "freq": 1.3422818791946312,
+    "model_freq": 1.18,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg105.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg106": {
+    "action": "accept",
+    "freq": 1.369863013698631,
+    "model_freq": 1.429,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg106.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg107": {
+    "action": "accept",
+    "freq": 1.379310344827587,
+    "model_freq": 1.399,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg107.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg108": {
+    "action": "accept",
+    "freq": 1.492537313432836,
+    "model_freq": 1.869,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg108.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg109": {
+    "action": "accept",
+    "freq": 1.5503875968992242,
+    "model_freq": 1.66,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg109.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg110": {
+    "action": "accept",
+    "freq": 1.0752688172043015,
+    "model_freq": 1.311,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg110.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg111": {
+    "action": "accept",
+    "freq": 0.9240740740740735,
+    "model_freq": 1.333,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg111.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg112": {
+    "action": "accept",
+    "freq": 1.0183673469387762,
+    "model_freq": 1.418,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg112.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg113": {
+    "action": "accept",
+    "freq": 1.063829787234042,
+    "model_freq": 1.235,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg113.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg114": {
+    "action": "accept",
+    "freq": 1.4814814814814814,
+    "model_freq": 1.538,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg114.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg115": {
+    "action": "accept",
+    "freq": 1.3071895424836593,
+    "model_freq": 1.329,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg115.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg116": {
+    "action": "accept",
+    "freq": 1.4705882352941182,
+    "model_freq": 1.37,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg116.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg117": {
+    "action": "accept",
+    "freq": 1.3245033112582776,
+    "model_freq": 1.356,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg117.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg118": {
+    "action": "accept",
+    "freq": 1.2048192771084336,
+    "model_freq": 1.455,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg118.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg119": {
+    "action": "accept",
+    "freq": 0.9240740740740743,
+    "model_freq": 1.361,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg119.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg120": {
+    "action": "accept",
+    "freq": 0.9756097560975606,
+    "model_freq": 1.124,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg120.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg121": {
+    "action": "accept",
+    "freq": 1.1976047904191618,
+    "model_freq": 1.307,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg121.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg122": {
+    "action": "accept",
+    "freq": 1.3888888888888893,
+    "model_freq": 1.487,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg122.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg123": {
+    "action": "accept",
+    "freq": 1.4184397163120566,
+    "model_freq": 1.471,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg123.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg124": {
+    "action": "accept",
+    "freq": 1.4388489208633088,
+    "model_freq": 1.423,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg124.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg125": {
+    "action": "accept",
+    "freq": 1.129943502824859,
+    "model_freq": 1.418,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg125.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg126": {
+    "action": "accept",
+    "freq": 1.0695187165775406,
+    "model_freq": 1.449,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg126.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg127": {
+    "action": "accept",
+    "freq": 1.0869565217391295,
+    "model_freq": 1.333,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg127.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg128": {
+    "action": "accept",
+    "freq": 0.8298755186721991,
+    "model_freq": 1.067,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg128.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg129": {
+    "action": "accept",
+    "freq": 1.6528925619834722,
+    "model_freq": 1.429,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg129.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg130": {
+    "action": "accept",
+    "freq": 1.6666666666666676,
+    "model_freq": 1.695,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg130.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg131": {
+    "action": "accept",
+    "freq": 0.9979999999999999,
+    "model_freq": 1.55,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg131.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg132": {
+    "action": "accept",
+    "freq": 1.4705882352941182,
+    "model_freq": 1.527,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg132.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg133": {
+    "action": "accept",
+    "freq": 0.7796874999999998,
+    "model_freq": 1.361,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg133.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg134": {
+    "action": "accept",
+    "freq": 1.1088888888888888,
+    "model_freq": 1.538,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg134.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg135": {
+    "action": "accept",
+    "freq": 1.3513513513513518,
+    "model_freq": 1.333,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg135.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg136": {
+    "action": "accept",
+    "freq": 1.247499999999996,
+    "model_freq": 1.465,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg136.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg137": {
+    "action": "accept",
+    "freq": 1.2170731707317064,
+    "model_freq": 1.389,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg137.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg138": {
+    "action": "accept",
+    "freq": 1.515151515151515,
+    "model_freq": 1.515,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg138.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg139": {
+    "action": "accept",
+    "freq": 1.5384615384615377,
+    "model_freq": 1.527,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg139.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg140": {
+    "action": "accept",
+    "freq": 1.4388489208633088,
+    "model_freq": 1.394,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg140.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg141": {
+    "action": "accept",
+    "freq": 1.1299435028248588,
+    "model_freq": 1.208,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg141.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg142": {
+    "action": "accept",
+    "freq": 1.3157894736842108,
+    "model_freq": 1.227,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg142.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg143": {
+    "action": "accept",
+    "freq": 1.1049723756906074,
+    "model_freq": 1.235,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg143.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg144": {
+    "action": "accept",
+    "freq": 1.538461538461538,
+    "model_freq": 1.521,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg144.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg145": {
+    "action": "accept",
+    "freq": 1.7857142857142856,
+    "model_freq": 1.724,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg145.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg146": {
+    "action": "accept",
+    "freq": 1.6528925619834747,
+    "model_freq": 1.739,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg146.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg147": {
+    "action": "accept",
+    "freq": 1.3245033112582782,
+    "model_freq": 1.294,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg147.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg148": {
+    "action": "accept",
+    "freq": 1.4084507042253522,
+    "model_freq": 1.55,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg148.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg149": {
+    "action": "accept",
+    "freq": 1.1764705882352942,
+    "model_freq": 1.212,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg149.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg150": {
+    "action": "accept",
+    "freq": 1.2820512820512824,
+    "model_freq": 1.307,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg150.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg151": {
+    "action": "accept",
+    "freq": 1.2048192771084323,
+    "model_freq": 1.455,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg151.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg152": {
+    "action": "accept",
+    "freq": 1.129943502824859,
+    "model_freq": 1.235,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg152.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg153": {
+    "action": "accept",
+    "freq": 1.3422818791946323,
+    "model_freq": 1.325,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg153.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg154": {
+    "action": "accept",
+    "freq": 1.2903225806451621,
+    "model_freq": 1.338,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg154.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg155": {
+    "action": "accept",
+    "freq": 1.2121212121212133,
+    "model_freq": 1.333,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg155.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg156": {
+    "action": "accept",
+    "freq": 1.2195121951219514,
+    "model_freq": 1.365,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg156.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg157": {
+    "action": "accept",
+    "freq": 0.8264462809917352,
+    "model_freq": 1.562,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg157.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg158": {
+    "action": "accept",
+    "freq": 1.8181818181818188,
+    "model_freq": 1.653,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg158.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg159": {
+    "action": "accept",
+    "freq": 1.129943502824859,
+    "model_freq": 1.242,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg159.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg160": {
+    "action": "accept",
+    "freq": 1.176470588235294,
+    "model_freq": 1.19,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg160.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg161": {
+    "action": "accept",
+    "freq": 1.0309278350515463,
+    "model_freq": 1.17,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg161.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg162": {
+    "action": "accept",
+    "freq": 1.063829787234042,
+    "model_freq": 1.25,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg162.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg163": {
+    "action": "accept",
+    "freq": 1.5151515151515158,
+    "model_freq": 1.389,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg163.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg164": {
+    "action": "accept",
+    "freq": 1.2903225806451606,
+    "model_freq": 1.342,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg164.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg165": {
+    "action": "accept",
+    "freq": 1.4492753623188417,
+    "model_freq": 1.338,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg165.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg166": {
+    "action": "accept",
+    "freq": 1.058201058201058,
+    "model_freq": 1.258,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg166.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg167": {
+    "action": "accept",
+    "freq": 1.0309278350515467,
+    "model_freq": 1.201,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg167.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg168": {
+    "action": "accept",
+    "freq": 1.098901098901099,
+    "model_freq": 1.231,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg168.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg169": {
+    "action": "accept",
+    "freq": 1.0309278350515465,
+    "model_freq": 1.208,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg169.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg170": {
+    "action": "accept",
+    "freq": 1,
+    "model_freq": 1.316,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg170.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg171": {
+    "action": "accept",
+    "freq": 1.1111111111111118,
+    "model_freq": 1.223,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg171.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg172": {
+    "action": "accept",
+    "freq": 1.3245033112582782,
+    "model_freq": 1.274,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg172.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg173": {
+    "action": "accept",
+    "freq": 0.7782101167315185,
+    "model_freq": 0.993,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg173.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg174": {
+    "action": "accept",
+    "freq": 1.1111111111111118,
+    "model_freq": 0.897,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg174.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg175": {
+    "action": "accept",
+    "freq": 1.1695906432748533,
+    "model_freq": 1.17,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg175.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg176": {
+    "action": "accept",
+    "freq": 1.1627906976744193,
+    "model_freq": 1.176,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg176.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg177": {
+    "action": "accept",
+    "freq": 1.1627906976744187,
+    "model_freq": 1.216,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg177.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg178": {
+    "action": "accept",
+    "freq": 0.8163265306122451,
+    "model_freq": 1.07,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg178.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg179": {
+    "action": "accept",
+    "freq": 0.9478672985781993,
+    "model_freq": 1.117,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg179.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg180": {
+    "action": "accept",
+    "freq": 0.9478672985781993,
+    "model_freq": 1.099,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg180.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg181": {
+    "action": "accept",
+    "freq": 0.9240740740740743,
+    "model_freq": 0.926,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg181.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg182": {
+    "action": "accept",
+    "freq": 1.0752688172043003,
+    "model_freq": 1.509,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg182.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg183": {
+    "action": "accept",
+    "freq": 1.1764705882352935,
+    "model_freq": 1.439,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg183.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg184": {
+    "action": "accept",
+    "freq": 0.9615384615384623,
+    "model_freq": 1.32,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg184.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg185": {
+    "action": "accept",
+    "freq": 1.282051282051283,
+    "model_freq": 1.465,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg185.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg186": {
+    "action": "accept",
+    "freq": 1.6096774193548353,
+    "model_freq": 1.786,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg186.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg187": {
+    "action": "accept",
+    "freq": 1.6129032258064513,
+    "model_freq": 1.6,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg187.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg188": {
+    "action": "accept",
+    "freq": 1.6393442622950811,
+    "model_freq": 1.429,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg188.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg189": {
+    "action": "accept",
+    "freq": 1.1880952380952374,
+    "model_freq": 1.471,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg189.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg190": {
+    "action": "accept",
+    "freq": 1.273885350318471,
+    "model_freq": 1.351,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg190.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg191": {
+    "action": "accept",
+    "freq": 1.183431952662721,
+    "model_freq": 1.146,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg191.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg192": {
+    "action": "accept",
+    "freq": 1.388888888888891,
+    "model_freq": 1.235,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg192.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg193": {
+    "action": "accept",
+    "freq": 1.960784313725491,
+    "model_freq": 1.639,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg193.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg194": {
+    "action": "accept",
+    "freq": 1.0050251256281397,
+    "model_freq": 1.294,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg194.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg195": {
+    "action": "accept",
+    "freq": 1.0362694300518127,
+    "model_freq": 1.246,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg195.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg196": {
+    "action": "accept",
+    "freq": 0.9174311926605506,
+    "model_freq": 1.208,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg196.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg197": {
+    "action": "accept",
+    "freq": 0.7447761194029855,
+    "model_freq": 1.176,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg197.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg198": {
+    "action": "accept",
+    "freq": 1.0695187165775406,
+    "model_freq": 1.46,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg198.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg199": {
+    "action": "accept",
+    "freq": 1.06951871657754,
+    "model_freq": 1.375,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg199.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg200": {
+    "action": "accept",
+    "freq": 1.1764705882352946,
+    "model_freq": 1.351,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg200.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg201": {
+    "action": "accept",
+    "freq": 1.1088888888888875,
+    "model_freq": 1.439,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg201.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg202": {
+    "action": "accept",
+    "freq": 1.1111111111111118,
+    "model_freq": 1.149,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg202.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg203": {
+    "action": "accept",
+    "freq": 1.1173184357541899,
+    "model_freq": 1.619,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg203.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg204": {
+    "action": "accept",
+    "freq": 1.1363636363636354,
+    "model_freq": 1.246,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg204.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg205": {
+    "action": "accept",
+    "freq": 1.0183673469387757,
+    "model_freq": 1.17,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg205.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg206": {
+    "action": "accept",
+    "freq": 1.1363636363636365,
+    "model_freq": 1.299,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg206.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg207": {
+    "action": "accept",
+    "freq": 1.2170731707317057,
+    "model_freq": 1.299,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg207.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg209": {
+    "action": "accept",
+    "freq": 0.8810572687224671,
+    "model_freq": 1.09,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg209.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg210": {
+    "action": "accept",
+    "freq": 0.8438818565400846,
+    "model_freq": 0.962,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg210.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg211": {
+    "action": "accept",
+    "freq": 1.2048192771084336,
+    "model_freq": 1.556,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg211.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg212": {
+    "action": "accept",
+    "freq": 1.398601398601399,
+    "model_freq": 1.55,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg212.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg213": {
+    "action": "accept",
+    "freq": 1.3861111111111115,
+    "model_freq": 1.176,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg213.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg214": {
+    "action": "accept",
+    "freq": 1.398601398601399,
+    "model_freq": 1.146,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg214.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg215": {
+    "action": "accept",
+    "freq": 1.6806722689075637,
+    "model_freq": 1.681,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg215.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg216": {
+    "action": "accept",
+    "freq": 1.7857142857142856,
+    "model_freq": 1.702,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg216.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg217": {
+    "action": "accept",
+    "freq": 0.875438596491228,
+    "model_freq": 1.439,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg217.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg218": {
+    "action": "accept",
+    "freq": 1.2658227848101264,
+    "model_freq": 1.299,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg218.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg219": {
+    "action": "accept",
+    "freq": 1.515151515151517,
+    "model_freq": 1.449,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg219.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg220": {
+    "action": "accept",
+    "freq": 1.5267175572519078,
+    "model_freq": 1.538,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg220.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg221": {
+    "action": "accept",
+    "freq": 1.1834319526627222,
+    "model_freq": 1.325,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg221.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg222": {
+    "action": "accept",
+    "freq": 1.3605442176870746,
+    "model_freq": 1.476,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg222.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg223": {
+    "action": "accept",
+    "freq": 1.0395833333333335,
+    "model_freq": 1.653,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg223.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg224": {
+    "action": "accept",
+    "freq": 0.8048387096774194,
+    "model_freq": 1.351,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg224.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg225": {
+    "action": "accept",
+    "freq": 1.4084507042253522,
+    "model_freq": 1.55,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg225.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg226": {
+    "action": "accept",
+    "freq": 1.2121212121212133,
+    "model_freq": 1.594,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg226.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg227": {
+    "action": "accept",
+    "freq": 1.3157894736842108,
+    "model_freq": 1.606,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg227.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg228": {
+    "action": "accept",
+    "freq": 1.4084507042253522,
+    "model_freq": 1.429,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg228.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg229": {
+    "action": "accept",
+    "freq": 1.273885350318471,
+    "model_freq": 1.227,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg229.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg230": {
+    "action": "accept",
+    "freq": 1.1560693641618498,
+    "model_freq": 1.17,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg230.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg231": {
+    "action": "accept",
+    "freq": 1.0101010101010108,
+    "model_freq": 1.12,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg231.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg232": {
+    "action": "accept",
+    "freq": 0.9302325581395348,
+    "model_freq": 1.14,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg232.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg233": {
+    "action": "accept",
+    "freq": 1.492537313432836,
+    "model_freq": 1.481,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg233.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg234": {
+    "action": "accept",
+    "freq": 1.6528925619834722,
+    "model_freq": 1.562,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg234.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2147_seg235": {
+    "action": "accept",
+    "freq": 1.7094017094017095,
+    "model_freq": 1.527,
+    "subtype": "gpd",
+    "mat_file": "abn2147_seg235.mat",
+    "patient_id": "abn2147"
+  },
+  "abn2336_seg001": {
+    "action": "accept",
+    "freq": 2.268181818181818,
+    "model_freq": 2.395,
+    "subtype": "gpd",
+    "mat_file": "abn2336_seg001.mat",
+    "patient_id": "abn2336"
+  },
+  "abn2336_seg002": {
+    "action": "accept",
+    "freq": 2.4390243902439015,
+    "model_freq": 2.326,
+    "subtype": "gpd",
+    "mat_file": "abn2336_seg002.mat",
+    "patient_id": "abn2336"
+  },
+  "abn4423_seg001": {
+    "action": "accept",
+    "freq": 1.2578616352201244,
+    "model_freq": 1.216,
+    "subtype": "gpd",
+    "mat_file": "abn4423_seg001.mat",
+    "patient_id": "abn4423"
+  },
+  "abn4423_seg002": {
+    "action": "accept",
+    "freq": 1.3157894736842102,
+    "model_freq": 1.25,
+    "subtype": "gpd",
+    "mat_file": "abn4423_seg002.mat",
+    "patient_id": "abn4423"
+  },
+  "abn4423_seg003": {
+    "action": "accept",
+    "freq": 1.2195121951219514,
+    "model_freq": 1.242,
+    "subtype": "gpd",
+    "mat_file": "abn4423_seg003.mat",
+    "patient_id": "abn4423"
+  },
+  "abn4423_seg004": {
+    "action": "accept",
+    "freq": 1.2903225806451606,
+    "model_freq": 1.235,
+    "subtype": "gpd",
+    "mat_file": "abn4423_seg004.mat",
+    "patient_id": "abn4423"
+  },
+  "abn4423_seg005": {
+    "action": "accept",
+    "freq": 1.2345679012345685,
+    "model_freq": 1.22,
+    "subtype": "gpd",
+    "mat_file": "abn4423_seg005.mat",
+    "patient_id": "abn4423"
+  },
+  "abn4423_seg006": {
+    "action": "accept",
+    "freq": 1.2738853503184717,
+    "model_freq": 1.311,
+    "subtype": "gpd",
+    "mat_file": "abn4423_seg006.mat",
+    "patient_id": "abn4423"
+  },
+  "abn4423_seg007": {
+    "action": "accept",
+    "freq": 1.3513513513513513,
+    "model_freq": 1.242,
+    "subtype": "gpd",
+    "mat_file": "abn4423_seg007.mat",
+    "patient_id": "abn4423"
+  },
+  "abn4423_seg008": {
+    "action": "accept",
+    "freq": 1.2820512820512817,
+    "model_freq": 1.223,
+    "subtype": "gpd",
+    "mat_file": "abn4423_seg008.mat",
+    "patient_id": "abn4423"
+  },
+  "abn4423_seg009": {
+    "action": "accept",
+    "freq": 1.36986301369863,
+    "model_freq": 1.274,
+    "subtype": "gpd",
+    "mat_file": "abn4423_seg009.mat",
+    "patient_id": "abn4423"
+  }
+}
