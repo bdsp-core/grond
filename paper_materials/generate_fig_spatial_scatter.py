@@ -184,26 +184,32 @@ def main():
                 ax.text(0.5, 0.5, 'No data', ha='center', va='center', transform=ax.transAxes)
                 continue
 
-            rng = np.random.RandomState(42)
-            jitter_scale = 0.015
+            # Count non-zero raters per segment for multi/single classification
+            for x in d:
+                x['n_valid_raters'] = len(x['rater_vals'])
 
-            # Plot per-rater dots: each segment gets up to 3 dots (one per expert)
-            n_dots = 0
-            for rater in RATERS:
-                gt_vals, pr_vals = [], []
-                for x in d:
-                    if rater in x['rater_vals']:
-                        gt_vals.append(x['rater_vals'][rater])
-                        pr_vals.append(x[pred_key])
-                if not gt_vals:
-                    continue
-                gt_j = np.array(gt_vals) + rng.uniform(-jitter_scale, jitter_scale, len(gt_vals))
-                pr_j = np.array(pr_vals) + rng.uniform(-jitter_scale, jitter_scale, len(pr_vals))
-                ax.scatter(gt_j, pr_j, alpha=0.7, s=18,
-                           color=RATER_COLORS[rater], edgecolors='none',
-                           marker=RATER_MARKERS[rater], zorder=2,
-                           label=f'{rater} (n={len(gt_vals)})')
-                n_dots += len(gt_vals)
+            multi = [x for x in d if x['n_valid_raters'] >= 3]
+            single = [x for x in d if x['n_valid_raters'] < 3]
+            base_color = SUBTYPE_COLORS[sub]
+
+            rng = np.random.RandomState(42)
+            jitter_scale = 0.02
+
+            # Single-rater: colored circles
+            if single:
+                gt_j = np.array([x['gt_mean'] for x in single]) + rng.uniform(-jitter_scale, jitter_scale, len(single))
+                pr_j = np.array([x[pred_key] for x in single]) + rng.uniform(-jitter_scale, jitter_scale, len(single))
+                ax.scatter(gt_j, pr_j, alpha=1.0, s=25, color=base_color, edgecolors='none',
+                           marker='o', zorder=2,
+                           label=f'1-2 raters (n={len(single)})')
+
+            # Multi-rater: black stars
+            if multi:
+                gt_j = np.array([x['gt_mean'] for x in multi]) + rng.uniform(-jitter_scale, jitter_scale, len(multi))
+                pr_j = np.array([x[pred_key] for x in multi]) + rng.uniform(-jitter_scale, jitter_scale, len(multi))
+                ax.scatter(gt_j, pr_j, alpha=1.0, s=60, color='black', edgecolors='none',
+                           marker='*', zorder=3,
+                           label=f'\u22653 raters (n={len(multi)})')
 
             # Compute stats using mean expert GT vs prediction
             gt_mean = np.array([x['gt_mean'] for x in d])

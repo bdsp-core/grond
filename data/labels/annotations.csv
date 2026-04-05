@@ -19,20 +19,20 @@ abn2147_seg127,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,
 abn2147_seg158,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg158.mat
 abn2147_seg118,abn2147,LB,1.0,0.0,0.0,0.94,LF RF LCP RCP LT RT RO,,original,,abn2147_seg118.mat
 abn2147_seg069,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg069.mat
-abn2147_seg081,abn2147,LB,,1.0,0.0,0.0,,,original,,abn2147_seg081.mat
+abn2147_seg081,abn2147,LB,,1.0,0.0,,,,original,,abn2147_seg081.mat
 abn4987_seg032,abn4987,LB,1.25,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn4987_seg032.mat
 abn2147_seg214,abn2147,LB,0.75,0.0,0.0,0.89,LF LCP RCP LT RT LO RO,,original,,abn2147_seg214.mat
-abn1967_seg000,abn1967,LB,,1.0,0.0,0.0,,,original,,abn1967_seg000.mat
+abn1967_seg000,abn1967,LB,,1.0,0.0,,,,original,,abn1967_seg000.mat
 abn4987_seg026,abn4987,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn4987_seg026.mat
 abn4987_seg002,abn4987,LB,1.25,0.0,0.0,0.94,LF LCP RCP LT RT LO RO,,original,,abn4987_seg002.mat
 abn2147_seg203,abn2147,LB,1.0,0.0,0.0,0.94,LF RF LCP RCP LT LO RO,,original,,abn2147_seg203.mat
 abn2147_seg060,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg060.mat
-abn2336_seg002,abn2336,LB,,1.0,0.0,0.0,,,original,,abn2336_seg002.mat
+abn2336_seg002,abn2336,LB,,1.0,0.0,,,,original,,abn2336_seg002.mat
 abn2147_seg128,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg128.mat
 abn2147_seg219,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg219.mat
 abn2147_seg086,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg086.mat
 abn2147_seg222,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg222.mat
-abn186_seg009,abn186,LB,,1.0,0.0,0.0,,,original,,abn186_seg009.mat
+abn186_seg009,abn186,LB,,1.0,0.0,,,,original,,abn186_seg009.mat
 abn2147_seg130,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg130.mat
 abn2147_seg167,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg167.mat
 abn2147_seg085,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg085.mat
@@ -45,7 +45,7 @@ abn2147_seg038,abn2147,LB,0.75,0.0,0.0,0.83,LF RF LCP RCP LT LO,,original,,abn21
 abn2147_seg027,abn2147,LB,1.5,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg027.mat
 abn4987_seg024,abn4987,LB,1.25,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn4987_seg024.mat
 abn2147_seg103,abn2147,LB,0.75,0.0,0.0,0.94,LF RF LCP RCP LT RT RO,,original,,abn2147_seg103.mat
-abn2147_seg136,abn2147,LB,,1.0,0.0,0.0,,,original,,abn2147_seg136.mat
+abn2147_seg136,abn2147,LB,,1.0,0.0,,,,original,,abn2147_seg136.mat
 abn2147_seg052,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg052.mat
 abn2147_seg095,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg095.mat
 abn2147_seg141,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg141.mat
@@ -58,7 +58,7 @@ abn2147_seg001,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,a
 abn4987_seg014,abn4987,LB,1.25,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn4987_seg014.mat
 abn2147_seg008,abn2147,LB,1.0,0.0,0.0,0.94,LF RF LCP RCP LT RT RO,,original,,abn2147_seg008.mat
 abn4987_seg029,abn4987,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn4987_seg029.mat
-abn186_seg008,abn186,LB,,1.0,0.0,0.0,,,original,,abn186_seg008.mat
+abn186_seg008,abn186,LB,,1.0,0.0,,,,original,,abn186_seg008.mat
 abn2147_seg225,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg225.mat
 abn2147_seg114,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg114.mat
 abn2147_seg024,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg024.mat
@@ -74,13 +74,13 @@ abn4423_seg005,abn4423,LB,1.0,0.0,0.0,0.78,LF RF LCP LT RT LO RO,,original,,abn4
 abn2147_seg151,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg151.mat
 abn2147_seg170,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg170.mat
 abn2147_seg129,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg129.mat
-abn2147_seg168,abn2147,LB,,1.0,0.0,0.0,,,original,,abn2147_seg168.mat
+abn2147_seg168,abn2147,LB,,1.0,0.0,,,,original,,abn2147_seg168.mat
 abn2147_seg063,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg063.mat
 abn2147_seg009,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg009.mat
 abn2147_seg150,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg150.mat
 abn2147_seg156,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg156.mat
 abn2147_seg137,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg137.mat
-abn2147_seg104,abn2147,LB,,1.0,0.0,0.0,,,original,,abn2147_seg104.mat
+abn2147_seg104,abn2147,LB,,1.0,0.0,,,,original,,abn2147_seg104.mat
 abn2147_seg143,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg143.mat
 abn2147_seg178,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg178.mat
 abn2147_seg216,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg216.mat
@@ -114,7 +114,7 @@ abn2147_seg181,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,a
 abn2147_seg204,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg204.mat
 abn4987_seg018,abn4987,LB,1.25,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn4987_seg018.mat
 abn2147_seg108,abn2147,LB,2.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg108.mat
-abn186_seg006,abn186,LB,,1.0,0.0,0.0,,,original,,abn186_seg006.mat
+abn186_seg006,abn186,LB,,1.0,0.0,,,,original,,abn186_seg006.mat
 abn2147_seg186,abn2147,LB,1.5,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg186.mat
 abn2147_seg068,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg068.mat
 abn2147_seg012,abn2147,LB,1.25,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg012.mat
@@ -174,18 +174,18 @@ abn2147_seg006,abn2147,LB,2.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,a
 abn2147_seg226,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg226.mat
 abn2147_seg089,abn2147,LB,1.0,0.0,0.0,0.83,LF LCP RCP LT RT LO RO,,original,,abn2147_seg089.mat
 abn2147_seg164,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg164.mat
-abn186_seg007,abn186,LB,,1.0,0.0,0.0,,,original,,abn186_seg007.mat
+abn186_seg007,abn186,LB,,1.0,0.0,,,,original,,abn186_seg007.mat
 abn2147_seg090,abn2147,LB,2.0,0.0,0.0,0.94,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg090.mat
 abn2147_seg000,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg000.mat
 abn4987_seg007,abn4987,LB,1.25,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn4987_seg007.mat
 abn2147_seg189,abn2147,LB,0.78,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg189.mat
 abn2147_seg199,abn2147,LB,1.0,0.0,0.0,0.94,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg199.mat
-abn2147_seg078,abn2147,LB,,1.0,0.0,0.0,,,original,,abn2147_seg078.mat
+abn2147_seg078,abn2147,LB,,1.0,0.0,,,,original,,abn2147_seg078.mat
 abn4987_seg022,abn4987,LB,1.0,0.0,0.0,0.94,LF RF LCP RCP LT RT LO RO,,original,,abn4987_seg022.mat
 abn4987_seg000,abn4987,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn4987_seg000.mat
 abn2147_seg014,abn2147,LB,1.0,0.0,0.0,0.89,LF RF LCP RCP LT LO RO,,original,,abn2147_seg014.mat
 abn2147_seg080,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg080.mat
-abn186_seg005,abn186,LB,,1.0,0.0,0.0,,,original,,abn186_seg005.mat
+abn186_seg005,abn186,LB,,1.0,0.0,,,,original,,abn186_seg005.mat
 abn2147_seg066,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg066.mat
 abn4987_seg009,abn4987,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn4987_seg009.mat
 abn2147_seg055,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg055.mat
@@ -199,7 +199,7 @@ abn2147_seg083,abn2147,LB,1.0,0.0,0.0,0.78,LF LCP RCP LT RT LO RO,,original,,abn
 abn4987_seg028,abn4987,LB,1.25,0.0,0.0,0.78,LF LCP RCP LT LO RO,,original,,abn4987_seg028.mat
 abn2147_seg056,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg056.mat
 abn2147_seg229,abn2147,LB,0.75,0.0,0.0,0.94,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg229.mat
-abn186_seg003,abn186,LB,,1.0,0.0,0.0,,,original,,abn186_seg003.mat
+abn186_seg003,abn186,LB,,1.0,0.0,,,,original,,abn186_seg003.mat
 abn4423_seg000,abn4423,LB,1.5,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn4423_seg000.mat
 abn2147_seg026,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg026.mat
 abn2147_seg044,abn2147,LB,0.75,0.0,0.0,0.94,LF RF LCP RCP LT LO RO,,original,,abn2147_seg044.mat
@@ -207,12 +207,12 @@ abn2147_seg022,abn2147,LB,0.75,0.0,0.0,0.94,LF RF LCP RCP LT RT LO RO,,original,
 abn4987_seg011,abn4987,LB,1.25,0.0,0.0,0.89,LF RF LCP RCP LT RT LO RO,,original,,abn4987_seg011.mat
 abn2147_seg153,abn2147,LB,1.0,0.0,0.0,0.89,LF RF LCP RCP LT LO RO,,original,,abn2147_seg153.mat
 abn2147_seg169,abn2147,LB,0.75,0.0,0.0,0.94,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg169.mat
-abn2147_seg193,abn2147,LB,,1.0,0.0,0.0,,,original,,abn2147_seg193.mat
+abn2147_seg193,abn2147,LB,,1.0,0.0,,,,original,,abn2147_seg193.mat
 abn2336_seg000,abn2336,LB,2.5,0.0,0.0,0.94,LF RF LCP RCP LT RT LO RO,,original,,abn2336_seg000.mat
 abn2147_seg072,abn2147,LB,2.5,0.0,0.0,0.67,RF RCP RT LO RO,,original,,abn2147_seg072.mat
 abn2147_seg021,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg021.mat
 abn4423_seg007,abn4423,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn4423_seg007.mat
-abn186_seg002,abn186,LB,,1.0,0.0,0.0,,,original,,abn186_seg002.mat
+abn186_seg002,abn186,LB,,1.0,0.0,,,,original,,abn186_seg002.mat
 abn2147_seg185,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg185.mat
 abn2147_seg146,abn2147,LB,1.0,0.0,0.0,0.94,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg146.mat
 abn2147_seg211,abn2147,LB,1.0,0.0,0.0,0.78,LF LCP RCP LT RT LO RO,,original,,abn2147_seg211.mat
@@ -232,13 +232,13 @@ abn2147_seg079,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,a
 abn2147_seg013,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg013.mat
 abn2147_seg140,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg140.mat
 abn2147_seg209,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg209.mat
-abn186_seg004,abn186,LB,,1.0,0.0,0.0,,,original,,abn186_seg004.mat
+abn186_seg004,abn186,LB,,1.0,0.0,,,,original,,abn186_seg004.mat
 abn2147_seg025,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg025.mat
 abn2147_seg043,abn2147,LB,1.0,0.0,0.0,0.94,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg043.mat
 abn2147_seg162,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg162.mat
 abn2147_seg112,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg112.mat
 abn2147_seg223,abn2147,LB,1.0,0.0,0.0,0.89,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg223.mat
-abn2147_seg084,abn2147,LB,,1.0,0.0,0.0,,,original,,abn2147_seg084.mat
+abn2147_seg084,abn2147,LB,,1.0,0.0,,,,original,,abn2147_seg084.mat
 abn2147_seg007,abn2147,LB,1.0,0.0,0.0,0.94,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg007.mat
 abn2147_seg057,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg057.mat
 abn2147_seg029,abn2147,LB,1.25,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg029.mat
@@ -246,10 +246,10 @@ abn2147_seg020,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,a
 abn4987_seg003,abn4987,LB,1.25,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn4987_seg003.mat
 abn4423_seg008,abn4423,LB,1.0,0.0,0.0,0.89,LF RF LCP RCP LT RT LO RO,,original,,abn4423_seg008.mat
 abn2147_seg071,abn2147,LB,1.0,0.0,0.0,0.89,LF RF LCP RCP LT LO RO,,original,,abn2147_seg071.mat
-abn2147_seg047,abn2147,LB,,1.0,0.0,0.0,,,original,,abn2147_seg047.mat
+abn2147_seg047,abn2147,LB,,1.0,0.0,,,,original,,abn2147_seg047.mat
 abn2147_seg210,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg210.mat
 abn2147_seg134,abn2147,LB,1.0,0.0,0.0,0.83,LF RF LCP RCP LT LO RO,,original,,abn2147_seg134.mat
-abn186_seg001,abn186,LB,,1.0,0.0,0.0,,,original,,abn186_seg001.mat
+abn186_seg001,abn186,LB,,1.0,0.0,,,,original,,abn186_seg001.mat
 abn2147_seg005,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg005.mat
 abn2147_seg061,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg061.mat
 abn2147_seg152,abn2147,LB,1.0,0.0,0.0,0.89,LF RF LCP RCP LT LO RO,,original,,abn2147_seg152.mat
@@ -264,8 +264,8 @@ abn2147_seg107,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,a
 abn2147_seg212,abn2147,LB,0.75,0.0,0.0,0.83,LF LCP RCP LT RT LO RO,,original,,abn2147_seg212.mat
 abn2147_seg035,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg035.mat
 abn4987_seg020,abn4987,LB,1.25,0.0,0.0,0.83,LF RF LCP RCP LT RT LO RO,,original,,abn4987_seg020.mat
-abn1967_seg001,abn1967,LB,,1.0,0.0,0.0,,,original,,abn1967_seg001.mat
-abn1967_seg002,abn1967,LB,,1.0,0.0,0.0,,,original,,abn1967_seg002.mat
+abn1967_seg001,abn1967,LB,,1.0,0.0,,,,original,,abn1967_seg001.mat
+abn1967_seg002,abn1967,LB,,1.0,0.0,,,,original,,abn1967_seg002.mat
 abn2147_seg040,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg040.mat
 abn2147_seg176,abn2147,LB,1.0,0.0,0.0,0.94,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg176.mat
 abn2147_seg105,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg105.mat
@@ -278,7 +278,7 @@ abn4987_seg012,abn4987,LB,1.25,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,
 abn2147_seg062,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg062.mat
 abn2147_seg200,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg200.mat
 abn2147_seg182,abn2147,LB,0.75,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg182.mat
-abn2147_seg046,abn2147,LB,,1.0,0.0,0.0,,,original,,abn2147_seg046.mat
+abn2147_seg046,abn2147,LB,,1.0,0.0,,,,original,,abn2147_seg046.mat
 abn2147_seg058,abn2147,LB,1.5,0.0,0.0,0.89,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg058.mat
 abn2147_seg088,abn2147,LB,1.0,0.0,0.0,0.83,LF RF LCP RCP LT LO RO,,original,,abn2147_seg088.mat
 abn2147_seg165,abn2147,LB,1.0,0.0,0.0,1.0,LF RF LCP RCP LT RT LO RO,,original,,abn2147_seg165.mat
@@ -891,8 +891,8 @@ abn514_seg044,abn514,LB,2.0,0.0,0.0,0.94,,,original,,abn514_seg044.mat
 emu141_seg010,emu141,LB,1.0,0.0,0.0,1.0,,,original,,emu141_seg010.mat
 abn14115_seg053,abn14115,LB,1.0,0.0,0.0,1.0,,,original,,abn14115_seg053.mat
 abn14115_seg031,abn14115,LB,1.0,0.0,0.0,0.94,,,original,,abn14115_seg031.mat
-abn10320_seg001,abn10320,LB,,1.0,0.0,0.0,,,original,,abn10320_seg001.mat
-abn1762_seg009,abn1762,LB,,1.0,0.0,0.0,,,original,,abn1762_seg009.mat
+abn10320_seg001,abn10320,LB,,1.0,0.0,,,,original,,abn10320_seg001.mat
+abn1762_seg009,abn1762,LB,,1.0,0.0,,,,original,,abn1762_seg009.mat
 abn620_seg005,abn620,LB,1.25,0.0,0.0,0.78,,,original,,abn620_seg005.mat
 abn620_seg007,abn620,LB,1.5,0.0,0.0,0.78,,,original,,abn620_seg007.mat
 abn10320_seg045,abn10320,LB,1.0,0.0,0.0,0.89,,,original,,abn10320_seg045.mat
@@ -907,11 +907,11 @@ abn14115_seg047,abn14115,LB,1.0,0.0,0.0,0.89,,,original,,abn14115_seg047.mat
 abn14115_seg035,abn14115,LB,1.0,0.0,0.0,0.89,,,original,,abn14115_seg035.mat
 abn514_seg041,abn514,LB,1.0,0.0,0.0,0.78,,,original,,abn514_seg041.mat
 abn13638_seg004,abn13638,LB,2.5,0.0,0.0,0.78,,,original,,abn13638_seg004.mat
-abn514_seg006,abn514,LB,,1.0,0.0,0.0,,,original,,abn514_seg006.mat
+abn514_seg006,abn514,LB,,1.0,0.0,,,,original,,abn514_seg006.mat
 abn10320_seg078,abn10320,LB,0.75,0.0,0.0,0.89,,,original,,abn10320_seg078.mat
 abn10320_seg012,abn10320,LB,1.0,0.0,0.0,0.78,,,original,,abn10320_seg012.mat
 abn620_seg003,abn620,LB,1.25,0.0,0.0,0.67,,,original,,abn620_seg003.mat
-abn4064_seg009,abn4064,LB,,1.0,0.0,0.0,,,original,,abn4064_seg009.mat
+abn4064_seg009,abn4064,LB,,1.0,0.0,,,,original,,abn4064_seg009.mat
 abn14115_seg029,abn14115,LB,1.25,0.0,0.0,0.89,,,original,,abn14115_seg029.mat
 abn514_seg012,abn514,LB,1.5,0.0,0.0,0.67,,,original,,abn514_seg012.mat
 abn2077_seg002,abn2077,LB,3.0,0.0,0.0,0.89,,,original,,abn2077_seg002.mat
@@ -921,7 +921,7 @@ abn10320_seg082,abn10320,LB,1.0,0.0,0.0,0.89,,,original,,abn10320_seg082.mat
 abn10320_seg041,abn10320,LB,0.75,0.0,0.0,0.89,,,original,,abn10320_seg041.mat
 abn10320_seg023,abn10320,LB,0.75,0.0,0.0,0.89,,,original,,abn10320_seg023.mat
 abn4064_seg004,abn4064,LB,1.25,0.0,0.0,0.78,,,original,,abn4064_seg004.mat
-abn4064_seg000,abn4064,LB,,1.0,0.0,0.0,,,original,,abn4064_seg000.mat
+abn4064_seg000,abn4064,LB,,1.0,0.0,,,,original,,abn4064_seg000.mat
 abn1762_seg007,abn1762,LB,1.0,0.0,0.0,0.89,,,original,,abn1762_seg007.mat
 abn10320_seg098,abn10320,LB,1.0,0.0,0.0,0.89,,,original,,abn10320_seg098.mat
 abn10320_seg077,abn10320,LB,1.0,0.0,0.0,0.89,,,original,,abn10320_seg077.mat
@@ -954,7 +954,7 @@ abn10320_seg049,abn10320,LB,1.0,0.0,0.0,0.83,,,original,,abn10320_seg049.mat
 abn514_seg047,abn514,LB,1.0,0.0,0.0,0.83,,,original,,abn514_seg047.mat
 abn514_seg024,abn514,LB,2.0,0.0,0.0,0.83,,,original,,abn514_seg024.mat
 emu141_seg008,emu141,LB,1.0,0.0,0.0,1.0,,,original,,emu141_seg008.mat
-abn4064_seg012,abn4064,LB,,1.0,0.0,0.0,,,original,,abn4064_seg012.mat
+abn4064_seg012,abn4064,LB,,1.0,0.0,,,,original,,abn4064_seg012.mat
 abn10320_seg003,abn10320,LB,0.75,0.0,0.0,0.78,,,original,,abn10320_seg003.mat
 abn14115_seg033,abn14115,LB,1.25,0.0,0.0,0.89,,,original,,abn14115_seg033.mat
 abn14115_seg051,abn14115,LB,1.25,0.0,0.0,0.09,,,original,,abn14115_seg051.mat
@@ -969,7 +969,7 @@ abn10320_seg064,abn10320,LB,0.75,0.0,0.0,0.89,,,original,,abn10320_seg064.mat
 abn11260_seg003,abn11260,LB,1.0,0.0,0.0,1.0,,,original,,abn11260_seg003.mat
 abn10320_seg037,abn10320,LB,1.0,0.0,0.0,0.89,,,original,,abn10320_seg037.mat
 abn620_seg006,abn620,LB,1.25,0.0,0.0,1.0,,,original,,abn620_seg006.mat
-abn10320_seg080,abn10320,LB,,1.0,0.0,0.0,,,original,,abn10320_seg080.mat
+abn10320_seg080,abn10320,LB,,1.0,0.0,,,,original,,abn10320_seg080.mat
 abn4064_seg008,abn4064,LB,,1.0,0.0,1.0,,,original,,abn4064_seg008.mat
 abn10320_seg010,abn10320,LB,0.75,0.0,0.0,0.83,,,original,,abn10320_seg010.mat
 abn514_seg040,abn514,LB,2.0,0.0,0.0,0.78,,,original,,abn514_seg040.mat
@@ -990,7 +990,7 @@ abn10320_seg101,abn10320,LB,1.0,0.0,0.0,0.89,,,original,,abn10320_seg101.mat
 abn13638_seg001,abn13638,LB,2.5,0.0,0.0,1.0,,,original,,abn13638_seg001.mat
 abn514_seg025,abn514,LB,1.75,0.0,0.0,0.78,,,original,,abn514_seg025.mat
 emu141_seg009,emu141,LB,0.75,0.0,0.0,0.94,,,original,,emu141_seg009.mat
-abn4064_seg010,abn4064,LB,,1.0,0.0,0.0,,,original,,abn4064_seg010.mat
+abn4064_seg010,abn4064,LB,,1.0,0.0,,,,original,,abn4064_seg010.mat
 abn10320_seg051,abn10320,LB,1.0,0.0,0.0,0.89,,,original,,abn10320_seg051.mat
 abn10320_seg070,abn10320,LB,0.75,0.0,0.0,0.89,,,original,,abn10320_seg070.mat
 abn10320_seg094,abn10320,LB,1.0,0.0,0.0,0.89,,,original,,abn10320_seg094.mat
@@ -1000,7 +1000,7 @@ abn14115_seg046,abn14115,LB,1.5,0.0,0.0,1.0,,,original,,abn14115_seg046.mat
 abn10320_seg019,abn10320,LB,1.0,0.0,0.0,0.83,,,original,,abn10320_seg019.mat
 abn10320_seg044,abn10320,LB,0.75,0.0,0.0,0.83,,,original,,abn10320_seg044.mat
 abn14115_seg009,abn14115,LB,1.5,0.0,0.0,0.94,,,original,,abn14115_seg009.mat
-abn514_seg035,abn514,LB,,1.0,0.0,0.0,,,original,,abn514_seg035.mat
+abn514_seg035,abn514,LB,,1.0,0.0,,,,original,,abn514_seg035.mat
 abn14115_seg028,abn14115,LB,1.5,0.0,0.0,0.94,,,original,,abn14115_seg028.mat
 abn514_seg000,abn514,LB,1.25,0.0,0.0,0.78,,,original,,abn514_seg000.mat
 abn514_seg011,abn514,LB,1.75,0.0,0.0,0.89,,,original,,abn514_seg011.mat
@@ -1010,7 +1010,7 @@ abn514_seg007,abn514,LB,2.0,0.0,0.0,0.67,,,original,,abn514_seg007.mat
 abn10320_seg079,abn10320,LB,1.0,0.0,0.0,0.89,,,original,,abn10320_seg079.mat
 abn10320_seg013,abn10320,LB,0.75,0.0,0.0,0.89,,,original,,abn10320_seg013.mat
 abn10320_seg065,abn10320,LB,1.0,0.0,0.0,0.89,,,original,,abn10320_seg065.mat
-abn6757_seg000,abn6757,LB,,1.0,0.0,0.0,,,original,,abn6757_seg000.mat
+abn6757_seg000,abn6757,LB,,1.0,0.0,,,,original,,abn6757_seg000.mat
 abn11260_seg002,abn11260,LB,1.0,0.0,0.0,1.0,,,original,,abn11260_seg002.mat
 abn10320_seg034,abn10320,LB,0.75,0.0,0.0,0.83,,,original,,abn10320_seg034.mat
 abn4064_seg002,abn4064,LB,1.25,0.0,0.0,0.89,,,original,,abn4064_seg002.mat
@@ -1041,7 +1041,7 @@ abn14115_seg034,abn14115,LB,1.25,0.0,0.0,0.89,,,original,,abn14115_seg034.mat
 abn10320_seg050,abn10320,LB,1.0,0.0,0.0,0.89,,,original,,abn10320_seg050.mat
 emu141_seg007,emu141,LB,0.75,0.0,0.0,0.67,,,original,,emu141_seg007.mat
 abn514_seg023,abn514,LB,2.0,0.0,0.0,0.67,,,original,,abn514_seg023.mat
-abn7509_seg000,abn7509,LB,,1.0,0.0,0.0,,,original,,abn7509_seg000.mat
+abn7509_seg000,abn7509,LB,,1.0,0.0,,,,original,,abn7509_seg000.mat
 abn14115_seg042,abn14115,LB,1.0,0.0,0.0,1.0,,,original,,abn14115_seg042.mat
 abn514_seg013,abn514,LB,2.0,0.0,0.0,0.67,,,original,,abn514_seg013.mat
 abn11260_seg004,abn11260,LB,1.0,0.0,0.0,1.0,,,original,,abn11260_seg004.mat
@@ -1050,7 +1050,7 @@ abn10320_seg063,abn10320,LB,0.75,0.0,0.0,0.67,,,original,,abn10320_seg063.mat
 abn514_seg043,abn514,LB,2.0,0.0,0.0,0.89,,,original,,abn514_seg043.mat
 abn514_seg026,abn514,LB,2.0,0.0,0.0,0.89,,,original,,abn514_seg026.mat
 abn10320_seg099,abn10320,LB,0.75,0.0,0.0,0.89,,,original,,abn10320_seg099.mat
-abn10320_seg074,abn10320,LB,,1.0,0.0,0.0,,,original,,abn10320_seg074.mat
+abn10320_seg074,abn10320,LB,,1.0,0.0,,,,original,,abn10320_seg074.mat
 abn10320_seg029,abn10320,LB,0.75,0.0,0.0,0.89,,,original,,abn10320_seg029.mat
 abn10320_seg017,abn10320,LB,1.0,0.0,0.0,0.89,,,original,,abn10320_seg017.mat
 abn10320_seg061,abn10320,LB,0.75,0.0,0.0,0.83,,,original,,abn10320_seg061.mat
@@ -1177,7 +1177,7 @@ emu141_seg010,emu141,PH,1.0,0.0,0.0,1.0,,,original,,emu141_seg010.mat
 abn14115_seg053,abn14115,PH,1.25,0.0,0.0,1.0,,,original,,abn14115_seg053.mat
 abn14115_seg031,abn14115,PH,1.0,0.0,0.0,1.0,,,original,,abn14115_seg031.mat
 abn10320_seg001,abn10320,PH,1.0,0.0,0.0,1.0,,,original,,abn10320_seg001.mat
-abn1762_seg009,abn1762,PH,,1.0,0.0,0.0,,,original,,abn1762_seg009.mat
+abn1762_seg009,abn1762,PH,,1.0,0.0,,,,original,,abn1762_seg009.mat
 abn620_seg005,abn620,PH,2.0,0.0,0.0,1.0,,,original,,abn620_seg005.mat
 abn620_seg007,abn620,PH,1.25,0.0,0.0,0.89,,,original,,abn620_seg007.mat
 abn10320_seg045,abn10320,PH,0.75,0.0,0.0,1.0,,,original,,abn10320_seg045.mat
@@ -1224,10 +1224,10 @@ abn514_seg030,abn514,PH,2.0,0.0,0.0,0.83,,,original,,abn514_seg030.mat
 abn13638_seg005,abn13638,PH,2.5,0.0,0.0,1.0,,,original,,abn13638_seg005.mat
 abn14115_seg006,abn14115,PH,1.0,0.0,0.0,0.89,,,original,,abn14115_seg006.mat
 abn6757_seg002,abn6757,PH,1.0,0.0,0.0,0.39,,,original,,abn6757_seg002.mat
-abn4064_seg011,abn4064,PH,1.0,0.0,0.0,0.0,,,original,,abn4064_seg011.mat
-abn10320_seg047,abn10320,PH,1.0,0.0,0.0,0.0,,,original,,abn10320_seg047.mat
+abn4064_seg011,abn4064,PH,1.0,0.0,0.0,,,,original,,abn4064_seg011.mat
+abn10320_seg047,abn10320,PH,1.0,0.0,0.0,,,,original,,abn10320_seg047.mat
 abn2102_seg000,abn2102,PH,2.0,0.0,0.0,0.61,,,original,,abn2102_seg000.mat
-abn514_seg046,abn514,PH,,0.0,0.0,0.0,,,original,,abn514_seg046.mat
+abn514_seg046,abn514,PH,,0.0,0.0,,,,original,,abn514_seg046.mat
 abn14115_seg049,abn14115,PH,1.5,0.0,0.0,0.89,,,original,,abn14115_seg049.mat
 abn14115_seg010,abn14115,PH,1.25,0.0,0.0,1.0,,,original,,abn14115_seg010.mat
 abn514_seg036,abn514,PH,2.0,0.0,0.0,0.61,,,original,,abn514_seg036.mat
@@ -1302,7 +1302,7 @@ abn4064_seg002,abn4064,PH,1.0,0.0,0.0,0.89,,,original,,abn4064_seg002.mat
 abn514_seg031,abn514,PH,1.5,0.0,0.0,0.83,,,original,,abn514_seg031.mat
 abn14115_seg044,abn14115,PH,1.25,0.0,0.0,1.0,,,original,,abn14115_seg044.mat
 abn514_seg015,abn514,PH,2.0,0.0,0.0,0.78,,,original,,abn514_seg015.mat
-abn10320_seg076,abn10320,PH,,1.0,0.0,0.0,,,original,,abn10320_seg076.mat
+abn10320_seg076,abn10320,PH,,1.0,0.0,,,,original,,abn10320_seg076.mat
 abn10320_seg097,abn10320,PH,1.0,0.0,0.0,0.94,,,original,,abn10320_seg097.mat
 abn10320_seg015,abn10320,PH,0.75,0.0,0.0,0.89,,,original,,abn10320_seg015.mat
 abn10320_seg031,abn10320,PH,0.75,0.0,0.0,0.89,,,original,,abn10320_seg031.mat
@@ -1743,85 +1743,85 @@ abn2077_seg005,abn2077,SZ,2.2,0.0,0.0,0.888888889,"LF,RF.LT,RT,LCP,RCP,LO,RO",,o
 abn14115_seg023,abn14115,SZ,1.3,0.0,0.0,0.944444444,"LF,RF.LT,RT,LCP,RCP,LO,RO",,original,,abn14115_seg023.mat
 abn6074_seg006,abn6074,SZ,1.4,0.0,0.0,0.888888889,"LF,RF.LT,RT,LCP,RCP,LO,RO",,original,,abn6074_seg006.mat
 pat0103_seg000,pat0103,LB,1.25,0.0,0.0,0.78,"LF,RF, RCP, RT, LO, RO,",,original,,pat0103_seg000.mat
-pat0089_seg007,pat0089,LB,,1.0,0.0,0.0,,,original,,pat0089_seg007.mat
+pat0089_seg007,pat0089,LB,,1.0,0.0,,,,original,,pat0089_seg007.mat
 abn2947_seg002,abn2947,LB,2.0,0.0,0.0,0.61,"RF, RCP, RT, LO, RO",,original,,abn2947_seg002.mat
 abn5053_seg010,abn5053,LB,0.75,0.0,0.0,0.11,LT,,original,,abn5053_seg010.mat
 pat0111_seg001,pat0111,LB,1.0,0.0,0.0,0.22,"RCP, RT, LO, RO",,original,,pat0111_seg001.mat
 abn12400_seg000,abn12400,LB,0.75,0.0,0.0,0.17,LT,,original,,abn12400_seg000.mat
-pat0084_seg000,pat0084,LB,,1.0,0.0,0.0,,,original,,pat0084_seg000.mat
-abn798_seg004,abn798,LB,,1.0,0.0,0.0,,,original,,abn798_seg004.mat
+pat0084_seg000,pat0084,LB,,1.0,0.0,,,,original,,pat0084_seg000.mat
+abn798_seg004,abn798,LB,,1.0,0.0,,,,original,,abn798_seg004.mat
 abn13729_seg006,abn13729,LB,0.75,0.0,0.0,0.17,"LCP, LT",,original,,abn13729_seg006.mat
 pat0036_seg006,pat0036,LB,0.75,0.0,0.0,0.17,"LF, LCP",,original,,pat0036_seg006.mat
 emu278_seg001,emu278,LB,1.0,0.0,0.0,0.33,"RCP, RT, RO",,original,,emu278_seg001.mat
 abn6077_seg004,abn6077,LB,2.0,0.0,0.0,0.33,"RF, RCP, RT, RO",,original,,abn6077_seg004.mat
-pat0108_seg000,pat0108,LB,,1.0,0.0,0.0,,,original,,pat0108_seg000.mat
+pat0108_seg000,pat0108,LB,,1.0,0.0,,,,original,,pat0108_seg000.mat
 pat0048_seg009,pat0048,LB,1.5,0.0,0.0,0.17,"RCP, RO",,original,,pat0048_seg009.mat
 pat0090_seg000,pat0090,LB,1.25,0.0,0.0,0.33,"RF, RCP, RT, RO",,original,,pat0090_seg000.mat
-abn1047_seg001,abn1047,LB,,1.0,0.0,0.0,,,original,,abn1047_seg001.mat
+abn1047_seg001,abn1047,LB,,1.0,0.0,,,,original,,abn1047_seg001.mat
 pat0068_seg004,pat0068,LB,0.75,0.0,0.0,0.22,"LCP, LT, LO",,original,,pat0068_seg004.mat
 abn12400_seg009,abn12400,LB,1.0,0.0,0.0,0.11,"LF, LT",,original,,abn12400_seg009.mat
-pat0078_seg003,pat0078,LB,,1.0,0.0,0.0,,,original,,pat0078_seg003.mat
+pat0078_seg003,pat0078,LB,,1.0,0.0,,,,original,,pat0078_seg003.mat
 abn2947_seg006,abn2947,LB,1.5,0.0,0.0,0.67,"RCP, LT, RT, LO, RO",,original,,abn2947_seg006.mat
 abn1383_seg001,abn1383,LB,1.0,0.0,0.0,0.5,"RF, RCP,RT, RO",,original,,abn1383_seg001.mat
 emu70_seg003,emu70,LB,0.75,0.0,0.0,0.28,"LCP, LT, LO",,original,,emu70_seg003.mat
 pat0036_seg009,pat0036,LB,1.0,0.0,0.0,0.11,LCP,,original,,pat0036_seg009.mat
-abn1762_seg004,abn1762,LB,,1.0,0.0,0.0,,,original,,abn1762_seg004.mat
+abn1762_seg004,abn1762,LB,,1.0,0.0,,,,original,,abn1762_seg004.mat
 emu375_seg001,emu375,LB,2.0,0.0,0.0,0.33,"RCP, RT, RO",,original,,emu375_seg001.mat
 abn2947_seg003,abn2947,LB,2.0,0.0,0.0,0.67,"LCP, RCP, RT, LO, RO",,original,,abn2947_seg003.mat
-pat0089_seg006,pat0089,LB,,1.0,0.0,0.0,,,original,,pat0089_seg006.mat
-emu24_seg000,emu24,LB,,1.0,0.0,0.0,,,original,,emu24_seg000.mat
+pat0089_seg006,pat0089,LB,,1.0,0.0,,,,original,,pat0089_seg006.mat
+emu24_seg000,emu24,LB,,1.0,0.0,,,,original,,emu24_seg000.mat
 abn5891_seg010,abn5891,LB,1.0,0.0,0.0,0.17,"LT, LO",,original,,abn5891_seg010.mat
 pat0048_seg003,pat0048,LB,2.0,0.0,0.0,0.72,"LF, RF, LCP, RCP, RO",,original,,pat0048_seg003.mat
 emu63_seg001,emu63,LB,1.75,0.0,0.0,0.33,"LF, LCP, LT, LO",,original,,emu63_seg001.mat
-pat0089_seg002,pat0089,LB,,1.0,0.0,0.0,,,original,,pat0089_seg002.mat
-abn12400_seg003,abn12400,LB,,1.0,0.0,0.0,,,original,,abn12400_seg003.mat
-abn13729_seg001,abn13729,LB,,1.0,0.0,0.0,,,original,,abn13729_seg001.mat
+pat0089_seg002,pat0089,LB,,1.0,0.0,,,,original,,pat0089_seg002.mat
+abn12400_seg003,abn12400,LB,,1.0,0.0,,,,original,,abn12400_seg003.mat
+abn13729_seg001,abn13729,LB,,1.0,0.0,,,,original,,abn13729_seg001.mat
 abn2747_seg000,abn2747,LB,0.75,0.0,0.0,0.22,"LF, LT, LO",,original,,abn2747_seg000.mat
 pat0048_seg013,pat0048,LB,1.0,0.0,0.0,0.17,"RF, RCP",,original,,pat0048_seg013.mat
 abn5053_seg001,abn5053,LB,0.75,0.0,0.0,0.11,LT,,original,,abn5053_seg001.mat
-emu375_seg002,emu375,LB,,1.0,0.0,0.0,,,original,,emu375_seg002.mat
+emu375_seg002,emu375,LB,,1.0,0.0,,,,original,,emu375_seg002.mat
 abn1047_seg010,abn1047,LB,1.0,0.0,0.0,0.67,"LF, RF, RCP, RT, RO",,original,,abn1047_seg010.mat
 pat0036_seg000,pat0036,LB,1.0,0.0,0.0,0.282,"LCP, LT",,original,,pat0036_seg000.mat
 emu70_seg005,emu70,LB,1.0,0.0,0.0,0.22,"LCP, LT, LO",,original,,emu70_seg005.mat
 pat0103_seg003,pat0103,LB,1.0,0.0,0.0,0.33,"RF, RCP, RO",,original,,pat0103_seg003.mat
-abn798_seg003,abn798,LB,,1.0,0.0,0.0,,,original,,abn798_seg003.mat
-pat0103_seg009,pat0103,LB,,1.0,0.0,0.0,,,original,,pat0103_seg009.mat
+abn798_seg003,abn798,LB,,1.0,0.0,,,,original,,abn798_seg003.mat
+pat0103_seg009,pat0103,LB,,1.0,0.0,,,,original,,pat0103_seg009.mat
 pat0048_seg010,pat0048,LB,1.5,0.0,0.0,0.17,RCP,,original,,pat0048_seg010.mat
 emu247_seg001,emu247,LB,1.0,0.0,0.0,0.11,RT,,original,,emu247_seg001.mat
 pat0090_seg003,pat0090,LB,1.25,0.0,0.0,0.22,"RF, RCP",,original,,pat0090_seg003.mat
 pat0048_seg005,pat0048,LB,1.25,0.0,0.0,0.33,"RF, RCP, RO",,original,,pat0048_seg005.mat
-pat0068_seg008,pat0068,LB,,1.0,0.0,0.0,,,original,,pat0068_seg008.mat
+pat0068_seg008,pat0068,LB,,1.0,0.0,,,,original,,pat0068_seg008.mat
 pat0036_seg002,pat0036,LB,1.25,0.0,0.0,0.33,"LCP, RCP, LO, RO",,original,,pat0036_seg002.mat
 abn2947_seg009,abn2947,LB,2.0,0.0,0.0,0.5,"RCP, LT, RT, LO, RO",,original,,abn2947_seg009.mat
 abn2747_seg006,abn2747,LB,1.5,0.0,0.0,0.44,"LCP, LT, RT, LO, RO",,original,,abn2747_seg006.mat
 abn5891_seg003,abn5891,LB,0.75,0.0,0.0,0.33,"LT, RT, LO, RO",,original,,abn5891_seg003.mat
-pat0089_seg001,pat0089,LB,,1.0,0.0,0.0,,,original,,pat0089_seg001.mat
+pat0089_seg001,pat0089,LB,,1.0,0.0,,,,original,,pat0089_seg001.mat
 pat0106_seg004,pat0106,LB,0.75,0.0,0.0,0.28,"LCP, LT, LO",,original,,pat0106_seg004.mat
 emu156_seg003,emu156,LB,1.25,0.0,0.0,0.22,"LCP, LT",,original,,emu156_seg003.mat
-pat0089_seg004,pat0089,LB,,1.0,0.0,0.0,,,original,,pat0089_seg004.mat
-pat0106_seg000,pat0106,LB,,1.0,0.0,0.0,,,original,,pat0106_seg000.mat
+pat0089_seg004,pat0089,LB,,1.0,0.0,,,,original,,pat0089_seg004.mat
+pat0106_seg000,pat0106,LB,,1.0,0.0,,,,original,,pat0106_seg000.mat
 emu111_seg000,emu111,LB,1.0,0.0,0.0,0.22,"LT, LO",,original,,emu111_seg000.mat
 abn1047_seg005,abn1047,LB,1.5,0.0,0.0,0.77,"LF, RF, LCP, RCP, LT, LO, RO",,original,,abn1047_seg005.mat
 abn1762_seg000,abn1762,LB,1.5,0.0,0.0,0.33,"LCP, LT, LO, RO",,original,,abn1762_seg000.mat
 pat0048_seg000,pat0048,LB,1.5,0.0,0.0,0.22,RF,,original,,pat0048_seg000.mat
-emu246_seg001,emu246,LB,,1.0,0.0,0.0,,,original,,emu246_seg001.mat
-emu246_seg002,emu246,LB,,1.0,0.0,0.0,,,original,,emu246_seg002.mat
+emu246_seg001,emu246,LB,,1.0,0.0,,,,original,,emu246_seg001.mat
+emu246_seg002,emu246,LB,,1.0,0.0,,,,original,,emu246_seg002.mat
 pat0048_seg014,pat0048,LB,1.0,0.0,0.0,0.11,RCP,,original,,pat0048_seg014.mat
 pat0048_seg002,pat0048,LB,1.5,0.0,0.0,0.33,"RF, RCP",,original,,pat0048_seg002.mat
-pat0089_seg003,pat0089,LB,,1.0,0.0,0.0,,,original,,pat0089_seg003.mat
+pat0089_seg003,pat0089,LB,,1.0,0.0,,,,original,,pat0089_seg003.mat
 abn13729_seg000,abn13729,LB,0.75,0.0,0.0,0.17,"RCP, RT",,original,,abn13729_seg000.mat
-abn798_seg005,abn798,LB,,1.0,0.0,0.0,,,original,,abn798_seg005.mat
-emu386_seg001,emu386,LB,,1.0,0.0,0.0,,,original,,emu386_seg001.mat
+abn798_seg005,abn798,LB,,1.0,0.0,,,,original,,abn798_seg005.mat
+emu386_seg001,emu386,LB,,1.0,0.0,,,,original,,emu386_seg001.mat
 abn5891_seg011,abn5891,LB,1.5,0.0,0.0,0.17,"LT, LO",,original,,abn5891_seg011.mat
 pat0103_seg008,pat0103,LB,1.5,0.0,0.0,0.28,"RCP, RT, RO",,original,,pat0103_seg008.mat
-abn12400_seg008,abn12400,LB,,1.0,0.0,0.0,,,original,,abn12400_seg008.mat
+abn12400_seg008,abn12400,LB,,1.0,0.0,,,,original,,abn12400_seg008.mat
 pat0036_seg008,pat0036,LB,1.0,0.0,0.0,0.22,"LCP, RCP",,original,,pat0036_seg008.mat
-abn5053_seg011,abn5053,LB,,1.0,0.0,0.0,,,original,,abn5053_seg011.mat
+abn5053_seg011,abn5053,LB,,1.0,0.0,,,,original,,abn5053_seg011.mat
 emu70_seg004,emu70,LB,1.25,0.0,0.0,0.28,"LCP, LT, LO",,original,,emu70_seg004.mat
 pat0048_seg004,pat0048,LB,1.25,0.0,0.0,0.22,"RCP, RO",,original,,pat0048_seg004.mat
-abn5053_seg003,abn5053,LB,,1.0,0.0,0.0,,,original,,abn5053_seg003.mat
+abn5053_seg003,abn5053,LB,,1.0,0.0,,,,original,,abn5053_seg003.mat
 abn2747_seg007,abn2747,LB,1.5,0.0,0.0,0.33,"LCP, LT, LO",,original,,abn2747_seg007.mat
-pat0103_seg006,pat0103,LB,,1.0,0.0,0.0,,,original,,pat0103_seg006.mat
+pat0103_seg006,pat0103,LB,,1.0,0.0,,,,original,,pat0103_seg006.mat
 emu156_seg001,emu156,LB,2.0,0.0,0.0,0.22,"LCP, LT",,original,,emu156_seg001.mat
 abn6077_seg000,abn6077,LB,1.5,0.0,0.0,0.33,"RCP, RT, RO",,original,,abn6077_seg000.mat
 abn2947_seg014,abn2947,LB,2.0,0.0,0.0,0.17,"RT, RO",,original,,abn2947_seg014.mat
@@ -1837,126 +1837,126 @@ abn1047_seg003,abn1047,LB,1.5,0.0,0.0,0.67,"LF, RF, LCP, RCP, LT, LO, RO",,origi
 pat0089_seg010,pat0089,LB,1.25,0.0,0.0,0.22,"LF, LCP",,original,,pat0089_seg010.mat
 abn5891_seg013,abn5891,LB,1.25,0.0,0.0,0.17,"LT, LO",,original,,abn5891_seg013.mat
 pat0106_seg003,pat0106,LB,1.25,0.0,0.0,0.33,"LCP, LT, LO",,original,,pat0106_seg003.mat
-abn12400_seg002,abn12400,LB,,1.0,0.0,0.0,,,original,,abn12400_seg002.mat
+abn12400_seg002,abn12400,LB,,1.0,0.0,,,,original,,abn12400_seg002.mat
 emu246_seg004,emu246,LB,0.75,0.0,0.0,0.22,"LF, LT, LO",,original,,emu246_seg004.mat
 emu111_seg001,emu111,LB,1.0,0.0,0.0,0.22,"LF, LT, LO",,original,,emu111_seg001.mat
-pat0078_seg008,pat0078,LB,,1.0,0.0,0.0,,,original,,pat0078_seg008.mat
-abn5053_seg000,abn5053,LB,,1.0,0.0,0.0,,,original,,abn5053_seg000.mat
+pat0078_seg008,pat0078,LB,,1.0,0.0,,,,original,,pat0078_seg008.mat
+abn5053_seg000,abn5053,LB,,1.0,0.0,,,,original,,abn5053_seg000.mat
 pat0078_seg009,pat0078,LB,1.0,0.0,0.0,0.33,"LF, LCP, LT",,original,,pat0078_seg009.mat
-abn1047_seg009,abn1047,LB,,1.0,0.0,0.0,,,original,,abn1047_seg009.mat
-pat0084_seg001,pat0084,LB,,1.0,0.0,0.0,,,original,,pat0084_seg001.mat
+abn1047_seg009,abn1047,LB,,1.0,0.0,,,,original,,abn1047_seg009.mat
+pat0084_seg001,pat0084,LB,,1.0,0.0,,,,original,,pat0084_seg001.mat
 pat0111_seg000,pat0111,LB,1.0,0.0,0.0,0.22,"RF, RCP, RO",,original,,pat0111_seg000.mat
 emu156_seg004,emu156,LB,2.0,0.0,0.0,0.33,"LF, LCP, LT, LO",,original,,emu156_seg004.mat
 pat0106_seg002,pat0106,LB,0.75,0.0,0.0,0.22,"LCP, LT, LO",,original,,pat0106_seg002.mat
 pat0103_seg001,pat0103,LB,1.25,0.0,0.0,0.33,"RF, RCP, RT",,original,,pat0103_seg001.mat
-pat0089_seg008,pat0089,LB,,1.0,0.0,0.0,,,original,,pat0089_seg008.mat
+pat0089_seg008,pat0089,LB,,1.0,0.0,,,,original,,pat0089_seg008.mat
 pat0090_seg009,pat0090,LB,1.5,0.0,0.0,0.33,"RF, RCP, RO",,original,,pat0090_seg009.mat
-abn798_seg000,abn798,LB,,1.0,0.0,0.0,,,original,,abn798_seg000.mat
+abn798_seg000,abn798,LB,,1.0,0.0,,,,original,,abn798_seg000.mat
 abn12400_seg005,abn12400,LB,0.75,0.0,0.0,0.11,LT,,original,,abn12400_seg005.mat
 emu278_seg000,emu278,LB,1.0,0.0,0.0,0.28,"RCP, RT, RO",,original,,emu278_seg000.mat
 abn2947_seg011,abn2947,LB,2.0,0.0,0.0,0.67,"LCP, RCP, RT, LO, RO",,original,,abn2947_seg011.mat
 abn6077_seg005,abn6077,LB,1.5,0.0,0.0,0.33,"RF, RT, RO",,original,,abn6077_seg005.mat
 pat0090_seg002,pat0090,LB,1.25,0.0,0.0,0.22,"RCP, RO",,original,,pat0090_seg002.mat
 pat0068_seg009,pat0068,LB,2.0,0.0,0.0,0.22,"LT, LO",,original,,pat0068_seg009.mat
-pat0057_seg000,pat0057,LB,,1.0,0.0,0.0,,,original,,pat0057_seg000.mat
+pat0057_seg000,pat0057,LB,,1.0,0.0,,,,original,,pat0057_seg000.mat
 pat0048_seg008,pat0048,LB,1.25,0.0,0.0,0.33,"RCP, RO",,original,,pat0048_seg008.mat
 emu247_seg000,emu247,LB,0.75,0.0,0.0,0.11,RT,,original,,emu247_seg000.mat
 abn5891_seg001,abn5891,LB,0.75,0.0,0.0,0.28,"LT, RT, LO",,original,,abn5891_seg001.mat
 abn5891_seg004,abn5891,LB,1.0,0.0,0.0,0.17,"LT, LO",,original,,abn5891_seg004.mat
 pat0045_seg004,pat0045,LB,1.5,0.0,0.0,0.17,"LT, LO",,original,,pat0045_seg004.mat
-abn11960_seg000,abn11960,LB,,1.0,0.0,0.0,,,original,,abn11960_seg000.mat
+abn11960_seg000,abn11960,LB,,1.0,0.0,,,,original,,abn11960_seg000.mat
 pat0068_seg003,pat0068,LB,0.75,0.0,0.0,0.17,"LT, LO",,original,,pat0068_seg003.mat
 abn2747_seg008,abn2747,LB,1.75,0.0,0.0,0.17,"LT, LO",,original,,abn2747_seg008.mat
-pat0078_seg002,pat0078,LB,,1.0,0.0,0.0,,,original,,pat0078_seg002.mat
+pat0078_seg002,pat0078,LB,,1.0,0.0,,,,original,,pat0078_seg002.mat
 abn2947_seg005,abn2947,LB,2.0,0.0,0.0,0.44,"RF, LCP, RCP, RT, LO, RO",,original,,abn2947_seg005.mat
 abn1383_seg000,abn1383,LB,1.0,0.0,0.0,0.44,"RF, RCP, RT, RO",,original,,abn1383_seg000.mat
 pat0036_seg007,pat0036,LB,1.5,0.0,0.0,0.11,"RCP, RO",,original,,pat0036_seg007.mat
-abn1762_seg005,abn1762,LB,,1.0,0.0,0.0,,,original,,abn1762_seg005.mat
+abn1762_seg005,abn1762,LB,,1.0,0.0,,,,original,,abn1762_seg005.mat
 pat0036_seg010,pat0036,LB,1.5,0.0,0.0,0.17,LCP,,original,,pat0036_seg010.mat
-pat0103_seg010,pat0103,LB,,1.0,0.0,0.0,,,original,,pat0103_seg010.mat
-abn11960_seg001,abn11960,LB,,1.0,0.0,0.0,,,original,,abn11960_seg001.mat
+pat0103_seg010,pat0103,LB,,1.0,0.0,,,,original,,pat0103_seg010.mat
+abn11960_seg001,abn11960,LB,,1.0,0.0,,,,original,,abn11960_seg001.mat
 abn5891_seg000,abn5891,LB,0.75,0.0,0.0,0.17,"LT, LO",,original,,abn5891_seg000.mat
 abn5891_seg009,abn5891,LB,1.5,0.0,0.0,0.17,"LT, LO",,original,,abn5891_seg009.mat
-abn1047_seg008,abn1047,LB,,1.0,0.0,0.0,,,original,,abn1047_seg008.mat
-emu63_seg000,emu63,LB,,1.0,0.0,0.0,,,original,,emu63_seg000.mat
+abn1047_seg008,abn1047,LB,,1.0,0.0,,,,original,,abn1047_seg008.mat
+emu63_seg000,emu63,LB,,1.0,0.0,,,,original,,emu63_seg000.mat
 abn2947_seg004,abn2947,LB,2.0,0.0,0.0,0.67,"LCP, RCP, LT, RT, LO, RO",,original,,abn2947_seg004.mat
-emu24_seg001,emu24,LB,,1.0,0.0,0.0,,,original,,emu24_seg001.mat
+emu24_seg001,emu24,LB,,1.0,0.0,,,,original,,emu24_seg001.mat
 pat0090_seg006,pat0090,LB,1.5,0.0,0.0,0.17,RCP,,original,,pat0090_seg006.mat
 abn2947_seg012,abn2947,LB,1.5,0.0,0.0,0.22,"RT, RO",,original,,abn2947_seg012.mat
 emu375_seg003,emu375,LB,2.0,0.0,0.0,0.44,"RCP, RT, LO, RO",,original,,emu375_seg003.mat
-abn1762_seg006,abn1762,LB,,1.0,0.0,0.0,,,original,,abn1762_seg006.mat
+abn1762_seg006,abn1762,LB,,1.0,0.0,,,,original,,abn1762_seg006.mat
 abn2947_seg008,abn2947,LB,2.25,0.0,0.0,0.33,"RCP, RT, LO, RO",,original,,abn2947_seg008.mat
-pat0078_seg005,pat0078,LB,,1.0,0.0,0.0,,,original,,pat0078_seg005.mat
+pat0078_seg005,pat0078,LB,,1.0,0.0,,,,original,,pat0078_seg005.mat
 pat0089_seg005,pat0089,LB,1.25,0.0,0.0,0.22,"LCP, LT, LO",,original,,pat0089_seg005.mat
 pat0090_seg005,pat0090,LB,1.75,0.0,0.0,0.33,"LF, RF, RCP",,original,,pat0090_seg005.mat
-abn12459_seg003,abn12459,LB,,1.0,0.0,0.0,,,original,,abn12459_seg003.mat
+abn12459_seg003,abn12459,LB,,1.0,0.0,,,,original,,abn12459_seg003.mat
 emu63_seg003,emu63,LB,0.75,0.0,0.0,0.22,"LCP, LT",,original,,emu63_seg003.mat
-abn13729_seg002,abn13729,LB,,1.0,0.0,0.0,,,original,,abn13729_seg002.mat
+abn13729_seg002,abn13729,LB,,1.0,0.0,,,,original,,abn13729_seg002.mat
 abn12400_seg006,abn12400,LB,1.25,0.0,0.0,0.17,"LF, LT",,original,,abn12400_seg006.mat
-pat0089_seg009,pat0089,LB,,1.0,0.0,0.0,,,original,,pat0089_seg009.mat
+pat0089_seg009,pat0089,LB,,1.0,0.0,,,,original,,pat0089_seg009.mat
 emu70_seg008,emu70,LB,1.25,0.0,0.0,0.22,"LCP, LT, LO",,original,,emu70_seg008.mat
 pat0090_seg007,pat0090,LB,1.5,0.0,0.0,0.28,"RF, RCP",,original,,pat0090_seg007.mat
 abn2947_seg000,abn2947,LB,1.75,0.0,0.0,0.22,"RT, RO",,original,,abn2947_seg000.mat
 emu156_seg002,emu156,LB,2.0,0.0,0.0,0.17,"LT, LO",,original,,emu156_seg002.mat
 abn1047_seg004,abn1047,LB,1.5,0.0,0.0,0.72,"LF, LCP, LT, RT, LO, RO",,original,,abn1047_seg004.mat
-pat0078_seg007,pat0078,LB,,1.0,0.0,0.0,,,original,,pat0078_seg007.mat
-pat0081_seg000,pat0081,LB,,1.0,0.0,0.0,,,original,,pat0081_seg000.mat
+pat0078_seg007,pat0078,LB,,1.0,0.0,,,,original,,pat0078_seg007.mat
+pat0081_seg000,pat0081,LB,,1.0,0.0,,,,original,,pat0081_seg000.mat
 pat0068_seg001,pat0068,LB,1.0,0.0,0.0,0.17,"LT, LO",,original,,pat0068_seg001.mat
 pat0089_seg000,pat0089,LB,1.5,0.0,0.0,0.22,"LCP, LO",,original,,pat0089_seg000.mat
-abn5053_seg012,abn5053,LB,,1.0,0.0,0.0,,,original,,abn5053_seg012.mat
+abn5053_seg012,abn5053,LB,,1.0,0.0,,,,original,,abn5053_seg012.mat
 abn2747_seg002,abn2747,LB,1.5,0.0,0.0,0.28,"LCP, LT, LO",,original,,abn2747_seg002.mat
 pat0068_seg005,pat0068,LB,1.0,0.0,0.0,0.22,"LCP, LT, LO",,original,,pat0068_seg005.mat
 emu70_seg007,emu70,LB,1.25,0.0,0.0,0.22,"LCP, LT, LO",,original,,emu70_seg007.mat
-abn1047_seg007,abn1047,LB,,1.0,0.0,0.0,,,original,,abn1047_seg007.mat
+abn1047_seg007,abn1047,LB,,1.0,0.0,,,,original,,abn1047_seg007.mat
 pat0078_seg006,pat0078,LB,1.0,0.0,0.0,0.17,"LCP, LO",,original,,pat0078_seg006.mat
 pat0036_seg003,pat0036,LB,1.0,0.0,0.0,0.33,"LCP, RCP, LO, RO",,original,,pat0036_seg003.mat
-abn5053_seg008,abn5053,LB,,1.0,0.0,0.0,,,original,,abn5053_seg008.mat
+abn5053_seg008,abn5053,LB,,1.0,0.0,,,,original,,abn5053_seg008.mat
 emu278_seg002,emu278,LB,1.0,0.0,0.0,0.33,"RF, RCP, RT, RO",,original,,emu278_seg002.mat
 pat0036_seg005,pat0036,LB,1.0,0.0,0.0,0.33,"LCP, LO, RO",,original,,pat0036_seg005.mat
 abn6077_seg001,abn6077,LB,1.5,0.0,0.0,0.44,"RF, RCP, RT, LO, RO",,original,,abn6077_seg001.mat
 pat0048_seg006,pat0048,LB,1.0,0.0,0.0,0.17,RCP,,original,,pat0048_seg006.mat
-pat0068_seg011,pat0068,LB,,1.0,0.0,0.0,,,original,,pat0068_seg011.mat
+pat0068_seg011,pat0068,LB,,1.0,0.0,,,,original,,pat0068_seg011.mat
 abn5891_seg005,abn5891,LB,1.0,0.0,0.0,0.17,"RT, RO",,original,,abn5891_seg005.mat
 pat0045_seg003,pat0045,LB,1.0,0.0,0.0,0.17,"LF, LT",,original,,pat0045_seg003.mat
-abn798_seg008,abn798,LB,,1.0,0.0,0.0,,,original,,abn798_seg008.mat
+abn798_seg008,abn798,LB,,1.0,0.0,,,,original,,abn798_seg008.mat
 pat0068_seg002,pat0068,LB,1.0,0.0,0.0,0.17,"LT, LO",,original,,pat0068_seg002.mat
 abn12459_seg000,abn12459,LB,2.0,0.0,0.0,0.44,"LF, LCP, LT, LO",,original,,abn12459_seg000.mat
-emu246_seg003,emu246,LB,,1.0,0.0,0.0,,,original,,emu246_seg003.mat
+emu246_seg003,emu246,LB,,1.0,0.0,,,,original,,emu246_seg003.mat
 pat0045_seg001,pat0045,LB,1.25,0.0,0.0,0.17,"LF, LT",,original,,pat0045_seg001.mat
 abn6077_seg002,abn6077,LB,1.5,0.0,0.0,0.22,"RT, RCP, RO",,original,,abn6077_seg002.mat
-pat0084_seg003,pat0084,LB,,1.0,0.0,0.0,,,original,,pat0084_seg003.mat
-pat0103_seg005,pat0103,LB,,1.0,0.0,0.0,,,original,,pat0103_seg005.mat
+pat0084_seg003,pat0084,LB,,1.0,0.0,,,,original,,pat0084_seg003.mat
+pat0103_seg005,pat0103,LB,,1.0,0.0,,,,original,,pat0103_seg005.mat
 abn2947_seg001,abn2947,LB,2.5,0.0,0.0,0.5,"LCP, RCP, RT, LO, RO",,original,,abn2947_seg001.mat
 abn5891_seg014,abn5891,LB,1.0,0.0,0.0,0.22,"LT, LO, RO",,original,,abn5891_seg014.mat
-abn1762_seg002,abn1762,LB,,1.0,0.0,0.0,,,original,,abn1762_seg002.mat
+abn1762_seg002,abn1762,LB,,1.0,0.0,,,,original,,abn1762_seg002.mat
 pat0036_seg012,pat0036,LB,1.25,0.0,0.0,0.17,"LCP, LO",,original,,pat0036_seg012.mat
 abn12400_seg004,abn12400,LB,0.75,0.0,0.0,0.17,"LF, LT",,original,,abn12400_seg004.mat
 pat0045_seg000,pat0045,LB,2.0,0.0,0.0,0.17,"LF, LT",,original,,pat0045_seg000.mat
-abn2947_seg010,abn2947,LB,,1.0,0.0,0.0,,,original,,abn2947_seg010.mat
-pat0068_seg013,pat0068,LB,,1.0,0.0,0.0,,,original,,pat0068_seg013.mat
+abn2947_seg010,abn2947,LB,,1.0,0.0,,,,original,,abn2947_seg010.mat
+pat0068_seg013,pat0068,LB,,1.0,0.0,,,,original,,pat0068_seg013.mat
 abn5891_seg015,abn5891,LB,1.0,0.0,0.0,0.22,"LT, LO, RO",,original,,abn5891_seg015.mat
 pat0078_seg000,pat0078,LB,1.0,0.0,0.0,0.28,"LCP, LT, LO",,original,,pat0078_seg000.mat
 abn5891_seg016,abn5891,LB,0.75,0.0,0.0,0.17,"LT, LO",,original,,abn5891_seg016.mat
 pat0068_seg012,pat0068,LB,1.0,0.0,0.0,0.28,"LT, LO, RO",,original,,pat0068_seg012.mat
 pat0103_seg004,pat0103,LB,1.25,0.0,0.0,0.28,"RCP, RO",,original,,pat0103_seg004.mat
 abn2947_seg007,abn2947,LB,1.5,0.0,0.0,0.67,"LCP, RCP, RT, LO, RO",,original,,abn2947_seg007.mat
-abn798_seg001,abn798,LB,,1.0,0.0,0.0,,,original,,abn798_seg001.mat
+abn798_seg001,abn798,LB,,1.0,0.0,,,,original,,abn798_seg001.mat
 emu70_seg002,emu70,LB,1.0,0.0,0.0,0.28,"LCP, LT, LO",,original,,emu70_seg002.mat
 abn1383_seg002,abn1383,LB,1.25,0.0,0.0,0.33,"RF, RCP, RO",,original,,abn1383_seg002.mat
-abn798_seg007,abn798,LB,,1.0,0.0,0.0,,,original,,abn798_seg007.mat
+abn798_seg007,abn798,LB,,1.0,0.0,,,,original,,abn798_seg007.mat
 abn13729_seg008,abn13729,LB,0.75,0.0,0.0,0.17,"LCP, LT",,original,,abn13729_seg008.mat
 abn5891_seg007,abn5891,LB,1.0,0.0,0.0,0.22,"LT, LO",,original,,abn5891_seg007.mat
 abn13729_seg007,abn13729,LB,0.75,0.0,0.0,0.17,"LCP, LT",,original,,abn13729_seg007.mat
 pat0090_seg001,pat0090,LB,1.25,0.0,0.0,0.22,"RF, RCP",,original,,pat0090_seg001.mat
 abn6077_seg003,abn6077,LB,1.5,0.0,0.0,0.44,"RCP, LT, RT, LO, RO",,original,,abn6077_seg003.mat
 abn6077_seg006,abn6077,LB,1.25,0.0,0.0,0.5,"RCP, LT, RT, RO",,original,,abn6077_seg006.mat
-abn5053_seg007,abn5053,LB,,1.0,0.0,0.0,,,original,,abn5053_seg007.mat
+abn5053_seg007,abn5053,LB,,1.0,0.0,,,,original,,abn5053_seg007.mat
 pat0036_seg011,pat0036,LB,1.25,0.0,0.0,0.33,"LCP, LO",,original,,pat0036_seg011.mat
 pat0048_seg007,pat0048,LB,1.25,0.0,0.0,0.17,"RCP, RO",,original,,pat0048_seg007.mat
 pat0068_seg010,pat0068,LB,2.0,0.0,0.0,0.22,"LT, LO",,original,,pat0068_seg010.mat
 abn2747_seg004,abn2747,LB,1.0,0.0,0.0,0.28,"LCP, LT, LO",,original,,abn2747_seg004.mat
 abn1047_seg002,abn1047,LB,2.0,0.0,0.0,0.67,"LCP, RCP, LT, LO, RO",,original,,abn1047_seg002.mat
-abn2947_seg013,abn2947,LB,,1.0,0.0,0.0,,,original,,abn2947_seg013.mat
+abn2947_seg013,abn2947,LB,,1.0,0.0,,,,original,,abn2947_seg013.mat
 emu70_seg000,emu70,LB,1.5,0.0,0.0,0.33,"LCP, LT, LO, RO",,original,,emu70_seg000.mat
 abn1762_seg003,abn1762,LB,1.0,0.0,0.0,0.17,"RT, RO",,original,,abn1762_seg003.mat
 abn12459_seg001,abn12459,LB,2.0,0.0,0.0,0.44,"LF, LCP, LT, LO",,original,,abn12459_seg001.mat
@@ -1964,13 +1964,13 @@ pat0045_seg002,pat0045,LB,1.5,0.0,0.0,0.17,"LT, LO",,original,,pat0045_seg002.ma
 pat0106_seg001,pat0106,LB,1.0,0.0,0.0,0.28,"LCP, LT, LO",,original,,pat0106_seg001.mat
 emu156_seg005,emu156,LB,2.0,0.0,0.0,0.33,"LCP, LT, LO",,original,,emu156_seg005.mat
 abn12400_seg001,abn12400,LB,0.75,0.0,0.0,0.17,"LCP, LT",,original,,abn12400_seg001.mat
-pat0084_seg002,pat0084,LB,,1.0,0.0,0.0,,,original,,pat0084_seg002.mat
-emu375_seg000,emu375,LB,,1.0,0.0,0.0,,,original,,emu375_seg000.mat
-emu24_seg002,emu24,LB,,1.0,0.0,0.0,,,original,,emu24_seg002.mat
+pat0084_seg002,pat0084,LB,,1.0,0.0,,,,original,,pat0084_seg002.mat
+emu375_seg000,emu375,LB,,1.0,0.0,,,,original,,emu375_seg000.mat
+emu24_seg002,emu24,LB,,1.0,0.0,,,,original,,emu24_seg002.mat
 abn5891_seg008,abn5891,LB,1.25,0.0,0.0,0.28,"LT, LO, RO",,original,,abn5891_seg008.mat
-pat0078_seg010,pat0078,LB,,1.0,0.0,0.0,,,original,,pat0078_seg010.mat
-emu268_seg000,emu268,LB,,1.0,0.0,0.0,,,original,,emu268_seg000.mat
-emu63_seg004,emu63,LB,,1.0,0.0,0.0,,,original,,emu63_seg004.mat
+pat0078_seg010,pat0078,LB,,1.0,0.0,,,,original,,pat0078_seg010.mat
+emu268_seg000,emu268,LB,,1.0,0.0,,,,original,,emu268_seg000.mat
+emu63_seg004,emu63,LB,,1.0,0.0,,,,original,,emu63_seg004.mat
 abn5053_seg006,abn5053,LB,1.0,0.0,0.0,0.11,LT,,original,,abn5053_seg006.mat
 abn1383_seg003,abn1383,LB,1.0,0.0,0.0,0.44,"RF, RCP, RT",,original,,abn1383_seg003.mat
 abn12400_seg010,abn12400,LB,1.0,0.0,0.0,0.17,LT,,original,,abn12400_seg010.mat
@@ -1979,17 +1979,17 @@ abn2747_seg005,abn2747,LB,1.0,0.0,0.0,0.33,"LCP, LT, LO",,original,,abn2747_seg0
 abn1047_seg006,abn1047,LB,1.0,0.0,0.0,0.67,"LCP, RCP, LT, RT, LO, RO",,original,,abn1047_seg006.mat
 abn11960_seg002,abn11960,LB,1.5,0.0,0.0,0.56,"LF, LCP, LT, LO",,original,,abn11960_seg002.mat
 abn5053_seg004,abn5053,LB,1.0,0.0,0.0,0.11,LT,,original,,abn5053_seg004.mat
-pat0078_seg001,pat0078,LB,,1.0,0.0,0.0,,,original,,pat0078_seg001.mat
+pat0078_seg001,pat0078,LB,,1.0,0.0,,,,original,,pat0078_seg001.mat
 emu70_seg001,emu70,LB,1.0,0.0,0.0,0.28,"LCP, LT, LO",,original,,emu70_seg001.mat
 abn5053_seg009,abn5053,LB,1.0,0.0,0.0,0.11,LT,,original,,abn5053_seg009.mat
-abn798_seg002,abn798,LB,,1.0,0.0,0.0,,,original,,abn798_seg002.mat
+abn798_seg002,abn798,LB,,1.0,0.0,,,,original,,abn798_seg002.mat
 pat0078_seg004,pat0078,LB,1.0,0.0,0.0,0.33,"LCP, LT, LO",,original,,pat0078_seg004.mat
-emu386_seg000,emu386,LB,,1.0,0.0,0.0,,,original,,emu386_seg000.mat
+emu386_seg000,emu386,LB,,1.0,0.0,,,,original,,emu386_seg000.mat
 abn1383_seg004,abn1383,LB,0.75,0.0,0.0,0.67,"LF, RF, LT, RT, LO, RO",,original,,abn1383_seg004.mat
 pat0103_seg007,pat0103,LB,1.5,0.0,0.0,0.17,RCP,,original,,pat0103_seg007.mat
 emu63_seg002,emu63,LB,1.0,0.0,0.0,0.22,"LCP, LT, LO",,original,,emu63_seg002.mat
-abn13729_seg003,abn13729,LB,,1.0,0.0,0.0,,,original,,abn13729_seg003.mat
-abn798_seg006,abn798,LB,,1.0,0.0,0.0,,,original,,abn798_seg006.mat
+abn13729_seg003,abn13729,LB,,1.0,0.0,,,,original,,abn13729_seg003.mat
+abn798_seg006,abn798,LB,,1.0,0.0,,,,original,,abn798_seg006.mat
 pat0048_seg012,pat0048,LB,1.25,0.0,0.0,0.22,"RF, RCP, RO",,original,,pat0048_seg012.mat
 pat0048_seg001,pat0048,LB,1.5,0.0,0.0,0.17,RF,,original,,pat0048_seg001.mat
 abn2747_seg001,abn2747,LB,0.75,0.0,0.0,0.28,"LCP, LT, LO",,original,,abn2747_seg001.mat
@@ -2001,7 +2001,7 @@ abn5053_seg005,abn5053,LB,0.75,0.0,0.0,0.11,LT,,original,,abn5053_seg005.mat
 abn12459_seg002,abn12459,LB,1.5,0.0,0.0,0.44,"LF, LCP, LT, LO",,original,,abn12459_seg002.mat
 abn5891_seg012,abn5891,LB,1.0,0.0,0.0,0.17,"LT, LO",,original,,abn5891_seg012.mat
 emu70_seg009,emu70,LB,1.0,0.0,0.0,0.11,"LCP, LO",,original,,emu70_seg009.mat
-emu246_seg000,emu246,LB,,1.0,0.0,0.0,,,original,,emu246_seg000.mat
+emu246_seg000,emu246,LB,,1.0,0.0,,,,original,,emu246_seg000.mat
 pat0103_seg002,pat0103,LB,1.0,0.0,0.0,0.22,"RF, RCP, RO",,original,,pat0103_seg002.mat
 emu70_seg006,emu70,LB,1.25,0.0,0.0,0.33,"LCP, LT, LO",,original,,emu70_seg006.mat
 pat0068_seg006,pat0068,LB,1.25,0.0,0.0,0.22,"LCP, LT, LO",,original,,pat0068_seg006.mat
@@ -2018,7 +2018,7 @@ abn5053_seg010,abn5053,PH,0.75,0.0,0.0,0.11,LT,,original,spatial_origin=18-Feb,a
 pat0111_seg001,pat0111,PH,1.0,0.0,0.0,0.56,"LF, RF, RT, RO, LCP, RCP",,original,spatial_origin=18-Oct,pat0111_seg001.mat
 abn12400_seg000,abn12400,PH,1.0,0.0,0.0,0.22,"LF, LT, LO",,original,spatial_origin=18-Apr,abn12400_seg000.mat
 pat0084_seg000,pat0084,PH,1.0,0.0,0.0,1.0,"LT, LO",,original,spatial_origin=1,pat0084_seg000.mat
-abn798_seg004,abn798,PH,,1.0,0.0,0.0,na,,original,spatial_origin=na,abn798_seg004.mat
+abn798_seg004,abn798,PH,,1.0,0.0,,na,,original,spatial_origin=na,abn798_seg004.mat
 abn13729_seg006,abn13729,PH,0.5,0.0,0.0,0.28,"LT, LO, LCP, RO",,original,spatial_origin=18-May,abn13729_seg006.mat
 pat0036_seg006,pat0036,PH,1.0,0.0,0.0,0.39,"LCP, RCP, LT",,original,spatial_origin=18-Jul,pat0036_seg006.mat
 emu278_seg001,emu278,PH,1.0,0.0,0.0,0.44,"RF, RT, RO, RCP",,original,spatial_origin=18-Aug,emu278_seg001.mat
@@ -2079,13 +2079,13 @@ pat0048_seg014,pat0048,PH,1.0,0.0,0.0,0.28,"RCP, RO, RF",,original,spatial_origi
 pat0048_seg002,pat0048,PH,1.5,0.0,0.0,1.0,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=1,pat0048_seg002.mat
 pat0089_seg003,pat0089,PH,1.0,0.0,0.0,0.39,"LF, LT, LCP",,original,spatial_origin=18-Jul,pat0089_seg003.mat
 abn13729_seg000,abn13729,PH,0.25,0.0,0.0,0.33,"LT, LCP, LO, RO",,original,spatial_origin=18-Jun,abn13729_seg000.mat
-abn798_seg005,abn798,PH,,1.0,0.0,0.0,na,,original,spatial_origin=na,abn798_seg005.mat
+abn798_seg005,abn798,PH,,1.0,0.0,,na,,original,spatial_origin=na,abn798_seg005.mat
 emu386_seg001,emu386,PH,0.5,0.0,0.0,1.0,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=1,emu386_seg001.mat
 abn5891_seg011,abn5891,PH,1.5,0.0,0.0,0.44,"LF, LT, LCP, LO",,original,spatial_origin=18-Aug,abn5891_seg011.mat
 pat0103_seg008,pat0103,PH,1.5,0.0,0.0,1.0,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=1,pat0103_seg008.mat
 abn12400_seg008,abn12400,PH,1.0,0.0,0.0,0.94,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=17/18,abn12400_seg008.mat
 pat0036_seg008,pat0036,PH,1.0,0.0,0.0,0.22,"LCP, RCP",,original,spatial_origin=18-Apr,pat0036_seg008.mat
-abn5053_seg011,abn5053,PH,,1.0,0.0,0.0,na,,original,spatial_origin=na,abn5053_seg011.mat
+abn5053_seg011,abn5053,PH,,1.0,0.0,,na,,original,spatial_origin=na,abn5053_seg011.mat
 emu70_seg004,emu70,PH,1.5,0.0,0.0,0.5,"LT, RT, LCP, RCP, LO, RO",,original,spatial_origin=18-Sep,emu70_seg004.mat
 pat0048_seg004,pat0048,PH,1.5,0.0,0.0,0.89,"LF, LT, LO, RF, RT, RO, RCP",,original,spatial_origin=16/18,pat0048_seg004.mat
 abn5053_seg003,abn5053,PH,2.0,0.0,0.0,0.11,LT,,original,spatial_origin=18-Feb,abn5053_seg003.mat
@@ -2120,7 +2120,7 @@ pat0106_seg002,pat0106,PH,0.5,0.0,0.0,0.44,"LT, LCP, RCP, LO",,original,spatial_
 pat0103_seg001,pat0103,PH,1.5,0.0,0.0,1.0,"LF, RF, LCP, RCP, LT, RT, LO, RO",,original,spatial_origin=1,pat0103_seg001.mat
 pat0089_seg008,pat0089,PH,2.0,0.0,0.0,0.28,"LT, LO, LF",,original,spatial_origin=18-May,pat0089_seg008.mat
 pat0090_seg009,pat0090,PH,1.5,0.0,0.0,0.94,"LF, RF, LCP, RCP, LT, RT, LO, RO",,original,spatial_origin=17/18,pat0090_seg009.mat
-abn798_seg000,abn798,PH,,1.0,0.0,0.0,na,,original,spatial_origin=na,abn798_seg000.mat
+abn798_seg000,abn798,PH,,1.0,0.0,,na,,original,spatial_origin=na,abn798_seg000.mat
 abn12400_seg005,abn12400,PH,1.0,0.0,0.0,0.17,"LT, LO",,original,spatial_origin=18-Mar,abn12400_seg005.mat
 emu278_seg000,emu278,PH,1.0,0.0,0.0,0.33,"RT, RO, RCP",,original,spatial_origin=18-Jun,emu278_seg000.mat
 abn2947_seg011,abn2947,PH,2.0,0.0,0.0,0.83,"LF, LCP, RCP, LT, RT, LO, RO",,original,spatial_origin=15/18,abn2947_seg011.mat
@@ -2169,7 +2169,7 @@ abn2947_seg000,abn2947,PH,2.0,0.0,0.0,0.78,"LT, LO, RF, RT, RO, RCP",,original,s
 emu156_seg002,emu156,PH,2.25,0.0,0.0,0.28,"LT, LCP, LO",,original,spatial_origin=18-May,emu156_seg002.mat
 abn1047_seg004,abn1047,PH,2.0,0.0,0.0,1.0,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=1,abn1047_seg004.mat
 pat0078_seg007,pat0078,PH,1.0,0.0,0.0,1.0,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=1,pat0078_seg007.mat
-pat0081_seg000,pat0081,PH,,1.0,0.0,0.0,na,,original,spatial_origin=na,pat0081_seg000.mat
+pat0081_seg000,pat0081,PH,,1.0,0.0,,na,,original,spatial_origin=na,pat0081_seg000.mat
 pat0068_seg001,pat0068,PH,1.5,0.0,0.0,0.11,LT,,original,spatial_origin=18-Feb,pat0068_seg001.mat
 pat0089_seg000,pat0089,PH,2.0,0.0,0.0,0.33,"LT, LCP, LO",,original,spatial_origin=18-Jun,pat0089_seg000.mat
 abn5053_seg012,abn5053,PH,0.5,0.0,0.0,0.11,LT,,original,spatial_origin=18-Feb,abn5053_seg012.mat
@@ -2179,7 +2179,7 @@ emu70_seg007,emu70,PH,1.5,0.0,0.0,0.5,"LT, LCP, LO, RCP, RO",,original,spatial_o
 abn1047_seg007,abn1047,PH,0.5,0.0,0.0,1.0,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=1,abn1047_seg007.mat
 pat0078_seg006,pat0078,PH,1.5,0.0,0.0,1.0,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=1,pat0078_seg006.mat
 pat0036_seg003,pat0036,PH,1.0,0.0,0.0,0.89,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=16/18,pat0036_seg003.mat
-abn5053_seg008,abn5053,PH,,1.0,0.0,0.0,na,,original,spatial_origin=na,abn5053_seg008.mat
+abn5053_seg008,abn5053,PH,,1.0,0.0,,na,,original,spatial_origin=na,abn5053_seg008.mat
 emu278_seg002,emu278,PH,1.0,0.0,0.0,0.44,"RT, RO, RF, RCP",,original,spatial_origin=18-Aug,emu278_seg002.mat
 pat0036_seg005,pat0036,PH,1.0,0.0,0.0,0.78,"LF, LT, LO, RT, RO, LCP, RCP",,original,spatial_origin=14/18,pat0036_seg005.mat
 abn6077_seg001,abn6077,PH,1.5,0.0,0.0,0.89,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=16/18,abn6077_seg001.mat
@@ -2209,7 +2209,7 @@ abn5891_seg016,abn5891,PH,1.0,0.0,0.0,0.22,"LT, LO, LCP",,original,spatial_origi
 pat0068_seg012,pat0068,PH,1.0,0.0,0.0,0.5,"LT, LO, LCP, RCP, RO",,original,spatial_origin=18-Sep,pat0068_seg012.mat
 pat0103_seg004,pat0103,PH,2.0,0.0,0.0,0.89,"LF, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=16/18,pat0103_seg004.mat
 abn2947_seg007,abn2947,PH,1.5,0.0,0.0,0.94,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=17/18,abn2947_seg007.mat
-abn798_seg001,abn798,PH,,1.0,0.0,0.0,,,original,spatial_origin=na,abn798_seg001.mat
+abn798_seg001,abn798,PH,,1.0,0.0,,,,original,spatial_origin=na,abn798_seg001.mat
 emu70_seg002,emu70,PH,1.0,0.0,0.0,0.56,"LF, LT, LO, RF, RT, RO, LCP",,original,spatial_origin=18-Oct,emu70_seg002.mat
 abn1383_seg002,abn1383,PH,1.0,0.0,0.0,1.0,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=1,abn1383_seg002.mat
 abn798_seg007,abn798,PH,0.25,0.0,0.0,1.0,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=1,abn798_seg007.mat
@@ -2258,7 +2258,7 @@ abn1383_seg004,abn1383,PH,1.0,0.0,0.0,1.0,"LF, LT, LO, RF, RT, RO, LCP, RCP",,or
 pat0103_seg007,pat0103,PH,2.0,0.0,0.0,1.0,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=1,pat0103_seg007.mat
 emu63_seg002,emu63,PH,1.0,0.0,0.0,0.33,"LF, LT, LO, LCP",,original,spatial_origin=18-Jun,emu63_seg002.mat
 abn13729_seg003,abn13729,PH,0.4,0.0,0.0,0.22,"LT, LO, LCP",,original,spatial_origin=18-Apr,abn13729_seg003.mat
-abn798_seg006,abn798,PH,,1.0,0.0,0.0,na,,original,spatial_origin=na,abn798_seg006.mat
+abn798_seg006,abn798,PH,,1.0,0.0,,na,,original,spatial_origin=na,abn798_seg006.mat
 pat0048_seg012,pat0048,PH,1.0,0.0,0.0,0.78,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=14/18,pat0048_seg012.mat
 pat0048_seg001,pat0048,PH,1.5,0.0,0.0,1.0,"LF, LT, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=1,pat0048_seg001.mat
 abn2747_seg001,abn2747,PH,1.0,0.0,0.0,0.44,"LF, LT, LCP, LO, RCP, RO",,original,spatial_origin=18-Aug,abn2747_seg001.mat
@@ -2270,7 +2270,7 @@ abn5053_seg005,abn5053,PH,1.0,0.0,0.0,0.11,LT,,original,spatial_origin=18-Feb,ab
 abn12459_seg002,abn12459,PH,2.0,0.0,0.0,0.89,"LF, LT, LO, RF, RT, RO, LCP",,original,spatial_origin=16/18,abn12459_seg002.mat
 abn5891_seg012,abn5891,PH,1.0,0.0,0.0,0.28,"LT, LO, RT,",,original,spatial_origin=18-May,abn5891_seg012.mat
 emu70_seg009,emu70,PH,1.0,0.0,0.0,0.39,"LCP, LO, RF, RCP, RO",,original,spatial_origin=18-Jul,emu70_seg009.mat
-emu246_seg000,emu246,PH,,1.0,0.0,0.0,na,,original,spatial_origin=na,emu246_seg000.mat
+emu246_seg000,emu246,PH,,1.0,0.0,,na,,original,spatial_origin=na,emu246_seg000.mat
 pat0103_seg002,pat0103,PH,1.5,0.0,0.0,0.89,"LF, LO, RF, RT, RO, LCP, RCP",,original,spatial_origin=16/18,pat0103_seg002.mat
 emu70_seg006,emu70,PH,1.5,0.0,0.0,0.56,"LT, LO, LCP, RF, RCP, RO",,original,spatial_origin=18-Oct,emu70_seg006.mat
 pat0068_seg006,pat0068,PH,1.5,0.0,0.0,0.61,"LT, RT, LF, LCP, RF, RCP",,original,spatial_origin=18-Nov,pat0068_seg006.mat
@@ -2569,7 +2569,7 @@ abn514_seg107,abn514,LB,1.5,0.0,0.0,0.67,,,original,,abn514_seg107.mat
 abn514_seg054,abn514,LB,1.0,0.0,0.0,0.67,,,original,,abn514_seg054.mat
 abn11079_seg002,abn11079,LB,1.0,0.0,0.0,0.67,,,original,,abn11079_seg002.mat
 abn10490_seg001,abn10490,LB,2.0,0.0,0.0,0.11,,,original,,abn10490_seg001.mat
-pat0004_seg018,pat0004,LB,,1.0,0.0,0.0,,,original,,pat0004_seg018.mat
+pat0004_seg018,pat0004,LB,,1.0,0.0,,,,original,,pat0004_seg018.mat
 abn3292_seg002,abn3292,LB,2.0,0.0,0.0,0.5,,,original,,abn3292_seg002.mat
 abn514_seg114,abn514,LB,1.5,0.0,0.0,0.78,,,original,,abn514_seg114.mat
 abn11079_seg016,abn11079,LB,1.5,0.0,0.0,0.44,,,original,,abn11079_seg016.mat
@@ -6559,8 +6559,8 @@ abn12400_seg001,abn12400,MW,,0.0,0.0,0.2222222222222222,,2026-04-04,expert_spati
 abn12400_seg003,abn12400,MW,,0.0,0.0,0.3333333333333333,,2026-04-04,expert_spatial_pd_batch1,,abn12400_seg003.mat
 abn12400_seg004,abn12400,MW,,0.0,0.0,0.1111111111111111,,2026-04-04,expert_spatial_pd_batch1,,abn12400_seg004.mat
 abn12400_seg005,abn12400,MW,,0.0,0.0,0.1111111111111111,,2026-04-04,expert_spatial_pd_batch1,,abn12400_seg005.mat
-abn12400_seg006,abn12400,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn12400_seg006.mat
-abn12400_seg007,abn12400,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn12400_seg007.mat
+abn12400_seg006,abn12400,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn12400_seg006.mat
+abn12400_seg007,abn12400,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn12400_seg007.mat
 abn12400_seg008,abn12400,MW,,0.0,0.0,0.2777777777777778,,2026-04-04,expert_spatial_pd_batch1,,abn12400_seg008.mat
 abn12400_seg009,abn12400,MW,,0.0,0.0,0.1111111111111111,,2026-04-04,expert_spatial_pd_batch1,,abn12400_seg009.mat
 abn12400_seg010,abn12400,MW,,0.0,0.0,0.1111111111111111,,2026-04-04,expert_spatial_pd_batch1,,abn12400_seg010.mat
@@ -6569,9 +6569,9 @@ abn12459_seg001,abn12459,MW,,0.0,0.0,0.4444444444444444,,2026-04-04,expert_spati
 abn12459_seg002,abn12459,MW,,0.0,0.0,0.6111111111111112,,2026-04-04,expert_spatial_pd_batch1,,abn12459_seg002.mat
 abn12459_seg003,abn12459,MW,,0.0,0.0,0.8888888888888888,,2026-04-04,expert_spatial_pd_batch1,,abn12459_seg003.mat
 abn13729_seg000,abn13729,MW,,0.0,0.0,0.2222222222222222,,2026-04-04,expert_spatial_pd_batch1,,abn13729_seg000.mat
-abn13729_seg001,abn13729,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn13729_seg001.mat
+abn13729_seg001,abn13729,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn13729_seg001.mat
 abn13729_seg002,abn13729,MW,,0.0,0.0,0.1111111111111111,,2026-04-04,expert_spatial_pd_batch1,,abn13729_seg002.mat
-abn13729_seg003,abn13729,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn13729_seg003.mat
+abn13729_seg003,abn13729,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn13729_seg003.mat
 abn13729_seg004,abn13729,MW,,0.0,0.0,0.2222222222222222,,2026-04-04,expert_spatial_pd_batch1,,abn13729_seg004.mat
 abn13729_seg005,abn13729,MW,,0.0,0.0,0.2777777777777778,,2026-04-04,expert_spatial_pd_batch1,,abn13729_seg005.mat
 abn1383_seg000,abn1383,MW,,0.0,0.0,0.9444444444444444,,2026-04-04,expert_spatial_pd_batch1,,abn1383_seg000.mat
@@ -6896,13 +6896,13 @@ abn4987_seg031,abn4987,MW,,0.0,0.0,1.0,,2026-04-04,expert_spatial_pd_batch1,,abn
 abn4987_seg032,abn4987,MW,,0.0,0.0,0.9444444444444444,,2026-04-04,expert_spatial_pd_batch1,,abn4987_seg032.mat
 abn4987_seg033,abn4987,MW,,0.0,0.0,1.0,,2026-04-04,expert_spatial_pd_batch1,,abn4987_seg033.mat
 abn5053_seg001,abn5053,MW,,0.0,0.0,0.1111111111111111,,2026-04-04,expert_spatial_pd_batch1,,abn5053_seg001.mat
-abn5053_seg003,abn5053,MW,,0.0,0.0,0.05555555555555555,,2026-04-04,expert_spatial_pd_batch1,,abn5053_seg003.mat
-abn5053_seg006,abn5053,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn5053_seg006.mat
+abn5053_seg003,abn5053,MW,,0.0,0.0,0.0555555555555555,,2026-04-04,expert_spatial_pd_batch1,,abn5053_seg003.mat
+abn5053_seg006,abn5053,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn5053_seg006.mat
 abn5053_seg008,abn5053,MW,,0.0,0.0,0.2222222222222222,,2026-04-04,expert_spatial_pd_batch1,,abn5053_seg008.mat
 abn5053_seg009,abn5053,MW,,0.0,0.0,0.1111111111111111,,2026-04-04,expert_spatial_pd_batch1,,abn5053_seg009.mat
 abn5053_seg010,abn5053,MW,,0.0,0.0,0.1111111111111111,,2026-04-04,expert_spatial_pd_batch1,,abn5053_seg010.mat
-abn5053_seg011,abn5053,MW,,0.0,0.0,0.0,,2026-04-04,expert_spatial_pd_batch1,,abn5053_seg011.mat
-abn5053_seg012,abn5053,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn5053_seg012.mat
+abn5053_seg011,abn5053,MW,,0.0,0.0,,,2026-04-04,expert_spatial_pd_batch1,,abn5053_seg011.mat
+abn5053_seg012,abn5053,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn5053_seg012.mat
 abn5891_seg000,abn5891,MW,,0.0,0.0,0.5,,2026-04-04,expert_spatial_pd_batch1,,abn5891_seg000.mat
 abn5891_seg001,abn5891,MW,,0.0,0.0,0.4444444444444444,,2026-04-04,expert_spatial_pd_batch1,,abn5891_seg001.mat
 abn5891_seg002,abn5891,MW,,0.0,0.0,0.3333333333333333,,2026-04-04,expert_spatial_pd_batch1,,abn5891_seg002.mat
@@ -6918,8 +6918,8 @@ abn5891_seg011,abn5891,MW,,0.0,0.0,0.5555555555555556,,2026-04-04,expert_spatial
 abn5891_seg012,abn5891,MW,,0.0,0.0,0.2222222222222222,,2026-04-04,expert_spatial_pd_batch1,,abn5891_seg012.mat
 abn5891_seg013,abn5891,MW,,0.0,0.0,0.4444444444444444,,2026-04-04,expert_spatial_pd_batch1,,abn5891_seg013.mat
 abn5891_seg014,abn5891,MW,,0.0,0.0,0.3333333333333333,,2026-04-04,expert_spatial_pd_batch1,,abn5891_seg014.mat
-abn5891_seg015,abn5891,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn5891_seg015.mat
-abn5891_seg016,abn5891,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn5891_seg016.mat
+abn5891_seg015,abn5891,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn5891_seg015.mat
+abn5891_seg016,abn5891,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,abn5891_seg016.mat
 abn6077_seg000,abn6077,MW,,0.0,0.0,0.7777777777777778,,2026-04-04,expert_spatial_pd_batch1,,abn6077_seg000.mat
 abn6077_seg001,abn6077,MW,,0.0,0.0,0.7222222222222222,,2026-04-04,expert_spatial_pd_batch1,,abn6077_seg001.mat
 abn6077_seg002,abn6077,MW,,0.0,0.0,0.8333333333333334,,2026-04-04,expert_spatial_pd_batch1,,abn6077_seg002.mat
@@ -6930,12 +6930,12 @@ abn6077_seg006,abn6077,MW,,0.0,0.0,0.7222222222222222,,2026-04-04,expert_spatial
 emu111_seg000,emu111,MW,,0.0,0.0,0.6666666666666666,,2026-04-04,expert_spatial_pd_batch1,,emu111_seg000.mat
 emu111_seg001,emu111,MW,,0.0,0.0,0.6666666666666666,,2026-04-04,expert_spatial_pd_batch1,,emu111_seg001.mat
 emu156_seg000,emu156,MW,,0.0,0.0,0.2222222222222222,,2026-04-04,expert_spatial_pd_batch1,,emu156_seg000.mat
-emu156_seg001,emu156,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,emu156_seg001.mat
+emu156_seg001,emu156,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,emu156_seg001.mat
 emu156_seg002,emu156,MW,,0.0,0.0,0.3888888888888889,,2026-04-04,expert_spatial_pd_batch1,,emu156_seg002.mat
 emu156_seg003,emu156,MW,,0.0,0.0,0.2777777777777778,,2026-04-04,expert_spatial_pd_batch1,,emu156_seg003.mat
 emu156_seg004,emu156,MW,,0.0,0.0,0.2222222222222222,,2026-04-04,expert_spatial_pd_batch1,,emu156_seg004.mat
 emu156_seg005,emu156,MW,,0.0,0.0,0.3333333333333333,,2026-04-04,expert_spatial_pd_batch1,,emu156_seg005.mat
-emu246_seg000,emu246,MW,,0.0,0.0,0.05555555555555555,,2026-04-04,expert_spatial_pd_batch1,,emu246_seg000.mat
+emu246_seg000,emu246,MW,,0.0,0.0,0.0555555555555555,,2026-04-04,expert_spatial_pd_batch1,,emu246_seg000.mat
 emu246_seg004,emu246,MW,,0.0,0.0,0.2222222222222222,,2026-04-04,expert_spatial_pd_batch1,,emu246_seg004.mat
 emu247_seg000,emu247,MW,,0.0,0.0,0.1111111111111111,,2026-04-04,expert_spatial_pd_batch1,,emu247_seg000.mat
 emu247_seg001,emu247,MW,,0.0,0.0,0.1111111111111111,,2026-04-04,expert_spatial_pd_batch1,,emu247_seg001.mat
@@ -6951,9 +6951,9 @@ emu70_seg002,emu70,MW,,0.0,0.0,0.6111111111111112,,2026-04-04,expert_spatial_pd_
 emu70_seg003,emu70,MW,,0.0,0.0,0.7222222222222222,,2026-04-04,expert_spatial_pd_batch1,,emu70_seg003.mat
 emu70_seg004,emu70,MW,,0.0,0.0,0.6666666666666666,,2026-04-04,expert_spatial_pd_batch1,,emu70_seg004.mat
 emu70_seg005,emu70,MW,,0.0,0.0,0.6111111111111112,,2026-04-04,expert_spatial_pd_batch1,,emu70_seg005.mat
-emu70_seg006,emu70,MW,,0.0,0.0,0.05555555555555555,,2026-04-04,expert_spatial_pd_batch1,,emu70_seg006.mat
-emu70_seg007,emu70,MW,,0.0,0.0,0.05555555555555555,,2026-04-04,expert_spatial_pd_batch1,,emu70_seg007.mat
-emu70_seg008,emu70,MW,,0.0,0.0,0.05555555555555555,,2026-04-04,expert_spatial_pd_batch1,,emu70_seg008.mat
+emu70_seg006,emu70,MW,,0.0,0.0,0.0555555555555555,,2026-04-04,expert_spatial_pd_batch1,,emu70_seg006.mat
+emu70_seg007,emu70,MW,,0.0,0.0,0.0555555555555555,,2026-04-04,expert_spatial_pd_batch1,,emu70_seg007.mat
+emu70_seg008,emu70,MW,,0.0,0.0,0.0555555555555555,,2026-04-04,expert_spatial_pd_batch1,,emu70_seg008.mat
 emu70_seg009,emu70,MW,,0.0,0.0,0.1111111111111111,,2026-04-04,expert_spatial_pd_batch1,,emu70_seg009.mat
 pat0036_seg000,pat0036,MW,,0.0,0.0,0.3333333333333333,,2026-04-04,expert_spatial_pd_batch1,,pat0036_seg000.mat
 pat0036_seg001,pat0036,MW,,0.0,0.0,0.3333333333333333,,2026-04-04,expert_spatial_pd_batch1,,pat0036_seg001.mat
@@ -6990,11 +6990,11 @@ pat0048_seg012,pat0048,MW,,0.0,0.0,0.3333333333333333,,2026-04-04,expert_spatial
 pat0048_seg013,pat0048,MW,,0.0,0.0,0.2222222222222222,,2026-04-04,expert_spatial_pd_batch1,,pat0048_seg013.mat
 pat0048_seg014,pat0048,MW,,0.0,0.0,0.2222222222222222,,2026-04-04,expert_spatial_pd_batch1,,pat0048_seg014.mat
 pat0068_seg004,pat0068,MW,,0.0,0.0,0.2777777777777778,,2026-04-04,expert_spatial_pd_batch1,,pat0068_seg004.mat
-pat0068_seg005,pat0068,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0068_seg005.mat
-pat0068_seg006,pat0068,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0068_seg006.mat
-pat0068_seg007,pat0068,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0068_seg007.mat
-pat0068_seg008,pat0068,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0068_seg008.mat
-pat0068_seg010,pat0068,MW,,0.0,0.0,0.05555555555555555,,2026-04-04,expert_spatial_pd_batch1,,pat0068_seg010.mat
+pat0068_seg005,pat0068,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0068_seg005.mat
+pat0068_seg006,pat0068,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0068_seg006.mat
+pat0068_seg007,pat0068,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0068_seg007.mat
+pat0068_seg008,pat0068,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0068_seg008.mat
+pat0068_seg010,pat0068,MW,,0.0,0.0,0.0555555555555555,,2026-04-04,expert_spatial_pd_batch1,,pat0068_seg010.mat
 pat0068_seg013,pat0068,MW,,0.0,0.0,0.1111111111111111,,2026-04-04,expert_spatial_pd_batch1,,pat0068_seg013.mat
 pat0078_seg000,pat0078,MW,,0.0,0.0,0.5,,2026-04-04,expert_spatial_pd_batch1,,pat0078_seg000.mat
 pat0078_seg003,pat0078,MW,,0.0,0.0,0.2777777777777778,,2026-04-04,expert_spatial_pd_batch1,,pat0078_seg003.mat
@@ -7004,7 +7004,7 @@ pat0078_seg006,pat0078,MW,,0.0,0.0,0.4444444444444444,,2026-04-04,expert_spatial
 pat0078_seg007,pat0078,MW,,0.0,0.0,0.4444444444444444,,2026-04-04,expert_spatial_pd_batch1,,pat0078_seg007.mat
 pat0078_seg008,pat0078,MW,,0.0,0.0,0.5,,2026-04-04,expert_spatial_pd_batch1,,pat0078_seg008.mat
 pat0078_seg009,pat0078,MW,,0.0,0.0,0.4444444444444444,,2026-04-04,expert_spatial_pd_batch1,,pat0078_seg009.mat
-pat0089_seg000,pat0089,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0089_seg000.mat
+pat0089_seg000,pat0089,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0089_seg000.mat
 pat0089_seg001,pat0089,MW,,0.0,0.0,0.2777777777777778,,2026-04-04,expert_spatial_pd_batch1,,pat0089_seg001.mat
 pat0089_seg002,pat0089,MW,,0.0,0.0,0.3888888888888889,,2026-04-04,expert_spatial_pd_batch1,,pat0089_seg002.mat
 pat0089_seg003,pat0089,MW,,0.0,0.0,0.2222222222222222,,2026-04-04,expert_spatial_pd_batch1,,pat0089_seg003.mat
@@ -7031,14 +7031,14 @@ pat0103_seg003,pat0103,MW,,0.0,0.0,0.4444444444444444,,2026-04-04,expert_spatial
 pat0103_seg004,pat0103,MW,,0.0,0.0,0.4444444444444444,,2026-04-04,expert_spatial_pd_batch1,,pat0103_seg004.mat
 pat0103_seg005,pat0103,MW,,0.0,0.0,0.3888888888888889,,2026-04-04,expert_spatial_pd_batch1,,pat0103_seg005.mat
 pat0103_seg006,pat0103,MW,,0.0,0.0,0.1111111111111111,,2026-04-04,expert_spatial_pd_batch1,,pat0103_seg006.mat
-pat0103_seg007,pat0103,MW,,0.0,0.0,0.05555555555555555,,2026-04-04,expert_spatial_pd_batch1,,pat0103_seg007.mat
-pat0103_seg008,pat0103,MW,,0.0,0.0,0.05555555555555555,,2026-04-04,expert_spatial_pd_batch1,,pat0103_seg008.mat
-pat0103_seg009,pat0103,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0103_seg009.mat
-pat0103_seg010,pat0103,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0103_seg010.mat
+pat0103_seg007,pat0103,MW,,0.0,0.0,0.0555555555555555,,2026-04-04,expert_spatial_pd_batch1,,pat0103_seg007.mat
+pat0103_seg008,pat0103,MW,,0.0,0.0,0.0555555555555555,,2026-04-04,expert_spatial_pd_batch1,,pat0103_seg008.mat
+pat0103_seg009,pat0103,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0103_seg009.mat
+pat0103_seg010,pat0103,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0103_seg010.mat
 pat0106_seg000,pat0106,MW,,0.0,0.0,0.3888888888888889,,2026-04-04,expert_spatial_pd_batch1,,pat0106_seg000.mat
 pat0106_seg001,pat0106,MW,,0.0,0.0,0.5555555555555556,,2026-04-04,expert_spatial_pd_batch1,,pat0106_seg001.mat
 pat0106_seg002,pat0106,MW,,0.0,0.0,0.5555555555555556,,2026-04-04,expert_spatial_pd_batch1,,pat0106_seg002.mat
 pat0106_seg003,pat0106,MW,,0.0,0.0,0.5,,2026-04-04,expert_spatial_pd_batch1,,pat0106_seg003.mat
 pat0106_seg004,pat0106,MW,,0.0,0.0,0.3333333333333333,,2026-04-04,expert_spatial_pd_batch1,,pat0106_seg004.mat
-pat0111_seg000,pat0111,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0111_seg000.mat
-pat0111_seg001,pat0111,MW,,0.0,0.0,0.16666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0111_seg001.mat
+pat0111_seg000,pat0111,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0111_seg000.mat
+pat0111_seg001,pat0111,MW,,0.0,0.0,0.1666666666666666,,2026-04-04,expert_spatial_pd_batch1,,pat0111_seg001.mat
