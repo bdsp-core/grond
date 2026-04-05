@@ -78,9 +78,9 @@ def main():
     sl = sl[sl.excluded != True]
 
     # Build per-rater spatial extent lookup
-    RATERS = ['LB', 'PH', 'SZ']
-    RATER_COLORS = {'LB': '#2196F3', 'PH': '#E91E63', 'SZ': '#4CAF50'}  # blue, pink, green
-    RATER_MARKERS = {'LB': 'o', 'PH': 's', 'SZ': '^'}
+    RATERS = ['LB', 'PH', 'SZ', 'MW']
+    RATER_COLORS = {'LB': '#2196F3', 'PH': '#E91E63', 'SZ': '#4CAF50', 'MW': '#FF9800'}  # blue, pink, green, orange
+    RATER_MARKERS = {'LB': 'o', 'PH': 's', 'SZ': '^', 'MW': 'D'}
 
     spat = ann[ann.spatial_extent.notna() & ann.rater.isin(RATERS)].copy()
     spat['spatial_extent'] = pd.to_numeric(spat['spatial_extent'], errors='coerce')
