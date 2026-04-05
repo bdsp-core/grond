@@ -39,7 +39,7 @@ DURATION = 10.0
 LOWPASS_HZ = 20.0
 DISPLAY_SAMPLES = 800
 PD_THRESHOLD = 0.62
-RDA_THRESHOLD = 0.30
+RDA_THRESHOLD = 0.15
 
 MONO_CHANNELS = [
     'Fp1', 'F3', 'C3', 'P3', 'F7', 'T3', 'T5', 'O1', 'Fz', 'Cz',
@@ -131,7 +131,7 @@ def predict_rda_channel_scores(seg_bi, freq_hz):
     """Use rda_spatial_extent for LRDA/GRDA channel scores."""
     try:
         from rda_spatial_extent import rda_spatial_extent
-        result = rda_spatial_extent(seg_bi, freq_hz, threshold=RDA_THRESHOLD)
+        result = rda_spatial_extent(seg_bi, freq_hz, threshold=RDA_THRESHOLD, metric='plv_amp')
         scores = result['channel_scores']
         return [float(s) for s in scores]
     except Exception as e:
@@ -141,57 +141,84 @@ def predict_rda_channel_scores(seg_bi, freq_hz):
 
 # ── Case selection ──
 
-def find_target_segments():
-    """Find segments with spatial_extent from >=2 of LB/PH/SZ, non-excluded, no MW label."""
+def find_target_segments(mode='expert', subtypes=None, max_cases=0, min_votes=0):
+    """Find segments needing MW spatial extent labels.
+
+    Modes:
+        'expert': Segments with >=2 LB/PH/SZ spatial labels but no MW (original behavior)
+        'iiic': IIIC segments (>=min_votes) with MW freq+timing but no MW spatial
+
+    Args:
+        mode: 'expert' or 'iiic'
+        subtypes: list of subtypes to include, e.g. ['lpd', 'gpd']. None = all.
+        max_cases: limit per subtype (0 = no limit)
+        min_votes: minimum IIIC votes (only for mode='iiic')
+    """
+    import json
+
     sl = pd.read_csv(str(LABELS_DIR / 'segment_labels.csv'))
     ann = pd.read_csv(str(LABELS_DIR / 'annotations.csv'))
 
-    # Non-excluded segments
-    sl_active = sl[sl.excluded == False].copy()
+    sl_active = sl[sl.excluded.fillna(False).astype(bool) == False].copy()
     active_mats = set(sl_active['mat_file'])
 
-    # Expert spatial_extent annotations
+    # MW already labeled spatial
+    mw_spat_labeled = set(ann[(ann.rater == 'MW') & ann.spatial_extent.notna()].mat_file)
+
+    # Expert spatial values lookup
     expert_ann = ann[
         ann.rater.isin(['LB', 'PH', 'SZ']) &
         ann.spatial_extent.notna() &
         ann.mat_file.isin(active_mats)
     ].copy()
-
-    # Require at least 2 expert raters with spatial_extent
-    seg_rater_counts = expert_ann.groupby('segment_id').rater.nunique()
-    segs_2plus = set(seg_rater_counts[seg_rater_counts >= 2].index)
-
-    # MW already labeled
-    mw_labeled = set(ann[(ann.rater == 'MW') & ann.spatial_extent.notna()].segment_id)
-
-    # Need labeling
-    need_label = segs_2plus - mw_labeled
-
-    # Build expert values lookup: segment_id -> {rater: spatial_extent}
-    expert_vals = {}
+    expert_vals_lookup = {}
     for _, row in expert_ann.iterrows():
-        sid = row['segment_id']
-        if sid in need_label:
-            if sid not in expert_vals:
-                expert_vals[sid] = {}
-            expert_vals[sid][row['rater']] = float(row['spatial_extent'])
+        mf = row['mat_file']
+        if mf not in expert_vals_lookup:
+            expert_vals_lookup[mf] = {}
+        expert_vals_lookup[mf][row['rater']] = float(row['spatial_extent'])
 
-    # Merge with segment_labels for metadata
     sl_lookup = sl_active.set_index('mat_file')
-    mat_to_seg = dict(zip(
-        ann[ann.segment_id.isin(need_label)].segment_id,
-        ann[ann.segment_id.isin(need_label)].mat_file
-    ))
+
+    if mode == 'expert':
+        # Original: segments with >=2 expert spatial raters, no MW
+        seg_rater_counts = expert_ann.groupby('mat_file').rater.nunique()
+        target_mats = set(seg_rater_counts[seg_rater_counts >= 2].index) - mw_spat_labeled
+
+    elif mode == 'iiic':
+        # IIIC segments with MW freq+timing but no MW spatial
+        nv = pd.to_numeric(sl_active.iiic_n_votes, errors='coerce')
+        iiic_mats = set(sl_active[nv >= min_votes].mat_file)
+
+        # Has MW freq
+        mw_freq_mats = set(sl_active[
+            (sl_active.expert_freq_rater == 'MW') & sl_active.expert_freq_hz.notna()
+        ].mat_file)
+
+        # Has discharge timing
+        dt_path = LABELS_DIR / 'discharge_times.json'
+        timing_sids = set()
+        if dt_path.exists():
+            with open(str(dt_path)) as f:
+                dt = json.load(f)
+            timing_sids = set(dt.keys())
+        timing_mats = {m for m in iiic_mats
+                       if m.replace('.mat', '') in timing_sids}
+
+        target_mats = (iiic_mats & mw_freq_mats & timing_mats) - mw_spat_labeled
+    else:
+        raise ValueError(f"Unknown mode: {mode}")
 
     results = {'pd': [], 'rda': []}
-    for sid in sorted(need_label):
-        if sid not in mat_to_seg:
-            continue
-        mat_file = mat_to_seg[sid]
+    for mat_file in sorted(target_mats):
         if mat_file not in sl_lookup.index:
             continue
         row = sl_lookup.loc[mat_file]
         subtype = row['subtype']
+        if subtypes and subtype not in subtypes:
+            continue
+
+        sid = mat_file.replace('.mat', '')
         patient_id = str(row['patient_id'])
         is_pd = subtype in ('lpd', 'gpd')
         category = 'pd' if is_pd else 'rda'
@@ -200,18 +227,30 @@ def find_target_segments():
         if not is_pd:
             freq_hz = row.get('pdchar_freq_hz', None)
             if pd.isna(freq_hz):
-                freq_hz = row.get('algo_freq_hz', None)
-            if pd.isna(freq_hz):
-                freq_hz = 1.5  # fallback
+                freq_hz = 1.5
 
         results[category].append({
             'segment_id': sid,
             'mat_file': mat_file,
             'patient_id': patient_id,
             'subtype': subtype,
-            'expert_vals': expert_vals.get(sid, {}),
+            'expert_vals': expert_vals_lookup.get(mat_file, {}),
             'freq_hz': float(freq_hz) if freq_hz is not None else None,
         })
+
+    # Apply max_cases per subtype
+    if max_cases > 0:
+        for cat in results:
+            by_sub = {}
+            for case in results[cat]:
+                sub = case['subtype']
+                if sub not in by_sub:
+                    by_sub[sub] = []
+                by_sub[sub].append(case)
+            trimmed = []
+            for sub in by_sub:
+                trimmed.extend(by_sub[sub][:max_cases])
+            results[cat] = trimmed
 
     return results
 
@@ -266,7 +305,7 @@ def build_html(cases_data, category, storage_key, export_filename):
   #eeg-panel {{
     flex: 1; padding: 8px; position: relative;
   }}
-  #eeg-canvas {{ display: block; width: 100%; cursor: default; }}
+  #eeg-canvas {{ display: block; width: 100%; cursor: pointer; }}
 
   #control-panel {{
     flex: 0 0 320px; max-width: 320px; padding: 8px;
@@ -380,6 +419,8 @@ const Z_SCALE = 0.01;
 let idx = 0;
 let selectedN = 0;     // number of channels currently selected
 let labeled = new Set();
+let manualOverrides = new Set();  // channels manually toggled by clicking
+let useManualMode = false;        // true when user has clicked channels
 
 // Persistence
 const STORAGE_KEY = '{storage_key}';
@@ -414,10 +455,15 @@ const N_DISPLAY = DISPLAY_CHANNELS.length;
 
 function setChannelCount(n) {{
   selectedN = Math.max(0, Math.min(N_CHANNELS, n));
+  useManualMode = false;
+  manualOverrides.clear();
   redraw();
 }}
 
 function getInvolvedChannels() {{
+  if (useManualMode) {{
+    return new Set(manualOverrides);
+  }}
   // Sort channels by score descending, return top N indices
   const c = CASES[idx];
   const scores = c.channel_scores;
@@ -427,6 +473,22 @@ function getInvolvedChannels() {{
     involved.add(ranked[i][1]);
   }}
   return involved;
+}}
+
+function toggleChannel(chIdx) {{
+  if (!useManualMode) {{
+    // Enter manual mode: copy current selection
+    const current = getInvolvedChannels();
+    manualOverrides = new Set(current);
+    useManualMode = true;
+  }}
+  if (manualOverrides.has(chIdx)) {{
+    manualOverrides.delete(chIdx);
+  }} else {{
+    manualOverrides.add(chIdx);
+  }}
+  selectedN = manualOverrides.size;
+  redraw();
 }}
 
 function redraw() {{
@@ -640,6 +702,8 @@ function goPrev() {{
 
 function loadCase() {{
   const c = CASES[idx];
+  useManualMode = false;
+  manualOverrides.clear();
   // Restore previous label if exists
   if (allLabels[c.segment_id] && !allLabels[c.segment_id].rejected && allLabels[c.segment_id].n_channels !== null) {{
     selectedN = allLabels[c.segment_id].n_channels;
@@ -667,6 +731,33 @@ function exportJSON() {{
   showStatus('Exported ' + Object.keys(allLabels).length + ' labels');
 }}
 
+// ── Click on canvas to toggle channel ──
+
+document.getElementById('eeg-canvas').addEventListener('click', (e) => {{
+  const canvas = document.getElementById('eeg-canvas');
+  const rect = canvas.getBoundingClientRect();
+  const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+  const chSpacing = PLOT_H / (N_DISPLAY + 1);
+
+  // Find which channel row was clicked
+  let closestDi = -1;
+  let closestDist = Infinity;
+  for (let di = 0; di < N_DISPLAY; di++) {{
+    const ch = DISPLAY_CHANNELS[di];
+    if (ch.idx < 0) continue;
+    const yCenter = MARGIN_TOP + chSpacing * (di + 1);
+    const dist = Math.abs(y - yCenter);
+    if (dist < closestDist) {{
+      closestDist = dist;
+      closestDi = di;
+    }}
+  }}
+  if (closestDi >= 0 && closestDist < chSpacing * 0.6) {{
+    const chIdx = DISPLAY_CHANNELS[closestDi].idx;
+    toggleChannel(chIdx);
+  }}
+}});
+
 // ── Keyboard ──
 
 document.addEventListener('keydown', (e) => {{
@@ -690,12 +781,25 @@ loadCase();
 # ── Main ──
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(description='Spatial Extent Labeler Generator')
+    parser.add_argument('--mode', type=str, default='expert', choices=['expert', 'iiic'],
+                        help='Mode: expert (original dataset) or iiic (IIIC segments with freq+timing)')
+    parser.add_argument('--subtypes', type=str, default=None,
+                        help='Comma-separated subtypes, e.g. lpd,gpd')
+    parser.add_argument('--max-cases', type=int, default=0, help='Max cases per subtype (0=all)')
+    parser.add_argument('--min-votes', type=int, default=10, help='Min IIIC votes (iiic mode)')
+    args = parser.parse_args()
+
+    subtypes = args.subtypes.split(',') if args.subtypes else None
+
     print("=" * 70)
-    print("  Spatial Extent Labeler Generator")
+    print(f"  Spatial Extent Labeler Generator (mode={args.mode})")
     print("=" * 70)
 
     print("\nFinding target segments...")
-    targets = find_target_segments()
+    targets = find_target_segments(mode=args.mode, subtypes=subtypes,
+                                    max_cases=args.max_cases, min_votes=args.min_votes)
     print(f"  PD segments: {len(targets['pd'])}")
     print(f"  RDA segments: {len(targets['rda'])}")
 
@@ -708,8 +812,9 @@ def main():
 
         is_pd = (category == 'pd')
         label = 'PD' if is_pd else 'RDA'
-        storage_key = f'expert_spatial_{category}_v1'
-        export_filename = f'expert_spatial_{category}_results.json'
+        mode_tag = args.mode
+        storage_key = f'{mode_tag}_spatial_{category}_v1'
+        export_filename = f'{mode_tag}_spatial_{category}_results.json'
         out_file = OUT_DIR / f'spatial_extent_labeler_{category}.html'
 
         print(f"\n{'='*50}")
