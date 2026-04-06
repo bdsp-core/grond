@@ -239,8 +239,9 @@ def gfp_align(mono_filtered, discharge_times_sec, fs=200, window_ms=25):
                 mean_topo_mono = np.mean(refined_voltages, axis=0)
                 mean_topo_lap = np.mean(lap_voltages, axis=0)
 
-    # No polarity flip — preserve true voltage polarity.
-    # Red = positive, Blue = negative in RdBu_r colormap.
+    # Use absolute values — we care about magnitude of deflection, not polarity.
+    mean_topo_mono = np.abs(mean_topo_mono)
+    mean_topo_lap = np.abs(mean_topo_lap)
 
     return mean_topo_mono, mean_topo_lap
 
@@ -254,25 +255,25 @@ def generate_topoplot_b64(mean_topo, ch_names_orig, title='Mean discharge\ntopog
     montage = mne.channels.make_standard_montage('standard_1020')
     info.set_montage(montage)
 
-    vmax = float(np.max(np.abs(mean_topo)))
+    vmax = float(np.max(mean_topo))
     if vmax < 1e-10:
         vmax = 1.0
 
     fig, ax = plt.subplots(1, 1, figsize=(3, 3))
     # Plot topomap without names — we'll add them manually
     image, _ = mne.viz.plot_topomap(mean_topo, info, axes=ax, show=False,
-                                     contours=6, cmap='RdBu_r', sensors=False,
-                                     vlim=(-vmax, vmax))
+                                     contours=6, cmap='inferno', sensors=False,
+                                     vlim=(0, vmax))
 
     # Get electrode positions in the topomap's coordinate system
     from mne.channels.layout import _find_topomap_coords
     pos = _find_topomap_coords(info, picks='eeg')
 
     # Draw original 10-20 names with adaptive text color
-    cmap = plt.cm.RdBu_r
+    cmap = plt.cm.inferno
     for i, (orig_name, xy) in enumerate(zip(ch_names_orig, pos)):
         # Determine background color at this position
-        val_normalized = (mean_topo[i] + vmax) / (2 * vmax)  # 0-1 range
+        val_normalized = mean_topo[i] / vmax if vmax > 0 else 0  # 0-1 range
         bg_color = cmap(val_normalized)
         # Use luminance to decide text color
         lum = 0.299 * bg_color[0] + 0.587 * bg_color[1] + 0.114 * bg_color[2]
