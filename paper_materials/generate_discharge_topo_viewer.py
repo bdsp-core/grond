@@ -239,19 +239,14 @@ def gfp_align(mono_filtered, discharge_times_sec, fs=200, window_ms=25):
                 mean_topo_mono = np.mean(refined_voltages, axis=0)
                 mean_topo_lap = np.mean(lap_voltages, axis=0)
 
-    # Auto-flip polarity based on Laplacian (which reliably identifies the
-    # discharge peak). Apply the SAME flip to both so they're consistent.
-    # The Laplacian is the ground truth for where the discharge is — if
-    # its max absolute is negative, flip both.
-    if np.abs(np.min(mean_topo_lap)) > np.abs(np.max(mean_topo_lap)):
-        mean_topo_mono = -mean_topo_mono
-        mean_topo_lap = -mean_topo_lap
+    # No polarity flip — preserve true voltage polarity.
+    # Red = positive, Blue = negative in RdBu_r colormap.
 
     return mean_topo_mono, mean_topo_lap
 
 
 def generate_topoplot_b64(mean_topo, ch_names_orig, title='Mean discharge\ntopography'):
-    """Generate topoplot as base64-encoded PNG."""
+    """Generate topoplot as base64-encoded PNG with original 10-20 names."""
     name_map = {'T3': 'T7', 'T4': 'T8', 'T5': 'P7', 'T6': 'P8'}
     mne_names = [name_map.get(n, n) for n in ch_names_orig]
 
@@ -264,10 +259,27 @@ def generate_topoplot_b64(mean_topo, ch_names_orig, title='Mean discharge\ntopog
         vmax = 1.0
 
     fig, ax = plt.subplots(1, 1, figsize=(3, 3))
-    mne.viz.plot_topomap(mean_topo, info, axes=ax, show=False,
-                         contours=6, cmap='RdBu_r', sensors=True,
-                         vlim=(-vmax, vmax),
-                         names=mne_names, size=3)
+    # Plot topomap without names — we'll add them manually
+    image, _ = mne.viz.plot_topomap(mean_topo, info, axes=ax, show=False,
+                                     contours=6, cmap='RdBu_r', sensors=False,
+                                     vlim=(-vmax, vmax))
+
+    # Get electrode positions in the topomap's coordinate system
+    from mne.channels.layout import _find_topomap_coords
+    pos = _find_topomap_coords(info, picks='eeg')
+
+    # Draw original 10-20 names with adaptive text color
+    cmap = plt.cm.RdBu_r
+    for i, (orig_name, xy) in enumerate(zip(ch_names_orig, pos)):
+        # Determine background color at this position
+        val_normalized = (mean_topo[i] + vmax) / (2 * vmax)  # 0-1 range
+        bg_color = cmap(val_normalized)
+        # Use luminance to decide text color
+        lum = 0.299 * bg_color[0] + 0.587 * bg_color[1] + 0.114 * bg_color[2]
+        text_color = 'white' if lum < 0.45 else 'black'
+        ax.text(xy[0], xy[1], orig_name, fontsize=6, ha='center', va='center',
+                fontweight='bold', color=text_color, zorder=10)
+
     ax.set_title(title, fontsize=9)
 
     buf = io.BytesIO()
