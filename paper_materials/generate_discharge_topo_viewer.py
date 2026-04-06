@@ -360,6 +360,80 @@ def select_cases(segment_labels_path, discharge_times_path, n_per_subtype=100):
     return lpd + gpd
 
 
+def generate_verbal_description(subtype, frequency, laterality_index, region_scores):
+    """Generate ACNS 2021 verbal description from characterization results."""
+    REGION_BARE = {
+        'LF': 'frontal', 'RF': 'frontal',
+        'LT': 'temporal', 'RT': 'temporal',
+        'LCP': 'centro-parietal', 'RCP': 'centro-parietal',
+        'LO': 'occipital', 'RO': 'occipital',
+    }
+    LEFT_REGIONS = ['LF', 'LT', 'LCP', 'LO']
+    RIGHT_REGIONS = ['RF', 'RT', 'RCP', 'RO']
+    THRESHOLD = 0.4  # region active threshold (normalized scores 0-1)
+
+    type_str = subtype.upper()
+    freq_str = f'at {frequency:.1f} Hz' if np.isfinite(frequency) else ''
+    is_lateralized = subtype in ('lpd', 'lrda')
+
+    if is_lateralized:
+        UNILATERAL_T = 0.15
+        BILATERAL_T = 0.10
+        li = laterality_index if np.isfinite(laterality_index) else 0
+
+        if li < -UNILATERAL_T:
+            dom_regs, lat_str = LEFT_REGIONS, 'unilateral left'
+        elif li > UNILATERAL_T:
+            dom_regs, lat_str = RIGHT_REGIONS, 'unilateral right'
+        elif li < -BILATERAL_T:
+            dom_regs, lat_str = LEFT_REGIONS, 'bilateral asymmetric, left-predominant'
+        elif li > BILATERAL_T:
+            dom_regs, lat_str = RIGHT_REGIONS, 'bilateral asymmetric, right-predominant'
+        else:
+            dom_regs, lat_str = LEFT_REGIONS + RIGHT_REGIONS, 'bilateral/symmetric'
+
+        active = [(r, s) for r, s in region_scores.items()
+                  if s > THRESHOLD and r in dom_regs]
+        active.sort(key=lambda x: -x[1])
+        top_names = list(dict.fromkeys(REGION_BARE[r] for r, _ in active[:2]))
+        region_str = ('maximal in the ' + ' and '.join(top_names) + ' regions'
+                      if top_names else '')
+        parts = [type_str, freq_str, lat_str]
+        if region_str:
+            parts.append(region_str)
+        return ', '.join(p for p in parts if p) + '.'
+
+    else:  # generalized
+        frontal = np.nanmean([region_scores.get('LF', 0), region_scores.get('RF', 0)])
+        occipital = np.nanmean([region_scores.get('LO', 0), region_scores.get('RO', 0)])
+        temporal = np.nanmean([region_scores.get('LT', 0), region_scores.get('RT', 0)])
+        central = np.nanmean([region_scores.get('LCP', 0), region_scores.get('RCP', 0)])
+
+        groups = {
+            'frontally predominant': frontal,
+            'occipitally predominant': occipital,
+            'temporally predominant': temporal,
+            'centrally predominant': central,
+        }
+        best_label = max(groups, key=groups.get)
+        best_score = groups[best_label]
+        region_str = best_label if best_score > THRESHOLD else 'no regional predominance'
+        parts = [type_str, freq_str, region_str]
+        return ', '.join(p for p in parts if p) + '.'
+
+
+# PDCharacterizer singleton
+_pd_characterizer = None
+
+def get_pd_characterizer():
+    global _pd_characterizer
+    if _pd_characterizer is None:
+        sys.path.insert(0, str(PROJECT_DIR / 'code'))
+        from pd_characterizer import PDCharacterizer
+        _pd_characterizer = PDCharacterizer()
+    return _pd_characterizer
+
+
 def build_case_data(case_info):
     """Build display data for one case."""
     mono = load_monopolar(case_info['mat_file'])
@@ -379,6 +453,31 @@ def build_case_data(case_info):
     topo_img_mono = generate_topoplot_b64(mean_topo_mono, MONO_CHANNELS, title='Average Reference')
     topo_img_lap = generate_topoplot_b64(mean_topo_lap, MONO_CHANNELS, title='Laplacian')
 
+    # Run PDCharacterizer for verbal description
+    bipolar_raw = mono_to_bipolar(mono)
+    subtype = case_info['subtype']
+    try:
+        pc = get_pd_characterizer()
+        char_result = pc.characterize(bipolar_raw[:18, :2000], subtype=subtype)
+        frequency = char_result.get('frequency', np.nan)
+        lat_conf = char_result.get('laterality_confidence', 0)
+        laterality = char_result.get('laterality', None)
+        region_scores_raw = char_result.get('region_scores', {})
+        channel_probs = np.array(char_result.get('channel_probs', [0.5]*18))
+
+        # Compute laterality index from channel probs
+        LEFT_IDX = [0,1,2,3,8,9,10,11]
+        RIGHT_IDX = [4,5,6,7,12,13,14,15]
+        left_mean = np.mean(channel_probs[LEFT_IDX])
+        right_mean = np.mean(channel_probs[RIGHT_IDX])
+        total = left_mean + right_mean
+        lat_idx = (right_mean - left_mean) / total if total > 0 else 0
+
+        verbal = generate_verbal_description(subtype, frequency, lat_idx, region_scores_raw)
+    except Exception as e:
+        verbal = f'{subtype.upper()}'
+        frequency = np.nan
+
     # Bipolar EEG for display (from filtered data)
     bipolar = mono_to_bipolar(mono_filt)
     bipolar_ds = downsample_for_display(bipolar, target_points=800)
@@ -395,6 +494,7 @@ def build_case_data(case_info):
         'mono_data': mono_ds.tolist(),
         'topo_img_mono': topo_img_mono,
         'topo_img_lap': topo_img_lap,
+        'verbal': verbal,
     }
 
 
@@ -482,6 +582,8 @@ canvas {{ display: block; }}
   <div id="topo-panel">
     <img id="topo-img" src="" alt="Topoplot">
     <div class="topo-title" id="topo-caption"></div>
+    <div id="verbal-desc" style="font-size:12px; color:#333; margin-top:10px; padding:8px;
+         background:#f0f0f0; border-radius:4px; text-align:center; line-height:1.4;"></div>
   </div>
 </div>
 
@@ -506,6 +608,7 @@ function updateTopo() {{
   const label = topoMode === 'mono' ? 'Avg Ref' : 'Laplacian';
   document.getElementById('topo-caption').textContent =
     label + ' | ' + c.subtype.toUpperCase() + ' | ' + c.n_discharges + ' discharges';
+  document.getElementById('verbal-desc').textContent = c.verbal || '';
 }}
 
 const BIPOLAR_NAMES = {json.dumps(BIPOLAR_NAMES)};
