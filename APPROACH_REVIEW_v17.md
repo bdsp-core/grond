@@ -323,14 +323,77 @@ Generated comprehensive ICC/PA comparison figure (`paper_materials/generate_fig_
 | RDA Spatial ICC | 0.373 | — | 0.215 | **0.371** |
 
 - W05 for RDA frequency **matches expert-expert ICC** (0.860 vs 0.852)
-- RDA-PLV for spatial extent **matches expert-expert ICC** (0.371 vs 0.373)
-- PDCharacterizer PD spatial ICC (0.303) lower than Tautan (0.464) — the threshold-based conversion from continuous CNN probabilities may not be optimal for ICC
+- RDA-PLV×Amp for spatial extent approaches expert-expert ICC
+- After threshold optimization (0.62 for PD, 0.15 for RDA) and removing SZ spatial_extent=0 entries, PDCharacterizer PD spatial ICC **exceeds** expert-expert (0.852 vs 0.845)
+
+### 17. Massive Label Expansion (IIIC ≥10 votes)
+
+MW labeled frequency, spatial extent, and discharge timing for ~1000 IIIC segments per PD subtype, and frequency + spatial for ~600 RDA segments. All from unique patients with ≥10 IIIC crowd votes for pattern class.
+
+**Final label counts on IIIC segments (≥10 votes):**
+
+| | LPD | GPD | LRDA | GRDA |
+|---|---|---|---|---|
+| Pattern class (≥10 raters) | 1,846 | 1,024 | 275→239 | 433→420 |
+| MW frequency | 1,014 | 995 | 239 | 420 |
+| MW spatial extent | 986 | 994 | 239 | 420 |
+| MW discharge/wave timing | 986 | 994 | — | — |
+| **Have ALL** | **986** | **994** | **239** (freq+spatial) | **420** (freq+spatial) |
+
+**Updated figure results:**
+
+| Subtype | n (Fig 6) | Freq ρ | Spatial ρ (vs expert mean) |
+|---------|-----------|--------|--------------------------|
+| LPD | 1,226 | **0.786** | 0.783 |
+| GPD | 1,089 | **0.846** | 0.841 |
+| LRDA | 640 | **0.674** | 0.775 |
+| GRDA | 1,310 | **0.712** | 0.307 |
+
+### 18. Discharge-Locked Topographic Localization
+
+**Motivation:** While our spatial extent methods (PDCharacterizer threshold, RDA-PLV×Amp) compare favorably with Tautan et al. and match expert-expert ICC, we found that expert ratings of spatial extent were highly inconsistent with one another. The ee-IRR for spatial extent (ICC 0.43-0.69 depending on cleanup) was substantially lower than for frequency (ICC 0.61-0.88). The "percentage of channels involved" metric is inherently ambiguous — it conflates localization (where is the source?) with spatial spread (how widespread is the field?), and experts disagree on where to draw the boundary between "involved" and "not involved."
+
+We realized that because our HemiCET+DP pipeline can precisely localize discharge peak timings (median timing accuracy <1ms), we could bypass the ambiguous "channels involved" metric entirely and compute spatial localization directly from the data — by extracting the voltage topography at the moment of each discharge.
+
+**Algorithm** (`paper_materials/generate_discharge_topo_viewer.py`):
+
+1. **Laplacian-GFP alignment**: For each labeled discharge time, compute the Laplacian transform of the 19-channel monopolar EEG. Find the GFP (global field power = std across Laplacian channels) peak within ±25ms of the labeled time. The Laplacian GFP is more sensitive to focal sources than monopolar GFP, which can be dominated by volume-conducted fields.
+
+2. **Two-pass template refinement**: 
+   - Pass 1: Extract ±50ms epochs around each Laplacian-GFP-aligned peak. Average to create an initial template.
+   - Pass 2: Cross-correlate each epoch's Laplacian GFP profile with the template to refine alignment. Extract monopolar voltage at the refined peak time.
+
+3. **GFP²-weighted averaging**: Weight each discharge's contribution by the square of its Laplacian GFP. This strongly suppresses phantom discharges (interpolated by the DP algorithm at times where no real discharge exists) whose Laplacian GFP is close to baseline, preventing background EEG (often posterior-dominant) from biasing the topography.
+
+4. **Topoplot visualization**: Generate MNE spherical spline topoplots of both:
+   - Monopolar (average reference) topography
+   - Laplacian (current source density approximation) topography
+   The Laplacian shows sharper, more focal peaks corresponding to cortical generators. Toggle between views with T key.
+
+5. **Verbal description**: Uses `describe_ied_topoplot()` from the morgoth-viewer codebase for standardized regional localization with 16 brain regions (including transitional zones: frontotemporal, centro-parietal, fronto-central, parieto-occipital). PDCharacterizer provides left/right laterality. Format: "LPD, left sided (unilateral), at 1.5 Hz, left frontotemporal."
+
+**Advantages over threshold-based spatial extent:**
+- **Principled**: directly computes the voltage/CSD map at the discharge peak, rather than asking "which channels show something"
+- **No threshold**: the topographic map is continuous — no binary involved/not-involved decision needed
+- **Robust to noise**: signal averaging across N discharges reduces noise by √N; GFP² weighting suppresses outliers
+- **Clinically interpretable**: the topoplot directly shows the standard clinical concept of "field distribution"
+- **Consistent with ACNS 2021**: the verbal description follows standardized nomenclature
+
+**Viewer**: Interactive HTML viewer with EEG traces (3 montages: bipolar, average reference, Laplacian), discharge time markers, and topoplot. 200 example cases (100 LPD + 100 GPD).
+
+### 19. Unified Label System Migration
+
+Migrated from scattered 4-file label system to unified two-file structure:
+- **`labels.csv`** (44,448 rows): one row per (segment, rater, label_type). All human labels in one place — frequency, spatial extent, spatial channels, discharge timing, wave timing, pattern class, laterality.
+- **`segments.csv`** (13,556 rows): one row per segment. Metadata + algorithm predictions only. No human labels.
+
+This prevents the problem where labels stored in different files (annotations.csv, segment_labels.csv, discharge_times.json, rda_wave_labels.json) could be missed when summarizing rater counts.
 
 ## Next Steps
 
-1. **RDA wave timing** — 549 cases labeled, need automated method (RhythmiCET or signal-processing)
-2. **Complete LRDA laterality** — Review remaining 469 segments in bilateral zone
-3. **Paper** — Write up the unified characterization pipeline
+1. **RDA wave timing** — 468 cases labeled, need automated method
+2. **Extend discharge-locked topography to RDA** — narrowband amplitude topography at estimated frequency
+3. **Paper** — Write up the unified characterization pipeline with discharge-locked localization as the primary spatial method
 
 ### 11. Paper Figures (LPD, GPD, LRDA, GRDA Characterization Examples)
 

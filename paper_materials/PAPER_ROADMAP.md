@@ -239,12 +239,13 @@ The paper presents **PDCharacterizer** — a unified pipeline that characterizes
   - Multi-task: PD probability + log-frequency per channel
   - 5-fold patient-stratified CV, trained on curated 815-patient dataset
 
-- **3.3 Spatial localization** — Hybrid CNN+PLV
-  - Phase-locking value with CNN-weighted reference channels
-  - Combined score: 50% CNN probability + 50% PLV
-  - Threshold optimization (0.38) using 3-rater inter-rater agreement analysis
-  - Region mapping: 8 canonical regions (LF, RF, LT, RT, LCP, RCP, LO, RO) + midline
-  - ACNS 2021 verbal description generation
+- **3.3 Spatial localization** — Discharge-locked topographic mapping
+  - **Motivation**: Expert ratings of "spatial extent" (% channels involved) showed poor inter-rater reliability (ICC 0.43-0.69), making threshold-based channel counting an unreliable ground truth. Because our HemiCET+DP pipeline localizes discharge peaks with <1ms accuracy, we can directly compute the voltage topography at each discharge — a principled, ground-truth-free approach to localization.
+  - **Method**: Laplacian-GFP aligned discharge averaging with two-pass template refinement and GFP²-weighted averaging to suppress phantom discharges
+  - **Output**: MNE spherical spline topoplots (both monopolar and Laplacian/CSD), with standardized ACNS 2021 verbal descriptions using 16 brain regions from the morgoth-viewer IED localization module
+  - **Spatial extent comparison** (retained for benchmarking against Tautan et al.): PDCharacterizer CNN+PLV threshold (T=0.62), RDA-PLV×Amp (T=0.15). PDCharacterizer exceeds expert-expert ICC for PD spatial (0.852 vs 0.845)
+  - Region mapping: 16 regions including transitional zones (frontotemporal, centro-parietal, fronto-central, parieto-occipital) via morgoth-viewer
+  - ACNS 2021 verbal description: laterality from PDCharacterizer, localization from discharge-locked topography
 
 - **3.4 Discharge timing** — HemiCET+DP
   - HemiCET: 8-channel CET-UNet (one hemisphere → frame-level evidence)
@@ -276,17 +277,26 @@ The paper presents **PDCharacterizer** — a unified pipeline that characterizes
   - **Table 3**: Lateralization performance by subtype
 
 - **4.2 Spatial localization**
-  - Model Jaccard 0.731 vs human inter-rater 0.751 (97.3%)
-  - At threshold 0.38: avg(Model-LB, Model-PH) = 0.767, exceeding LB-PH = 0.762
-  - **Figure 4**: Spatial inter-rater agreement — 4×4 Jaccard matrix + bar plot + threshold sweep — **DONE**
-  - **Table 4**: Per-rater pairwise Jaccard agreements
+  - **Discharge-locked topographic mapping** — primary localization method for PDs
+    - Two-pass Laplacian-GFP alignment + GFP²-weighted averaging → MNE topoplot
+    - ACNS 2021 verbal descriptions with 16-region localization (morgoth-viewer)
+    - Interactive viewer with 3 montages (bipolar, average ref, Laplacian) — **DONE**
+  - **Spatial extent comparison** (benchmarking against Tautan et al.)
+    - Expert-expert spatial ICC: 0.845 (after removing SZ zeros)
+    - PDCharacterizer (T=0.62): ICC=**0.852** (exceeds experts), MAE=0.095
+    - Tautan: ICC=0.764, MAE=0.310
+    - **Figure spatial scatter**: per-rater dots, 4 subtypes — **DONE**
+    - **Figure IRR**: ICC/PA bars for spatial — **DONE**
+    - **Figure threshold sweep**: threshold optimization curves — **DONE**
+  - **Key finding**: Expert spatial extent ratings have poor IRR, motivating the discharge-locked topographic approach which bypasses subjective channel counting entirely
+  - **Table 4**: Spatial extent ICC comparison (4 raters, threshold-optimized)
 
 - **4.3 Frequency estimation**
   - **Quality-filtered evaluation** (MW-reviewed OR 3-expert consensus OR ≥80% IIIC agreement):
-    - LPD: ρ=0.736, MAE=0.192 Hz (n=727)
-    - GPD: ρ=0.760, MAE=0.184 Hz (n=484)
-    - LRDA: ρ=0.617, MAE=0.265 Hz (n=519)
-    - GRDA: ρ=0.689, MAE=0.221 Hz (n=1107)
+    - LPD: ρ=0.786, MAE=0.265 Hz (n=1,226)
+    - GPD: ρ=0.846, MAE=0.172 Hz (n=1,089)
+    - LRDA: ρ=0.674, MAE=0.233 Hz (n=640)
+    - GRDA: ρ=0.712, MAE=0.215 Hz (n=1,310)
   - Label quality analysis: segments with <60% expert agreement have 2.4× higher discrepancy than those with 100% agreement
   - Discrepancy review: MW reviewed all |model - MW| > 0.5 Hz cases; 94% of PD and 61% of RDA accepted model over original MW label
   - **Figure 6**: 2×4 frequency scatter (PDCharacterizer vs Tautan et al., 4 subtypes) — **DONE**

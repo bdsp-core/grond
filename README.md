@@ -10,21 +10,18 @@ Algorithms for estimating the frequency of periodic discharges (PD) and rhythmic
 |------|--------|---|-------------|--------|
 | **PD Unified Pipeline** | | | | **PDCharacterizer** |
 | PD discharge timing | F1 | 651 | **0.684** | HemiCET+DP (CNN-weighted) |
-| PD frequency (IPI) | Spearman ρ | 500 | **0.681** | CNN+ACF → IPI |
-| PD spatial localization | Composite | 465 | **0.811** | Hybrid-PLV (CNN ref + PLV) |
-| PD spatial localization | Mean AUC | 465 | **0.814** | Hybrid-PLV |
-| PD spatial inter-rater | Jaccard | 220 | **0.731** vs human 0.751 (97.3%) | Hybrid-PLV @ threshold 0.38 |
+| PD frequency | Spearman ρ | 1,226 / 1,089 | **0.786 / 0.846** (LPD/GPD) | CNN+ACF → IPI |
+| PD spatial extent | ICC | 499 | **0.852** (exceeds expert 0.845) | CNN+PLV @ threshold 0.62 |
+| PD spatial localization | — | 200 | Discharge-locked topoplot | Laplacian-GFP alignment + morgoth regions |
 | Laterality (L vs R) | AUC | 423 | **0.963** | ChannelPD-Net hemisphere |
 | Channel PD detection | AUC | 815 | **0.870** | ChannelPD-Net |
 | Subtype (LPD vs GPD) | AUC | 594 | **0.931** | RF 300 trees |
 | BIPD vs GPD | AUC | 2,305 | **0.840** | HemiCET+GBT (screening) |
 | **RDA Analysis** | | | | |
 | LRDA vs GRDA | AUC | 4,253 | **0.837** | W05_DomOnly_IterRefine |
-| RDA frequency | Spearman ρ | 4,253 | **0.686** | W07_AutoChannel_FreqAgreement |
-| RDA frequency | ICC | 68 | **0.860** (expert 0.852) | W05_DomOnly_IterRefine |
-| RDA spatial extent | ICC | 211 | **0.371** (expert 0.373) | RDA-PLV (phase coherence) |
-| LRDA+GRDA+freq (unified) | AUC / ρ | 4,253 | **0.837 / 0.635** | W05_DomOnly_IterRefine |
-| RDA freq labels reviewed | — | 1,446 | MW-reviewed | W05 viewer + MW review |
+| RDA frequency | Spearman ρ | 640 / 1,310 | **0.674 / 0.712** (LRDA/GRDA) | W05_DomOnly_IterRefine |
+| RDA frequency | ICC | 68 | **0.881** (expert 0.878) | W05_DomOnly_IterRefine |
+| RDA spatial extent | ICC | 205 | **0.598** (expert 0.640) | PLV×Amplitude @ threshold 0.15 |
 | LRDA laterality reviewed | — | 1,374 | MW-reviewed | 727 left, 308 right, 338 not-LRDA |
 
 **All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [APPROACH_REVIEW_v17.md](APPROACH_REVIEW_v17.md) for details.
