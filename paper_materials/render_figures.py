@@ -331,11 +331,28 @@ def draw_eeg_panel(ax, case, is_pd):
 # ── Topoplot panel ──────────────────────────────────────────────────────────
 
 def draw_topoplot(ax, ax_cbar, case, is_pd):
-    """Draw the topoplot using MNE's spherical spline interpolation."""
+    """Draw the topoplot from pre-rendered base64 PNG or fall back to region_scores."""
     import mne
+    import io
+    import base64
+    from PIL import Image
+
+    # Prefer pre-rendered Laplacian topoplot from generate_figure_data.py
+    topo_b64 = case.get('topo_img_lap') or case.get('topo_img_mono')
+
+    if topo_b64:
+        # Decode base64 PNG and display as image
+        img_bytes = base64.b64decode(topo_b64)
+        img = Image.open(io.BytesIO(img_bytes))
+        ax.imshow(img)
+        ax.axis('off')
+        # Hide the colorbar axis (colorbar is baked into the topoplot PNG)
+        ax_cbar.axis('off')
+        return
+
+    # ── Fallback: old region_scores approach ──
     region_scores = case.get('region_scores', {})
 
-    # 19-channel monopolar layout
     ch_names_orig = ['Fp1','F3','C3','P3','F7','T3','T5','O1','Fz','Cz','Pz',
                      'Fp2','F4','C4','P4','F8','T4','T6','O2']
     name_map = {'T3': 'T7', 'T4': 'T8', 'T5': 'P7', 'T6': 'P8'}
@@ -345,7 +362,6 @@ def draw_topoplot(ax, ax_cbar, case, is_pd):
     montage = mne.channels.make_standard_montage('standard_1020')
     info.set_montage(montage)
 
-    # Map region scores to 19 monopolar electrodes
     region_to_electrodes = {
         'LF': ['Fp1', 'F3', 'F7'], 'RF': ['Fp2', 'F4', 'F8'],
         'LT': ['T3', 'T5', 'F7'], 'RT': ['T4', 'T6', 'F8'],
@@ -363,18 +379,15 @@ def draw_topoplot(ax, ax_cbar, case, is_pd):
     for e in electrode_scores:
         electrode_scores[e] /= electrode_counts[e]
 
-    # Build 19-element data array in ch_names_orig order
     data = np.array([electrode_scores.get(e, 0.5) for e in ch_names_orig])
 
-    # Determine vlim based on subtype for consistent scaling
     vmin, vmax = None, None
-    if is_pd: # LPD or GPD
+    if is_pd:
         vmin, vmax = COLOR_SCALE['pd']['vmin'], COLOR_SCALE['pd']['vmax']
-    else: # LRDA or GRDA
+    else:
         vmin, vmax = COLOR_SCALE['rda']['vmin'], COLOR_SCALE['rda']['vmax']
 
-    # Ensure vmin/vmax are not identical if data is flat, add small padding
-    if vmax - vmin < 1e-6: # Check for near-zero range
+    if vmax - vmin < 1e-6:
         vmin = max(0, vmin - 0.05)
         vmax = min(1, vmax + 0.05)
 
@@ -382,15 +395,13 @@ def draw_topoplot(ax, ax_cbar, case, is_pd):
         data, info, axes=ax, show=False,
         contours=6, cmap='inferno',
         vlim=(vmin, vmax),
-        sensors=True, # Keep sensor dots
-        # names=ch_names_orig, # Removed electrode labels (Critique Point 5: Clarify/Remove Topoplot Numerical Labels)
-        size=3, # This is sensor dot size
+        sensors=True,
+        size=3,
     )
-    
-    # Add colorbar (Critique Point 2: Increased font size for colorbar labels)
+
     cbar = plt.colorbar(image, cax=ax_cbar, orientation='vertical', label='Score')
-    cbar.ax.tick_params(labelsize=COLORBAR_TICK_LABEL_FONTSIZE) # Colorbar tick labels
-    cbar.set_label('Score', fontsize=COLORBAR_LABEL_FONTSIZE) # Colorbar label
+    cbar.ax.tick_params(labelsize=COLORBAR_TICK_LABEL_FONTSIZE)
+    cbar.set_label('Score', fontsize=COLORBAR_LABEL_FONTSIZE)
 
 
 # ── Right-side info panel ───────────────────────────────────────────────────

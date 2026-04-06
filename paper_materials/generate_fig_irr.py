@@ -38,7 +38,7 @@ sys.path.insert(0, str(CODE_DIR / 'pd_detector_alternate'))
 DATA_DIR = PROJECT_DIR / 'data'
 LABELS_DIR = DATA_DIR / 'labels'
 EEG_DIR = DATA_DIR / 'eeg'
-OUT_PATH = PROJECT_DIR / 'paper_materials' / 'figures' / 'fig_irr_comparison.png'
+OUT_PATH = PROJECT_DIR / 'paper_materials' / 'figures' / 'figS8_irr_comparison.png'
 OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 # ── Constants ──
