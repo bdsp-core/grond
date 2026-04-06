@@ -70,12 +70,12 @@ PANELS = {
         'desc': 'Clear GPD',
     },
     'C': {
-        'file': 'sub-S0001113503202_20131123042304.mat',
+        'file': 'sub-S0001115633229_20190719143934.mat',
         'title': 'LRDA',
         'desc': 'Clear LRDA',
     },
     'D': {
-        'file': 'sub-S0001111954062_20141016000029.mat',
+        'file': 'sub-S0001121223249_20170404132640.mat',
         'title': 'GRDA',
         'desc': 'Clear GRDA',
     },
