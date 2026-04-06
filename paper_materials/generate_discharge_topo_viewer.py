@@ -95,12 +95,52 @@ def mono_to_bipolar(mono):
     return mono[BIPOLAR_INDICES[:, 0]] - mono[BIPOLAR_INDICES[:, 1]]
 
 
-def gfp_align(mono_filtered, discharge_times_sec, fs=200, window_ms=25):
-    """Two-pass discharge-locked topography with GFP + template alignment.
+def compute_laplacian(mono, neighbors_map):
+    """Compute Laplacian (each channel minus mean of neighbors)."""
+    n_ch, n_samp = mono.shape
+    lap = np.zeros_like(mono)
+    for ch in range(n_ch):
+        nbrs = neighbors_map.get(ch, [])
+        if nbrs:
+            lap[ch] = mono[ch] - np.mean(mono[nbrs], axis=0)
+        else:
+            lap[ch] = mono[ch]
+    return lap
 
-    Pass 1: GFP-align each discharge within ±window_ms, compute initial template.
-    Pass 2: Cross-correlate each discharge epoch with template to refine alignment,
-            then re-average for the final topography.
+
+# Neighbor map for 19-channel 10-20 system
+LAP_NEIGHBORS = {
+    0: [1, 4, 8, 11],      # Fp1: F3, F7, Fz, Fp2
+    1: [0, 2, 4, 8],       # F3: Fp1, C3, F7, Fz
+    2: [1, 3, 5, 9],       # C3: F3, P3, T3, Cz
+    3: [2, 6, 7, 10],      # P3: C3, T5, O1, Pz
+    4: [0, 1, 5],          # F7: Fp1, F3, T3
+    5: [4, 2, 6],          # T3: F7, C3, T5
+    6: [5, 3, 7],          # T5: T3, P3, O1
+    7: [3, 6, 10],         # O1: P3, T5, Pz
+    8: [0, 1, 9, 11, 12],  # Fz: Fp1, F3, Cz, Fp2, F4
+    9: [8, 2, 10, 13],     # Cz: Fz, C3, Pz, C4
+    10: [9, 3, 7, 14, 18], # Pz: Cz, P3, O1, P4, O2
+    11: [12, 15, 8, 0],    # Fp2: F4, F8, Fz, Fp1
+    12: [11, 13, 15, 8],   # F4: Fp2, C4, F8, Fz
+    13: [12, 14, 16, 9],   # C4: F4, P4, T4, Cz
+    14: [13, 17, 18, 10],  # P4: C4, T6, O2, Pz
+    15: [11, 12, 16],      # F8: Fp2, F4, T4
+    16: [15, 13, 17],      # T4: F8, C4, T6
+    17: [16, 14, 18],      # T6: T4, P4, O2
+    18: [14, 17, 10],      # O2: P4, T6, Pz
+}
+
+
+def gfp_align(mono_filtered, discharge_times_sec, fs=200, window_ms=25):
+    """Two-pass discharge-locked topography with Laplacian-GFP alignment.
+
+    Uses Laplacian-transformed data for alignment (better for focal sources)
+    but extracts voltage from monopolar data for the topoplot.
+
+    Pass 1: Laplacian-GFP-align each discharge, compute initial template.
+    Pass 2: Cross-correlate each epoch's Laplacian-GFP with template to refine.
+    Final: GFP²-weighted average of monopolar voltages at aligned times.
 
     Returns: mean_topo (19,) or None if <2 valid discharges.
     """
@@ -108,7 +148,10 @@ def gfp_align(mono_filtered, discharge_times_sec, fs=200, window_ms=25):
     epoch_half = int(50 * fs / 1000)  # ±50ms epoch for template matching
     n_ch, n_total = mono_filtered.shape
 
-    # ── Pass 1: GFP alignment ──
+    # Compute Laplacian for alignment
+    lap = compute_laplacian(mono_filtered, LAP_NEIGHBORS)
+
+    # ── Pass 1: Laplacian-GFP alignment ──
     gfp_aligned_samples = []
     for t in discharge_times_sec:
         center = int(t * fs)
@@ -116,43 +159,44 @@ def gfp_align(mono_filtered, discharge_times_sec, fs=200, window_ms=25):
         hi = min(n_total, center + window_samples + 1)
         if hi - lo < 3:
             continue
-        segment = mono_filtered[:, lo:hi]
-        gfp = np.std(segment, axis=0)
-        peak_sample = lo + np.argmax(gfp)
+        segment_lap = lap[:, lo:hi]
+        gfp_lap = np.std(segment_lap, axis=0)
+        peak_sample = lo + np.argmax(gfp_lap)
         gfp_aligned_samples.append(peak_sample)
 
     if len(gfp_aligned_samples) < 2:
         return None
 
-    # Extract ±50ms epochs around GFP-aligned peaks
-    epochs = []
+    # Extract ±50ms epochs around GFP-aligned peaks (both mono and Laplacian)
+    mono_epochs = []
+    lap_epochs = []
     valid_samples = []
     for s in gfp_aligned_samples:
         elo = s - epoch_half
         ehi = s + epoch_half + 1
         if elo < 0 or ehi > n_total:
             continue
-        epochs.append(mono_filtered[:, elo:ehi])  # (19, epoch_len)
+        mono_epochs.append(mono_filtered[:, elo:ehi])
+        lap_epochs.append(lap[:, elo:ehi])
         valid_samples.append(s)
 
-    if len(epochs) < 2:
-        # Fall back to single-sample GFP alignment
+    if len(mono_epochs) < 2:
+        # Fall back to single-sample alignment
         mean_topo = np.mean([mono_filtered[:, s] for s in gfp_aligned_samples], axis=0)
     else:
-        epoch_len = epochs[0].shape[1]
-        template = np.mean(epochs, axis=0)  # (19, epoch_len) — pass 1 template
+        epoch_len = mono_epochs[0].shape[1]
+        # Template from Laplacian epochs (for alignment)
+        lap_template = np.mean(lap_epochs, axis=0)
 
-        # ── Pass 2: Template cross-correlation refinement ──
-        # For each epoch, compute GFP of template and epoch, cross-correlate
-        # to find optimal sub-sample shift, then extract aligned peak voltage.
-        template_gfp = np.std(template, axis=0)  # (epoch_len,)
+        # ── Pass 2: Template cross-correlation refinement using Laplacian GFP ──
+        template_gfp = np.std(lap_template, axis=0)
         mid = epoch_len // 2
-        max_shift = window_samples  # allow re-alignment within original window
+        max_shift = window_samples
 
         refined_voltages = []
-        for epoch in epochs:
-            epoch_gfp = np.std(epoch, axis=0)
-            # Cross-correlate GFP profiles to find best alignment
+        for mono_epoch, lap_epoch in zip(mono_epochs, lap_epochs):
+            epoch_gfp = np.std(lap_epoch, axis=0)
+            # Cross-correlate Laplacian GFP profiles
             best_shift = 0
             best_corr = -np.inf
             for shift in range(-max_shift, max_shift + 1):
@@ -169,17 +213,22 @@ def gfp_align(mono_filtered, discharge_times_sec, fs=200, window_ms=25):
 
             aligned_mid = mid + best_shift
             if 0 <= aligned_mid < epoch_len:
-                refined_voltages.append(epoch[:, aligned_mid])
+                # Extract MONOPOLAR voltage at the Laplacian-aligned time
+                refined_voltages.append(mono_epoch[:, aligned_mid])
 
         if len(refined_voltages) < 2:
             mean_topo = np.mean([mono_filtered[:, s] for s in gfp_aligned_samples], axis=0)
         else:
-            # GFP-weighted averaging: real discharges have high GFP (large
-            # voltage deflection), phantom discharges interpolated by DP have
-            # GFP close to baseline. Weighting by GFP^2 strongly suppresses
-            # phantom contributions that would otherwise bias the topography.
+            # GFP-weighted averaging using Laplacian GFP: real discharges have
+            # high Laplacian GFP (focal activity), phantoms have low GFP.
+            # Weighting by GFP^2 strongly suppresses phantom contributions.
             refined_voltages = np.array(refined_voltages)  # (n_discharges, 19)
-            gfp_weights = np.std(refined_voltages, axis=1)  # GFP per discharge
+            # Compute Laplacian of each discharge voltage for weighting
+            lap_voltages = np.array([
+                compute_laplacian(v.reshape(19, 1), LAP_NEIGHBORS).ravel()
+                for v in refined_voltages
+            ])
+            gfp_weights = np.std(lap_voltages, axis=1)  # Laplacian GFP per discharge
             gfp_weights = gfp_weights ** 2  # square to amplify contrast
             weight_sum = np.sum(gfp_weights)
             if weight_sum > 1e-12:
