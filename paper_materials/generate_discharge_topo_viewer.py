@@ -351,14 +351,9 @@ const BIPOLAR_NAMES = {json.dumps(BIPOLAR_NAMES)};
 const MONO_NAMES = {json.dumps([n + '-avg' for n in MONO_CHANNELS])};
 const MONO_RAW_NAMES = {json.dumps(MONO_CHANNELS)};
 const BIPOLAR_DISPLAY_ORDER = {json.dumps(DISPLAY_ORDER)};
-const MONO_DISPLAY_ORDER = [
-  0, 4, 8, 1, 5, 9, 2, 6, 10, 3, 7, 11, -1,
-  12, 15, 13, 16, 14, 17, -1, 18
-];
-// CAR display: L temporal, L parasag, midline, R parasag, R temporal
+// CAR/Laplacian display: L parasag, L temporal, midline, R parasag, R temporal
 const CAR_DISPLAY_ORDER = [
-  0, 4, 8, 1, 5, 9, 2, 6, 10, 3, 7, -1,
-  11, 15, 12, 16, 13, 17, 14, -1, 18
+  0, 1, 2, 3, 4, 5, 6, 7, -1, 8, 9, 10, -1, 11, 12, 13, 14, 15, 16, 17, 18
 ];
 const DURATION = {DURATION};
 
@@ -366,8 +361,8 @@ const MARGIN_TOP = 30;
 const MARGIN_BOTTOM = 25;
 const MARGIN_LEFT = 75;
 const MARGIN_RIGHT = 15;
-const CLIP_UV = 200;
-const Z_SCALE = 0.0025;
+const CLIP_UV = 300;
+const Z_SCALE = 0.01;
 
 // Laplacian neighbors (indices into 19-ch monopolar)
 // Fp1=0,F3=1,C3=2,P3=3,F7=4,T3=5,T5=6,O1=7,Fz=8,Cz=9,Pz=10,
