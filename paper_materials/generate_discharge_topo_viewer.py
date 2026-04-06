@@ -96,36 +96,87 @@ def mono_to_bipolar(mono):
 
 
 def gfp_align(mono_filtered, discharge_times_sec, fs=200, window_ms=25):
-    """Align discharge times to GFP peak within +/-window_ms.
+    """Two-pass discharge-locked topography with GFP + template alignment.
+
+    Pass 1: GFP-align each discharge within ±window_ms, compute initial template.
+    Pass 2: Cross-correlate each discharge epoch with template to refine alignment,
+            then re-average for the final topography.
 
     Returns: mean_topo (19,) or None if <2 valid discharges.
     """
     window_samples = int(window_ms * fs / 1000)
-    n_samples = mono_filtered.shape[1]
+    epoch_half = int(50 * fs / 1000)  # ±50ms epoch for template matching
+    n_ch, n_total = mono_filtered.shape
 
-    aligned_voltages = []
+    # ── Pass 1: GFP alignment ──
+    gfp_aligned_samples = []
     for t in discharge_times_sec:
         center = int(t * fs)
         lo = max(0, center - window_samples)
-        hi = min(n_samples, center + window_samples + 1)
+        hi = min(n_total, center + window_samples + 1)
         if hi - lo < 3:
             continue
-
         segment = mono_filtered[:, lo:hi]
         gfp = np.std(segment, axis=0)
-        peak_offset = np.argmax(gfp)
-        peak_sample = lo + peak_offset
+        peak_sample = lo + np.argmax(gfp)
+        gfp_aligned_samples.append(peak_sample)
 
-        aligned_voltages.append(mono_filtered[:, peak_sample])
-
-    if len(aligned_voltages) < 2:
+    if len(gfp_aligned_samples) < 2:
         return None
 
-    mean_topo = np.mean(aligned_voltages, axis=0)
+    # Extract ±50ms epochs around GFP-aligned peaks
+    epochs = []
+    valid_samples = []
+    for s in gfp_aligned_samples:
+        elo = s - epoch_half
+        ehi = s + epoch_half + 1
+        if elo < 0 or ehi > n_total:
+            continue
+        epochs.append(mono_filtered[:, elo:ehi])  # (19, epoch_len)
+        valid_samples.append(s)
+
+    if len(epochs) < 2:
+        # Fall back to single-sample GFP alignment
+        mean_topo = np.mean([mono_filtered[:, s] for s in gfp_aligned_samples], axis=0)
+    else:
+        epoch_len = epochs[0].shape[1]
+        template = np.mean(epochs, axis=0)  # (19, epoch_len) — pass 1 template
+
+        # ── Pass 2: Template cross-correlation refinement ──
+        # For each epoch, compute GFP of template and epoch, cross-correlate
+        # to find optimal sub-sample shift, then extract aligned peak voltage.
+        template_gfp = np.std(template, axis=0)  # (epoch_len,)
+        mid = epoch_len // 2
+        max_shift = window_samples  # allow re-alignment within original window
+
+        refined_voltages = []
+        for epoch in epochs:
+            epoch_gfp = np.std(epoch, axis=0)
+            # Cross-correlate GFP profiles to find best alignment
+            best_shift = 0
+            best_corr = -np.inf
+            for shift in range(-max_shift, max_shift + 1):
+                t_lo = max(0, -shift)
+                t_hi = min(epoch_len, epoch_len - shift)
+                e_lo = max(0, shift)
+                e_hi = min(epoch_len, epoch_len + shift)
+                if t_hi - t_lo < 5:
+                    continue
+                corr = np.dot(template_gfp[t_lo:t_hi], epoch_gfp[e_lo:e_hi])
+                if corr > best_corr:
+                    best_corr = corr
+                    best_shift = shift
+
+            aligned_mid = mid + best_shift
+            if 0 <= aligned_mid < epoch_len:
+                refined_voltages.append(epoch[:, aligned_mid])
+
+        if len(refined_voltages) < 2:
+            mean_topo = np.mean([mono_filtered[:, s] for s in gfp_aligned_samples], axis=0)
+        else:
+            mean_topo = np.mean(refined_voltages, axis=0)
 
     # Auto-flip polarity so max absolute channel is positive (red on topoplot).
-    # Discharges are typically surface-negative; flipping ensures the "hotspot"
-    # always appears red regardless of dipole orientation.
     if np.abs(np.min(mean_topo)) > np.abs(np.max(mean_topo)):
         mean_topo = -mean_topo
 
