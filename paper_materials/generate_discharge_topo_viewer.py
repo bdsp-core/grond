@@ -409,12 +409,8 @@ def generate_verbal_from_topo(subtype, frequency, mean_topo_mono, laterality_fro
             lat_qual = 'unilateral'
 
         parts = [type_str, f'{side} sided ({lat_qual})', freq_str, descriptor]
-        if field:
-            parts.append(field)
     else:  # generalized (GPD/GRDA)
         parts = [type_str, freq_str, descriptor]
-        if field:
-            parts.append(field)
 
     return ', '.join(p for p in parts if p) + '.'
 
