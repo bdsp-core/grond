@@ -70,43 +70,40 @@ DIFF_BADGE_COLORS = {
 
 # ── Channel layout ──────────────────────────────────────────────────────────
 
-BIPOLAR_NAMES = [
-    'Fp1-F7', 'F7-T3', 'T3-T5', 'T5-O1',
-    'Fp2-F8', 'F8-T4', 'T4-T6', 'T6-O2',
-    'Fp1-F3', 'F3-C3', 'C3-P3', 'P3-O1',
-    'Fp2-F4', 'F4-C4', 'C4-P4', 'P4-O2',
-    'Fz-Cz', 'Cz-Pz',
+MONO_CHANNELS = [
+    'Fp1', 'F3', 'C3', 'P3', 'F7', 'T3', 'T5', 'O1', 'Fz', 'Cz',
+    'Pz', 'Fp2', 'F4', 'C4', 'P4', 'F8', 'T4', 'T6', 'O2',
 ]
 
-# Display order: L temporal, L parasagittal, midline, R parasagittal, R temporal
-# idx=-1 means gap
+# Display order for average reference montage:
+# L parasag, L temporal, midline, R parasag, R temporal
+# idx = index into MONO_CHANNELS (19 channels), -1 = gap
 DISPLAY_ORDER = [
-    {'idx': 0,  'name': 'Fp1-F7', 'hemi': 'L'},
-    {'idx': 1,  'name': 'F7-T3',  'hemi': 'L'},
-    {'idx': 2,  'name': 'T3-T5',  'hemi': 'L'},
-    {'idx': 3,  'name': 'T5-O1',  'hemi': 'L'},
-    {'idx': -1, 'name': '',        'hemi': ''},   # gap
-    {'idx': 8,  'name': 'Fp1-F3', 'hemi': 'L'},
-    {'idx': 9,  'name': 'F3-C3',  'hemi': 'L'},
-    {'idx': 10, 'name': 'C3-P3',  'hemi': 'L'},
-    {'idx': 11, 'name': 'P3-O1',  'hemi': 'L'},
-    {'idx': -1, 'name': '',        'hemi': ''},   # gap
-    {'idx': 16, 'name': 'Fz-Cz',  'hemi': 'M'},
-    {'idx': 17, 'name': 'Cz-Pz',  'hemi': 'M'},
-    {'idx': -1, 'name': '',        'hemi': ''},   # gap
-    {'idx': 12, 'name': 'Fp2-F4', 'hemi': 'R'},
-    {'idx': 13, 'name': 'F4-C4',  'hemi': 'R'},
-    {'idx': 14, 'name': 'C4-P4',  'hemi': 'R'},
-    {'idx': 15, 'name': 'P4-O2',  'hemi': 'R'},
-    {'idx': -1, 'name': '',        'hemi': ''},   # gap
-    {'idx': 4,  'name': 'Fp2-F8', 'hemi': 'R'},
-    {'idx': 5,  'name': 'F8-T4',  'hemi': 'R'},
-    {'idx': 6,  'name': 'T4-T6',  'hemi': 'R'},
-    {'idx': 7,  'name': 'T6-O2',  'hemi': 'R'},
+    {'idx': 0,  'name': 'Fp1', 'hemi': 'L'},
+    {'idx': 1,  'name': 'F3',  'hemi': 'L'},
+    {'idx': 2,  'name': 'C3',  'hemi': 'L'},
+    {'idx': 3,  'name': 'P3',  'hemi': 'L'},
+    {'idx': 4,  'name': 'F7',  'hemi': 'L'},
+    {'idx': 5,  'name': 'T3',  'hemi': 'L'},
+    {'idx': 6,  'name': 'T5',  'hemi': 'L'},
+    {'idx': 7,  'name': 'O1',  'hemi': 'L'},
+    {'idx': -1, 'name': '',    'hemi': ''},   # gap
+    {'idx': 8,  'name': 'Fz',  'hemi': 'M'},
+    {'idx': 9,  'name': 'Cz',  'hemi': 'M'},
+    {'idx': 10, 'name': 'Pz',  'hemi': 'M'},
+    {'idx': -1, 'name': '',    'hemi': ''},   # gap
+    {'idx': 11, 'name': 'Fp2', 'hemi': 'R'},
+    {'idx': 12, 'name': 'F4',  'hemi': 'R'},
+    {'idx': 13, 'name': 'C4',  'hemi': 'R'},
+    {'idx': 14, 'name': 'P4',  'hemi': 'R'},
+    {'idx': 15, 'name': 'F8',  'hemi': 'R'},
+    {'idx': 16, 'name': 'T4',  'hemi': 'R'},
+    {'idx': 17, 'name': 'T6',  'hemi': 'R'},
+    {'idx': 18, 'name': 'O2',  'hemi': 'R'},
 ]
 
-LEFT_CH_IDX = {0, 1, 2, 3, 8, 9, 10, 11}
-RIGHT_CH_IDX = {4, 5, 6, 7, 12, 13, 14, 15}
+LEFT_CH_IDX = {0, 1, 2, 3, 4, 5, 6, 7}
+RIGHT_CH_IDX = {11, 12, 13, 14, 15, 16, 17, 18}
 
 # Electrode positions (normalized to unit circle, nose at top = +y)
 ELECTRODE_POS = {
@@ -173,9 +170,18 @@ TOPO_CMAP = plt.cm.inferno  # perceptually uniform, colorblind-friendly
 # ── EEG panel ───────────────────────────────────────────────────────────────
 
 def draw_eeg_panel(ax, case, is_pd):
-    """Draw the EEG traces on the given axes."""
+    """Draw the EEG traces on the given axes (average reference montage)."""
     from scipy.signal import butter, sosfiltfilt, iirnotch, filtfilt, detrend
-    eeg = np.array(case['eeg_data'])  # (18, 1000)
+
+    # Use monopolar data with common average reference
+    if 'mono_data' in case:
+        mono = np.array(case['mono_data'])  # (19, 1000)
+        # Compute CAR
+        avg = np.mean(mono, axis=0)
+        eeg = mono - avg[np.newaxis, :]
+    else:
+        # Fallback to bipolar if mono_data not available
+        eeg = np.array(case['eeg_data'])
     n_ch, n_samp = eeg.shape
     fs_display = n_samp / 10.0  # 100 Hz for downsampled data
 

@@ -48,9 +48,11 @@ BIPOLAR_PAIRS = [
 
 # Display order: L temporal, L parasag, midline, R parasag, R temporal
 # -1 = blank separator row
-DISPLAY_ORDER = [0, 1, 2, 3, -1, 8, 9, 10, 11, -1, 16, 17, -1, 12, 13, 14, 15, -1, 4, 5, 6, 7]
+# Average reference display order (indices into 19-ch monopolar):
+# L parasag+temporal, midline, R parasag+temporal
+DISPLAY_ORDER = [0, 1, 2, 3, 4, 5, 6, 7, -1, 8, 9, 10, -1, 11, 12, 13, 14, 15, 16, 17, 18]
 
-BIPOLAR_LABELS = [f'{a}-{b}' for a, b in BIPOLAR_PAIRS]
+MONO_LABELS = MONO_CHANNELS  # Use electrode names directly
 
 FS = 200  # sampling rate
 
@@ -146,9 +148,9 @@ def get_vote_info(row):
     return votes, n_votes, plurality, pct
 
 
-def plot_eeg_panel(ax, bipolar_data, fs, panel_label, subtitle_text):
-    """Plot a single EEG panel with bipolar banana montage."""
-    n_samples = bipolar_data.shape[1]
+def plot_eeg_panel(ax, eeg_data, fs, panel_label, subtitle_text):
+    """Plot a single EEG panel with average reference montage."""
+    n_samples = eeg_data.shape[1]
     t = np.arange(n_samples) / fs
 
     # Spacing between channels (in uV)
@@ -164,10 +166,10 @@ def plot_eeg_panel(ax, bipolar_data, fs, panel_label, subtitle_text):
             # Separator - just skip a half-space
             y_pos -= spacing * 0.4
             continue
-        trace = bipolar_data[idx]
+        trace = eeg_data[idx]
         ax.plot(t, trace + y_pos, color='black', linewidth=0.4, clip_on=True)
         yticks.append(y_pos)
-        yticklabels.append(BIPOLAR_LABELS[idx])
+        yticklabels.append(MONO_LABELS[idx])
         y_pos -= spacing
 
     # Set axis properties
@@ -248,18 +250,20 @@ def main():
         eeg_path = EEG_DIR / mat_file
         mono_data, fs = load_eeg(eeg_path)
 
-        # Check if data might already be bipolar (18 channels)
-        if mono_data.shape[0] == 18:
-            bipolar = mono_data
+        # Convert to average reference
+        if mono_data.shape[0] == 19:
+            avg = np.mean(mono_data, axis=0)
+            car_data = mono_data - avg[np.newaxis, :]
         else:
-            bipolar = mono_to_bipolar(mono_data)
+            # Fallback if not 19 channels
+            car_data = mono_data
 
-        bipolar = filter_eeg(bipolar, fs)
-        bipolar = clip_data(bipolar, clip_uv=300.0)
+        car_data = filter_eeg(car_data, fs)
+        car_data = clip_data(car_data, clip_uv=300.0)
 
         # Plot
         ax = axes[row_idx, col_idx]
-        plot_eeg_panel(ax, bipolar, fs, panel_label, subtitle)
+        plot_eeg_panel(ax, car_data, fs, panel_label, subtitle)
 
         # Build caption text
         vote_str = (f"{n_votes} experts: {votes['lpd']} LPD, {votes['gpd']} GPD, "

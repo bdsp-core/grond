@@ -418,9 +418,10 @@ def process_pd_case(case, discharge_times_dict):
     # Verbal description
     verbal = generate_verbal_description(subtype, freq, mean_topo_lap, laterality)
 
-    # Bipolar EEG for display
+    # EEG for display (both bipolar and monopolar)
     bipolar = mono_to_bipolar(mono_filt)
     bipolar_ds = downsample_for_display(bipolar, target_points=1000)
+    mono_ds = downsample_for_display(mono_filt, target_points=1000)
 
     # Update case
     case['topo_img_mono'] = topo_img_mono
@@ -430,6 +431,7 @@ def process_pd_case(case, discharge_times_dict):
     case['pred_freq'] = float(freq)
     case['discharge_times'] = [float(t) for t in discharge_times]
     case['eeg_data'] = bipolar_ds.tolist()
+    case['mono_data'] = mono_ds.tolist()
     # Keep gt fields
     # Remove old region_scores (no longer needed)
     case.pop('region_scores', None)
@@ -486,10 +488,11 @@ def process_rda_case(case, segment_labels_lookup):
     # Verbal description
     verbal = generate_verbal_description(subtype, freq_hz, amplitude_vector, laterality)
 
-    # Bipolar EEG for display (broadband filtered)
+    # EEG for display (both bipolar and monopolar)
     mono_filt = bandpass_filter(mono, lo=0.5, hi=20.0)
     bipolar = mono_to_bipolar(mono_filt)
     bipolar_ds = downsample_for_display(bipolar, target_points=1000)
+    mono_ds = downsample_for_display(mono_filt, target_points=1000)
 
     # Update case
     case['topo_img_mono'] = topo_img_mono
@@ -498,6 +501,7 @@ def process_rda_case(case, segment_labels_lookup):
     case['pred_lat'] = laterality
     case['pred_freq'] = float(freq_hz)
     case['eeg_data'] = bipolar_ds.tolist()
+    case['mono_data'] = mono_ds.tolist()
     case.pop('region_scores', None)
     case.pop('channel_scores', None)
 
