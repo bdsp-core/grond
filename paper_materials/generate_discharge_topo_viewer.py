@@ -242,6 +242,7 @@ def build_case_data(case_info):
     # Bipolar EEG for display (from filtered data)
     bipolar = mono_to_bipolar(mono_filt)
     bipolar_ds = downsample_for_display(bipolar, target_points=800)
+    mono_ds = downsample_for_display(mono_filt, target_points=800)
 
     return {
         'segment_id': case_info['mat_file'].replace('.mat', ''),
@@ -251,6 +252,7 @@ def build_case_data(case_info):
         'n_discharges': case_info['n_discharges'],
         'discharge_times': case_info['discharge_times'],
         'eeg_data': bipolar_ds.tolist(),
+        'mono_data': mono_ds.tolist(),
         'topo_img': topo_img,
     }
 
@@ -317,8 +319,10 @@ canvas {{ display: block; }}
     <button onclick="prev()">&#9664; Prev</button>
     <span id="counter">1 / {len(cases_data)}</span>
     <button onclick="next()">Next &#9654;</button>
+    <button id="montage-btn" onclick="cycleMontage()" style="background:#27ae60;">Bipolar</button>
     <span style="font-size:11px; color:#bdc3c7;">
-      <span class="kbd">&larr;</span> / <span class="kbd">&rarr;</span> navigate
+      <span class="kbd">&larr;</span>/<span class="kbd">&rarr;</span> nav
+      <span class="kbd">M</span> montage
     </span>
   </div>
 </div>
@@ -341,9 +345,21 @@ canvas {{ display: block; }}
 <script>
 const CASES = {cases_json};
 let idx = 0;
+let montageMode = 'bipolar'; // 'bipolar', 'average', 'laplacian'
 
 const BIPOLAR_NAMES = {json.dumps(BIPOLAR_NAMES)};
-const DISPLAY_ORDER = {json.dumps(DISPLAY_ORDER)};
+const MONO_NAMES = {json.dumps([n + '-avg' for n in MONO_CHANNELS])};
+const MONO_RAW_NAMES = {json.dumps(MONO_CHANNELS)};
+const BIPOLAR_DISPLAY_ORDER = {json.dumps(DISPLAY_ORDER)};
+const MONO_DISPLAY_ORDER = [
+  0, 4, 8, 1, 5, 9, 2, 6, 10, 3, 7, 11, -1,
+  12, 15, 13, 16, 14, 17, -1, 18
+];
+// CAR display: L temporal, L parasag, midline, R parasag, R temporal
+const CAR_DISPLAY_ORDER = [
+  0, 4, 8, 1, 5, 9, 2, 6, 10, 3, 7, -1,
+  11, 15, 12, 16, 13, 17, 14, -1, 18
+];
 const DURATION = {DURATION};
 
 const MARGIN_TOP = 30;
@@ -353,16 +369,86 @@ const MARGIN_RIGHT = 15;
 const CLIP_UV = 200;
 const Z_SCALE = 0.0025;
 
-function getDisplayChannels() {{
-  const dc = [];
-  for (const i of DISPLAY_ORDER) {{
-    if (i < 0) dc.push({{ idx: -1, name: '' }});
-    else dc.push({{ idx: i, name: BIPOLAR_NAMES[i] }});
-  }}
-  return dc;
+// Laplacian neighbors (indices into 19-ch monopolar)
+// Fp1=0,F3=1,C3=2,P3=3,F7=4,T3=5,T5=6,O1=7,Fz=8,Cz=9,Pz=10,
+// Fp2=11,F4=12,C4=13,P4=14,F8=15,T4=16,T6=17,O2=18
+const LAP_NEIGHBORS = {{
+  0: [1,4,8,11],     // Fp1: F3,F7,Fz,Fp2
+  1: [0,2,4,8],      // F3: Fp1,C3,F7,Fz
+  2: [1,3,5,9],      // C3: F3,P3,T3,Cz
+  3: [2,6,7,10],     // P3: C3,T5,O1,Pz
+  4: [0,1,5],        // F7: Fp1,F3,T3
+  5: [4,2,6],        // T3: F7,C3,T5
+  6: [5,3,7],        // T5: T3,P3,O1
+  7: [3,6,10],       // O1: P3,T5,Pz
+  8: [0,1,9,11,12],  // Fz: Fp1,F3,Cz,Fp2,F4
+  9: [8,2,10,13],    // Cz: Fz,C3,Pz,C4
+  10:[9,3,7,14,18],  // Pz: Cz,P3,O1,P4,O2
+  11:[12,15,8,0],    // Fp2: F4,F8,Fz,Fp1
+  12:[11,13,15,8],   // F4: Fp2,C4,F8,Fz
+  13:[12,14,16,9],   // C4: F4,P4,T4,Cz
+  14:[13,17,18,10],  // P4: C4,T6,O2,Pz
+  15:[11,12,16],     // F8: Fp2,F4,T4
+  16:[15,13,17],     // T4: F8,C4,T6
+  17:[16,14,18],     // T6: T4,P4,O2
+  18:[14,17,10],     // O2: P4,T6,Pz
+}};
+
+function cycleMontage() {{
+  if (montageMode === 'bipolar') montageMode = 'average';
+  else if (montageMode === 'average') montageMode = 'laplacian';
+  else montageMode = 'bipolar';
+  const btn = document.getElementById('montage-btn');
+  btn.textContent = montageMode.charAt(0).toUpperCase() + montageMode.slice(1);
+  btn.style.background = montageMode === 'bipolar' ? '#27ae60' : montageMode === 'average' ? '#e67e22' : '#8e44ad';
+  show();
 }}
-const DISPLAY_CHANNELS = getDisplayChannels();
-const N_DISPLAY = DISPLAY_CHANNELS.length;
+
+function getDisplayConfig() {{
+  if (montageMode === 'bipolar') {{
+    return {{ order: BIPOLAR_DISPLAY_ORDER, names: BIPOLAR_NAMES, getData: getBipolarData }};
+  }} else if (montageMode === 'average') {{
+    return {{ order: CAR_DISPLAY_ORDER, names: MONO_NAMES, getData: getAverageData }};
+  }} else {{
+    return {{ order: CAR_DISPLAY_ORDER, names: MONO_RAW_NAMES.map(n => n + '-lap'), getData: getLaplacianData }};
+  }}
+}}
+
+function getBipolarData() {{ return CASES[idx].eeg_data; }}
+
+function getAverageData() {{
+  const mono = CASES[idx].mono_data;
+  const nCh = mono.length, nSamp = mono[0].length;
+  const avg = new Array(nSamp).fill(0);
+  for (let ch = 0; ch < nCh; ch++)
+    for (let s = 0; s < nSamp; s++) avg[s] += mono[ch][s];
+  for (let s = 0; s < nSamp; s++) avg[s] /= nCh;
+  const car = [];
+  for (let ch = 0; ch < nCh; ch++) {{
+    const row = new Array(nSamp);
+    for (let s = 0; s < nSamp; s++) row[s] = mono[ch][s] - avg[s];
+    car.push(row);
+  }}
+  return car;
+}}
+
+function getLaplacianData() {{
+  const mono = CASES[idx].mono_data;
+  const nCh = mono.length, nSamp = mono[0].length;
+  const lap = [];
+  for (let ch = 0; ch < nCh; ch++) {{
+    const neighbors = LAP_NEIGHBORS[ch] || [];
+    const row = new Array(nSamp);
+    for (let s = 0; s < nSamp; s++) {{
+      let nAvg = 0;
+      for (const n of neighbors) nAvg += mono[n][s];
+      nAvg /= neighbors.length || 1;
+      row[s] = mono[ch][s] - nAvg;
+    }}
+    lap.push(row);
+  }}
+  return lap;
+}}
 
 function timeToX(t, plotLeft, plotW) {{ return plotLeft + (t / DURATION) * plotW; }}
 
@@ -376,8 +462,17 @@ function drawEEG() {{
   const ctx = canvas.getContext('2d');
 
   const c = CASES[idx];
-  const eegData = c.eeg_data;
+  const config = getDisplayConfig();
+  const eegData = config.getData();
   const nSamples = eegData[0].length;
+
+  // Build display channels from config
+  const dispCh = [];
+  for (const i of config.order) {{
+    if (i < 0) dispCh.push({{ idx: -1, name: '' }});
+    else dispCh.push({{ idx: i, name: config.names[i] }});
+  }}
+  const nDisp = dispCh.length;
 
   const PLOT_LEFT = MARGIN_LEFT;
   const PLOT_RIGHT = W - MARGIN_RIGHT;
@@ -397,11 +492,11 @@ function drawEEG() {{
   }}
   ctx.setLineDash([]);
 
-  const chSpacing = PLOT_H / (N_DISPLAY + 1);
+  const chSpacing = PLOT_H / (nDisp + 1);
 
   // Traces
-  for (let di = 0; di < N_DISPLAY; di++) {{
-    const ch = DISPLAY_CHANNELS[di];
+  for (let di = 0; di < nDisp; di++) {{
+    const ch = dispCh[di];
     if (ch.idx < 0) continue;
     const yCenter = MARGIN_TOP + chSpacing * (di + 1);
     const trace = eegData[ch.idx];
@@ -423,8 +518,8 @@ function drawEEG() {{
   ctx.textAlign = 'right';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = '#000000';
-  for (let di = 0; di < N_DISPLAY; di++) {{
-    const ch = DISPLAY_CHANNELS[di];
+  for (let di = 0; di < nDisp; di++) {{
+    const ch = dispCh[di];
     if (ch.idx < 0) continue;
     const yCenter = MARGIN_TOP + chSpacing * (di + 1);
     ctx.fillText(ch.name, PLOT_LEFT - 4, yCenter);
@@ -498,6 +593,7 @@ function next() {{ if (idx < CASES.length - 1) {{ idx++; show(); }} }}
 document.addEventListener('keydown', function(e) {{
   if (e.key === 'ArrowLeft') {{ e.preventDefault(); prev(); }}
   else if (e.key === 'ArrowRight') {{ e.preventDefault(); next(); }}
+  else if (e.key === 'm' || e.key === 'M') {{ e.preventDefault(); cycleMontage(); }}
 }});
 
 window.addEventListener('resize', () => show());
