@@ -165,7 +165,7 @@ def gfp_align(mono_filtered, discharge_times_sec, fs=200, window_ms=25):
         gfp_aligned_samples.append(peak_sample)
 
     if len(gfp_aligned_samples) < 2:
-        return None
+        return None, None
 
     # Extract ±50ms epochs around GFP-aligned peaks (both mono and Laplacian)
     mono_epochs = []
@@ -182,7 +182,8 @@ def gfp_align(mono_filtered, discharge_times_sec, fs=200, window_ms=25):
 
     if len(mono_epochs) < 2:
         # Fall back to single-sample alignment
-        mean_topo = np.mean([mono_filtered[:, s] for s in gfp_aligned_samples], axis=0)
+        mean_topo_mono = np.mean([mono_filtered[:, s] for s in gfp_aligned_samples], axis=0)
+        mean_topo_lap = np.mean([lap[:, s] for s in gfp_aligned_samples], axis=0)
     else:
         epoch_len = mono_epochs[0].shape[1]
         # Template from Laplacian epochs (for alignment)
@@ -232,18 +233,22 @@ def gfp_align(mono_filtered, discharge_times_sec, fs=200, window_ms=25):
             gfp_weights = gfp_weights ** 2  # square to amplify contrast
             weight_sum = np.sum(gfp_weights)
             if weight_sum > 1e-12:
-                mean_topo = np.average(refined_voltages, axis=0, weights=gfp_weights)
+                mean_topo_mono = np.average(refined_voltages, axis=0, weights=gfp_weights)
+                mean_topo_lap = np.average(lap_voltages, axis=0, weights=gfp_weights)
             else:
-                mean_topo = np.mean(refined_voltages, axis=0)
+                mean_topo_mono = np.mean(refined_voltages, axis=0)
+                mean_topo_lap = np.mean(lap_voltages, axis=0)
 
     # Auto-flip polarity so max absolute channel is positive (red on topoplot).
-    if np.abs(np.min(mean_topo)) > np.abs(np.max(mean_topo)):
-        mean_topo = -mean_topo
+    if np.abs(np.min(mean_topo_mono)) > np.abs(np.max(mean_topo_mono)):
+        mean_topo_mono = -mean_topo_mono
+    if np.abs(np.min(mean_topo_lap)) > np.abs(np.max(mean_topo_lap)):
+        mean_topo_lap = -mean_topo_lap
 
-    return mean_topo
+    return mean_topo_mono, mean_topo_lap
 
 
-def generate_topoplot_b64(mean_topo, ch_names_orig):
+def generate_topoplot_b64(mean_topo, ch_names_orig, title='Mean discharge\ntopography'):
     """Generate topoplot as base64-encoded PNG."""
     name_map = {'T3': 'T7', 'T4': 'T8', 'T5': 'P7', 'T6': 'P8'}
     mne_names = [name_map.get(n, n) for n in ch_names_orig]
@@ -261,7 +266,7 @@ def generate_topoplot_b64(mean_topo, ch_names_orig):
                          contours=6, cmap='RdBu_r', sensors=True,
                          vlim=(-vmax, vmax),
                          names=mne_names, size=3)
-    ax.set_title('Mean discharge\ntopography', fontsize=9)
+    ax.set_title(title, fontsize=9)
 
     buf = io.BytesIO()
     fig.savefig(buf, format='png', dpi=150, bbox_inches='tight', facecolor='white')
@@ -350,13 +355,15 @@ def build_case_data(case_info):
     # Bandpass filter
     mono_filt = bandpass_filter(mono, lo=0.5, hi=20.0)
 
-    # GFP-aligned mean topography
-    mean_topo = gfp_align(mono_filt, case_info['discharge_times'])
-    if mean_topo is None:
+    # GFP-aligned mean topography (monopolar + Laplacian)
+    result = gfp_align(mono_filt, case_info['discharge_times'])
+    mean_topo_mono, mean_topo_lap = result
+    if mean_topo_mono is None:
         return None
 
-    # Generate topoplot
-    topo_img = generate_topoplot_b64(mean_topo, MONO_CHANNELS)
+    # Generate both topoplots
+    topo_img_mono = generate_topoplot_b64(mean_topo_mono, MONO_CHANNELS, title='Monopolar')
+    topo_img_lap = generate_topoplot_b64(mean_topo_lap, MONO_CHANNELS, title='Laplacian')
 
     # Bipolar EEG for display (from filtered data)
     bipolar = mono_to_bipolar(mono_filt)
@@ -372,7 +379,8 @@ def build_case_data(case_info):
         'discharge_times': case_info['discharge_times'],
         'eeg_data': bipolar_ds.tolist(),
         'mono_data': mono_ds.tolist(),
-        'topo_img': topo_img,
+        'topo_img_mono': topo_img_mono,
+        'topo_img_lap': topo_img_lap,
     }
 
 
@@ -439,9 +447,11 @@ canvas {{ display: block; }}
     <span id="counter">1 / {len(cases_data)}</span>
     <button onclick="next()">Next &#9654;</button>
     <button id="montage-btn" onclick="cycleMontage()" style="background:#27ae60;">Bipolar</button>
+    <button id="topo-btn" onclick="toggleTopoMode()" style="background:#2980b9;">Monopolar topo</button>
     <span style="font-size:11px; color:#bdc3c7;">
       <span class="kbd">&larr;</span>/<span class="kbd">&rarr;</span> nav
-      <span class="kbd">M</span> montage
+      <span class="kbd">M</span>/<span class="kbd">Ctrl</span> montage
+      <span class="kbd">T</span> topo mode
     </span>
   </div>
 </div>
@@ -465,6 +475,24 @@ canvas {{ display: block; }}
 const CASES = {cases_json};
 let idx = 0;
 let montageMode = 'bipolar'; // 'bipolar', 'average', 'laplacian'
+let topoMode = 'mono'; // 'mono' or 'lap'
+
+function toggleTopoMode() {{
+  topoMode = (topoMode === 'mono') ? 'lap' : 'mono';
+  const btn = document.getElementById('topo-btn');
+  btn.textContent = topoMode === 'mono' ? 'Monopolar topo' : 'Laplacian topo';
+  btn.style.background = topoMode === 'mono' ? '#2980b9' : '#8e44ad';
+  updateTopo();
+}}
+
+function updateTopo() {{
+  const c = CASES[idx];
+  const imgSrc = topoMode === 'mono' ? c.topo_img_mono : c.topo_img_lap;
+  document.getElementById('topo-img').src = 'data:image/png;base64,' + imgSrc;
+  const label = topoMode === 'mono' ? 'Monopolar' : 'Laplacian';
+  document.getElementById('topo-caption').textContent =
+    label + ' | ' + c.subtype.toUpperCase() + ' | ' + c.n_discharges + ' discharges';
+}}
 
 const BIPOLAR_NAMES = {json.dumps(BIPOLAR_NAMES)};
 const MONO_NAMES = {json.dumps([n + '-avg' for n in MONO_CHANNELS])};
@@ -691,9 +719,7 @@ function updateInfo() {{
   document.getElementById('info-pat').textContent = c.patient_id;
   document.getElementById('info-nd').textContent = c.n_discharges;
   document.getElementById('counter').textContent = (idx + 1) + ' / ' + CASES.length;
-  document.getElementById('topo-img').src = 'data:image/png;base64,' + c.topo_img;
-  document.getElementById('topo-caption').textContent =
-    c.subtype.toUpperCase() + ' | ' + c.n_discharges + ' discharges averaged';
+  updateTopo();
 }}
 
 function show() {{
@@ -708,6 +734,7 @@ document.addEventListener('keydown', function(e) {{
   if (e.key === 'ArrowLeft') {{ e.preventDefault(); prev(); }}
   else if (e.key === 'ArrowRight') {{ e.preventDefault(); next(); }}
   else if (e.key === 'm' || e.key === 'M' || e.key === 'Control') {{ e.preventDefault(); cycleMontage(); }}
+  else if (e.key === 't' || e.key === 'T') {{ e.preventDefault(); toggleTopoMode(); }}
 }});
 
 window.addEventListener('resize', () => show());
