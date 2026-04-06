@@ -362,7 +362,7 @@ def build_case_data(case_info):
         return None
 
     # Generate both topoplots
-    topo_img_mono = generate_topoplot_b64(mean_topo_mono, MONO_CHANNELS, title='Monopolar')
+    topo_img_mono = generate_topoplot_b64(mean_topo_mono, MONO_CHANNELS, title='Average Reference')
     topo_img_lap = generate_topoplot_b64(mean_topo_lap, MONO_CHANNELS, title='Laplacian')
 
     # Bipolar EEG for display (from filtered data)
@@ -447,7 +447,7 @@ canvas {{ display: block; }}
     <span id="counter">1 / {len(cases_data)}</span>
     <button onclick="next()">Next &#9654;</button>
     <button id="montage-btn" onclick="cycleMontage()" style="background:#27ae60;">Bipolar</button>
-    <button id="topo-btn" onclick="toggleTopoMode()" style="background:#2980b9;">Monopolar topo</button>
+    <button id="topo-btn" onclick="toggleTopoMode()" style="background:#8e44ad;">Laplacian topo</button>
     <span style="font-size:11px; color:#bdc3c7;">
       <span class="kbd">&larr;</span>/<span class="kbd">&rarr;</span> nav
       <span class="kbd">M</span>/<span class="kbd">Ctrl</span> montage
@@ -475,12 +475,12 @@ canvas {{ display: block; }}
 const CASES = {cases_json};
 let idx = 0;
 let montageMode = 'bipolar'; // 'bipolar', 'average', 'laplacian'
-let topoMode = 'mono'; // 'mono' or 'lap'
+let topoMode = 'lap'; // 'mono' or 'lap'
 
 function toggleTopoMode() {{
   topoMode = (topoMode === 'mono') ? 'lap' : 'mono';
   const btn = document.getElementById('topo-btn');
-  btn.textContent = topoMode === 'mono' ? 'Monopolar topo' : 'Laplacian topo';
+  btn.textContent = topoMode === 'mono' ? 'Avg Ref topo' : 'Laplacian topo';
   btn.style.background = topoMode === 'mono' ? '#2980b9' : '#8e44ad';
   updateTopo();
 }}
@@ -489,7 +489,7 @@ function updateTopo() {{
   const c = CASES[idx];
   const imgSrc = topoMode === 'mono' ? c.topo_img_mono : c.topo_img_lap;
   document.getElementById('topo-img').src = 'data:image/png;base64,' + imgSrc;
-  const label = topoMode === 'mono' ? 'Monopolar' : 'Laplacian';
+  const label = topoMode === 'mono' ? 'Avg Ref' : 'Laplacian';
   document.getElementById('topo-caption').textContent =
     label + ' | ' + c.subtype.toUpperCase() + ' | ' + c.n_discharges + ' discharges';
 }}
