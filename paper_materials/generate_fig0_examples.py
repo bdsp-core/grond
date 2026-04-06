@@ -83,9 +83,9 @@ PANELS = {
         'desc': 'Ambiguous LPD',
     },
     'F': {
-        'file': 'sub-S0001114433509_20111031010306.mat',
-        'title': 'Ambiguous mixed',
-        'desc': 'Ambiguous pattern',
+        'file': 'sub-S0001114100764_20130624050638.mat',
+        'title': 'Ambiguous GRDA',
+        'desc': 'Ambiguous GRDA',
     },
 }
 
@@ -305,11 +305,11 @@ def main():
             )
         elif panel_label == 'F':
             caption_parts.append(
-                f"(F) Ambiguous pattern with mixed classification. "
-                f"Low inter-rater agreement ({pct}%, {vote_str}).{freq_str} "
-                f"Votes are distributed across multiple IIIC categories (GPD, LPD, LRDA, GRDA), "
-                f"demonstrating that some EEG patterns do not fit neatly into a single IIIC category "
-                f"and that classification difficulty varies substantially across segments."
+                f"(F) Ambiguous generalized rhythmic delta activity. "
+                f"Moderate inter-rater agreement ({pct}%, {vote_str}).{freq_str} "
+                f"Classified as GRDA by plurality vote, but with substantial disagreement — "
+                f"some experts saw periodic discharges (LPD/GPD) rather than purely rhythmic activity, "
+                f"illustrating the challenge of distinguishing generalized rhythmic from periodic patterns."
             )
 
     # Save
