@@ -239,10 +239,12 @@ def gfp_align(mono_filtered, discharge_times_sec, fs=200, window_ms=25):
                 mean_topo_mono = np.mean(refined_voltages, axis=0)
                 mean_topo_lap = np.mean(lap_voltages, axis=0)
 
-    # Auto-flip polarity so max absolute channel is positive (red on topoplot).
-    if np.abs(np.min(mean_topo_mono)) > np.abs(np.max(mean_topo_mono)):
-        mean_topo_mono = -mean_topo_mono
+    # Auto-flip polarity based on Laplacian (which reliably identifies the
+    # discharge peak). Apply the SAME flip to both so they're consistent.
+    # The Laplacian is the ground truth for where the discharge is — if
+    # its max absolute is negative, flip both.
     if np.abs(np.min(mean_topo_lap)) > np.abs(np.max(mean_topo_lap)):
+        mean_topo_mono = -mean_topo_mono
         mean_topo_lap = -mean_topo_lap
 
     return mean_topo_mono, mean_topo_lap
