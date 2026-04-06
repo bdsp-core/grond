@@ -234,34 +234,15 @@ def generate_topoplot_b64(amplitude_vector, ch_names_orig, title='Amplitude'):
 # ---------- Verbal description ----------
 
 def generate_verbal_description(subtype, freq_hz, amplitude_vector):
-    """Generate ACNS 2021 verbal description.
-
-    Uses morgoth-viewer's describe_ied_topoplot() for regional localization
-    and amplitude-based laterality from narrowband data.
+    """Generate ACNS 2021 verbal description — delegates to the shared function
+    in generate_discharge_topo_viewer.py for consistency across all figures/viewers.
     """
+    from generate_discharge_topo_viewer import generate_verbal_from_topo
     # Laterality from amplitude vector
     left_amp = np.mean(amplitude_vector[LEFT_IDX])
     right_amp = np.mean(amplitude_vector[RIGHT_IDX])
     side = 'left' if left_amp > right_amp else 'right'
-
-    # Regional localization via morgoth-viewer
-    try:
-        sys.path.insert(0, '/Users/mwestover/GithubRepos/morgoth-viewer')
-        from morgoth_viewer_app.processing.ied_localization import describe_ied_topoplot
-        result = describe_ied_topoplot(amplitude_vector)
-        descriptor = result['descriptor']  # e.g., "left temporal"
-    except Exception as e:
-        descriptor = 'unknown region'
-
-    type_str = subtype.upper()
-    freq_str = f'at {freq_hz:.1f} Hz' if np.isfinite(freq_hz) else ''
-
-    if subtype == 'lrda':
-        parts = [type_str, f'{side} sided (unilateral)', freq_str, descriptor]
-    else:  # grda
-        parts = [type_str, freq_str, 'generalized', descriptor]
-
-    return ', '.join(p for p in parts if p) + '.'
+    return generate_verbal_from_topo(subtype, freq_hz, amplitude_vector, laterality_from_pdchar=side)
 
 
 # ---------- Case selection ----------

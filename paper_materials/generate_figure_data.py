@@ -327,39 +327,12 @@ def generate_topoplot_b64(data_vector, ch_names_orig, title='Topography'):
 # ── Verbal description ────────────────────────────────────────────────────
 
 def generate_verbal_description(subtype, freq_hz, topo_vector, laterality):
-    """Generate ACNS-style verbal description using morgoth-viewer.
-
-    Args:
-        subtype: 'lpd', 'gpd', 'lrda', 'grda'
-        freq_hz: frequency in Hz
-        topo_vector: 19-element amplitude/voltage vector for regional description
-        laterality: 'left', 'right', 'bilateral', etc.
+    """Generate ACNS-style verbal description — delegates to the shared function
+    in generate_discharge_topo_viewer.py for consistency across all figures/viewers.
     """
-    # Regional localization via morgoth-viewer
-    try:
-        sys.path.insert(0, '/Users/mwestover/GithubRepos/morgoth-viewer')
-        from morgoth_viewer_app.processing.ied_localization import describe_ied_topoplot
-        result = describe_ied_topoplot(topo_vector)
-        descriptor = result['descriptor']
-    except Exception as e:
-        print(f'  Warning: describe_ied_topoplot failed: {e}')
-        descriptor = 'unknown region'
-
-    type_str = subtype.upper()
-    freq_str = f'at {freq_hz:.1f} Hz' if freq_hz and np.isfinite(freq_hz) else ''
-
-    if subtype == 'lpd':
-        side_str = f'{laterality} sided (unilateral)' if laterality in ('left', 'right') else laterality
-        parts = [type_str, side_str, freq_str, descriptor]
-    elif subtype == 'gpd':
-        parts = [type_str, freq_str, descriptor]
-    elif subtype == 'lrda':
-        side_str = f'{laterality} sided (unilateral)' if laterality in ('left', 'right') else laterality
-        parts = [type_str, side_str, freq_str, descriptor]
-    else:  # grda
-        parts = [type_str, freq_str, 'generalized', descriptor]
-
-    return ', '.join(p for p in parts if p) + '.'
+    from generate_discharge_topo_viewer import generate_verbal_from_topo
+    freq = freq_hz if freq_hz and np.isfinite(freq_hz) else np.nan
+    return generate_verbal_from_topo(subtype, freq, topo_vector, laterality_from_pdchar=laterality)
 
 
 # ── Laterality computation ────────────────────────────────────────────────
