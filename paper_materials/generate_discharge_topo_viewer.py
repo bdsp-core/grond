@@ -360,78 +360,102 @@ def select_cases(segment_labels_path, discharge_times_path, n_per_subtype=100):
     return lpd + gpd
 
 
-def generate_verbal_description(subtype, frequency, laterality_index, region_scores):
-    """Generate ACNS 2021 verbal description from characterization results."""
-    REGION_BARE = {
-        'LF': 'frontal', 'RF': 'frontal',
-        'LT': 'temporal', 'RT': 'temporal',
-        'LCP': 'centro-parietal', 'RCP': 'centro-parietal',
-        'LO': 'occipital', 'RO': 'occipital',
-    }
-    LEFT_REGIONS = ['LF', 'LT', 'LCP', 'LO']
-    RIGHT_REGIONS = ['RF', 'RT', 'RCP', 'RO']
-    THRESHOLD = 0.4  # region active threshold (normalized scores 0-1)
+def generate_verbal_from_topo(subtype, frequency, mean_topo_lap):
+    """Generate ACNS 2021 verbal description from discharge-locked topography.
+
+    Uses the Laplacian topography to determine laterality and localization,
+    which is more accurate than CNN channel probabilities.
+
+    ACNS 2021 terminology:
+    - Lateralized (LPD): unilateral, bilateral asymmetric, or bilateral asynchronous
+    - Generalized (GPD): frontally/occipitally/midline predominant, or generalized NOS
+    """
+    # Electrode-to-lobe mapping (19 monopolar channels)
+    # Fp1=0,F3=1,C3=2,P3=3,F7=4,T3=5,T5=6,O1=7,Fz=8,Cz=9,Pz=10,
+    # Fp2=11,F4=12,C4=13,P4=14,F8=15,T4=16,T6=17,O2=18
+    LEFT_IDX = [0, 1, 2, 3, 4, 5, 6, 7]    # Fp1,F3,C3,P3,F7,T3,T5,O1
+    RIGHT_IDX = [11, 12, 13, 14, 15, 16, 17, 18]  # Fp2,F4,C4,P4,F8,T4,T6,O2
+    MIDLINE_IDX = [8, 9, 10]  # Fz,Cz,Pz
+
+    FRONTAL_IDX = [0, 1, 4, 11, 12, 15, 8]  # Fp1,F3,F7,Fp2,F4,F8,Fz
+    TEMPORAL_IDX = [4, 5, 6, 15, 16, 17]     # F7,T3,T5,F8,T4,T6
+    CENTRAL_IDX = [2, 9, 13]                  # C3,Cz,C4
+    PARIETAL_IDX = [3, 10, 14]                # P3,Pz,P4
+    OCCIPITAL_IDX = [7, 18]                    # O1,O2
+
+    # Use absolute values — we care about magnitude of activity, not polarity
+    abs_topo = np.abs(mean_topo_lap)
 
     type_str = subtype.upper()
     freq_str = f'at {frequency:.1f} Hz' if np.isfinite(frequency) else ''
+
+    # Compute laterality from topography
+    left_power = np.mean(abs_topo[LEFT_IDX])
+    right_power = np.mean(abs_topo[RIGHT_IDX])
+    total = left_power + right_power
+    if total > 1e-12:
+        asymmetry_ratio = abs(left_power - right_power) / total
+    else:
+        asymmetry_ratio = 0
+    dom_side = 'left' if left_power > right_power else 'right'
+
+    # Find peak electrode
+    peak_ch = np.argmax(abs_topo)
+    peak_name = MONO_CHANNELS[peak_ch]
+
+    # Determine lobe of peak
+    lobe_map = {}
+    for i in FRONTAL_IDX: lobe_map[i] = 'frontal'
+    for i in TEMPORAL_IDX: lobe_map[i] = 'temporal'
+    for i in CENTRAL_IDX: lobe_map[i] = 'central'
+    for i in PARIETAL_IDX: lobe_map[i] = 'parietal'
+    for i in OCCIPITAL_IDX: lobe_map[i] = 'occipital'
+    peak_lobe = lobe_map.get(peak_ch, 'unknown')
+
     is_lateralized = subtype in ('lpd', 'lrda')
 
     if is_lateralized:
-        UNILATERAL_T = 0.15
-        BILATERAL_T = 0.10
-        li = laterality_index if np.isfinite(laterality_index) else 0
-
-        if li < -UNILATERAL_T:
-            dom_regs, lat_str = LEFT_REGIONS, 'unilateral left'
-        elif li > UNILATERAL_T:
-            dom_regs, lat_str = RIGHT_REGIONS, 'unilateral right'
-        elif li < -BILATERAL_T:
-            dom_regs, lat_str = LEFT_REGIONS, 'bilateral asymmetric, left-predominant'
-        elif li > BILATERAL_T:
-            dom_regs, lat_str = RIGHT_REGIONS, 'bilateral asymmetric, right-predominant'
+        # ACNS 2021: unilateral vs bilateral asymmetric
+        # Asymmetry ratio: >0.3 = unilateral, 0.1-0.3 = bilateral asymmetric, <0.1 = bilateral symmetric
+        if asymmetry_ratio > 0.3:
+            lat_str = f'lateralized ({dom_side}), unilateral'
+        elif asymmetry_ratio > 0.1:
+            lat_str = f'lateralized ({dom_side}), bilateral asymmetric'
         else:
-            dom_regs, lat_str = LEFT_REGIONS + RIGHT_REGIONS, 'bilateral/symmetric'
+            lat_str = 'lateralized, bilateral symmetric'
 
-        active = [(r, s) for r, s in region_scores.items()
-                  if s > THRESHOLD and r in dom_regs]
-        active.sort(key=lambda x: -x[1])
-        top_names = list(dict.fromkeys(REGION_BARE[r] for r, _ in active[:2]))
-        region_str = ('maximal in the ' + ' and '.join(top_names) + ' regions'
-                      if top_names else '')
-        parts = [type_str, freq_str, lat_str]
-        if region_str:
-            parts.append(region_str)
-        return ', '.join(p for p in parts if p) + '.'
+        # Localization: peak lobe on dominant side
+        loc_str = f'maximum at {peak_name} ({peak_lobe})'
+        parts = [type_str, freq_str, lat_str, loc_str]
 
     else:  # generalized
-        frontal = np.nanmean([region_scores.get('LF', 0), region_scores.get('RF', 0)])
-        occipital = np.nanmean([region_scores.get('LO', 0), region_scores.get('RO', 0)])
-        temporal = np.nanmean([region_scores.get('LT', 0), region_scores.get('RT', 0)])
-        central = np.nanmean([region_scores.get('LCP', 0), region_scores.get('RCP', 0)])
+        # ACNS 2021: frontally/occipitally/midline predominant
+        frontal_mean = np.mean(abs_topo[FRONTAL_IDX])
+        temporal_mean = np.mean(abs_topo[TEMPORAL_IDX])
+        central_mean = np.mean(abs_topo[CENTRAL_IDX])
+        parietal_mean = np.mean(abs_topo[PARIETAL_IDX])
+        occipital_mean = np.mean(abs_topo[OCCIPITAL_IDX])
+        midline_mean = np.mean(abs_topo[MIDLINE_IDX])
 
         groups = {
-            'frontally predominant': frontal,
-            'occipitally predominant': occipital,
-            'temporally predominant': temporal,
-            'centrally predominant': central,
+            'frontally predominant': frontal_mean,
+            'occipitally predominant': occipital_mean,
+            'midline predominant': midline_mean,
+            'temporally predominant': temporal_mean,
+            'centrally predominant': central_mean,
         }
         best_label = max(groups, key=groups.get)
-        best_score = groups[best_label]
-        region_str = best_label if best_score > THRESHOLD else 'no regional predominance'
-        parts = [type_str, freq_str, region_str]
-        return ', '.join(p for p in parts if p) + '.'
+        # Check if predominance is significant (>50% more than average)
+        avg_all = np.mean(abs_topo)
+        if groups[best_label] > 1.5 * avg_all:
+            loc_str = f'generalized, {best_label}'
+        else:
+            loc_str = 'generalized, no regional predominance'
 
+        loc_str += f'; maximum at {peak_name}'
+        parts = [type_str, freq_str, loc_str]
 
-# PDCharacterizer singleton
-_pd_characterizer = None
-
-def get_pd_characterizer():
-    global _pd_characterizer
-    if _pd_characterizer is None:
-        sys.path.insert(0, str(PROJECT_DIR / 'code'))
-        from pd_characterizer import PDCharacterizer
-        _pd_characterizer = PDCharacterizer()
-    return _pd_characterizer
+    return ', '.join(p for p in parts if p) + '.'
 
 
 def build_case_data(case_info):
@@ -453,30 +477,19 @@ def build_case_data(case_info):
     topo_img_mono = generate_topoplot_b64(mean_topo_mono, MONO_CHANNELS, title='Average Reference')
     topo_img_lap = generate_topoplot_b64(mean_topo_lap, MONO_CHANNELS, title='Laplacian')
 
-    # Run PDCharacterizer for verbal description
-    bipolar_raw = mono_to_bipolar(mono)
+    # Generate verbal description from discharge-locked topography
     subtype = case_info['subtype']
     try:
-        pc = get_pd_characterizer()
-        char_result = pc.characterize(bipolar_raw[:18, :2000], subtype=subtype)
-        frequency = char_result.get('frequency', np.nan)
-        lat_conf = char_result.get('laterality_confidence', 0)
-        laterality = char_result.get('laterality', None)
-        region_scores_raw = char_result.get('region_scores', {})
-        channel_probs = np.array(char_result.get('channel_probs', [0.5]*18))
-
-        # Compute laterality index from channel probs
-        LEFT_IDX = [0,1,2,3,8,9,10,11]
-        RIGHT_IDX = [4,5,6,7,12,13,14,15]
-        left_mean = np.mean(channel_probs[LEFT_IDX])
-        right_mean = np.mean(channel_probs[RIGHT_IDX])
-        total = left_mean + right_mean
-        lat_idx = (right_mean - left_mean) / total if total > 0 else 0
-
-        verbal = generate_verbal_description(subtype, frequency, lat_idx, region_scores_raw)
+        # Get frequency from discharge timing (IPI)
+        times = case_info['discharge_times']
+        if len(times) >= 2:
+            ipis = np.diff(times)
+            frequency = 1.0 / np.median(ipis) if len(ipis) > 0 else np.nan
+        else:
+            frequency = np.nan
+        verbal = generate_verbal_from_topo(subtype, frequency, mean_topo_lap)
     except Exception as e:
         verbal = f'{subtype.upper()}'
-        frequency = np.nan
 
     # Bipolar EEG for display (from filtered data)
     bipolar = mono_to_bipolar(mono_filt)
