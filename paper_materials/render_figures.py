@@ -230,21 +230,23 @@ def draw_eeg_panel(ax, case, is_pd):
     ax.set_facecolor('white')
 
     # Hemisphere shading — light blue on involved side(s)
-    lat = case.get('gt_lat', case.get('pred_lat', ''))
+    lat = case.get('pred_lat', '') or case.get('gt_lat', '')
     subtype = case.get('subtype', '').lower()
     shade_color = (100/255, 160/255, 255/255, 0.07)  # light blue
 
     # Determine which hemispheres to shade
     if subtype in ('gpd', 'grda'):
         shade_hemis = {'L', 'R', 'M'}  # bilateral + midline for generalized
-    elif lat in ('left', 'bilateral, left-predominant'):
+    elif 'left' in lat:
         shade_hemis = {'L'}
-    elif lat in ('right', 'bilateral, right-predominant'):
+    elif 'right' in lat:
         shade_hemis = {'R'}
-    elif lat in ('bilateral', 'bilateral/symmetric'):
+    elif 'bilateral' in lat:
         shade_hemis = {'L', 'R'}
+    elif subtype in ('lpd', 'lrda'):
+        shade_hemis = {'L'}  # default left for lateralized if unknown
     else:
-        shade_hemis = {'L', 'R'}  # default both if unknown
+        shade_hemis = {'L', 'R'}
 
     for i, entry in enumerate(DISPLAY_ORDER):
         if entry['idx'] == -1 or y_positions[i] is None:

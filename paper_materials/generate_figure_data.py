@@ -346,16 +346,15 @@ def compute_laterality_from_topo(topo_vector, subtype):
     if subtype in ('gpd', 'grda'):
         return 'bilateral'
 
-    left_amp = np.mean(topo_vector[LEFT_IDX])
-    right_amp = np.mean(topo_vector[RIGHT_IDX])
+    left_amp = np.mean(np.abs(topo_vector[LEFT_IDX]))
+    right_amp = np.mean(np.abs(topo_vector[RIGHT_IDX]))
 
-    ratio = left_amp / (right_amp + 1e-12)
-    if ratio > 1.3:
+    # Use a low threshold — for lateralized patterns, any asymmetry
+    # should pick a side rather than defaulting to bilateral
+    if left_amp > right_amp:
         return 'left'
-    elif ratio < 1 / 1.3:
-        return 'right'
     else:
-        return 'bilateral'
+        return 'right'
 
 
 # ── Process one PD case ───────────────────────────────────────────────────
@@ -405,8 +404,17 @@ def process_pd_case(case, discharge_times_dict):
     topo_img_lap = generate_topoplot_b64(mean_topo_lap, MONO_CHANNELS,
                                           title='Laplacian\ntopography')
 
-    # Laterality from Laplacian topography
-    laterality = compute_laterality_from_topo(mean_topo_lap, subtype)
+    # Laterality: use PDCharacterizer (primary) with topo fallback
+    try:
+        from pd_characterizer import PDCharacterizer
+        pc = PDCharacterizer()
+        bipolar_raw = mono_to_bipolar(mono)
+        char_result = pc.characterize(bipolar_raw[:18, :2000], subtype=subtype)
+        laterality = char_result.get('laterality', None)
+        if laterality not in ('left', 'right'):
+            laterality = compute_laterality_from_topo(mean_topo_lap, subtype)
+    except Exception:
+        laterality = compute_laterality_from_topo(mean_topo_lap, subtype)
 
     # Frequency from discharge times IPI
     if len(discharge_times) >= 2:
