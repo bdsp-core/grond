@@ -174,7 +174,18 @@ def gfp_align(mono_filtered, discharge_times_sec, fs=200, window_ms=25):
         if len(refined_voltages) < 2:
             mean_topo = np.mean([mono_filtered[:, s] for s in gfp_aligned_samples], axis=0)
         else:
-            mean_topo = np.mean(refined_voltages, axis=0)
+            # GFP-weighted averaging: real discharges have high GFP (large
+            # voltage deflection), phantom discharges interpolated by DP have
+            # GFP close to baseline. Weighting by GFP^2 strongly suppresses
+            # phantom contributions that would otherwise bias the topography.
+            refined_voltages = np.array(refined_voltages)  # (n_discharges, 19)
+            gfp_weights = np.std(refined_voltages, axis=1)  # GFP per discharge
+            gfp_weights = gfp_weights ** 2  # square to amplify contrast
+            weight_sum = np.sum(gfp_weights)
+            if weight_sum > 1e-12:
+                mean_topo = np.average(refined_voltages, axis=0, weights=gfp_weights)
+            else:
+                mean_topo = np.mean(refined_voltages, axis=0)
 
     # Auto-flip polarity so max absolute channel is positive (red on topoplot).
     if np.abs(np.min(mean_topo)) > np.abs(np.max(mean_topo)):
