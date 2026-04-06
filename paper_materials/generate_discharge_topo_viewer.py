@@ -141,7 +141,8 @@ def generate_topoplot_b64(mean_topo, ch_names_orig):
     fig, ax = plt.subplots(1, 1, figsize=(3, 3))
     mne.viz.plot_topomap(mean_topo, info, axes=ax, show=False,
                          contours=6, cmap='RdBu_r', sensors=True,
-                         vlim=(-vmax, vmax))
+                         vlim=(-vmax, vmax),
+                         names=mne_names, size=3)
     ax.set_title('Mean discharge\ntopography', fontsize=9)
 
     buf = io.BytesIO()
@@ -588,7 +589,7 @@ function next() {{ if (idx < CASES.length - 1) {{ idx++; show(); }} }}
 document.addEventListener('keydown', function(e) {{
   if (e.key === 'ArrowLeft') {{ e.preventDefault(); prev(); }}
   else if (e.key === 'ArrowRight') {{ e.preventDefault(); next(); }}
-  else if (e.key === 'm' || e.key === 'M') {{ e.preventDefault(); cycleMontage(); }}
+  else if (e.key === 'm' || e.key === 'M' || e.key === 'Control') {{ e.preventDefault(); cycleMontage(); }}
 }});
 
 window.addEventListener('resize', () => show());
