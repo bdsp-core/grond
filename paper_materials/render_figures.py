@@ -306,13 +306,13 @@ def draw_eeg_panel(ax, case, is_pd):
     ax.text(scale_x + 0.15, scale_y_mid, f'{int(scale_uv)} µV',
             fontsize=7, va='center', ha='left', color='black')
 
-    # Difficulty badge (Critique Point 2: Increased font size, bold; Critique Point 4: Refined design)
+    # Difficulty badge
     difficulty = case.get('difficulty', '')
-    jaccard = case.get('jaccard') or 0
-    
+    agreement = case.get('agreement_pct', 0)
+
     dc_config = DIFF_BADGE_COLORS.get(difficulty, {'text': '#333', 'bg': '#f0f0f0', 'border': '#999'})
-    
-    diff_text = f'{difficulty.upper()} (Jaccard={jaccard:.2f})'
+
+    diff_text = f'{difficulty.upper()} (Agreement={agreement:.0f}%)'
     ax.text(0.99, 0.98, diff_text, transform=ax.transAxes,
             fontsize=DIFFICULTY_BADGE_FONTSIZE, fontweight='bold',
             color=dc_config['text'], va='top', ha='right',

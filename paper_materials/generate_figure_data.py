@@ -504,9 +504,61 @@ def process_rda_case(case, segment_labels_lookup):
     return case
 
 
+# ── Build a fresh case skeleton from mat_file ───────────────────────────
+
+DIFFICULTY_ORDER = ['Easy', 'Medium', 'Hard']
+
+def build_case_skeleton(mat_file, subtype, difficulty, agreement_pct, segment_labels_lookup):
+    """Create a minimal case dict for a mat_file not in the existing JSON."""
+    segment_id = mat_file.replace('.mat', '')
+    sl_row = segment_labels_lookup.get(mat_file, {})
+    patient_id = sl_row.get('patient_id', segment_id)
+    freq_hz_str = sl_row.get('pdchar_freq_hz', '')
+    try:
+        freq_hz = float(freq_hz_str) if freq_hz_str else 0.0
+    except (ValueError, TypeError):
+        freq_hz = 0.0
+
+    return {
+        'patient_id': patient_id,
+        'segment_id': segment_id,
+        'mat_file': mat_file,
+        'subtype': subtype,
+        'difficulty': difficulty,
+        'freq_bin': '',
+        'agreement_pct': agreement_pct,
+        'n_votes': 0,
+        'jaccard': agreement_pct / 100.0,
+        'eeg_data': [],
+        'pred_regions': [],
+        'pred_lat': '',
+        'pred_freq': freq_hz,
+        'pred_discharge_times': [],
+        'gt_lat': '',
+        'gt_freq': freq_hz,
+        'gt_discharge_times': [],
+        'gt_regions': [],
+        'rater_labels': {},
+        'verbal_description': '',
+        'rater_details': {},
+        'pred_confidence': 0.0,
+    }
+
+
 # ── Main ──────────────────────────────────────────────────────────────────
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(description='Generate figure data JSONs')
+    parser.add_argument('--cases', type=str, default=None,
+                        help='JSON string mapping subtype to list of {mat_file, agreement_pct} dicts. '
+                             'When provided, use only these cases (in order: Easy/Medium/Hard).')
+    args = parser.parse_args()
+
+    cases_override = None
+    if args.cases:
+        cases_override = json.loads(args.cases)
+
     print('Loading labels...')
 
     # Load discharge times
@@ -525,13 +577,39 @@ def main():
     subtypes = ['lpd', 'gpd', 'lrda', 'grda']
 
     for subtype in subtypes:
-        json_path = PAPER_DIR / f'figure_{subtype}_examples_data.json'
-        if not json_path.exists():
-            print(f'Skipping {subtype}: {json_path} not found')
-            continue
-
-        with open(json_path) as f:
-            cases = json.load(f)
+        # When --cases is provided, build fresh case list for specified subtypes
+        if cases_override and subtype in cases_override:
+            override_list = cases_override[subtype]
+            cases = []
+            for i, entry in enumerate(override_list):
+                mat_file = entry['mat_file']
+                agreement = entry.get('agreement_pct', 0)
+                difficulty = DIFFICULTY_ORDER[i] if i < len(DIFFICULTY_ORDER) else f'Case{i+1}'
+                # Check if this case already exists in the existing JSON
+                existing_case = None
+                json_path = PAPER_DIR / f'figure_{subtype}_examples_data.json'
+                if json_path.exists():
+                    with open(json_path) as f:
+                        existing_cases = json.load(f)
+                    for ec in existing_cases:
+                        if ec['mat_file'] == mat_file:
+                            existing_case = ec
+                            break
+                if existing_case:
+                    existing_case['difficulty'] = difficulty
+                    existing_case['agreement_pct'] = agreement
+                    existing_case['jaccard'] = agreement / 100.0
+                    cases.append(existing_case)
+                else:
+                    cases.append(build_case_skeleton(mat_file, subtype, difficulty, agreement,
+                                                      segment_labels_lookup))
+        else:
+            json_path = PAPER_DIR / f'figure_{subtype}_examples_data.json'
+            if not json_path.exists():
+                print(f'Skipping {subtype}: {json_path} not found')
+                continue
+            with open(json_path) as f:
+                cases = json.load(f)
 
         print(f'\nProcessing {subtype.upper()} ({len(cases)} cases)...')
         is_pd = subtype in ('lpd', 'gpd')
