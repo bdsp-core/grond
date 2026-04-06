@@ -122,6 +122,13 @@ def gfp_align(mono_filtered, discharge_times_sec, fs=200, window_ms=25):
         return None
 
     mean_topo = np.mean(aligned_voltages, axis=0)
+
+    # Auto-flip polarity so max absolute channel is positive (red on topoplot).
+    # Discharges are typically surface-negative; flipping ensures the "hotspot"
+    # always appears red regardless of dipole orientation.
+    if np.abs(np.min(mean_topo)) > np.abs(np.max(mean_topo)):
+        mean_topo = -mean_topo
+
     return mean_topo
 
 
