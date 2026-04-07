@@ -553,7 +553,7 @@ def build_full_figure(panel_a, panel_b, panel_c, verbal_text, mean_topo_lap):
     title_y = 45
     draw.text((30, title_y), 'A. Input', fill='black', font=title_font)
     # Center Panel B title over Panel B area
-    b_title = 'B. PDCharacterizer Architecture'
+    b_title = 'B. PD Pipeline Architecture'
     b_bbox = draw.textbbox((0, 0), b_title, font=title_font)
     b_title_w = b_bbox[2] - b_bbox[0]
     b_center = a_end + gap + b_w // 2
