@@ -39,7 +39,6 @@ LABELS_DIR = DATA_DIR / 'labels'
 EEG_DIR = DATA_DIR / 'eeg'
 
 COMPOSITE_PATH = SCRIPT_DIR / 'figures' / 'fig2_pd_pipeline.png'
-BACKUP_PATH = SCRIPT_DIR / 'figures' / 'fig2_pd_pipeline_backup.png'
 
 sys.path.insert(0, str(CODE_DIR))
 sys.path.insert(0, str(SCRIPT_DIR))
@@ -68,21 +67,6 @@ LAP_NEIGHBORS = {
     18: [14, 17, 10],
 }
 
-# Panel B pixel bounds in the composite image
-PANEL_B_LEFT = 1974
-PANEL_B_TOP = 24
-PANEL_B_RIGHT = 3840
-PANEL_B_BOTTOM = 2517
-PANEL_B_W = PANEL_B_RIGHT - PANEL_B_LEFT  # 1866
-PANEL_B_H = PANEL_B_BOTTOM - PANEL_B_TOP   # 2493
-
-# Panel C pixel bounds in the composite image (below "C. Output" title)
-PANEL_C_LEFT = 3920
-PANEL_C_TOP = 140
-PANEL_C_RIGHT = 5740
-PANEL_C_BOTTOM = 2590
-PANEL_C_W = PANEL_C_RIGHT - PANEL_C_LEFT
-PANEL_C_H = PANEL_C_BOTTOM - PANEL_C_TOP
 
 
 def load_monopolar(mat_file):
@@ -511,40 +495,6 @@ def add_topoplot_inset(img, mean_topo_lap, pc_left=None, pc_right=None):
 
     img.paste(topo_img, (inset_x, inset_y), topo_img)
     return img
-
-
-def build_composite(panel_b_img, panel_c_img=None, verbal_text=None,
-                    mean_topo_lap=None, base_path=None):
-    """Paste Panel B (and optionally C) into the composite figure."""
-    if base_path is None:
-        base_path = BACKUP_PATH if BACKUP_PATH.exists() else COMPOSITE_PATH
-
-    base = Image.open(str(base_path)).convert('RGBA')
-    result = base.copy()
-
-    # White out and paste Panel B
-    draw = ImageDraw.Draw(result)
-    draw.rectangle([PANEL_B_LEFT, 0, PANEL_B_RIGHT, base.size[1]], fill='white')
-    pb_scaled = panel_b_img.resize((PANEL_B_W, PANEL_B_H), Image.LANCZOS)
-    result.paste(pb_scaled, (PANEL_B_LEFT, PANEL_B_TOP))
-
-    # White out and paste Panel C (if re-rendered)
-    if panel_c_img is not None:
-        draw = ImageDraw.Draw(result)
-        # White out entire Panel C area below the title
-        draw.rectangle([PANEL_C_LEFT - 20, PANEL_C_TOP, PANEL_C_RIGHT + 40, PANEL_C_BOTTOM], fill='white')
-        pc_scaled = panel_c_img.resize((PANEL_C_W, PANEL_C_H), Image.LANCZOS)
-        result.paste(pc_scaled, (PANEL_C_LEFT, PANEL_C_TOP))
-
-    # Add topoplot inset to Panel C
-    if mean_topo_lap is not None:
-        result = add_topoplot_inset(result, mean_topo_lap)
-
-    # Add verbal description overlaid on Panel C
-    if verbal_text:
-        result = add_verbal_description(result, verbal_text)
-
-    return result.convert('RGB')
 
 
 def build_full_figure(panel_a, panel_b, panel_c, verbal_text, mean_topo_lap):

@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch, Circle
 import matplotlib as mpl
 
-W, H = 618, 786
+W, H = 618, 820
 
 COLORS = {
     "top_box":    "#ddebf9",
@@ -65,17 +65,22 @@ def draw_panel_b_rda(outpath='paper_materials/figures/_panel_b_rda.png',
     ax.set_aspect("equal")
     ax.axis("off")
 
-    # ── Header ──
-    ax.plot([8, 610], [9, 9], color="black", lw=1.1)
-    _text(ax, 24, 52, "B. Pipeline Architecture",
-          size=24, weight="bold", ha="left")
+    # Title is drawn externally in build_fig3.py for font consistency
+    # ax.plot([8, 610], [9, 9], color="black", lw=1.1)
+    # _text(ax, 24, 52, "B. Pipeline Architecture",
+    #       size=24, weight="bold", ha="left")
+
+    # ── Input: 18 Independent Bipolar Channels ──
+    _text(ax, 106, 85, "18 Independent\nBipolar Channels", size=13.2, linespacing=1.02)
+    for y_off in [-16, -5.5, 5.5, 16]:
+        _poly_arrow(ax, [(185, 85 + y_off), (220, 85 + y_off)], lw=1.2, ms=9)
 
     # ── Top: W05 Iterative Narrowband Refinement ──
-    _rounded_box(ax, 120, 80, 380, 50, COLORS["top_box"], radius=15)
-    _text(ax, 310, 105, "W05: Iterative Narrowband Refinement",
-          size=14, weight="bold")
+    _rounded_box(ax, 220, 60, 280, 50, COLORS["top_box"], radius=15)
+    _text(ax, 360, 85, "W05: Iterative\nNarrowband Refinement",
+          size=13, weight="bold")
 
-    _poly_arrow(ax, [(310, 130), (310, 155)], lw=1.9, ms=13)
+    _poly_arrow(ax, [(310, 110), (310, 155)], lw=1.9, ms=13)
 
     # ── Pass 1: Coarse Analysis ──
     _rounded_box(ax, 80, 155, 460, 85, COLORS["pass1_bg"],
@@ -111,16 +116,15 @@ def draw_panel_b_rda(outpath='paper_materials/figures/_panel_b_rda.png',
     _poly_arrow(ax, [(MX, FORK_Y), (MX, 400)])
     _poly_arrow(ax, [(RX, FORK_Y), (RX, 400)])
 
-    # ── Container panels ──
+    # ── Container panels (all same height) ──
     PT_Y = 400
-    PB_Y = 780
-    PH = PB_Y - PT_Y
+    PANEL_H = 410  # all three panels same height
 
-    _rounded_box(ax, 32, PT_Y, 150, PH - 20, COLORS["left_panel"],
+    _rounded_box(ax, 32, PT_Y, 150, PANEL_H, COLORS["left_panel"],
                  ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
-    _rounded_box(ax, 195, PT_Y, 228, PH - 20, COLORS["center_panel"],
+    _rounded_box(ax, 195, PT_Y, 228, PANEL_H, COLORS["center_panel"],
                  ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
-    _rounded_box(ax, 437, PT_Y, 163, PH - 20, COLORS["right_panel"],
+    _rounded_box(ax, 437, PT_Y, 163, PANEL_H, COLORS["right_panel"],
                  ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
 
     _text(ax, LX, 430, "Laterality\nDetection",
@@ -171,19 +175,7 @@ def draw_panel_b_rda(outpath='paper_materials/figures/_panel_b_rda.png',
 
     _poly_arrow(ax, [(RX, 610), (RX, 645)], lw=1.9, ms=13)
 
-    # Topoplot placeholder
-    if topoplot_fn is None:
-        circ = Circle((RX, 680), 28, facecolor="#f5f5f5",
-                       edgecolor=COLORS["line"], linewidth=1.4,
-                       linestyle=(0, (2, 2)), zorder=3)
-        ax.add_patch(circ)
-        _text(ax, RX, 680, "topoplot", size=9.5, color="#666666")
-    else:
-        inset = ax.inset_axes([490, 652, 58, 58], transform=ax.transData)
-        inset.set_axis_off()
-        topoplot_fn(inset)
-
-    _text(ax, RX, 730, "Localization", size=12.8)
+    _text(ax, RX, 780, "Localization", size=12.8)
 
     # ── Save ──
     fig.savefig(outpath, dpi=200, facecolor="white", bbox_inches='tight')
