@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch, Circle
 import matplotlib as mpl
 
-W, H = 618, 786
+W, H = 618, 820
 
 COLORS = {
     "top_box":    "#ddebf9",
@@ -52,7 +52,8 @@ def draw_panel_b(outpath='paper_materials/figures/_panel_b.png', topoplot_fn=Non
     _text(ax, 24, 32, "B. PDCharacterizer Architecture", size=22, weight="bold", ha="left")
 
     _text(ax, 106, 145, "18 Independent\nBipolar Channels", size=13.2, linespacing=1.02)
-    _poly_arrow(ax, [(178, 145), (220, 145)], lw=1.9, ms=14)
+    for y_off in [-16, -5.5, 5.5, 16]:
+        _poly_arrow(ax, [(185, 145 + y_off), (220, 145 + y_off)], lw=1.2, ms=9)
 
     _rounded_box(ax, 221, 103, 192, 84, COLORS["top_box"], radius=15)
     _text(ax, 317, 145, "ChannelPD-Net\n(CNN+Attention)", size=15, linespacing=0.95)
@@ -65,7 +66,7 @@ def draw_panel_b(outpath='paper_materials/figures/_panel_b.png', topoplot_fn=Non
     _poly_arrow(ax, [(355, 187), (355, 245), (519, 245), (519, 267)], lw=1.9, ms=13)
 
     _rounded_box(ax, 32, 267, 150, 517, COLORS["left_panel"], ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
-    _rounded_box(ax, 189, 266, 241, 518, COLORS["center_panel"], ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
+    _rounded_box(ax, 189, 266, 241, 548, COLORS["center_panel"], ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
     _rounded_box(ax, 437, 267, 163, 517, COLORS["right_panel"], ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
 
     _text(ax, 107, 307, "Laterality\nDetection", size=13.7, weight="bold")
@@ -98,7 +99,9 @@ def draw_panel_b(outpath='paper_materials/figures/_panel_b.png', topoplot_fn=Non
     _rounded_box(ax, 240, 591, 139, 78, COLORS["center_inner"], radius=12)
     _text(ax, 309.5, 630, "EM Template\nRefinement &\nFiltering", size=12.0)
     _poly_arrow(ax, [(309.5, 669), (309.5, 707)], lw=1.9, ms=13)
-    _text(ax, 309.5, 745, "Discharge Times ($t_1\\cdots t_n$)\nFrequency", size=12.3)
+    _text(ax, 309.5, 728, "Discharge Times ($t_1\\cdots t_n$)", size=12.3)
+    _poly_arrow(ax, [(309.5, 748), (309.5, 775)], lw=1.9, ms=13)
+    _text(ax, 309.5, 795, "Frequency", size=12.3)
 
     # Right
     _rounded_box(ax, 448, 335, 140, 72, COLORS["right_inner"], radius=12)
@@ -111,17 +114,7 @@ def draw_panel_b(outpath='paper_materials/figures/_panel_b.png', topoplot_fn=Non
     _poly_arrow(ax, [(518, 508), (518, 538)], lw=1.9, ms=13)
     _poly_arrow(ax, [(518, 635), (518, 671)], lw=1.9, ms=13)
 
-    if topoplot_fn is None:
-        circ = Circle((518, 708), 29, facecolor="#f5f5f5", edgecolor=COLORS["line"],
-                       linewidth=1.4, linestyle=(0,(2,2)), zorder=3)
-        ax.add_patch(circ)
-        _text(ax, 518, 708, "topoplot", size=9.5, color="#666666")
-    else:
-        inset = ax.inset_axes([489, 679, 58, 58], transform=ax.transData)
-        inset.set_axis_off()
-        topoplot_fn(inset)
-
-    _text(ax, 518, 756, "Localization", size=12.8)
+    _text(ax, 518, 730, "Localization", size=12.8)
 
     fig.savefig(outpath, dpi=200, facecolor="white", bbox_inches='tight')
     plt.close(fig)
