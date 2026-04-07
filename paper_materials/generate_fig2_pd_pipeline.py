@@ -486,51 +486,50 @@ def main():
     draw_flowchart(ax_b)
 
     # ── Panel C: Output Visualization ──
-    # Split Panel C into three sub-panels vertically
-    gs_c = gridspec.GridSpecFromSubplotSpec(3, 1, subplot_spec=gs[0, 2],
-                                            height_ratios=[0.55, 0.33, 0.12],
-                                            hspace=0.30)
-
-    # C top: EEG with discharge markers and hemisphere shading
-    ax_c_eeg = fig.add_subplot(gs_c[0])
+    # Full-height EEG (same dimensions as Panel A), topoplot overlaid in lower-right
+    ax_c = fig.add_subplot(gs[0, 2])
     is_left = laterality == 'left'
-    plot_eeg_traces(ax_c_eeg, mono_filt,
+    plot_eeg_traces(ax_c, mono_filt,
                     title='C. Output: Characterized LPD',
                     discharge_times=discharge_times,
                     highlight_left=is_left)
 
-    # C middle: Laplacian topoplot
-    ax_c_topo = fig.add_subplot(gs_c[1])
-    generate_topoplot_on_ax(ax_c_topo, mean_topo_lap, MONO_CHANNELS,
-                            title='Laplacian Topoplot')
+    # Topoplot as inset in lower-right corner of Panel C
+    # Position: [left, bottom, width, height] in figure coordinates
+    c_pos = ax_c.get_position()
+    topo_size = 0.13  # fraction of figure width/height
+    inset_left = c_pos.x1 - topo_size - 0.01
+    inset_bottom = c_pos.y0 + 0.02
+    ax_topo_inset = fig.add_axes([inset_left, inset_bottom, topo_size, topo_size * (22/9)])
+    generate_topoplot_on_ax(ax_topo_inset, mean_topo_lap, MONO_CHANNELS, title='')
+    # Add thin border around topoplot inset
+    for spine in ax_topo_inset.spines.values():
+        spine.set_visible(True)
+        spine.set_linewidth(0.5)
+        spine.set_color('#666')
 
-    # C bottom: Verbal description
-    ax_c_text = fig.add_subplot(gs_c[2])
-    ax_c_text.axis('off')
-    # Wrap the verbal description
+    # Verbal description as text annotation below topoplot inset
     wrapped = verbal
-    if len(verbal) > 60:
-        # Simple word wrap
+    if len(verbal) > 45:
         words = verbal.split()
         lines = []
         current = []
         for w in words:
             current.append(w)
-            if len(' '.join(current)) > 55:
+            if len(' '.join(current)) > 40:
                 lines.append(' '.join(current))
                 current = []
         if current:
             lines.append(' '.join(current))
         wrapped = '\n'.join(lines)
 
-    ax_c_text.text(0.5, 0.8, 'Verbal Description:', ha='center', va='top',
-                   fontsize=8, fontweight='bold', fontfamily='sans-serif',
-                   transform=ax_c_text.transAxes)
-    ax_c_text.text(0.5, 0.4, wrapped, ha='center', va='top',
-                   fontsize=7.5, fontfamily='sans-serif', fontstyle='italic',
-                   transform=ax_c_text.transAxes, color='#333333',
-                   bbox=dict(boxstyle='round,pad=0.3', facecolor='#F5F5F5',
-                             edgecolor='#CCCCCC', alpha=0.8))
+    fig.text(inset_left + topo_size / 2, inset_bottom - 0.01, wrapped,
+             ha='center', va='top', fontsize=7, fontstyle='italic',
+             fontfamily='sans-serif', color='#333',
+             bbox=dict(boxstyle='round,pad=0.3', facecolor='#f8f8f0',
+                       edgecolor='#ccc', alpha=0.9))
+
+    # (verbal description already placed via fig.text above)
 
     # ── Save ──
     fig.savefig(str(OUT_PATH), dpi=300, bbox_inches='tight', facecolor='white')
