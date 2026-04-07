@@ -375,8 +375,8 @@ The paper presents **PDCharacterizer** — a unified pipeline that characterizes
 | Figure | Description | Status | File |
 |--------|-------------|--------|------|
 | Fig 1 | Raw EEG examples (6 panels: 4 clear + 2 ambiguous) | **DONE** | `fig1_eeg_examples.png` |
-| Fig 2 | PD pipeline (ChannelPD-Net + HemiCET+DP + discharge-locked topo) | **TODO** | `fig2_pd_pipeline.png` |
-| Fig 3 | RDA pipeline (W05 iterative Hilbert + PLV×Amp + narrowband topo) | **TODO** | `fig3_rda_pipeline.png` |
+| Fig 2 | PD pipeline (ChannelPD-Net + HemiCET+DP + discharge-locked topo) | **DONE** | `fig2_pd_pipeline.png` via `build_fig2.py` |
+| Fig 3 | RDA pipeline (W05 iterative Hilbert + PLV×Amp + narrowband topo) | **DONE** | `fig3_rda_pipeline.png` via `build_fig3.py` |
 | Fig 4 | Frequency scatter (2×4: PDChar/W05 vs Tautan, quality-filtered) | **DONE** | `fig4_frequency_scatter.png` |
 | Fig 5 | LPD characterization examples (easy/med/hard) | **DONE** | `fig5_lpd_characterization.png` |
 | Fig 6 | GPD characterization examples | **DONE** | `fig6_gpd_characterization.png` |

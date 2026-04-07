@@ -184,7 +184,7 @@ code/
 
 docs/                                 Archived approach review documents (v1-v6)
 paper_materials/                      Paper writeup, figures, pipeline specs
-APPROACH_REVIEW_v15.md                Current approach, results, and system architecture
+APPROACH_REVIEW_v17.md                Current approach, results, and system architecture
 ```
 
 ## Usage

@@ -389,9 +389,29 @@ Migrated from scattered 4-file label system to unified two-file structure:
 
 This prevents the problem where labels stored in different files (annotations.csv, segment_labels.csv, discharge_times.json, rda_wave_labels.json) could be missed when summarizing rater counts.
 
+### 20. Publication Figures — Pipeline Diagrams (Figs 2-3)
+
+Built fully reproducible pipeline figures for both PD and RDA characterization:
+
+- **Fig 2** (`build_fig2.py`): PD Pipeline Architecture — 3-panel composite (Input EEG | Architecture flowchart | Output EEG with discharge markers, topoplot, verbal description)
+- **Fig 3** (`build_fig3.py`): RDA Pipeline Architecture — matching style (Input EEG | W05 iterative narrowband refinement flowchart | Output EEG with hemisphere shading, topoplot, verbal description)
+
+Both figures:
+- EEG panels rendered via `render_figures.draw_eeg_panel()` (same code as Figs 5-8)
+- Architecture panels from `draw_panel_b.py` / `draw_panel_b_rda.py` (matplotlib)
+- Titles drawn in Pillow for cross-panel font consistency
+- Verbal descriptions from `generate_verbal_from_topo()` (ACNS 2021 nomenclature)
+- Topoplot insets (MNE inferno colormap, Laplacian for PD, narrowband amplitude for RDA)
+- Fully generated from raw EEG data — no dependency on pre-rendered backup images
+
+```bash
+conda run -n morgoth python paper_materials/build_fig2.py
+conda run -n morgoth python paper_materials/build_fig3.py
+```
+
 ## Next Steps
 
-1. **RDA wave timing** — 468 cases labeled, need automated method
+1. **RDA wave timing** — 549 cases labeled, need automated method
 2. **Extend discharge-locked topography to RDA** — narrowband amplitude topography at estimated frequency
 3. **Paper** — Write up the unified characterization pipeline with discharge-locked localization as the primary spatial method
 
