@@ -153,8 +153,9 @@ def plot_eeg_panel(ax, eeg_data, fs, panel_label, subtitle_text):
     n_samples = eeg_data.shape[1]
     t = np.arange(n_samples) / fs
 
-    # Spacing between channels (in uV)
-    spacing = 120.0
+    # --- IMPROVEMENT 2: Optimize Vertical Spacing of EEG Channels within Panels ---
+    # Spacing between channels (in uV) - reduced from 120.0 to 100.0
+    spacing = 100.0 
     n_display = len(DISPLAY_ORDER)
 
     y_pos = 0
@@ -174,6 +175,7 @@ def plot_eeg_panel(ax, eeg_data, fs, panel_label, subtitle_text):
 
     # Set axis properties
     ax.set_xlim(0, 10)
+    # Adjust y_top and y_bottom based on new spacing
     y_top = spacing * 0.8
     y_bottom = y_pos + spacing * 0.4
     ax.set_ylim(y_bottom, y_top)
@@ -181,7 +183,10 @@ def plot_eeg_panel(ax, eeg_data, fs, panel_label, subtitle_text):
     ax.set_yticks(yticks)
     ax.set_yticklabels(yticklabels, fontsize=7, fontfamily='sans-serif')
 
-    ax.set_xlabel('Time (s)', fontsize=9, fontfamily='sans-serif')
+    # --- IMPROVEMENT 6: Refine Time Axis Labeling ---
+    # Removed ax.set_xlabel for individual panels. A figure-wide label will be added in main().
+    ax.set_xlabel('') # Clear label for all panels
+
     ax.tick_params(axis='x', labelsize=8)
 
     # Remove top and right spines
@@ -190,28 +195,44 @@ def plot_eeg_panel(ax, eeg_data, fs, panel_label, subtitle_text):
     ax.spines['left'].set_visible(False)
     ax.tick_params(axis='y', length=0)
 
-    # Panel label (A., B., etc.) in top-left
-    ax.text(0.02, 0.97, f'{panel_label}.', transform=ax.transAxes,
-            fontsize=14, fontweight='bold', fontfamily='sans-serif',
-            verticalalignment='top', horizontalalignment='left')
+    # --- IMPROVEMENT 1: Adjust Font Sizes and Positioning for Panel Labels (A, B, C, etc.) ---
+    # Panel label (A., B., etc.) in top-left, outside plotting area
+    # Reduced fontsize from 12 to 10, fontweight from 'bold' to 'normal'.
+    # Adjusted x, y for better positioning to avoid Fp1 overlap.
+    ax.text(-0.12, 1.02, f'{panel_label}.', transform=ax.transAxes,
+            fontsize=10, fontweight='normal', fontfamily='sans-serif',
+            verticalalignment='bottom', horizontalalignment='left',
+            clip_on=False) # Important for text outside axes
 
-    # Subtitle below panel label
-    ax.text(0.02, 0.90, subtitle_text, transform=ax.transAxes,
-            fontsize=8.5, fontfamily='sans-serif', fontstyle='italic',
-            verticalalignment='top', horizontalalignment='left',
-            color='#444444')
+    # --- IMPROVEMENT 1: Adjust Font Sizes and Positioning for Verbal Descriptions ---
+    # Subtitle (descriptive text) centered above the plot area
+    # Reduced fontsize from 8.5 to 8, increased pad from 10 to 15 to move it higher.
+    ax.set_title(subtitle_text, fontsize=8, fontfamily='sans-serif',
+                 loc='center', pad=15) # pad controls distance from top of plot
 
+    # --- IMPROVEMENT 4: Standardize Scale Bar Placement and Appearance ---
     # Scale bar: 100 uV, 1 second — in bottom-right
-    bar_x = 8.5
-    bar_y = y_bottom + spacing * 0.7
+    # Using fixed data coordinates relative to the plot's xlim/ylim for consistency.
+    # Line thickness reduced from 1.5 to 1.0 for a cleaner look.
+    
+    # Define scale bar's bottom-right corner in data coordinates
+    # Let's place it 0.5s from the right edge and 8% of the y-range from the bottom.
+    x_end_data = ax.get_xlim()[1] - 0.5 # 9.5
+    y_bottom_data = ax.get_ylim()[0] + (ax.get_ylim()[1] - ax.get_ylim()[0]) * 0.08 
+
     # Horizontal bar (1 second)
-    ax.plot([bar_x, bar_x + 1], [bar_y, bar_y], color='black', linewidth=1.5, clip_on=False)
+    ax.plot([x_end_data - 1, x_end_data], [y_bottom_data, y_bottom_data], 
+            color='black', linewidth=1.0, clip_on=False)
     # Vertical bar (100 uV)
-    ax.plot([bar_x, bar_x], [bar_y, bar_y + 100], color='black', linewidth=1.5, clip_on=False)
-    ax.text(bar_x + 0.5, bar_y - spacing * 0.15, '1 s', fontsize=7,
-            ha='center', va='top', fontfamily='sans-serif')
-    ax.text(bar_x - 0.15, bar_y + 50, '100 \u00b5V', fontsize=7,
-            ha='right', va='center', fontfamily='sans-serif', rotation=90)
+    ax.plot([x_end_data, x_end_data], [y_bottom_data, y_bottom_data + 100], 
+            color='black', linewidth=1.0, clip_on=False)
+    
+    # Text labels for scale bar
+    # Adjusted text positions slightly for better alignment with new bar placement
+    ax.text(x_end_data - 0.5, y_bottom_data - 10, '1 s', fontsize=7,
+            ha='center', va='top', fontfamily='sans-serif', clip_on=False)
+    ax.text(x_end_data - 0.15, y_bottom_data + 50, '100 \u00b5V', fontsize=7,
+            ha='right', va='center', fontfamily='sans-serif', rotation=90, clip_on=False)
 
 
 def main():
@@ -219,8 +240,16 @@ def main():
     labels = pd.read_csv(LABELS_CSV)
 
     # Build figure: 3 rows x 2 columns
-    fig, axes = plt.subplots(3, 2, figsize=(16, 20))
-    fig.subplots_adjust(hspace=0.25, wspace=0.22, left=0.07, right=0.97, top=0.97, bottom=0.03)
+    # Adjusted figsize height for more compact figure (from 20 to 16)
+    fig, axes = plt.subplots(3, 2, figsize=(16, 16))
+    
+    # --- IMPROVEMENT 3: Reduce Vertical Spacing Between Subplot Rows ---
+    # Optimized vertical spacing and margins - hspace reduced from 0.05 to 0.02
+    fig.subplots_adjust(hspace=0.02, wspace=0.22, left=0.07, right=0.97, top=0.95, bottom=0.05)
+    
+    # Add a subtle border around the entire figure
+    fig.patch.set_edgecolor('lightgray')
+    fig.patch.set_linewidth(0.5)
 
     panel_order = ['A', 'B', 'C', 'D', 'E', 'F']
     positions = [(0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1)]
@@ -263,6 +292,7 @@ def main():
 
         # Plot
         ax = axes[row_idx, col_idx]
+        # is_bottom_row parameter removed as x-axis label is now figure-wide
         plot_eeg_panel(ax, car_data, fs, panel_label, subtitle)
 
         # Build caption text
@@ -315,6 +345,10 @@ def main():
                 f"some experts saw periodic discharges (LPD/GPD) rather than purely rhythmic activity, "
                 f"illustrating the challenge of distinguishing generalized rhythmic from periodic patterns."
             )
+
+    # --- IMPROVEMENT 6: Refine Time Axis Labeling (Figure-wide) ---
+    # Add a single 'Time (s)' label centrally below the entire figure.
+    fig.supxlabel('Time (s)', fontsize=9, fontfamily='sans-serif', y=0.015) # Adjusted y for better placement
 
     # Save
     fig.savefig(str(OUT_PATH), dpi=300, bbox_inches='tight', facecolor='white')

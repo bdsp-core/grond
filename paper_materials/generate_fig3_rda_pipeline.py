@@ -24,6 +24,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from matplotlib.patches import FancyBboxPatch
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes # Added for colorbar
 
 import mne
 mne.set_log_level('WARNING')
@@ -146,7 +147,7 @@ def compute_amplitude_envelope(mono, freq_hz, bw=0.4):
     return amplitude_vector, narrowband
 
 
-def generate_topoplot_on_ax(ax, mean_topo, ch_names_orig, title='Laplacian Topoplot'):
+def generate_topoplot_on_ax(ax, mean_topo, ch_names_orig, title=''): # Title is now empty by default
     """Generate topoplot directly on given axes using inferno colormap."""
     name_map = {'T3': 'T7', 'T4': 'T8', 'T5': 'P7', 'T6': 'P8'}
     mne_names = [name_map.get(n, n) for n in ch_names_orig]
@@ -172,14 +173,19 @@ def generate_topoplot_on_ax(ax, mean_topo, ch_names_orig, title='Laplacian Topop
         bg_color = cmap(val_normalized)
         lum = 0.299 * bg_color[0] + 0.587 * bg_color[1] + 0.114 * bg_color[2]
         text_color = 'white' if lum < 0.45 else 'black'
-        ax.text(xy[0], xy[1], orig_name, fontsize=5, ha='center', va='center',
-                fontweight='bold', color=text_color, zorder=10)
-
+        # Improvement 4: Increase font size and add subtle background for electrode labels
+        ax.text(xy[0], xy[1], orig_name, fontsize=8, ha='center', va='center', # Fontsize increased from 5 to 8
+                fontweight='bold', color=text_color, zorder=10,
+                bbox=dict(boxstyle="round,pad=0.05", fc=(1,1,1,0.4), ec='none')) # Added transparent background
+    
+    # Title is empty, but if it were present, this would apply
     ax.set_title(title, fontsize=9, fontweight='bold')
+
+    return image # Return image for colorbar
 
 
 def plot_eeg_traces(ax, eeg_data, title, narrowband=None,
-                    highlight_side=None, spacing=120.0):
+                    highlight_side=None, spacing=180.0): # Improvement 1: Increased spacing from 120.0 to 180.0
     """Plot 19-channel average reference EEG traces.
 
     Args:
@@ -222,7 +228,8 @@ def plot_eeg_traces(ax, eeg_data, title, narrowband=None,
     ax.set_ylim(y_bottom, y_top)
 
     ax.set_yticks(yticks)
-    ax.set_yticklabels(yticklabels, fontsize=6, fontfamily='sans-serif')
+    # Improvement 6: Increased EEG Channel Label Font Size from 6 to 9
+    ax.set_yticklabels(yticklabels, fontsize=9, fontfamily='sans-serif')
     ax.set_xlabel('Time (s)', fontsize=8, fontfamily='sans-serif')
     ax.tick_params(axis='x', labelsize=7)
 
@@ -231,7 +238,7 @@ def plot_eeg_traces(ax, eeg_data, title, narrowband=None,
     ax.spines['left'].set_visible(False)
     ax.tick_params(axis='y', length=0)
 
-    # Light blue shading on involved hemisphere
+    # Improvement 5: Hemisphere shading (already present, ensuring it's visible with new scaling)
     if highlight_side in ('left', 'right'):
         side_indices = LEFT_CH_INDICES if highlight_side == 'left' else RIGHT_CH_INDICES
         side_y_vals = [channel_y_positions[idx] for idx in side_indices
@@ -239,7 +246,7 @@ def plot_eeg_traces(ax, eeg_data, title, narrowband=None,
         if side_y_vals:
             y_hi = max(side_y_vals) + spacing * 0.5
             y_lo = min(side_y_vals) - spacing * 0.5
-            ax.axhspan(y_lo, y_hi, color='lightblue', alpha=0.15, zorder=0)
+            ax.axhspan(y_lo, y_hi, color='lightblue', alpha=0.15, zorder=0) # Alpha 0.15 is transparent enough
 
     ax.set_title(title, fontsize=10, fontweight='bold', fontfamily='sans-serif')
 
@@ -251,7 +258,8 @@ def draw_flowchart(ax):
     ax.axis('off')
 
     def add_box(x, y, w, h, text, facecolor='#E8F4FD', edgecolor='#2C3E50',
-                fontsize=8, text_color='black', linewidth=1.5, alpha=0.9):
+                fontsize=8, text_color='black', linewidth=1.5, alpha=0.9,
+                title_fontsize_boost=1.0, base_line_spacing_factor=0.03): # Improvement 2 & 7: New params for font/spacing control
         """Add a rounded rectangle with centered text."""
         box = FancyBboxPatch((x - w/2, y - h/2), w, h,
                              boxstyle="round,pad=0.15",
@@ -260,7 +268,11 @@ def draw_flowchart(ax):
         ax.add_patch(box)
         lines = text.split('\n')
         n_lines = len(lines)
-        line_spacing = min(fontsize * 0.018, h / (n_lines + 0.5))
+        
+        # Calculate line spacing based on the base font size and a more generous factor
+        # Ensure it's not too large for the box height
+        line_spacing = min(fontsize * base_line_spacing_factor, h / (n_lines + 0.5))
+        
         start_y = y + (n_lines - 1) * line_spacing / 2
         for i, line in enumerate(lines):
             ly = start_y - i * line_spacing
@@ -268,7 +280,7 @@ def draw_flowchart(ax):
             fw = 'normal'
             if i == 0:
                 fw = 'bold'
-                fs = fontsize + 0.5
+                fs = fontsize + title_fontsize_boost # Improvement 2: Boost title font size
             ax.text(x, ly, line, ha='center', va='center',
                     fontsize=fs, fontweight=fw, color=text_color, zorder=3)
 
@@ -279,23 +291,26 @@ def draw_flowchart(ax):
                                     lw=1.5, connectionstyle='arc3,rad=0'))
 
     # -- Top box: W05 Iterative Narrowband Refinement --
-    add_box(5, 9.3, 8.5, 0.9,
+    # Improvement 2: Increased font size and box height
+    add_box(5, 9.3, 8.5, 1.2, # h increased from 0.9 to 1.2
             "W05: Iterative Narrowband Refinement",
-            facecolor='#D6EAF8', edgecolor='#2471A3', fontsize=9)
+            facecolor='#D6EAF8', edgecolor='#2471A3', fontsize=9, title_fontsize_boost=1.0)
 
     add_arrow(5.0, 8.8, 5.0, 8.1)
 
     # -- Pass 1: Coarse Analysis --
-    add_box(5, 7.3, 8.5, 1.4,
+    # Improvement 2: Increased font size and box height
+    add_box(5, 7.3, 8.5, 2.0, # h increased from 1.4 to 2.0
             "Pass 1: Coarse Analysis\nBandpass 0.5\u20133.5 Hz\nLateralization: mean variance per hemisphere\nFrequency: Hilbert inst. freq from top-3 dominant channels",
-            facecolor='#D6EAF8', edgecolor='#2980B9', fontsize=7.5)
+            facecolor='#D6EAF8', edgecolor='#2980B9', fontsize=8.5, title_fontsize_boost=1.0) # Fontsize increased from 7.5 to 8.5
 
     add_arrow(5.0, 6.55, 5.0, 5.85)
 
     # -- Pass 2: Narrowband Refinement --
-    add_box(5, 5.1, 8.5, 1.4,
+    # Improvement 2: Increased font size and box height
+    add_box(5, 5.1, 8.5, 2.0, # h increased from 1.4 to 2.0
             "Pass 2: Narrowband Refinement\nBandpass at est_freq \u00b1 0.4 Hz\nRefined Lateralization: envelope amplitude\nRefined Frequency: Hilbert on dominant hemisphere",
-            facecolor='#AED6F1', edgecolor='#2471A3', fontsize=7.5)
+            facecolor='#AED6F1', edgecolor='#2471A3', fontsize=8.5, title_fontsize_boost=1.0) # Fontsize increased from 7.5 to 8.5
 
     # Arrows from pass 2 to three branches
     add_arrow(2.2, 4.35, 2.0, 3.5)
@@ -303,19 +318,22 @@ def draw_flowchart(ax):
     add_arrow(7.8, 4.35, 8.0, 3.5)
 
     # -- Branch 1 (left, green): Laterality Detection --
-    add_box(2.0, 2.5, 3.0, 1.8,
+    # Improvement 2: Increased font size and box height
+    add_box(2.0, 2.5, 3.0, 2.2, # h increased from 1.8 to 2.2
             "Laterality Detection\nL vs R narrowband amplitude\nOutput: Left/Right\nAUC = 0.837",
-            facecolor='#D5F5E3', edgecolor='#1E8449', fontsize=7.5)
+            facecolor='#D5F5E3', edgecolor='#1E8449', fontsize=8.5, title_fontsize_boost=1.0) # Fontsize increased from 7.5 to 8.5
 
     # -- Branch 2 (center, purple): Spatial Extent --
-    add_box(5.0, 2.5, 3.0, 1.8,
-            "Spatial Extent\nPLV \u00d7 Amplitude\nPer-channel phase coherence\nwith dominant hemisphere\n\u00d7 narrowband amplitude\nThreshold \u2192 count/18",
-            facecolor='#E8DAEF', edgecolor='#7D3C98', fontsize=6.8)
+    # Improvement 2 & 7: Increased font size, box width/height, and refined text layout
+    add_box(5.0, 2.5, 3.3, 2.5, # w increased from 3.0 to 3.3, h increased from 1.8 to 2.5
+            "Spatial Extent\nPLV \u00d7 Amplitude\nPer-channel phase coherence\nwith dominant hemisphere\n\u00d7 narrowband amplitude\nThreshold \u2192 count/18", # Text layout refined
+            facecolor='#E8DAEF', edgecolor='#7D3C98', fontsize=8.0, title_fontsize_boost=1.0) # Fontsize increased from 6.8 to 8.0
 
     # -- Branch 3 (right, orange): Topographic Localization --
-    add_box(8.0, 2.5, 3.0, 1.8,
+    # Improvement 2: Increased font size and box height
+    add_box(8.0, 2.5, 3.0, 2.2, # h increased from 1.8 to 2.2
             "Topographic Localization\nPer-channel Hilbert envelope\nLaplacian transform\n\u2192 Topoplot + Verbal Description",
-            facecolor='#FDEBD0', edgecolor='#E67E22', fontsize=7.2)
+            facecolor='#FDEBD0', edgecolor='#E67E22', fontsize=8.5, title_fontsize_boost=1.0) # Fontsize increased from 7.2 to 8.5
 
     # Arrows down to output boxes
     add_arrow(2.0, 1.55, 2.0, 1.0)
@@ -323,17 +341,18 @@ def draw_flowchart(ax):
     add_arrow(8.0, 1.55, 8.0, 1.0)
 
     # -- Output boxes (bottom) --
-    add_box(2.0, 0.55, 2.8, 0.7,
+    # Improvement 2: Increased font size and box height
+    add_box(2.0, 0.55, 2.8, 0.9, # h increased from 0.7 to 0.9
             "Laterality",
-            facecolor='#D5F5E3', edgecolor='#1E8449', fontsize=9)
+            facecolor='#D5F5E3', edgecolor='#1E8449', fontsize=10, title_fontsize_boost=0) # Fontsize increased from 9 to 10
 
-    add_box(5.0, 0.55, 2.8, 0.7,
+    add_box(5.0, 0.55, 2.8, 0.9, # h increased from 0.7 to 0.9
             "Spatial Extent + Frequency",
-            facecolor='#E8DAEF', edgecolor='#7D3C98', fontsize=8.5)
+            facecolor='#E8DAEF', edgecolor='#7D3C98', fontsize=9.5, title_fontsize_boost=0) # Fontsize increased from 8.5 to 9.5
 
-    add_box(8.0, 0.55, 2.8, 0.7,
+    add_box(8.0, 0.55, 2.8, 0.9, # h increased from 0.7 to 0.9
             "Spatial Localization",
-            facecolor='#FDEBD0', edgecolor='#E67E22', fontsize=9)
+            facecolor='#FDEBD0', edgecolor='#E67E22', fontsize=10, title_fontsize_boost=0) # Fontsize increased from 9 to 10
 
     # Title
     ax.text(5, 10.3, 'B. Pipeline Architecture', ha='center', va='bottom',
@@ -429,14 +448,25 @@ def main():
     # Topoplot as inset in lower-right corner
     c_pos = ax_c.get_position()
     topo_size = 0.13
-    inset_left = c_pos.x1 - topo_size - 0.01
+    # Shift inset left slightly to make space for the colorbar
+    inset_left = c_pos.x1 - topo_size - 0.01 - 0.015 
     inset_bottom = c_pos.y0 + 0.02
     ax_topo_inset = fig.add_axes([inset_left, inset_bottom, topo_size, topo_size * (22/9)])
-    generate_topoplot_on_ax(ax_topo_inset, lap_amplitude, MONO_CHANNELS, title='')
+    
+    # Capture the image object returned by generate_topoplot_on_ax for the colorbar
+    image = generate_topoplot_on_ax(ax_topo_inset, lap_amplitude, MONO_CHANNELS, title='')
     for spine in ax_topo_inset.spines.values():
         spine.set_visible(True)
         spine.set_linewidth(0.5)
         spine.set_color('#666')
+
+    # Improvement 3: Add a Colorbar to the Topoplot
+    cbar_ax = inset_axes(ax_topo_inset, width="8%", height="90%", loc='center right',
+                         bbox_to_anchor=(1.05, 0., 1, 1), bbox_transform=ax_topo_inset.transAxes, borderpad=0)
+    fig.colorbar(image, cax=cbar_ax, orientation='vertical', label='Laplacian Amplitude (a.u.)',
+                 ticks=matplotlib.ticker.MaxNLocator(nbins=5)) # Add ticks for clarity
+    cbar_ax.yaxis.label.set_fontsize(7) # Adjust colorbar label font size
+    cbar_ax.tick_params(labelsize=6) # Adjust colorbar tick label font size
 
     # Verbal description below topoplot inset
     wrapped = verbal

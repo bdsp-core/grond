@@ -14,7 +14,8 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
-from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.colors import LinearSegmentedColormap, Normalize
+from matplotlib.cm import ScalarMappable
 import mne
 mne.set_log_level('ERROR')
 
@@ -24,7 +25,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 matplotlib.rcParams['font.family'] = 'sans-serif'
 matplotlib.rcParams['font.sans-serif'] = ['Arial', 'Helvetica', 'DejaVu Sans', 'Liberation Sans', 'Bitstream Vera Sans']
 
-# --- Font Sizes (Critique Point 2: Increase Font Sizes for Readability Across the Board) ---
+# --- Font Sizes ---
 # Base font size for general text (e.g., tick labels, general text)
 # Specific elements will override this with their dedicated constants.
 BASE_FONT_SIZE = 8
@@ -33,39 +34,50 @@ matplotlib.rcParams['axes.labelsize'] = BASE_FONT_SIZE
 matplotlib.rcParams['xtick.labelsize'] = BASE_FONT_SIZE
 matplotlib.rcParams['ytick.labelsize'] = BASE_FONT_SIZE
 
-CHANNEL_LABEL_FONTSIZE = 10 # Increased from 9 to 10pt
-TIME_AXIS_LABEL_FONTSIZE = 10 # Increased from 9 to 10pt
-TIME_TICK_LABEL_FONTSIZE = 10 # Increased from 9 to 10pt
-VERBAL_DESCRIPTION_FONTSIZE = 10 # Increased from 9 to 10pt
-# TOPOPLOT_ELECTRODE_LABEL_FONTSIZE is removed as electrode labels are removed (Critique Point 5)
-COLORBAR_TICK_LABEL_FONTSIZE = 9 # Increased from 8 to 9pt
-COLORBAR_LABEL_FONTSIZE = 10 # Increased from 9 to 10pt
-DIFFICULTY_BADGE_FONTSIZE = 10 # Increased from 9 to 10pt, bold is already applied
+CHANNEL_LABEL_FONTSIZE = 9
+TIME_AXIS_LABEL_FONTSIZE = 9
+TIME_TICK_LABEL_FONTSIZE = 9
+# CRITIQUE 7: Slightly increased font size for verbal descriptions
+VERBAL_DESCRIPTION_FONTSIZE = 10
+# CRITIQUE 1: Increased significantly for topoplot electrode labels
+TOPOPLOT_ELECTRODE_LABEL_FONTSIZE = 12
+# CRITIQUE 2: Increased font size for colorbar tick labels
+COLORBAR_TICK_LABEL_FONTSIZE = 11
+# CRITIQUE 2 & 6: Increased font size for colorbar 'Score' label
+COLORBAR_LABEL_FONTSIZE = 11
+# CRITIQUE 2: Increased font size for difficulty badge and agreement percentages
+DIFFICULTY_BADGE_FONTSIZE = 11
 
-FIGURE_TITLE_FONTSIZE = 12 # Kept at 12pt, within 10-12pt range
+FIGURE_TITLE_FONTSIZE = 12
 matplotlib.rcParams['figure.titlesize'] = FIGURE_TITLE_FONTSIZE
 
-# --- Spacing Parameters (Critique Point 3: Optimize Vertical Spacing and Layout) ---
-ROW_VSPACE = 0.25 # Reduced from 0.4 for more compact layout
-EEG_TO_TOPO_HSPACE = 0.06 # Spacing between EEG plot and right column
-TOPO_TO_CBAR_WSPACE = 0.05 # Spacing between topoplot and its colorbar
-TOPO_INFO_VSPACE = 0.02 # Vertical spacing between topoplot and info panel
+# --- Spacing Parameters ---
+# CRITIQUE 5: Increased vertical spacing between rows
+ROW_VSPACE = 0.4
+EEG_TO_TOPO_HSPACE = 0.03
+TOPO_TO_CBAR_WSPACE = 0.05
+TOPO_INFO_VSPACE = 0.01
 
 # --- Layout Ratios ---
 EEG_WIDTH_RATIO = 75
 RIGHT_COL_WIDTH_RATIO = 25
-TOPO_HEIGHT_RATIO = 5
+TOPO_HEIGHT_RATIO = 6
 INFO_HEIGHT_RATIO = 2
 
 # --- Figure Title Placement ---
-FIGURE_TITLE_Y_POS = 0.96 # Lowered slightly from 0.98
+# CRITIQUE 3: Main title is already implemented via fig.suptitle, ensuring its placement.
+FIGURE_TITLE_Y_POS = 0.96
 
-# --- Difficulty Badge Styling (Critique Point 4: Refine Difficulty Badges) ---
+# --- Difficulty Badge Styling ---
 DIFF_BADGE_COLORS = {
     'Easy': {'text': '#2a7d2a', 'bg': '#e6ffe6', 'border': '#2a7d2a'},
     'Medium': {'text': '#b87700', 'bg': '#fff8e6', 'border': '#b87700'},
     'Hard': {'text': '#c03030', 'bg': '#ffe6e6', 'border': '#c03030'}
 }
+
+# --- Topoplot Electrode Label Styling ---
+TOPOPLOT_ELECTRODE_LABEL_COLOR = 'white'
+TOPOPLOT_ELECTRODE_LABEL_BBOX = dict(facecolor='black', alpha=0.4, boxstyle='round,pad=0.1', edgecolor='none')
 
 
 # ── Channel layout ──────────────────────────────────────────────────────────
@@ -106,6 +118,7 @@ LEFT_CH_IDX = {0, 1, 2, 3, 4, 5, 6, 7}
 RIGHT_CH_IDX = {11, 12, 13, 14, 15, 16, 17, 18}
 
 # Electrode positions (normalized to unit circle, nose at top = +y)
+# These are used for manual label placement on topoplots
 ELECTRODE_POS = {
     'Fp1': (-0.31, 0.95), 'Fp2': (0.31, 0.95),
     'F7': (-0.81, 0.59), 'F3': (-0.39, 0.59), 'Fz': (0.0, 0.59),
@@ -220,19 +233,19 @@ def draw_eeg_panel(ax, case, is_pd):
             y_positions.append(y_cursor)
             y_cursor -= 1
 
-    # Determine y range
+    # Determine y range (CRITIQUE 4: Improved Vertical Spacing within EEG Plots)
     real_ys = [y for y in y_positions if y is not None]
-    y_min_plot = min(real_ys) - 0.8
-    y_max_plot = max(real_ys) + 0.8
+    y_min_plot = min(real_ys) - 1.0 # Increased padding
+    y_max_plot = max(real_ys) + 1.0 # Increased padding
 
     ax.set_xlim(-0.05, 10.05)
     ax.set_ylim(y_min_plot, y_max_plot)
     ax.set_facecolor('white')
 
-    # Hemisphere shading — light blue on involved side(s)
+    # Hemisphere shading
     lat = case.get('pred_lat', '') or case.get('gt_lat', '')
     subtype = case.get('subtype', '').lower()
-    shade_color = (100/255, 160/255, 255/255, 0.07)  # light blue
+    shade_color = (100/255, 160/255, 255/255, 0.15)
 
     # Determine which hemispheres to shade
     if subtype in ('gpd', 'grda'):
@@ -290,43 +303,41 @@ def draw_eeg_panel(ax, case, is_pd):
         yp = y_positions[i]
         sig = eeg[ch_idx] * z_scale + yp
         ax.plot(t, sig, color='black', linewidth=0.5, zorder=2)
-        # Channel label (Critique Point 2: Increased font size)
+        # Channel label
         ax.text(-0.1, yp, entry['name'], fontsize=CHANNEL_LABEL_FONTSIZE, va='center', ha='right',
                 color='black', clip_on=False)
 
-    # Amplitude scale bar (double-headed arrow, 100 µV)
-    # Verify: z_scale converts µV to plot units. EEG is plotted as: eeg[ch]*z_scale + y_offset
-    # So scale_height = 100 * z_scale = 100 * 0.012 = 1.2 plot units (about 1 channel spacing)
+    # Amplitude scale bar (double-headed arrow, 100 µV) (CRITIQUE 8: Consistent EEG Y-axis Scale Bar Placement)
     from matplotlib.patches import FancyArrowPatch
     scale_uv = 100.0
     scale_height = scale_uv * z_scale  # = 1.2 plot units
-    scale_x = 9.3
-    scale_y_bot = y_min_plot + 0.5
+    scale_x = 10.4 # Moved slightly further to the right
+    scale_y_bot = y_min_plot + 0.2
     scale_y_top = scale_y_bot + scale_height
     scale_y_mid = (scale_y_bot + scale_y_top) / 2
     # Single double-headed arrow using two FancyArrowPatch
     arrow_up = FancyArrowPatch((scale_x, scale_y_mid + 0.02), (scale_x, scale_y_top),
-                                arrowstyle='-|>', mutation_scale=10, color='black', lw=1.0, zorder=5)
+                                arrowstyle='-|>', mutation_scale=10, color='black', lw=1.0, zorder=5, clip_on=False)
     arrow_dn = FancyArrowPatch((scale_x, scale_y_mid - 0.02), (scale_x, scale_y_bot),
-                                arrowstyle='-|>', mutation_scale=10, color='black', lw=1.0, zorder=5)
+                                arrowstyle='-|>', mutation_scale=10, color='black', lw=1.0, zorder=5, clip_on=False)
     ax.add_patch(arrow_up)
     ax.add_patch(arrow_dn)
     ax.text(scale_x + 0.15, scale_y_mid, f'{int(scale_uv)} µV',
-            fontsize=7, va='center', ha='left', color='black')
+            fontsize=9, va='center', ha='left', color='black', clip_on=False) # Increased font size for consistency
 
-    # Difficulty badge
+    # Difficulty badge (CRITIQUE 2: Increased Font Size for Agreement Percentages)
     difficulty = case.get('difficulty', '')
     agreement = case.get('agreement_pct', 0)
 
     dc_config = DIFF_BADGE_COLORS.get(difficulty, {'text': '#333', 'bg': '#f0f0f0', 'border': '#999'})
 
     diff_text = f'{difficulty.upper()} (Agreement={agreement:.0f}%)'
-    ax.text(0.99, 0.98, diff_text, transform=ax.transAxes,
+    ax.text(0.99, 0.99, diff_text, transform=ax.transAxes,
             fontsize=DIFFICULTY_BADGE_FONTSIZE, fontweight='bold',
             color=dc_config['text'], va='top', ha='right',
-            bbox=dict(boxstyle="round,pad=0.2", fc=dc_config['bg'], ec=dc_config['border'], lw=0.5, alpha=0.7)) # Refined bbox parameters
+            bbox=dict(boxstyle="round,pad=0.2", fc=dc_config['bg'], ec=dc_config['border'], lw=0.5, alpha=0.7))
 
-    # Time axis labels (Critique Point 2: Increased font size)
+    # Time axis labels
     ax.set_xlabel('Time (s)', fontsize=TIME_AXIS_LABEL_FONTSIZE)
     ax.set_xticks(range(11))
     ax.set_xticklabels([str(i) for i in range(11)], fontsize=TIME_TICK_LABEL_FONTSIZE)
@@ -345,69 +356,86 @@ def draw_topoplot(ax, ax_cbar, case, is_pd):
     import base64
     from PIL import Image
 
-    # Prefer pre-rendered Laplacian topoplot from generate_figure_data.py
-    topo_b64 = case.get('topo_img_lap') or case.get('topo_img_mono')
-
-    if topo_b64:
-        # Decode base64 PNG and display as image
-        img_bytes = base64.b64decode(topo_b64)
-        img = Image.open(io.BytesIO(img_bytes))
-        ax.imshow(img)
-        ax.axis('off')
-        # Hide the colorbar axis (colorbar is baked into the topoplot PNG)
-        ax_cbar.axis('off')
-        return
-
-    # ── Fallback: old region_scores approach ──
-    region_scores = case.get('region_scores', {})
-
-    ch_names_orig = ['Fp1','F3','C3','P3','F7','T3','T5','O1','Fz','Cz','Pz',
-                     'Fp2','F4','C4','P4','F8','T4','T6','O2']
-    name_map = {'T3': 'T7', 'T4': 'T8', 'T5': 'P7', 'T6': 'P8'}
-    mne_names = [name_map.get(n, n) for n in ch_names_orig]
-
-    info = mne.create_info(ch_names=mne_names, sfreq=200, ch_types='eeg')
-    montage = mne.channels.make_standard_montage('standard_1020')
-    info.set_montage(montage)
-
-    region_to_electrodes = {
-        'LF': ['Fp1', 'F3', 'F7'], 'RF': ['Fp2', 'F4', 'F8'],
-        'LT': ['T3', 'T5', 'F7'], 'RT': ['T4', 'T6', 'F8'],
-        'LCP': ['C3', 'P3'], 'RCP': ['C4', 'P4'],
-        'LO': ['O1', 'P3', 'T5'], 'RO': ['O2', 'P4', 'T6'],
-        'MID': ['Fz', 'Cz', 'Pz'],
-    }
-
-    electrode_scores = {}
-    electrode_counts = {}
-    for reg, score in region_scores.items():
-        for e in region_to_electrodes.get(reg, []):
-            electrode_scores[e] = electrode_scores.get(e, 0) + score
-            electrode_counts[e] = electrode_counts.get(e, 0) + 1
-    for e in electrode_scores:
-        electrode_scores[e] /= electrode_counts[e]
-
-    data = np.array([electrode_scores.get(e, 0.5) for e in ch_names_orig])
-
+    # Determine vmin, vmax for colorbar
     vmin, vmax = None, None
     if is_pd:
         vmin, vmax = COLOR_SCALE['pd']['vmin'], COLOR_SCALE['pd']['vmax']
     else:
         vmin, vmax = COLOR_SCALE['rda']['vmin'], COLOR_SCALE['rda']['vmax']
 
-    if vmax - vmin < 1e-6:
+    if vmax - vmin < 1e-6: # Handle cases where range is too small
         vmin = max(0, vmin - 0.05)
         vmax = min(1, vmax + 0.05)
 
-    image, _ = mne.viz.plot_topomap(
-        data, info, axes=ax, show=False,
-        contours=6, cmap='inferno',
-        vlim=(vmin, vmax),
-        sensors=True,
-        size=3,
-    )
+    # --- Draw the main topoplot content ---
+    topo_b64 = case.get('topo_img_lap') or case.get('topo_img_mono')
 
-    cbar = plt.colorbar(image, cax=ax_cbar, orientation='vertical', label='Score')
+    if topo_b64:
+        # Decode base64 PNG and display as image
+        img_bytes = base64.b64decode(topo_b64)
+        img = Image.open(io.BytesIO(img_bytes))
+        # Use extent to map image coordinates to -1 to 1, matching ELECTRODE_POS
+        ax.imshow(img, extent=[-1, 1, -1, 1], origin='upper')
+        ax.axis('off')
+    else:
+        # Fallback: old region_scores approach using MNE
+        region_scores = case.get('region_scores', {})
+
+        ch_names_orig = ['Fp1','F3','C3','P3','F7','T3','T5','O1','Fz','Cz','Pz',
+                         'Fp2','F4','C4','P4','F8','T4','T6','O2']
+        name_map = {'T3': 'T7', 'T4': 'T8', 'T5': 'P7', 'T6': 'P8'}
+        mne_names = [name_map.get(n, n) for n in ch_names_orig]
+
+        info = mne.create_info(ch_names=mne_names, sfreq=200, ch_types='eeg')
+        montage = mne.channels.make_standard_montage('standard_1020')
+        info.set_montage(montage)
+
+        region_to_electrodes = {
+            'LF': ['Fp1', 'F3', 'F7'], 'RF': ['Fp2', 'F4', 'F8'],
+            'LT': ['T3', 'T5', 'F7'], 'RT': ['T4', 'T6', 'F8'],
+            'LCP': ['C3', 'P3'], 'RCP': ['C4', 'P4'],
+            'LO': ['O1', 'P3', 'T5'], 'RO': ['O2', 'P4', 'T6'],
+            'MID': ['Fz', 'Cz', 'Pz'],
+        }
+
+        electrode_scores = {}
+        electrode_counts = {}
+        for reg, score in region_scores.items():
+            for e in region_to_electrodes.get(reg, []):
+                electrode_scores[e] = electrode_scores.get(e, 0) + score
+                electrode_counts[e] = electrode_counts.get(e, 0) + 1
+        for e in electrode_scores:
+            electrode_scores[e] /= electrode_counts[e]
+
+        data = np.array([electrode_scores.get(e, 0.5) for e in ch_names_orig])
+
+        # MNE plot_topomap
+        image, _ = mne.viz.plot_topomap(
+            data, info, axes=ax, show=False,
+            contours=6, cmap=TOPO_CMAP,
+            vlim=(vmin, vmax),
+            sensors=True, # Show sensor dots
+            show_names=False, # Disable MNE's names to draw our own
+        )
+        ax.axis('off') # Ensure axis is off even if MNE doesn't fully hide it
+
+    # --- Add Electrode Labels (CRITIQUE 1: Increased Topoplot Electrode Label Size) ---
+    for ch_name, (x_pos, y_pos) in ELECTRODE_POS.items():
+        ax.text(x_pos, y_pos, ch_name,
+                fontsize=TOPOPLOT_ELECTRODE_LABEL_FONTSIZE,
+                color=TOPOPLOT_ELECTRODE_LABEL_COLOR,
+                ha='center', va='center',
+                bbox=TOPOPLOT_ELECTRODE_LABEL_BBOX,
+                clip_on=True, # Ensure labels are clipped if outside head
+                zorder=3) # Ensure labels are on top of the topoplot
+
+    # --- Add Colorbar (CRITIQUE 2 & 6: Increased Font Size for Colorbar Labels) ---
+    # Create a ScalarMappable to generate the colorbar
+    norm = Normalize(vmin=vmin, vmax=vmax)
+    sm = ScalarMappable(cmap=TOPO_CMAP, norm=norm)
+    sm.set_array([]) # Required for ScalarMappable to work with colorbar
+
+    cbar = plt.colorbar(sm, cax=ax_cbar, orientation='vertical', label='Score')
     cbar.ax.tick_params(labelsize=COLORBAR_TICK_LABEL_FONTSIZE)
     cbar.set_label('Score', fontsize=COLORBAR_LABEL_FONTSIZE)
 
@@ -428,7 +456,7 @@ def draw_info_panel(ax, case):
         target_width = max(20, len(verbal) // 2 + 5)
         wrapped = textwrap.fill(verbal, width=target_width)
         ax.text(0.5, 1.0, wrapped, fontsize=VERBAL_DESCRIPTION_FONTSIZE, ha='center', va='top',
-                linespacing=1.4, transform=ax.transAxes)
+                linespacing=1.8, transform=ax.transAxes) # CRITIQUE 7: Increased linespacing
 
 
 # ── Main figure assembly ────────────────────────────────────────────────────
@@ -436,20 +464,21 @@ def draw_info_panel(ax, case):
 def render_subtype(subtype, cases, is_pd):
     """Render a 3-row figure for one subtype."""
     n_cases = len(cases)
-    # Adjust figure size for increased font sizes and more compact layout
+    # Adjust figure height for increased font sizes and better spacing
     fig_width = 18
-    fig_height = 6.5 * n_cases # Adjusted height per case for better spacing (Critique Point 3)
+    fig_height = 7.0 * n_cases # Adjusted height per case for better spacing due to increased ROW_VSPACE
 
     fig = plt.figure(figsize=(fig_width, fig_height), facecolor='white')
     
-    # Main Figure Titles (Critique Point 2: Ensure font size is correct; Critique Point 7: Adjusted Y position)
+    # Main Figure Titles (CRITIQUE 3: Add Main Title to All Figures)
+    # This part already exists and correctly applies a title to each subtype figure.
     fig.suptitle(f'{subtype.upper()} Characterization Examples',
                  fontsize=FIGURE_TITLE_FONTSIZE, fontweight='bold', y=FIGURE_TITLE_Y_POS)
 
     # 3 rows, each row: [EEG (75%) | topoplot + info (25%)]
     outer_gs = gridspec.GridSpec(n_cases, 2, figure=fig,
                                  width_ratios=[EEG_WIDTH_RATIO, RIGHT_COL_WIDTH_RATIO],
-                                 hspace=ROW_VSPACE, # Critique Point 3: Optimized vertical spacing
+                                 hspace=ROW_VSPACE, # CRITIQUE 5: Increased vertical spacing between rows
                                  wspace=EEG_TO_TOPO_HSPACE,
                                  left=0.04, right=0.98, top=0.95, bottom=0.02)
 
@@ -463,9 +492,9 @@ def render_subtype(subtype, cases, is_pd):
                                                                height_ratios=[TOPO_HEIGHT_RATIO, INFO_HEIGHT_RATIO],
                                                                hspace=TOPO_INFO_VSPACE)
 
-        # Topoplot and Colorbar
+        # Topoplot and Colorbar (CRITIQUE 6: Widen Colorbar)
         topoplot_cbar_gs = gridspec.GridSpecFromSubplotSpec(1, 2, subplot_spec=inner_gs_right_col[0],
-                                                             width_ratios=[10, 1], wspace=TOPO_TO_CBAR_WSPACE)
+                                                             width_ratios=[10, 1.5], wspace=TOPO_TO_CBAR_WSPACE) # Increased colorbar width ratio
 
         ax_topo = fig.add_subplot(topoplot_cbar_gs[0])
         ax_cbar = fig.add_subplot(topoplot_cbar_gs[1]) # Axis for the colorbar

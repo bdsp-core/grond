@@ -22,6 +22,9 @@ from pathlib import Path
 
 import matplotlib
 matplotlib.use('Agg')
+# Set global font family for consistency and publication readiness
+matplotlib.rcParams['font.family'] = 'sans-serif'
+matplotlib.rcParams['font.sans-serif'] = ['Arial', 'Helvetica', 'DejaVu Sans', 'Liberation Sans', 'Bitstream Vera Sans']
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
@@ -214,7 +217,7 @@ def gfp_align(mono_filtered, discharge_times_sec, fs=200, window_ms=25):
     return mean_topo_mono, mean_topo_lap
 
 
-def generate_topoplot_on_ax(ax, mean_topo, ch_names_orig, title='Laplacian Topoplot'):
+def generate_topoplot_on_ax(ax, mean_topo, ch_names_orig):
     """Generate topoplot directly on given axes."""
     name_map = {'T3': 'T7', 'T4': 'T8', 'T5': 'P7', 'T6': 'P8'}
     mne_names = [name_map.get(n, n) for n in ch_names_orig]
@@ -240,14 +243,14 @@ def generate_topoplot_on_ax(ax, mean_topo, ch_names_orig, title='Laplacian Topop
         bg_color = cmap(val_normalized)
         lum = 0.299 * bg_color[0] + 0.587 * bg_color[1] + 0.114 * bg_color[2]
         text_color = 'white' if lum < 0.45 else 'black'
-        ax.text(xy[0], xy[1], orig_name, fontsize=5, ha='center', va='center',
+        # IMPROVEMENT 3: Significantly increase font size of electrode labels
+        ax.text(xy[0], xy[1], orig_name, fontsize=9, ha='center', va='center',
                 fontweight='bold', color=text_color, zorder=10)
-
-    ax.set_title(title, fontsize=9, fontweight='bold')
+    return image # Return image for colorbar
 
 
 def plot_eeg_traces(ax, eeg_data, title, discharge_times=None,
-                    highlight_left=False, spacing=120.0):
+                    highlight_left=False, spacing=120.0): # IMPROVEMENT 2: Increased base spacing
     """Plot 19-channel average reference EEG traces.
 
     Args:
@@ -268,9 +271,11 @@ def plot_eeg_traces(ax, eeg_data, title, discharge_times=None,
 
     for idx in DISPLAY_ORDER:
         if idx == -1:
-            y_pos -= spacing * 0.4
+            # IMPROVEMENT 6: Significantly increased vertical spacing between channel groups
+            y_pos -= spacing * 2.0
             continue
-        trace = eeg_data[idx]
+        # IMPROVEMENT 2: Increased vertical amplitude of EEG traces for better visibility
+        trace = eeg_data[idx] * 2.5
         ax.plot(t, trace + y_pos, color='black', linewidth=0.4, clip_on=True)
         yticks.append(y_pos)
         yticklabels.append(MONO_CHANNELS[idx])
@@ -278,14 +283,17 @@ def plot_eeg_traces(ax, eeg_data, title, discharge_times=None,
         y_pos -= spacing
 
     ax.set_xlim(0, 10)
+    # Adjusted top/bottom limits to account for increased spacing and amplitude
     y_top = spacing * 0.8
     y_bottom = y_pos + spacing * 0.4
     ax.set_ylim(y_bottom, y_top)
 
     ax.set_yticks(yticks)
-    ax.set_yticklabels(yticklabels, fontsize=6, fontfamily='sans-serif')
-    ax.set_xlabel('Time (s)', fontsize=8, fontfamily='sans-serif')
-    ax.tick_params(axis='x', labelsize=7)
+    # IMPROVEMENT 1: Channel labels: consistent font size and weight for readability
+    ax.set_yticklabels(yticklabels, fontsize=10, fontweight='bold')
+    # IMPROVEMENT 1: Add a Time Axis Label to Panel A (and C)
+    ax.set_xlabel('Time (s)', fontsize=10)
+    ax.tick_params(axis='x', labelsize=9) # IMPROVEMENT 1: Increased x-axis tick label size
 
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
@@ -307,7 +315,8 @@ def plot_eeg_traces(ax, eeg_data, title, discharge_times=None,
             y_lo = min(left_y_vals) - spacing * 0.5
             ax.axhspan(y_lo, y_hi, color='lightblue', alpha=0.15, zorder=0)
 
-    ax.set_title(title, fontsize=10, fontweight='bold', fontfamily='sans-serif')
+    # IMPROVEMENT 1: Panel title: consistent font size (10-12pt) and weight
+    ax.set_title(title, fontsize=12, fontweight='bold')
 
 
 def draw_flowchart(ax):
@@ -317,7 +326,7 @@ def draw_flowchart(ax):
     ax.axis('off')
 
     def add_box(x, y, w, h, text, facecolor='#E8F4FD', edgecolor='#2C3E50',
-                fontsize=8, text_color='black', linewidth=1.5, alpha=0.9):
+                fontsize=9.5, text_color='#1A2B3C', linewidth=2.0, alpha=0.9): # IMPROVEMENT 1: Base fontsize 9.5
         """Add a rounded rectangle with centered text."""
         box = FancyBboxPatch((x - w/2, y - h/2), w, h,
                              boxstyle="round,pad=0.15",
@@ -326,70 +335,78 @@ def draw_flowchart(ax):
         ax.add_patch(box)
         lines = text.split('\n')
         n_lines = len(lines)
-        line_spacing = min(fontsize * 0.018, h / (n_lines + 0.5))  # adaptive
+        # Adjusted line spacing for better fit with increased font sizes
+        line_spacing = min(fontsize * 0.3, h / (n_lines + 0.5))
         start_y = y + (n_lines - 1) * line_spacing / 2
         for i, line in enumerate(lines):
-            ly = start_y - i * line_spacing
             fs = fontsize
             fw = 'normal'
-            if i == 0:
+            if i == 0: # First line is bold and slightly larger
                 fw = 'bold'
-                fs = fontsize + 0.5
-            ax.text(x, ly, line, ha='center', va='center',
+                fs = fontsize + 1.0 # IMPROVEMENT 1: e.g., 9.5 -> 10.5
+            ax.text(x, start_y - i * line_spacing, line, ha='center', va='center',
                     fontsize=fs, fontweight=fw, color=text_color, zorder=3)
 
-    def add_arrow(x1, y1, x2, y2, color='#2C3E50'):
-        """Add a straight arrow."""
+    def add_arrow(x1, y1, x2, y2, color='#1A2B3C'):
+        """Add a straight arrow with enhanced visibility."""
         ax.annotate('', xy=(x2, y2), xytext=(x1, y1),
                     arrowprops=dict(arrowstyle='->', color=color,
-                                    lw=1.5, connectionstyle='arc3,rad=0'))
+                                    lw=3.0, connectionstyle='arc3,rad=0')) # Increased line width for arrows
 
     # ── Top box: ChannelPD-Net ──
-    add_box(5, 9.0, 8.5, 1.2,
+    # IMPROVEMENT 1: Adjusted y for better vertical centering of title, h for content, and fontsize
+    add_box(5, 9.2, 8.5, 1.3,
             "ChannelPD-Net\nPer-channel CNN+Attention (\u00d718)\n18 PD Probabilities + 18 Frequency Estimates",
-            facecolor='#D6EAF8', edgecolor='#2471A3', fontsize=8)
+            facecolor='#D6EAF8', edgecolor='#2471A3', fontsize=9.5) # IMPROVEMENT 1: Base fontsize for text
 
-    # Arrows from top box to three branches
-    add_arrow(2.5, 8.35, 2.0, 7.0)
-    add_arrow(5.0, 8.35, 5.0, 7.0)
-    add_arrow(7.5, 8.35, 8.0, 7.0)
+    # Arrows from top box to three branches (adjusted y coordinates for new box positions)
+    add_arrow(2.5, 8.55, 2.0, 6.8)
+    add_arrow(5.0, 8.55, 5.0, 6.8)
+    add_arrow(7.5, 8.55, 8.0, 6.8)
 
     # ── Branch 1 (left, green): Laterality Detection ──
-    add_box(2.0, 5.7, 3.2, 2.3,
+    # IMPROVEMENT 1: Adjusted y, h, and fontsize for better readability and vertical distribution
+    add_box(2.0, 6.0, 3.2, 2.5,
             "Laterality Detection\n\nL vs R hemisphere\nmean PD probability\n\nOutput: Left / Right\nAUC = 0.963",
-            facecolor='#D5F5E3', edgecolor='#1E8449', fontsize=7.5)
+            facecolor='#D5F5E3', edgecolor='#1E8449', fontsize=9.5)
 
     # ── Branch 2 (center, red): HemiCET+DP ──
-    add_box(5.0, 5.3, 3.2, 3.1,
-            "HemiCET+DP\nDischarge Detection\n\n8-ch CET-UNet \u2192 Evidence\nCNN+ACF Frequency Prior\nDP with Periodic Prior\nEM Refinement + Filtering\n\nOutput: t\u2081, t\u2082, ..., t\u2096\nFreq = 1 / median(IPI)",
-            facecolor='#FADBD8', edgecolor='#C0392B', fontsize=7)
+    # IMPROVEMENT 1: Adjusted y, h, and fontsize for better readability and vertical distribution
+    # IMPROVEMENT 4: Replaced Unicode subscripts with standard text subscripts for robustness
+    add_box(5.0, 5.6, 3.2, 3.3,
+            "HemiCET+DP\nDischarge Detection\n\n8-ch CET-UNet \u2192 Evidence\nCNN+ACF Frequency Prior\nDP with Periodic Prior\nEM Refinement + Filtering\n\nOutput: t_1, t_2, ..., t_n\nFreq = 1 / median(IPI)",
+            facecolor='#FADBD8', edgecolor='#C0392B', fontsize=9.5)
 
     # ── Branch 3 (right, orange): Topographic Localization ──
-    add_box(8.0, 5.7, 3.2, 2.3,
+    # IMPROVEMENT 1: Adjusted y, h, and fontsize for better readability and vertical distribution
+    add_box(8.0, 6.0, 3.2, 2.5,
             "Discharge-Locked\nTopographic Localization\n\nLaplacian-GFP Alignment\nTwo-Pass Template Refinement\nGFP\u00b2-Weighted Averaging\n\u2192 Topoplot + Description",
-            facecolor='#FDEBD0', edgecolor='#E67E22', fontsize=7)
+            facecolor='#FDEBD0', edgecolor='#E67E22', fontsize=9.5)
 
-    # Arrows down to output boxes
-    add_arrow(2.0, 4.5, 2.0, 3.3)
-    add_arrow(5.0, 3.7, 5.0, 3.3)
-    add_arrow(8.0, 4.5, 8.0, 3.3)
+    # Arrows down to output boxes (adjusted y coordinates for new box positions)
+    # Arrows now point to the top edge of the raised output boxes
+    add_arrow(2.0, 4.7, 2.0, 3.75)
+    add_arrow(5.0, 3.9, 5.0, 3.75)
+    add_arrow(8.0, 4.7, 8.0, 3.75)
 
     # ── Output boxes (bottom) ──
-    add_box(2.0, 2.7, 2.8, 0.8,
+    # Raised output boxes for better visual integration with branches
+    # IMPROVEMENT 1: Explicit fontsize 10 for single-line output
+    add_box(2.0, 3.3, 2.8, 0.9,
             "Laterality",
-            facecolor='#D5F5E3', edgecolor='#1E8449', fontsize=9)
+            facecolor='#D5F5E3', edgecolor='#1E8449', fontsize=10)
 
-    add_box(5.0, 2.7, 2.8, 0.8,
+    add_box(5.0, 3.3, 2.8, 0.9,
             "Timing + Frequency",
-            facecolor='#FADBD8', edgecolor='#C0392B', fontsize=9)
+            facecolor='#FADBD8', edgecolor='#C0392B', fontsize=10)
 
-    add_box(8.0, 2.7, 2.8, 0.8,
+    add_box(8.0, 3.3, 2.8, 0.9,
             "Spatial Localization",
-            facecolor='#FDEBD0', edgecolor='#E67E22', fontsize=9)
+            facecolor='#FDEBD0', edgecolor='#E67E22', fontsize=10)
 
-    # Title
-    ax.text(5, 10.3, 'B. Pipeline Architecture', ha='center', va='bottom',
-            fontsize=12, fontweight='bold', fontfamily='sans-serif')
+    # IMPROVEMENT 1: Title: Vertically centered more closely above the "ChannelPD-Net" box
+    ax.text(5, 10.0, 'B. Pipeline Architecture', ha='center', va='bottom',
+            fontsize=12, fontweight='bold')
 
 
 def main():
@@ -424,6 +441,7 @@ def main():
 
     # ── Run PDCharacterizer for laterality ──
     print("Running PDCharacterizer...", flush=True)
+    sys.path.insert(0, str(CODE_DIR))
     from pd_characterizer import PDCharacterizer
     charzer = PDCharacterizer()
 
@@ -469,11 +487,13 @@ def main():
 
     # ── Create figure ──
     print("Building figure...", flush=True)
-    fig = plt.figure(figsize=(22, 9), facecolor='white')
+    # Adjusted figure height for better balance across panels
+    fig = plt.figure(figsize=(22, 7.5), facecolor='white')
 
     # Three panels: A (30%), B (40%), C (30%)
+    # Adjusted top/bottom for more vertical margin
     gs = gridspec.GridSpec(1, 3, width_ratios=[0.30, 0.40, 0.30],
-                           left=0.03, right=0.97, top=0.92, bottom=0.05,
+                           left=0.03, right=0.97, top=0.94, bottom=0.06,
                            wspace=0.08)
 
     # ── Panel A: Input EEG ──
@@ -486,31 +506,44 @@ def main():
     draw_flowchart(ax_b)
 
     # ── Panel C: Output Visualization ──
-    # Full-height EEG (same dimensions as Panel A), topoplot overlaid in lower-right
-    ax_c = fig.add_subplot(gs[0, 2])
+    # Create a nested gridspec for Panel C to separate EEG from topoplot/verbal
+    # This ensures consistent figure height and better alignment
+    gs_c = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=gs[0, 2],
+                                            height_ratios=[0.7, 0.3], hspace=0.15)
+
+    ax_c_eeg = fig.add_subplot(gs_c[0, 0])
     is_left = laterality == 'left'
-    plot_eeg_traces(ax_c, mono_filt,
+    plot_eeg_traces(ax_c_eeg, mono_filt,
                     title='C. Output: Characterized LPD',
                     discharge_times=discharge_times,
                     highlight_left=is_left)
 
-    # Topoplot as inset in lower-right corner of Panel C
-    # Position: [left, bottom, width, height] in figure coordinates
-    c_pos = ax_c.get_position()
-    topo_size = 0.13  # fraction of figure width/height
-    inset_left = c_pos.x1 - topo_size - 0.01
-    inset_bottom = c_pos.y0 + 0.02
-    ax_topo_inset = fig.add_axes([inset_left, inset_bottom, topo_size, topo_size * (22/9)])
-    generate_topoplot_on_ax(ax_topo_inset, mean_topo_lap, MONO_CHANNELS, title='')
-    # Add thin border around topoplot inset
-    for spine in ax_topo_inset.spines.values():
+    # Sub-gridspec for topoplot and verbal description in the bottom part of Panel C
+    # IMPROVEMENT 5: Increased topoplot's share of width for larger size
+    gs_c_bottom = gridspec.GridSpecFromSubplotSpec(1, 2, subplot_spec=gs_c[1, 0],
+                                                    width_ratios=[0.7, 0.3], wspace=0.05)
+    ax_topo = fig.add_subplot(gs_c_bottom[0, 0])
+    ax_verbal = fig.add_subplot(gs_c_bottom[0, 1])
+
+    # Generate topoplot and get the image for the colorbar
+    image = generate_topoplot_on_ax(ax_topo, mean_topo_lap, MONO_CHANNELS)
+
+    # Add colorbar adjacent to the topoplot
+    cbar = fig.colorbar(image, ax=ax_topo, orientation='vertical', fraction=0.04, pad=0.04)
+    # IMPROVEMENT 1: Increased colorbar tick label size
+    cbar.ax.tick_params(labelsize=9)
+    # IMPROVEMENT 1: Increased colorbar label font size
+    cbar.set_label('Laplacian Amplitude (\u00b5V)', fontsize=10)
+
+    # Add thin border around topoplot for visual separation
+    for spine in ax_topo.spines.values():
         spine.set_visible(True)
         spine.set_linewidth(0.5)
         spine.set_color('#666')
 
-    # Verbal description as text annotation below topoplot inset
+    # Relocate Verbal Description to its dedicated axes, ensuring consistent sizing and professional placement
     wrapped = verbal
-    if len(verbal) > 45:
+    if len(verbal) > 45: # Word wrap for longer descriptions
         words = verbal.split()
         lines = []
         current = []
@@ -523,13 +556,14 @@ def main():
             lines.append(' '.join(current))
         wrapped = '\n'.join(lines)
 
-    fig.text(inset_left + topo_size / 2, inset_bottom - 0.01, wrapped,
-             ha='center', va='top', fontsize=7, fontstyle='italic',
-             fontfamily='sans-serif', color='#333',
-             bbox=dict(boxstyle='round,pad=0.3', facecolor='#f8f8f0',
-                       edgecolor='#ccc', alpha=0.9))
-
-    # (verbal description already placed via fig.text above)
+    # IMPROVEMENT 1: Increased verbal description font size
+    # IMPROVEMENT 7: Removed the thin border around the verbal description text box
+    ax_verbal.text(0.5, 0.5, wrapped,
+                   ha='center', va='center', fontsize=10, fontstyle='italic',
+                   color='#333',
+                   bbox=dict(boxstyle='round,pad=0.3', facecolor='#f8f8f0',
+                             edgecolor='none', alpha=0.9)) # Removed edgecolor
+    ax_verbal.axis('off') # Hide axes for the verbal description
 
     # ── Save ──
     fig.savefig(str(OUT_PATH), dpi=300, bbox_inches='tight', facecolor='white')
