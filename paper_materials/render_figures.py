@@ -488,14 +488,25 @@ def render_subtype(subtype, cases, is_pd):
                                                                height_ratios=[TOPO_HEIGHT_RATIO, INFO_HEIGHT_RATIO],
                                                                hspace=TOPO_INFO_VSPACE)
 
-        # Topoplot and Colorbar (CRITIQUE 6: Widen Colorbar)
-        topoplot_cbar_gs = gridspec.GridSpecFromSubplotSpec(1, 2, subplot_spec=inner_gs_right_col[0],
-                                                             width_ratios=[10, 1.5], wspace=TOPO_TO_CBAR_WSPACE) # Increased colorbar width ratio
-
-        ax_topo = fig.add_subplot(topoplot_cbar_gs[0])
-        ax_cbar = fig.add_subplot(topoplot_cbar_gs[1]) # Axis for the colorbar
-
+        # Topoplot — full width, no colorbar
+        ax_topo = fig.add_subplot(inner_gs_right_col[0])
+        ax_cbar = ax_topo  # dummy — draw_topoplot will just hide it
         draw_topoplot(ax_topo, ax_cbar, case, is_pd)
+        # Force square aspect by adjusting the axes position
+        pos = ax_topo.get_position()
+        # Make width = height (in figure coords), centered
+        w = pos.width
+        h = pos.height
+        if h > w:
+            # Too tall — shrink height to match width, center vertically
+            new_h = w * (fig.get_figwidth() / fig.get_figheight())
+            offset = (h - new_h) / 2
+            ax_topo.set_position([pos.x0, pos.y0 + offset, pos.width, new_h])
+        elif w > h:
+            # Too wide — shrink width to match height
+            new_w = h * (fig.get_figheight() / fig.get_figwidth())
+            offset = (w - new_w) / 2
+            ax_topo.set_position([pos.x0 + offset, pos.y0, new_w, pos.height])
 
         ax_info = fig.add_subplot(inner_gs_right_col[1])
         draw_info_panel(ax_info, case)
