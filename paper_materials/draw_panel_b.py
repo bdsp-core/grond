@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-Draw Panel B (Pipeline Architecture) for Fig 2, matching PaperBanana style.
+Draw Panel B (Pipeline Architecture) for Fig 2.
+Refined version matching PaperBanana style.
 
 Usage:
     conda run -n morgoth python paper_materials/draw_panel_b.py
@@ -12,183 +13,142 @@ matplotlib.rcParams['font.family'] = 'sans-serif'
 matplotlib.rcParams['font.sans-serif'] = ['Arial', 'Helvetica', 'DejaVu Sans']
 
 import matplotlib.pyplot as plt
-import matplotlib.patches as patches
+from matplotlib.patches import FancyBboxPatch
 import numpy as np
 
 def draw_panel_b(outpath='paper_materials/figures/_panel_b.png'):
-    fig, ax = plt.subplots(figsize=(8, 10))
-    ax.set_xlim(0, 10)
-    ax.set_ylim(0, 12)
+    W, H = 82, 100
+    fig, ax = plt.subplots(figsize=(9, 11))
+    ax.set_xlim(0, W)
+    ax.set_ylim(0, H)
+    ax.set_aspect('equal')
     ax.axis('off')
+    fig.patch.set_facecolor('white')
 
-    # ── Color Palette (PaperBanana-inspired) ──
-    DARK_BG = '#3C3C3C'       # ChannelPD-Net and output boxes
-    GREEN_CONT = '#E8F5E9'    # Laterality container
-    GREEN_BOX = '#C8E6C9'     # Laterality sub-boxes
-    GREEN_BD = '#81C784'
-    SALMON_CONT = '#FBE9E7'   # Discharge container
-    SALMON_BOX = '#FFCCBC'    # Discharge sub-boxes
-    SALMON_BD = '#EF9A9A'
-    BLUE_CONT = '#E3F2FD'     # Topographic container
-    BLUE_BOX = '#BBDEFB'      # Topographic sub-boxes
-    BLUE_BD = '#90CAF9'
-    TEXT_DARK = '#2C2C2C'
-    TEXT_WHITE = '#FFFFFF'
-    ARROW_COLOR = '#555555'
+    # ── Colors ──
+    TOP_FC = '#3C3C3C'; TOP_EC = '#222222'  # Dark ChannelPD-Net
+    L_BG = '#E8F5E9'; L_EC = '#81C784'; L_BF = '#C8E6C9'; L_BE = '#66BB6A'  # Green
+    M_BG = '#FBE9E7'; M_EC = '#EF9A9A'; M_BF = '#FFCCBC'; M_BE = '#E57373'  # Salmon
+    R_BG = '#E3F2FD'; R_EC = '#90CAF9'; R_BF = '#BBDEFB'; R_BE = '#64B5F6'  # Blue
+    ARR = '#444444'
 
-    def rounded_box(x, y, w, h, fc, ec='#888', lw=1.0, ls='-'):
-        box = patches.FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.12",
-                                      facecolor=fc, edgecolor=ec, linewidth=lw,
-                                      linestyle=ls, zorder=2)
-        ax.add_patch(box)
+    def box(cx, cy, w, h, fc, ec, rad=1.5, lw=1.0):
+        ax.add_patch(FancyBboxPatch(
+            (cx - w/2, cy - h/2), w, h,
+            boxstyle=f'round,pad=0,rounding_size={rad}',
+            facecolor=fc, edgecolor=ec, linewidth=lw, zorder=4, clip_on=False))
 
-    def arrow(x1, y1, x2, y2, lw=1.2):
+    def T(x, y, s, fs=9.5, fw='normal', ha='center', va='center', col='black'):
+        ax.text(x, y, s, fontsize=fs, fontweight=fw, ha=ha, va=va,
+                color=col, zorder=6, multialignment='center', linespacing=1.15, clip_on=False)
+
+    def arr(x1, y1, x2, y2, lw=1.0):
         ax.annotate('', xy=(x2, y2), xytext=(x1, y1),
-                    arrowprops=dict(arrowstyle='->', color=ARROW_COLOR, lw=lw))
+            arrowprops=dict(arrowstyle='-|>', color=ARR, lw=lw,
+                            mutation_scale=9, shrinkA=0, shrinkB=0), zorder=5, clip_on=False)
 
     # ── Title ──
-    ax.text(5, 11.6, 'B. Pipeline Architecture', fontsize=16, fontweight='bold',
-            ha='center', va='center', color=TEXT_DARK)
+    T(2, 97, 'B. Pipeline Architecture', fs=16, fw='bold', ha='left')
 
-    # ── Input label + arrow to ChannelPD-Net ──
-    ax.text(1.5, 10.7, '18 Independent\nBipolar Channels', fontsize=9, ha='center',
-            va='center', color='#666')
-    arrow(2.5, 10.7, 3.3, 10.7, lw=1.5)
+    # ── Input + ChannelPD-Net ──
+    T(14, 90, '18 Independent\nBipolar Channels', fs=9, ha='right', col='#555')
+    arr(15, 90, 27, 90)
 
-    # ── ChannelPD-Net (dark box) ──
-    rounded_box(3.3, 10.1, 3.4, 1.2, fc=DARK_BG, ec='#222', lw=1.5)
-    ax.text(5.0, 10.7, 'ChannelPD-Net\n(CNN+Attention)', fontsize=11, fontweight='bold',
-            ha='center', va='center', color=TEXT_WHITE, zorder=3)
+    TX, TY, TW, TH = 41, 90, 26, 8
+    box(TX, TY, TW, TH, TOP_FC, TOP_EC, rad=2.5, lw=1.5)
+    T(TX, TY + 1.5, 'ChannelPD-Net', fs=11, fw='bold', col='white')
+    T(TX, TY - 1.8, '(CNN+Attention)', fs=10, col='#CCC')
 
-    # ── PD Probability / Frequency Estimate labels ──
-    ax.text(3.5, 9.75, 'PD Probability', fontsize=8, ha='center', color='#666', style='italic')
-    ax.text(6.5, 9.75, 'Frequency Estimate', fontsize=8, ha='center', color='#666', style='italic')
+    # ── Fork ──
+    LX, MX, RX = 15, 41, 67
+    FORK_Y = 82
+    ax.plot([TX, TX], [TY - TH/2, FORK_Y], color=ARR, lw=1.0, zorder=3)
+    ax.plot([LX, RX], [FORK_Y, FORK_Y], color=ARR, lw=1.0, zorder=3)
+    arr(LX, FORK_Y, LX, 77)
+    arr(MX, FORK_Y, MX, 77)
+    arr(RX, FORK_Y, RX, 77)
 
-    # Horizontal connector line
-    ax.plot([1.5, 8.5], [9.5, 9.5], color='#BBB', linewidth=0.8, zorder=1)
-    # Vertical drops
-    arrow(1.75, 9.5, 1.75, 9.0)
-    arrow(5.0, 9.5, 5.0, 9.0)
-    arrow(8.25, 9.5, 8.25, 9.0)
+    T(28, 83.5, 'PD Probability', fs=8.5, col='#666')
+    T(54, 83.5, 'Frequency Estimate', fs=8.5, col='#666')
 
-    # ══════════════════════════════════════════════
-    # CONTAINER PANELS (colored backgrounds)
-    # ══════════════════════════════════════════════
+    # ── Container panels (solid borders) ──
+    PW_L, PW_M, PW_R = 22, 28, 22
+    PT_Y, PB_Y = 76.5, 8
+    PH = PT_Y - PB_Y
 
-    # Laterality container
-    rounded_box(0.3, 1.2, 2.9, 7.6, fc=GREEN_CONT, ec=GREEN_BD, lw=1.2)
-    ax.text(1.75, 8.5, 'Laterality\nDetection', fontsize=12, fontweight='bold',
-            ha='center', va='center', color='#2E7D32', zorder=3)
+    for cx, pw, bg, ec in [(LX, PW_L, L_BG, L_EC), (MX, PW_M, M_BG, M_EC), (RX, PW_R, R_BG, R_EC)]:
+        ax.add_patch(FancyBboxPatch(
+            (cx - pw/2, PB_Y), pw, PH,
+            boxstyle='round,pad=0,rounding_size=2',
+            facecolor=bg, edgecolor=ec, linewidth=1.2, zorder=2))
 
-    # Discharge container
-    rounded_box(3.5, 1.2, 3.0, 7.6, fc=SALMON_CONT, ec=SALMON_BD, lw=1.2)
-    ax.text(5.0, 8.5, 'Discharge\nDetection', fontsize=12, fontweight='bold',
-            ha='center', va='center', color='#C62828', zorder=3)
+    # ── LEFT: Laterality Detection ──
+    T(LX, 73.5, 'Laterality\nDetection', fs=11, fw='bold', col='#2E7D32')
 
-    # Topographic container
-    rounded_box(6.8, 1.2, 2.9, 7.6, fc=BLUE_CONT, ec=BLUE_BD, lw=1.2)
-    ax.text(8.25, 8.5, 'Topographic\nLocalization', fontsize=12, fontweight='bold',
-            ha='center', va='center', color='#1565C0', zorder=3)
+    box(LX, 63, 19, 8, L_BF, L_BE)
+    T(LX, 63, 'Compare\nL vs R Mean\nProbabilities', fs=9)
 
-    # ══════════════════════════════════════════════
-    # LATERALITY COLUMN
-    # ══════════════════════════════════════════════
+    arr(LX, 59, LX, 52)
 
-    rounded_box(0.6, 6.6, 2.3, 0.9, fc=GREEN_BOX, ec=GREEN_BD)
-    ax.text(1.75, 7.05, 'Compare\nL vs R Mean\nProbabilities', fontsize=9, ha='center', va='center',
-            color=TEXT_DARK, zorder=3)
+    T(LX, 48, 'Laterality\n(Side)', fs=10, fw='bold')
 
-    arrow(1.75, 6.6, 1.75, 5.8)
+    # ── MIDDLE: Discharge Detection ──
+    T(MX, 73.5, 'Discharge\nDetection', fs=11, fw='bold', col='#C62828')
 
-    ax.text(1.75, 5.3, 'Laterality\n(Side)', fontsize=10, ha='center', va='center',
-            color=TEXT_DARK, fontweight='bold')
+    CET_X, ACF_X = MX - 7, MX + 7
+    box(CET_X, 64, 12, 7, M_BF, M_BE)
+    T(CET_X, 64, '8-channel\nCET-UNet', fs=9)
+    box(ACF_X, 64, 12, 7, M_BF, M_BE)
+    T(ACF_X, 64, 'CNN+ACF\nEnsemble', fs=9)
 
-    # ══════════════════════════════════════════════
-    # DISCHARGE COLUMN
-    # ══════════════════════════════════════════════
+    T(CET_X, 57.5, 'Evidence\nTrace', fs=8, col='#888')
+    T(ACF_X, 57.5, 'Frequency\nPrior', fs=8, col='#888')
 
-    # Two top boxes side by side
-    rounded_box(3.7, 6.6, 1.3, 0.9, fc=SALMON_BOX, ec=SALMON_BD)
-    ax.text(4.35, 7.05, '8-channel\nCET-UNet', fontsize=8.5, ha='center', va='center',
-            color=TEXT_DARK, zorder=3)
+    arr(CET_X, 55.5, MX - 2, 49)
+    arr(ACF_X, 55.5, MX + 2, 49)
 
-    rounded_box(5.2, 6.6, 1.3, 0.9, fc=SALMON_BOX, ec=SALMON_BD)
-    ax.text(5.85, 7.05, 'CNN+ACF\nEnsemble', fontsize=8.5, ha='center', va='center',
-            color=TEXT_DARK, zorder=3)
+    box(MX, 45, 22, 7, M_BF, M_BE)
+    T(MX, 45, 'Dynamic\nProgramming', fs=9.5)
 
-    # Labels below
-    ax.text(4.35, 6.25, 'Evidence\nTrace', fontsize=8, ha='center', color='#888')
-    ax.text(5.85, 6.25, 'Frequency\nPrior', fontsize=8, ha='center', color='#888')
+    arr(MX, 41.5, MX, 37)
 
-    # Arrows converging
-    arrow(4.35, 5.9, 5.0, 5.2)
-    arrow(5.85, 5.9, 5.0, 5.2)
+    box(MX, 33, 22, 8, M_BF, M_BE)
+    T(MX, 33, 'EM Template\nRefinement &\nFiltering', fs=9)
 
-    # Dynamic Programming
-    rounded_box(4.0, 4.4, 2.0, 0.8, fc=SALMON_BOX, ec=SALMON_BD)
-    ax.text(5.0, 4.8, 'Dynamic\nProgramming', fontsize=9.5, ha='center', va='center',
-            color=TEXT_DARK, zorder=3)
+    arr(MX, 29, MX, 23)
 
-    arrow(5.0, 4.4, 5.0, 3.7)
+    T(MX, 18, r'Discharge Times ($t_1 \cdots t_n$)' '\nFrequency', fs=10, fw='bold')
 
-    # EM Template Refinement
-    rounded_box(3.8, 2.8, 2.4, 0.9, fc=SALMON_BOX, ec=SALMON_BD)
-    ax.text(5.0, 3.25, 'EM Template\nRefinement &\nFiltering', fontsize=9, ha='center', va='center',
-            color=TEXT_DARK, zorder=3)
+    # ── RIGHT: Topographic Localization ──
+    T(RX, 73.5, 'Topographic\nLocalization', fs=11, fw='bold', col='#1565C0')
 
-    arrow(5.0, 2.8, 5.0, 2.2)
+    box(RX, 64, 19, 7, R_BF, R_BE)
+    T(RX, 64, 'Extract\nMonopolar\nVoltage', fs=9)
 
-    ax.text(5.0, 1.7, 'Discharge Times ($t_1 \\cdots t_n$)\nFrequency', fontsize=10,
-            ha='center', va='center', color=TEXT_DARK, fontweight='bold')
+    arr(RX, 60.5, RX, 56)
 
-    # ══════════════════════════════════════════════
-    # TOPOGRAPHIC COLUMN
-    # ══════════════════════════════════════════════
+    box(RX, 52, 19, 8, R_BF, R_BE)
+    T(RX, 52, 'Laplacian-GFP\nAlignment\n(±25ms)', fs=9)
 
-    rounded_box(7.1, 6.6, 2.3, 0.9, fc=BLUE_BOX, ec=BLUE_BD)
-    ax.text(8.25, 7.05, 'Extract\nMonopolar\nVoltage', fontsize=9, ha='center', va='center',
-            color=TEXT_DARK, zorder=3)
+    arr(RX, 48, RX, 44)
 
-    arrow(8.25, 6.6, 8.25, 6.0)
+    box(RX, 39.5, 19, 9, R_BF, R_BE)
+    T(RX, 39.5, 'Template\nRefinement &\nGFP²-weighted\nAveraging', fs=9)
 
-    rounded_box(7.1, 5.1, 2.3, 0.9, fc=BLUE_BOX, ec=BLUE_BD)
-    ax.text(8.25, 5.55, 'Laplacian-GFP\nAlignment\n($\\pm$25ms)', fontsize=9, ha='center', va='center',
-            color=TEXT_DARK, zorder=3)
+    arr(RX, 35, RX, 30)
 
-    arrow(8.25, 5.1, 8.25, 4.5)
-
-    rounded_box(7.1, 3.3, 2.3, 1.2, fc=BLUE_BOX, ec=BLUE_BD)
-    ax.text(8.25, 3.9, 'Template\nRefinement &\nGFP$^2$-weighted\nAveraging', fontsize=9, ha='center', va='center',
-            color=TEXT_DARK, zorder=3)
-
-    arrow(8.25, 3.3, 8.25, 2.8)
-
-    # Topoplot icon (inferno-colored circle)
+    # Topoplot icon
     from matplotlib.colors import LinearSegmentedColormap
-    theta = np.linspace(0, 2*np.pi, 100)
-    r = 0.4
-    cx, cy = 8.25, 2.3
-    circle = plt.Circle((cx, cy), r, facecolor='#B71C1C', alpha=0.3, edgecolor='#E65100',
-                         linewidth=1.0, zorder=3)
-    ax.add_patch(circle)
-    # Gradient effect
-    inner = plt.Circle((cx-0.05, cy+0.05), r*0.5, facecolor='#FFEB3B', alpha=0.5, edgecolor='none', zorder=4)
-    ax.add_patch(inner)
+    circle_outer = plt.Circle((RX, 25), 4.5, facecolor='#1A0033', edgecolor=R_BE, lw=1.0, zorder=4)
+    ax.add_artist(circle_outer)
+    circle_inner = plt.Circle((RX - 0.5, 25.5), 2.0, facecolor='#FF6F00', alpha=0.7, edgecolor='none', zorder=5)
+    ax.add_artist(circle_inner)
+    circle_hot = plt.Circle((RX - 0.8, 25.8), 0.8, facecolor='#FFEB3B', alpha=0.8, edgecolor='none', zorder=5)
+    ax.add_artist(circle_hot)
 
-    arrow(8.25, 1.8, 8.25, 1.4)
+    arr(RX, 20, RX, 16)
 
-    ax.text(8.25, 1.0, 'Localization', fontsize=10, ha='center', va='center',
-            color=TEXT_DARK, fontweight='bold')
-
-    # ══════════════════════════════════════════════
-    # OUTPUT BOXES (dark, at very bottom)
-    # ══════════════════════════════════════════════
-
-    # These are outside the containers, in dark boxes
-    for bx, label in [(1.75, 'Laterality\n(Side)'),
-                       (5.0, 'Discharge Times\n($t_1 \\cdots t_n$)\nFrequency'),
-                       (8.25, 'Localization')]:
-        pass  # Output labels already placed inside containers above
+    T(RX, 12, 'Localization', fs=10, fw='bold')
 
     # ── Save ──
     fig.savefig(outpath, dpi=300, bbox_inches='tight', facecolor='white')
