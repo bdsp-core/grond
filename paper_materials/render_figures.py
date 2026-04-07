@@ -374,8 +374,9 @@ def draw_topoplot(ax, ax_cbar, case, is_pd):
         # Decode base64 PNG and display as image
         img_bytes = base64.b64decode(topo_b64)
         img = Image.open(io.BytesIO(img_bytes))
-        # Use extent to map image coordinates to -1 to 1, matching ELECTRODE_POS
+        # Use extent to map image coordinates, with equal aspect to keep circle
         ax.imshow(img, extent=[-1, 1, -1, 1], origin='upper')
+        ax.set_aspect('equal')
         ax.axis('off')
     else:
         # Fallback: old region_scores approach using MNE
@@ -419,25 +420,20 @@ def draw_topoplot(ax, ax_cbar, case, is_pd):
         )
         ax.axis('off') # Ensure axis is off even if MNE doesn't fully hide it
 
-    # --- Add Electrode Labels (CRITIQUE 1: Increased Topoplot Electrode Label Size) ---
-    for ch_name, (x_pos, y_pos) in ELECTRODE_POS.items():
-        ax.text(x_pos, y_pos, ch_name,
-                fontsize=TOPOPLOT_ELECTRODE_LABEL_FONTSIZE,
-                color=TOPOPLOT_ELECTRODE_LABEL_COLOR,
-                ha='center', va='center',
-                bbox=TOPOPLOT_ELECTRODE_LABEL_BBOX,
-                clip_on=True, # Ensure labels are clipped if outside head
-                zorder=3) # Ensure labels are on top of the topoplot
+    # Electrode labels: only add if NOT using pre-rendered topoplot
+    # (pre-rendered topoplots already have electrode labels baked in)
+    if not topo_b64:
+        for ch_name, (x_pos, y_pos) in ELECTRODE_POS.items():
+            ax.text(x_pos, y_pos, ch_name,
+                    fontsize=TOPOPLOT_ELECTRODE_LABEL_FONTSIZE,
+                    color=TOPOPLOT_ELECTRODE_LABEL_COLOR,
+                    ha='center', va='center',
+                    bbox=TOPOPLOT_ELECTRODE_LABEL_BBOX,
+                    clip_on=True, zorder=3)
 
-    # --- Add Colorbar (CRITIQUE 2 & 6: Increased Font Size for Colorbar Labels) ---
-    # Create a ScalarMappable to generate the colorbar
-    norm = Normalize(vmin=vmin, vmax=vmax)
-    sm = ScalarMappable(cmap=TOPO_CMAP, norm=norm)
-    sm.set_array([]) # Required for ScalarMappable to work with colorbar
-
-    cbar = plt.colorbar(sm, cax=ax_cbar, orientation='vertical', label='Score')
-    cbar.ax.tick_params(labelsize=COLORBAR_TICK_LABEL_FONTSIZE)
-    cbar.set_label('Score', fontsize=COLORBAR_LABEL_FONTSIZE)
+    # Hide colorbar axis — colorbar is not needed (pre-rendered topoplots
+    # are self-explanatory, and the colorbar adds clutter)
+    ax_cbar.axis('off')
 
 
 # ── Right-side info panel ───────────────────────────────────────────────────
