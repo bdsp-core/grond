@@ -447,7 +447,7 @@ def main():
 
     # Topoplot as inset in lower-right corner
     c_pos = ax_c.get_position()
-    topo_size = 0.13
+    topo_size = 0.07
     inset_left = c_pos.x1 - topo_size - 0.01
     inset_bottom = c_pos.y0 + 0.02
     ax_topo_inset = fig.add_axes([inset_left, inset_bottom, topo_size, topo_size * (22/9)])
