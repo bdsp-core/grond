@@ -418,49 +418,46 @@ def main():
     draw_flowchart(ax_b)
 
     # -- Panel C: Output Visualization --
-    gs_c = gridspec.GridSpecFromSubplotSpec(3, 1, subplot_spec=gs[0, 2],
-                                            height_ratios=[0.55, 0.33, 0.12],
-                                            hspace=0.30)
-
-    # C top: EEG with narrowband overlay and hemisphere shading
-    ax_c_eeg = fig.add_subplot(gs_c[0])
-    # Narrowband overlay on CAR-filtered data
+    # Full-height EEG (same as Panel A), topoplot overlaid in lower-right
+    ax_c = fig.add_subplot(gs[0, 2])
     _, narrowband_display = compute_amplitude_envelope(mono_filt, freq_hz, bw=0.4)
-    plot_eeg_traces(ax_c_eeg, mono_filt,
+    plot_eeg_traces(ax_c, mono_filt,
                     title='C. Output: Characterized LRDA',
                     narrowband=narrowband_display,
                     highlight_side=laterality)
 
-    # C middle: Laplacian topoplot
-    ax_c_topo = fig.add_subplot(gs_c[1])
-    generate_topoplot_on_ax(ax_c_topo, lap_amplitude, MONO_CHANNELS,
-                            title='Laplacian Topoplot')
+    # Topoplot as inset in lower-right corner
+    c_pos = ax_c.get_position()
+    topo_size = 0.13
+    inset_left = c_pos.x1 - topo_size - 0.01
+    inset_bottom = c_pos.y0 + 0.02
+    ax_topo_inset = fig.add_axes([inset_left, inset_bottom, topo_size, topo_size * (22/9)])
+    generate_topoplot_on_ax(ax_topo_inset, lap_amplitude, MONO_CHANNELS, title='')
+    for spine in ax_topo_inset.spines.values():
+        spine.set_visible(True)
+        spine.set_linewidth(0.5)
+        spine.set_color('#666')
 
-    # C bottom: Verbal description
-    ax_c_text = fig.add_subplot(gs_c[2])
-    ax_c_text.axis('off')
+    # Verbal description below topoplot inset
     wrapped = verbal
-    if len(verbal) > 60:
+    if len(verbal) > 45:
         words = verbal.split()
         lines = []
         current = []
         for w in words:
             current.append(w)
-            if len(' '.join(current)) > 55:
+            if len(' '.join(current)) > 40:
                 lines.append(' '.join(current))
                 current = []
         if current:
             lines.append(' '.join(current))
         wrapped = '\n'.join(lines)
 
-    ax_c_text.text(0.5, 0.8, 'Verbal Description:', ha='center', va='top',
-                   fontsize=8, fontweight='bold', fontfamily='sans-serif',
-                   transform=ax_c_text.transAxes)
-    ax_c_text.text(0.5, 0.4, wrapped, ha='center', va='top',
-                   fontsize=7.5, fontfamily='sans-serif', fontstyle='italic',
-                   transform=ax_c_text.transAxes, color='#333333',
-                   bbox=dict(boxstyle='round,pad=0.3', facecolor='#F5F5F5',
-                             edgecolor='#CCCCCC', alpha=0.8))
+    fig.text(inset_left + topo_size / 2, inset_bottom - 0.01, wrapped,
+             ha='center', va='top', fontsize=7, fontstyle='italic',
+             fontfamily='sans-serif', color='#333',
+             bbox=dict(boxstyle='round,pad=0.3', facecolor='#f8f8f0',
+                       edgecolor='#ccc', alpha=0.9))
 
     # -- Save --
     fig.savefig(str(OUT_PATH), dpi=300, bbox_inches='tight', facecolor='white')
