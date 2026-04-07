@@ -49,8 +49,7 @@ def draw_panel_b(outpath='paper_materials/figures/_panel_b.png', topoplot_fn=Non
     ax.set_xlim(0, W); ax.set_ylim(H, 0)
     ax.set_aspect("equal"); ax.axis("off")
 
-    ax.plot([8, 610], [9, 9], color="black", lw=1.1)
-    _text(ax, 24, 52, "B. Pipeline Architecture", size=24, weight="bold", ha="left")
+    _text(ax, 24, 42, "B. PDCharacterizer Architecture", size=22, weight="bold", ha="left")
 
     _text(ax, 106, 145, "18 Independent\nBipolar Channels", size=13.2, linespacing=1.02)
     _poly_arrow(ax, [(178, 145), (220, 145)], lw=1.9, ms=14)
