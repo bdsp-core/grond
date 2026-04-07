@@ -141,8 +141,8 @@ def draw_panel_b_rda(outpath='paper_materials/figures/_panel_b_rda.png',
     _poly_arrow(ax, [(LX, 535), (LX, 580)], lw=1.9, ms=13)
     _text(ax, LX, 605, "Output:\nLeft / Right", size=11.5)
 
-    _poly_arrow(ax, [(LX, 630), (LX, 710)], lw=1.9, ms=13)
-    _text(ax, LX, 740, "Laterality\n(Side)", size=12.7)
+    _poly_arrow(ax, [(LX, 630), (LX, 765)], lw=1.9, ms=13)
+    _text(ax, LX, 780, "Laterality\n(Side)", size=12.7)
 
     # ── Center: Spatial Extent ──
     _rounded_box(ax, 210, 460, 198, 70, COLORS["center_inner"], radius=12)
@@ -160,9 +160,9 @@ def draw_panel_b_rda(outpath='paper_materials/figures/_panel_b_rda.png',
     _rounded_box(ax, 230, 650, 158, 45, COLORS["center_inner"], radius=12)
     _text(ax, MX, 672, "Threshold \u2192\ncount / 18", size=11)
 
-    _poly_arrow(ax, [(MX, 695), (MX, 720)], lw=1.9, ms=13)
-    _text(ax, MX, 745, "Spatial Extent\n+ Frequency",
-          size=12.3, weight="bold")
+    _poly_arrow(ax, [(MX, 695), (MX, 765)], lw=1.9, ms=13)
+    _text(ax, MX, 780, "Spatial Extent\n+ Frequency",
+          size=12.3)
 
     # ── Right: Topographic Localization ──
     _rounded_box(ax, 448, 460, 140, 65, COLORS["right_inner"], radius=12)
