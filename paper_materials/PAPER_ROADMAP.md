@@ -374,12 +374,17 @@ The paper presents **PDCharacterizer** — a unified pipeline that characterizes
 
 | Figure | Description | Status | File |
 |--------|-------------|--------|------|
-| Fig 1 | LPD characterization examples (easy/med/hard) | **DONE** | `figure_lpd_examples.png` |
-| Fig 2 | GPD characterization examples | **DONE** | `figure_gpd_examples.png` |
-| Fig 3 | PDCharacterizer system diagram | TODO | — |
-| Fig 4 | Spatial inter-rater agreement (4×4 matrix + bars + sweep) | **DONE** | `spatial_agreement.html` |
-| Fig 5 | Spatial inter-rater agreement (4 subtypes, both models) | **DONE** | `fig5_spatial_agreement.png` |
-| Fig 6 | Frequency scatter (2×4: PDChar vs Tautan, quality-filtered) | **DONE** | `fig6_frequency_scatter.png` |
+| Fig 1 | Raw EEG examples (6 panels: 4 clear + 2 ambiguous) | **DONE** | `fig1_eeg_examples.png` |
+| Fig 2 | PD pipeline (ChannelPD-Net + HemiCET+DP + discharge-locked topo) | **TODO** | `fig2_pd_pipeline.png` |
+| Fig 3 | RDA pipeline (W05 iterative Hilbert + PLV×Amp + narrowband topo) | **TODO** | `fig3_rda_pipeline.png` |
+| Fig 4 | Frequency scatter (2×4: PDChar/W05 vs Tautan, quality-filtered) | **DONE** | `fig4_frequency_scatter.png` |
+| Fig 5 | LPD characterization examples (easy/med/hard) | **DONE** | `fig5_lpd_characterization.png` |
+| Fig 6 | GPD characterization examples | **DONE** | `fig6_gpd_characterization.png` |
+| Fig 7 | LRDA characterization examples | **DONE** | `fig7_lrda_characterization.png` |
+| Fig 8 | GRDA characterization examples | **DONE** | `fig8_grda_characterization.png` |
+| Fig S1 | IRR comparison (ICC/PA bars, Tautan-style) | **DONE** | `figS1_irr_comparison.png` |
+| Fig S2 | Spatial extent scatter (per-rater dots) | **DONE** | `figS2_spatial_scatter.png` |
+| Fig S3 | Threshold optimization curves | **DONE** | `figS3_threshold_sweep.png` |
 
 Each characterization figure shows 3 cases selected by IIIC crowd vote agreement (Easy ≥95%/80%, Medium 70-80%, Hard 45-60%). Panels: 18-channel bipolar EEG with discharge markers + hemisphere shading, MNE spherical spline topoplot (inferno, per-case normalized), ACNS 2021 verbal description.
 
