@@ -228,7 +228,8 @@ def compute_auc(y_true, y_score):
         tpr_list.append(tp_cum / n_pos)
         fpr_list.append(fp_cum / n_neg)
 
-    return float(np.trapz(tpr_list, fpr_list))
+    _trapz = getattr(np, 'trapezoid', None) or np.trapz
+    return float(_trapz(tpr_list, fpr_list))
 
 
 # -- Learning Curve HTML Generator -------------------------------------------

@@ -1,1 +1,0 @@
-# Lateralization contest package

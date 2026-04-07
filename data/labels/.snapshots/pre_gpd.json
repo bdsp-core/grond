@@ -1,0 +1,140 @@
+{
+  "timestamp": "2026-04-01T20:52:59.211475",
+  "total_on_disk": 13556,
+  "total_active": 12947,
+  "total_excluded": 609,
+  "subtypes": {
+    "lpd": {
+      "pattern_class": {
+        "total": 4213,
+        "n_patients": 3967,
+        "ge1_expert": 4213,
+        "ge5_experts": 1860,
+        "ge10_experts": 1860
+      },
+      "laterality": {
+        "total": 942,
+        "pct": 22.4
+      },
+      "frequency": {
+        "total": 949,
+        "pct": 22.5,
+        "expert": 842,
+        "algo_only": 107,
+        "ge1_expert_rater": 273,
+        "ge3_expert_raters": 140,
+        "ge5_expert_raters": 0
+      },
+      "spatial": {
+        "total": 381,
+        "pct": 9.0,
+        "ge1_expert_rater": 276,
+        "ge3_expert_raters": 132,
+        "ge5_expert_raters": 0
+      },
+      "timing": {
+        "discharge_timing": 947,
+        "pct": 22.5
+      }
+    },
+    "gpd": {
+      "pattern_class": {
+        "total": 3357,
+        "n_patients": 3102,
+        "ge1_expert": 3357,
+        "ge5_experts": 1034,
+        "ge10_experts": 1034
+      },
+      "laterality": {
+        "total": 253,
+        "pct": 7.5
+      },
+      "frequency": {
+        "total": 264,
+        "pct": 7.9,
+        "expert": 259,
+        "algo_only": 5,
+        "ge1_expert_rater": 259,
+        "ge3_expert_raters": 86,
+        "ge5_expert_raters": 0
+      },
+      "spatial": {
+        "total": 264,
+        "pct": 7.9,
+        "ge1_expert_rater": 259,
+        "ge3_expert_raters": 85,
+        "ge5_expert_raters": 0
+      },
+      "timing": {
+        "discharge_timing": 267,
+        "pct": 8.0
+      }
+    },
+    "lrda": {
+      "pattern_class": {
+        "total": 1614,
+        "n_patients": 1465,
+        "ge1_expert": 1614,
+        "ge5_experts": 321,
+        "ge10_experts": 320
+      },
+      "laterality": {
+        "total": 1214,
+        "pct": 75.2
+      },
+      "frequency": {
+        "total": 1295,
+        "pct": 80.2,
+        "expert": 541,
+        "algo_only": 754,
+        "ge1_expert_rater": 524,
+        "ge3_expert_raters": 38,
+        "ge5_expert_raters": 0
+      },
+      "spatial": {
+        "total": 224,
+        "pct": 13.9,
+        "ge1_expert_rater": 30,
+        "ge3_expert_raters": 0,
+        "ge5_expert_raters": 0
+      },
+      "timing": {
+        "wave_timing": 189,
+        "pct": 11.7
+      }
+    },
+    "grda": {
+      "pattern_class": {
+        "total": 3435,
+        "n_patients": 3221,
+        "ge1_expert": 3435,
+        "ge5_experts": 480,
+        "ge10_experts": 479
+      },
+      "laterality": {
+        "total": 837,
+        "pct": 24.4
+      },
+      "frequency": {
+        "total": 2958,
+        "pct": 86.1,
+        "expert": 1016,
+        "algo_only": 1942,
+        "ge1_expert_rater": 939,
+        "ge3_expert_raters": 76,
+        "ge5_expert_raters": 0
+      },
+      "spatial": {
+        "total": 329,
+        "pct": 9.6,
+        "ge1_expert_rater": 68,
+        "ge3_expert_raters": 0,
+        "ge5_expert_raters": 0
+      },
+      "timing": {
+        "wave_timing": 279,
+        "pct": 8.1
+      }
+    }
+  }
+}

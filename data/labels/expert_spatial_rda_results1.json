@@ -1,0 +1,1640 @@
+{
+  "abn10320_seg000": {
+    "segment_id": "abn10320_seg000",
+    "mat_file": "abn10320_seg000.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 16,
+    "spatial_extent": 0.8888888888888888,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:39:54.008Z"
+  },
+  "abn10320_seg001": {
+    "segment_id": "abn10320_seg001",
+    "mat_file": "abn10320_seg001.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 14,
+    "spatial_extent": 0.7777777777777778,
+    "default_n": 14,
+    "expert_vals": {
+      "LB": 0,
+      "PH": 1
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:39:56.458Z"
+  },
+  "abn10320_seg002": {
+    "segment_id": "abn10320_seg002",
+    "mat_file": "abn10320_seg002.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.78,
+      "PH": 0.78
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:39:57.593Z"
+  },
+  "abn10320_seg003": {
+    "segment_id": "abn10320_seg003",
+    "mat_file": "abn10320_seg003.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 9,
+    "expert_vals": {
+      "LB": 0.78,
+      "PH": 0.83
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:40:21.660Z"
+  },
+  "abn10320_seg004": {
+    "segment_id": "abn10320_seg004",
+    "mat_file": "abn10320_seg004.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 14,
+    "spatial_extent": 0.7777777777777778,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94,
+      "SZ": 0.833333333
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:40:37.112Z"
+  },
+  "abn10320_seg005": {
+    "segment_id": "abn10320_seg005",
+    "mat_file": "abn10320_seg005.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 13,
+    "spatial_extent": 0.7222222222222222,
+    "default_n": 13,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:40:42.379Z"
+  },
+  "abn10320_seg006": {
+    "segment_id": "abn10320_seg006",
+    "mat_file": "abn10320_seg006.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 16,
+    "spatial_extent": 0.8888888888888888,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:40:54.937Z"
+  },
+  "abn10320_seg007": {
+    "segment_id": "abn10320_seg007",
+    "mat_file": "abn10320_seg007.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 13,
+    "spatial_extent": 0.7222222222222222,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 0.83,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:41:10.735Z"
+  },
+  "abn10320_seg008": {
+    "segment_id": "abn10320_seg008",
+    "mat_file": "abn10320_seg008.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 14,
+    "spatial_extent": 0.7777777777777778,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:41:26.578Z"
+  },
+  "abn10320_seg009": {
+    "segment_id": "abn10320_seg009",
+    "mat_file": "abn10320_seg009.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 16,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89,
+      "SZ": 0.833333333
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:41:46.259Z"
+  },
+  "abn10320_seg010": {
+    "segment_id": "abn10320_seg010",
+    "mat_file": "abn10320_seg010.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 0.78
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:41:47.395Z"
+  },
+  "abn10320_seg011": {
+    "segment_id": "abn10320_seg011",
+    "mat_file": "abn10320_seg011.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 9,
+    "expert_vals": {
+      "LB": 0.78,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:42:00.386Z"
+  },
+  "abn10320_seg012": {
+    "segment_id": "abn10320_seg012",
+    "mat_file": "abn10320_seg012.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 14,
+    "spatial_extent": 0.7777777777777778,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.78,
+      "PH": 1,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:42:24.629Z"
+  },
+  "abn10320_seg013": {
+    "segment_id": "abn10320_seg013",
+    "mat_file": "abn10320_seg013.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.83
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:42:58.232Z"
+  },
+  "abn10320_seg014": {
+    "segment_id": "abn10320_seg014",
+    "mat_file": "abn10320_seg014.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:43:07.788Z"
+  },
+  "abn10320_seg015": {
+    "segment_id": "abn10320_seg015",
+    "mat_file": "abn10320_seg015.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89,
+      "SZ": 0.888888889
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:43:09.286Z"
+  },
+  "abn10320_seg016": {
+    "segment_id": "abn10320_seg016",
+    "mat_file": "abn10320_seg016.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 16,
+    "spatial_extent": 0.8888888888888888,
+    "default_n": 12,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94,
+      "SZ": 0.944444444
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:43:24.725Z"
+  },
+  "abn10320_seg017": {
+    "segment_id": "abn10320_seg017",
+    "mat_file": "abn10320_seg017.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:43:27.799Z"
+  },
+  "abn10320_seg018": {
+    "segment_id": "abn10320_seg018",
+    "mat_file": "abn10320_seg018.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 15,
+    "spatial_extent": 0.8333333333333334,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.78,
+      "PH": 0.83
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:43:46.846Z"
+  },
+  "abn10320_seg019": {
+    "segment_id": "abn10320_seg019",
+    "mat_file": "abn10320_seg019.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 15,
+    "spatial_extent": 0.8333333333333334,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 0.83
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:43:59.140Z"
+  },
+  "abn10320_seg020": {
+    "segment_id": "abn10320_seg020",
+    "mat_file": "abn10320_seg020.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 14,
+    "spatial_extent": 0.7777777777777778,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 0.83,
+      "SZ": 0.722222222
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:44:08.351Z"
+  },
+  "abn10320_seg021": {
+    "segment_id": "abn10320_seg021",
+    "mat_file": "abn10320_seg021.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 11,
+    "spatial_extent": 0.6111111111111112,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89,
+      "SZ": 0.722222222
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:44:21.269Z"
+  },
+  "abn10320_seg022": {
+    "segment_id": "abn10320_seg022",
+    "mat_file": "abn10320_seg022.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 16,
+    "spatial_extent": 0.8888888888888888,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 1,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:44:31.311Z"
+  },
+  "abn10320_seg023": {
+    "segment_id": "abn10320_seg023",
+    "mat_file": "abn10320_seg023.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 15,
+    "spatial_extent": 0.8333333333333334,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:44:38.311Z"
+  },
+  "abn10320_seg024": {
+    "segment_id": "abn10320_seg024",
+    "mat_file": "abn10320_seg024.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 16,
+    "expert_vals": {
+      "LB": 0.78,
+      "PH": 0.89,
+      "SZ": 0.722222222
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:44:42.250Z"
+  },
+  "abn10320_seg025": {
+    "segment_id": "abn10320_seg025",
+    "mat_file": "abn10320_seg025.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 1
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:44:43.795Z"
+  },
+  "abn10320_seg026": {
+    "segment_id": "abn10320_seg026",
+    "mat_file": "abn10320_seg026.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.78,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:44:45.799Z"
+  },
+  "abn10320_seg027": {
+    "segment_id": "abn10320_seg027",
+    "mat_file": "abn10320_seg027.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.83,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:44:47.617Z"
+  },
+  "abn10320_seg028": {
+    "segment_id": "abn10320_seg028",
+    "mat_file": "abn10320_seg028.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 9,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 0.83
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:45:05.386Z"
+  },
+  "abn10320_seg029": {
+    "segment_id": "abn10320_seg029",
+    "mat_file": "abn10320_seg029.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.83,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:45:06.464Z"
+  },
+  "abn10320_seg030": {
+    "segment_id": "abn10320_seg030",
+    "mat_file": "abn10320_seg030.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.94,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:45:08.367Z"
+  },
+  "abn10320_seg031": {
+    "segment_id": "abn10320_seg031",
+    "mat_file": "abn10320_seg031.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.78,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:45:09.057Z"
+  },
+  "abn10320_seg032": {
+    "segment_id": "abn10320_seg032",
+    "mat_file": "abn10320_seg032.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 0.83,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:45:11.124Z"
+  },
+  "abn10320_seg033": {
+    "segment_id": "abn10320_seg033",
+    "mat_file": "abn10320_seg033.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:45:13.720Z"
+  },
+  "abn10320_seg034": {
+    "segment_id": "abn10320_seg034",
+    "mat_file": "abn10320_seg034.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:45:14.551Z"
+  },
+  "abn10320_seg035": {
+    "segment_id": "abn10320_seg035",
+    "mat_file": "abn10320_seg035.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.94,
+      "PH": 0.89,
+      "SZ": 0.944444444
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:45:15.327Z"
+  },
+  "abn10320_seg036": {
+    "segment_id": "abn10320_seg036",
+    "mat_file": "abn10320_seg036.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 1,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:45:16.603Z"
+  },
+  "abn10320_seg037": {
+    "segment_id": "abn10320_seg037",
+    "mat_file": "abn10320_seg037.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 16,
+    "spatial_extent": 0.8888888888888888,
+    "default_n": 8,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:45:40.823Z"
+  },
+  "abn10320_seg038": {
+    "segment_id": "abn10320_seg038",
+    "mat_file": "abn10320_seg038.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:45:46.425Z"
+  },
+  "abn10320_seg039": {
+    "segment_id": "abn10320_seg039",
+    "mat_file": "abn10320_seg039.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:45:47.694Z"
+  },
+  "abn10320_seg040": {
+    "segment_id": "abn10320_seg040",
+    "mat_file": "abn10320_seg040.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 0.83,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:45:48.462Z"
+  },
+  "abn10320_seg041": {
+    "segment_id": "abn10320_seg041",
+    "mat_file": "abn10320_seg041.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 1,
+      "SZ": 0.722222222
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:45:49.397Z"
+  },
+  "abn10320_seg042": {
+    "segment_id": "abn10320_seg042",
+    "mat_file": "abn10320_seg042.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:45:50.164Z"
+  },
+  "abn10320_seg043": {
+    "segment_id": "abn10320_seg043",
+    "mat_file": "abn10320_seg043.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 12,
+    "spatial_extent": 0.6666666666666666,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.83
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:05.563Z"
+  },
+  "abn10320_seg044": {
+    "segment_id": "abn10320_seg044",
+    "mat_file": "abn10320_seg044.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 0.83,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:06.576Z"
+  },
+  "abn10320_seg045": {
+    "segment_id": "abn10320_seg045",
+    "mat_file": "abn10320_seg045.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 1,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:07.329Z"
+  },
+  "abn10320_seg046": {
+    "segment_id": "abn10320_seg046",
+    "mat_file": "abn10320_seg046.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 9,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 1
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:20.947Z"
+  },
+  "abn10320_seg047": {
+    "segment_id": "abn10320_seg047",
+    "mat_file": "abn10320_seg047.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 15,
+    "spatial_extent": 0.8333333333333334,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 0
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:34.586Z"
+  },
+  "abn10320_seg048": {
+    "segment_id": "abn10320_seg048",
+    "mat_file": "abn10320_seg048.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 1,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:36.479Z"
+  },
+  "abn10320_seg049": {
+    "segment_id": "abn10320_seg049",
+    "mat_file": "abn10320_seg049.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 0.83,
+      "SZ": 0.888888889
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:37.163Z"
+  },
+  "abn10320_seg050": {
+    "segment_id": "abn10320_seg050",
+    "mat_file": "abn10320_seg050.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 1,
+      "SZ": 0.888888889
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:37.732Z"
+  },
+  "abn10320_seg051": {
+    "segment_id": "abn10320_seg051",
+    "mat_file": "abn10320_seg051.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 13,
+    "spatial_extent": 0.7222222222222222,
+    "default_n": 13,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:38.731Z"
+  },
+  "abn10320_seg052": {
+    "segment_id": "abn10320_seg052",
+    "mat_file": "abn10320_seg052.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:39.482Z"
+  },
+  "abn10320_seg053": {
+    "segment_id": "abn10320_seg053",
+    "mat_file": "abn10320_seg053.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:40.111Z"
+  },
+  "abn10320_seg054": {
+    "segment_id": "abn10320_seg054",
+    "mat_file": "abn10320_seg054.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:40.798Z"
+  },
+  "abn10320_seg055": {
+    "segment_id": "abn10320_seg055",
+    "mat_file": "abn10320_seg055.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:41.397Z"
+  },
+  "abn10320_seg056": {
+    "segment_id": "abn10320_seg056",
+    "mat_file": "abn10320_seg056.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94,
+      "SZ": 0.666666667
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:42.022Z"
+  },
+  "abn10320_seg057": {
+    "segment_id": "abn10320_seg057",
+    "mat_file": "abn10320_seg057.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.83,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:42.598Z"
+  },
+  "abn10320_seg058": {
+    "segment_id": "abn10320_seg058",
+    "mat_file": "abn10320_seg058.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.78,
+      "PH": 1,
+      "SZ": 0.722222222
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:46:43.238Z"
+  },
+  "abn10320_seg059": {
+    "segment_id": "abn10320_seg059",
+    "mat_file": "abn10320_seg059.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 8,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:00.342Z"
+  },
+  "abn10320_seg060": {
+    "segment_id": "abn10320_seg060",
+    "mat_file": "abn10320_seg060.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 13,
+    "spatial_extent": 0.7222222222222222,
+    "default_n": 13,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 1
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:06.675Z"
+  },
+  "abn10320_seg061": {
+    "segment_id": "abn10320_seg061",
+    "mat_file": "abn10320_seg061.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 1,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:08.451Z"
+  },
+  "abn10320_seg062": {
+    "segment_id": "abn10320_seg062",
+    "mat_file": "abn10320_seg062.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:09.048Z"
+  },
+  "abn10320_seg063": {
+    "segment_id": "abn10320_seg063",
+    "mat_file": "abn10320_seg063.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.67,
+      "PH": 1
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:09.598Z"
+  },
+  "abn10320_seg064": {
+    "segment_id": "abn10320_seg064",
+    "mat_file": "abn10320_seg064.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:10.163Z"
+  },
+  "abn10320_seg065": {
+    "segment_id": "abn10320_seg065",
+    "mat_file": "abn10320_seg065.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:10.684Z"
+  },
+  "abn10320_seg066": {
+    "segment_id": "abn10320_seg066",
+    "mat_file": "abn10320_seg066.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94,
+      "SZ": 0.944444444
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:11.158Z"
+  },
+  "abn10320_seg067": {
+    "segment_id": "abn10320_seg067",
+    "mat_file": "abn10320_seg067.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.94,
+      "PH": 0.94,
+      "SZ": 0.888888889
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:11.736Z"
+  },
+  "abn10320_seg068": {
+    "segment_id": "abn10320_seg068",
+    "mat_file": "abn10320_seg068.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94,
+      "SZ": 0.722222222
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:12.233Z"
+  },
+  "abn10320_seg069": {
+    "segment_id": "abn10320_seg069",
+    "mat_file": "abn10320_seg069.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 16,
+    "spatial_extent": 0.8888888888888888,
+    "default_n": 16,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 1
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:13.174Z"
+  },
+  "abn10320_seg070": {
+    "segment_id": "abn10320_seg070",
+    "mat_file": "abn10320_seg070.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 7,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:32.685Z"
+  },
+  "abn10320_seg071": {
+    "segment_id": "abn10320_seg071",
+    "mat_file": "abn10320_seg071.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:37.383Z"
+  },
+  "abn10320_seg072": {
+    "segment_id": "abn10320_seg072",
+    "mat_file": "abn10320_seg072.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:37.925Z"
+  },
+  "abn10320_seg073": {
+    "segment_id": "abn10320_seg073",
+    "mat_file": "abn10320_seg073.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:38.416Z"
+  },
+  "abn10320_seg074": {
+    "segment_id": "abn10320_seg074",
+    "mat_file": "abn10320_seg074.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 15,
+    "expert_vals": {
+      "LB": 0,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:43.889Z"
+  },
+  "abn10320_seg075": {
+    "segment_id": "abn10320_seg075",
+    "mat_file": "abn10320_seg075.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.78,
+      "PH": 0.89,
+      "SZ": 0.666666667
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:44.508Z"
+  },
+  "abn10320_seg076": {
+    "segment_id": "abn10320_seg076",
+    "mat_file": "abn10320_seg076.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:45.016Z"
+  },
+  "abn10320_seg077": {
+    "segment_id": "abn10320_seg077",
+    "mat_file": "abn10320_seg077.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94,
+      "SZ": 0.833333333
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:45.602Z"
+  },
+  "abn10320_seg078": {
+    "segment_id": "abn10320_seg078",
+    "mat_file": "abn10320_seg078.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:46.152Z"
+  },
+  "abn10320_seg079": {
+    "segment_id": "abn10320_seg079",
+    "mat_file": "abn10320_seg079.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.83,
+      "SZ": 0.666666667
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:46.752Z"
+  },
+  "abn10320_seg080": {
+    "segment_id": "abn10320_seg080",
+    "mat_file": "abn10320_seg080.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0,
+      "PH": 0.83
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:47.250Z"
+  },
+  "abn10320_seg081": {
+    "segment_id": "abn10320_seg081",
+    "mat_file": "abn10320_seg081.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94,
+      "SZ": 0.722222222
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:47.685Z"
+  },
+  "abn10320_seg082": {
+    "segment_id": "abn10320_seg082",
+    "mat_file": "abn10320_seg082.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:48.060Z"
+  },
+  "abn10320_seg083": {
+    "segment_id": "abn10320_seg083",
+    "mat_file": "abn10320_seg083.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.94,
+      "PH": 0.94,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:48.488Z"
+  },
+  "abn10320_seg084": {
+    "segment_id": "abn10320_seg084",
+    "mat_file": "abn10320_seg084.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:48.872Z"
+  },
+  "abn10320_seg085": {
+    "segment_id": "abn10320_seg085",
+    "mat_file": "abn10320_seg085.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:49.232Z"
+  },
+  "abn10320_seg086": {
+    "segment_id": "abn10320_seg086",
+    "mat_file": "abn10320_seg086.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.78,
+      "PH": 0.83,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:49.657Z"
+  },
+  "abn10320_seg087": {
+    "segment_id": "abn10320_seg087",
+    "mat_file": "abn10320_seg087.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 17,
+    "spatial_extent": 0.9444444444444444,
+    "default_n": 17,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 1
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:50.007Z"
+  },
+  "abn10320_seg088": {
+    "segment_id": "abn10320_seg088",
+    "mat_file": "abn10320_seg088.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:50.510Z"
+  },
+  "abn10320_seg089": {
+    "segment_id": "abn10320_seg089",
+    "mat_file": "abn10320_seg089.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94,
+      "SZ": 0.722222222
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:51.068Z"
+  },
+  "abn10320_seg090": {
+    "segment_id": "abn10320_seg090",
+    "mat_file": "abn10320_seg090.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 0.89,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:51.477Z"
+  },
+  "abn10320_seg091": {
+    "segment_id": "abn10320_seg091",
+    "mat_file": "abn10320_seg091.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 1,
+      "PH": 0.89,
+      "SZ": 0.722222222
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:51.820Z"
+  },
+  "abn10320_seg092": {
+    "segment_id": "abn10320_seg092",
+    "mat_file": "abn10320_seg092.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:52.159Z"
+  },
+  "abn10320_seg093": {
+    "segment_id": "abn10320_seg093",
+    "mat_file": "abn10320_seg093.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:52.520Z"
+  },
+  "abn10320_seg094": {
+    "segment_id": "abn10320_seg094",
+    "mat_file": "abn10320_seg094.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.83
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:52.876Z"
+  },
+  "abn10320_seg095": {
+    "segment_id": "abn10320_seg095",
+    "mat_file": "abn10320_seg095.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:53.228Z"
+  },
+  "abn10320_seg096": {
+    "segment_id": "abn10320_seg096",
+    "mat_file": "abn10320_seg096.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94,
+      "SZ": 0.722222222
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:53.559Z"
+  },
+  "abn10320_seg097": {
+    "segment_id": "abn10320_seg097",
+    "mat_file": "abn10320_seg097.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:53.901Z"
+  },
+  "abn10320_seg098": {
+    "segment_id": "abn10320_seg098",
+    "mat_file": "abn10320_seg098.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.89,
+      "SZ": 0.722222222
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:54.243Z"
+  },
+  "abn10320_seg099": {
+    "segment_id": "abn10320_seg099",
+    "mat_file": "abn10320_seg099.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.83,
+      "SZ": 0.777777778
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:54.567Z"
+  },
+  "abn10320_seg100": {
+    "segment_id": "abn10320_seg100",
+    "mat_file": "abn10320_seg100.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.78,
+      "PH": 1
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:54.869Z"
+  },
+  "abn10320_seg101": {
+    "segment_id": "abn10320_seg101",
+    "mat_file": "abn10320_seg101.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.83
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:55.151Z"
+  },
+  "abn10320_seg102": {
+    "segment_id": "abn10320_seg102",
+    "mat_file": "abn10320_seg102.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.89,
+      "PH": 0.94
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:55.427Z"
+  },
+  "abn10320_seg103": {
+    "segment_id": "abn10320_seg103",
+    "mat_file": "abn10320_seg103.mat",
+    "patient_id": "abn10320",
+    "subtype": "grda",
+    "n_channels": 18,
+    "spatial_extent": 1,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.83,
+      "PH": 0.89,
+      "SZ": 0.611111111
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:47:55.704Z"
+  },
+  "abn10424_seg000": {
+    "segment_id": "abn10424_seg000",
+    "mat_file": "abn10424_seg000.mat",
+    "patient_id": "abn10424",
+    "subtype": "grda",
+    "n_channels": 16,
+    "spatial_extent": 0.8888888888888888,
+    "default_n": 11,
+    "expert_vals": {
+      "LB": 0.78,
+      "PH": 0.89
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:48:05.437Z"
+  },
+  "abn10490_seg000": {
+    "segment_id": "abn10490_seg000",
+    "mat_file": "abn10490_seg000.mat",
+    "patient_id": "abn10490",
+    "subtype": "lrda",
+    "n_channels": 7,
+    "spatial_extent": 0.3888888888888889,
+    "default_n": 18,
+    "expert_vals": {
+      "LB": 0.22,
+      "PH": 0.33
+    },
+    "rejected": false,
+    "timestamp": "2026-04-04T18:48:26.012Z"
+  }
+}
