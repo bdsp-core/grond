@@ -394,15 +394,15 @@ Optimized via 3-round Gemini critic loop (`paper_materials/optimize_figures.py`)
 
 ## Main Tables Summary (7 tables)
 
-| Table | Description | Status |
-|-------|-------------|--------|
-| Table 1 | Dataset statistics by subtype (segments, patients, label coverage, multi-rater counts) | Can generate from label_status_report.py |
-| Table 2 | PDCharacterizer component summary (architecture, params, training data, role) | TODO |
-| Table 3 | Lateralization performance by subtype (PD AUC 0.984, RDA AUC 0.837) | **Data ready** |
-| Table 4 | Spatial inter-rater Jaccard matrix (LB, PH, SZ, Model) | **DONE** |
-| Table 5 | Frequency method comparison (Alexandra → CNN+ACF → HemiCET IPI) | **Data ready** |
-| Table 6 | Discharge timing metrics (F1, Sens, Prec, MAE) | **Data ready** |
-| Table 7 | Unified V1 vs V3 vs preprocessing variants comparison | **Data ready** |
+| Table | Description | Status | File |
+|-------|-------------|--------|------|
+| Table 1 | Dataset statistics by subtype (segments, patients, label coverage) | **DONE** | `tables/table1_dataset.md` |
+| Table 2 | PDCharacterizer component summary (architecture, params, training data, role) | **DONE** | `tables/table2_architecture.md` |
+| Table 3 | Lateralization performance by subtype (PD AUC 0.984, RDA AUC 0.837) | **DONE** | `tables/table3_lateralization.md` |
+| Table 4 | Spatial inter-rater Jaccard matrix (LB, PH, SZ, Model) | **DONE** | `tables/table4_spatial.md` |
+| Table 5 | Frequency method comparison (PDChar/W05 vs Tautan et al.) | **DONE** | `tables/table5_frequency.md` |
+| Table 6 | Discharge timing metrics (F1, Sens, Prec, MAE) | **DONE** | `tables/table6_timing.md` |
+| Table 7 | Model architecture comparison (end-to-end vs structured) | **DONE** | `tables/table7_model_variants.md` |
 
 ## Supplementary Figures (S1–S10)
 
