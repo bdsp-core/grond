@@ -320,11 +320,25 @@ def plot_eeg_traces(ax, eeg_data, title, discharge_times=None,
                 fontstyle='italic', color='#555', rotation=90,
                 transform=ax.get_yaxis_transform(), clip_on=False)
 
-    # Discharge time markers
+    # Discharge time markers (lateralized: only cover affected hemisphere)
     if discharge_times is not None:
+        # Determine y-range for markers
+        if highlight_left:
+            marker_indices = LEFT_CH_INDICES
+        else:
+            marker_indices = list(range(19))  # all channels if no laterality
+        marker_y_vals = [channel_y_positions[idx] for idx in marker_indices
+                         if idx in channel_y_positions]
+        if marker_y_vals:
+            marker_y_top = max(marker_y_vals) + spacing * 0.5
+            marker_y_bot = min(marker_y_vals) - spacing * 0.5
+        else:
+            marker_y_top, marker_y_bot = y_top, y_bottom
+
         for i, dt_val in enumerate(discharge_times):
             if 0 <= dt_val <= 10:
-                ax.axvline(x=dt_val, color='red', linestyle='--', linewidth=0.7, alpha=0.6)
+                ax.plot([dt_val, dt_val], [marker_y_bot, marker_y_top],
+                        color='red', linestyle='--', linewidth=1.2, alpha=0.6, zorder=1)
                 # Label discharge times (t1, t2, ... tn) at top
                 if label_discharges:
                     if i < 4:

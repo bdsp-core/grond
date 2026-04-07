@@ -65,9 +65,9 @@ def draw_panel_b(outpath='paper_materials/figures/_panel_b.png', topoplot_fn=Non
     _poly_arrow(ax, [(334, 187), (334, 267)], lw=1.9, ms=13)
     _poly_arrow(ax, [(355, 187), (355, 245), (519, 245), (519, 267)], lw=1.9, ms=13)
 
-    _rounded_box(ax, 32, 267, 150, 517, COLORS["left_panel"], ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
+    _rounded_box(ax, 32, 267, 150, 548, COLORS["left_panel"], ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
     _rounded_box(ax, 189, 266, 241, 548, COLORS["center_panel"], ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
-    _rounded_box(ax, 437, 267, 163, 517, COLORS["right_panel"], ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
+    _rounded_box(ax, 437, 267, 163, 548, COLORS["right_panel"], ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
 
     _text(ax, 107, 307, "Laterality\nDetection", size=13.7, weight="bold")
     _text(ax, 309, 307, "Discharge\nDetection", size=13.7, weight="bold")

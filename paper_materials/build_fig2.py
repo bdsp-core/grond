@@ -76,6 +76,14 @@ PANEL_B_BOTTOM = 2517
 PANEL_B_W = PANEL_B_RIGHT - PANEL_B_LEFT  # 1866
 PANEL_B_H = PANEL_B_BOTTOM - PANEL_B_TOP   # 2493
 
+# Panel C pixel bounds in the composite image (below "C. Output" title)
+PANEL_C_LEFT = 3920
+PANEL_C_TOP = 140
+PANEL_C_RIGHT = 5740
+PANEL_C_BOTTOM = 2590
+PANEL_C_W = PANEL_C_RIGHT - PANEL_C_LEFT
+PANEL_C_H = PANEL_C_BOTTOM - PANEL_C_TOP
+
 
 def load_monopolar(mat_file):
     path = EEG_DIR / mat_file
@@ -253,7 +261,13 @@ def compute_segment_data(mat_file, subtype='lpd'):
     laterality = charzer.characterize(bipolar_raw, subtype=subtype).get('laterality', 'unknown')
     print(f"  Laterality: {laterality}")
 
-    # Topography
+    # Filter EEG for display (CAR + bandpass)
+    avg = np.mean(mono_raw, axis=0)
+    mono_car = mono_raw - avg[np.newaxis, :]
+    mono_filt_display = bandpass_filter(mono_car, lo=0.5, hi=20.0)
+    mono_filt_display = np.clip(mono_filt_display, -300, 300)
+
+    # Topography (filter raw, not CAR)
     print("Computing topography...")
     mono_filt = bandpass_filter(mono_raw, lo=0.5, hi=20.0)
     mean_topo_mono, mean_topo_lap = gfp_align(mono_filt, discharge_times)
@@ -282,6 +296,7 @@ def compute_segment_data(mat_file, subtype='lpd'):
     return {
         'mean_topo_mono': mean_topo_mono,
         'mean_topo_lap': mean_topo_lap,
+        'mono_filt_display': mono_filt_display,
         'discharge_times': discharge_times,
         'laterality': laterality,
         'frequency': frequency,
@@ -301,22 +316,46 @@ def render_panel_b(topoplot_fn):
     return img
 
 
-def _wrap_text(text, font, max_width, draw):
-    """Wrap text into lines that fit within max_width pixels."""
-    words = text.split()
-    lines = []
-    current = []
-    for word in words:
-        test = ' '.join(current + [word])
-        bbox = draw.textbbox((0, 0), test, font=font)
-        if bbox[2] - bbox[0] > max_width and current:
-            lines.append(' '.join(current))
-            current = [word]
-        else:
-            current.append(word)
-    if current:
-        lines.append(' '.join(current))
-    return lines
+def render_panel_c(mono_filt, discharge_times, laterality, subtype='lpd'):
+    """Render Panel C (Output EEG with lateralized discharge markers)."""
+    import matplotlib.gridspec as gridspec
+    sys.path.insert(0, str(SCRIPT_DIR))
+    from generate_fig2_pd_pipeline import plot_eeg_traces
+
+    fig = plt.figure(figsize=(6, 7.5), facecolor='white')
+    ax = fig.add_subplot(111)
+    is_left = laterality == 'left'
+    plot_eeg_traces(ax, mono_filt,
+                    title='',
+                    discharge_times=discharge_times,
+                    highlight_left=is_left,
+                    label_discharges=True)
+
+    import tempfile
+    tmp = tempfile.NamedTemporaryFile(suffix='.png', delete=False)
+    tmp.close()
+    fig.savefig(tmp.name, dpi=300, bbox_inches='tight', facecolor='white')
+    plt.close(fig)
+    img = Image.open(tmp.name)
+    Path(tmp.name).unlink()
+    return img
+
+
+def _split_verbal_at_comma(text):
+    """Split verbal description into two lines at a natural comma break."""
+    # Find comma positions and pick the one closest to the middle
+    commas = [i for i, c in enumerate(text) if c == ',']
+    if not commas:
+        mid = len(text) // 2
+        # Fall back to splitting at a space near the middle
+        spaces = [i for i, c in enumerate(text) if c == ' ']
+        if spaces:
+            best = min(spaces, key=lambda x: abs(x - mid))
+            return text[:best] + '\n' + text[best+1:]
+        return text
+    mid = len(text) // 2
+    best_comma = min(commas, key=lambda x: abs(x - mid))
+    return text[:best_comma+1] + '\n' + text[best_comma+1:].lstrip()
 
 
 def add_verbal_description(img, verbal_text):
@@ -336,24 +375,35 @@ def add_verbal_description(img, verbal_text):
         except Exception:
             font = ImageFont.load_default()
 
-    # Wrap text to fit within Panel C width, leaving room for topoplot on the right
-    max_text_width = (panel_c_right - panel_c_left) - 380  # leave space for topoplot
-    lines = _wrap_text(verbal_text, font, max_text_width, draw)
-    wrapped = '\n'.join(lines)
+    # Split at a natural comma break
+    wrapped = _split_verbal_at_comma(verbal_text)
 
     # Measure wrapped text
     bbox = draw.textbbox((0, 0), wrapped, font=font)
     text_w = bbox[2] - bbox[0]
     text_h = bbox[3] - bbox[1]
 
-    # Position: overlaid on the EEG near the bottom of Panel C, left-aligned
+    # Position: overlaid on the EEG near the bottom of Panel C
+    # Keep within plot bounds (panel_c_left to panel_c_right)
     pad_x, pad_y = 20, 12
-    box_y = 2350
-    box_x = panel_c_left + 30
+    box_w = text_w + 2 * pad_x
+    box_h = text_h + 2 * pad_y
+
+    # Left edge: ensure box starts within Panel C plot area (past y-axis labels)
+    box_x = panel_c_left + 350
+    # Right edge: ensure box doesn't overlap topoplot (topoplot is ~320px from right)
+    max_right = panel_c_right - 350
+    if box_x + box_w > max_right:
+        box_x = max_right - box_w
+    # Clamp to panel left edge
+    if box_x < panel_c_left + 10:
+        box_x = panel_c_left + 10
+
+    box_y = 2290
 
     # Light blue opaque rounded box
     draw.rounded_rectangle(
-        [box_x, box_y, box_x + text_w + 2 * pad_x, box_y + text_h + 2 * pad_y],
+        [box_x, box_y, box_x + box_w, box_y + box_h],
         radius=10, fill='#D6EAF8', outline='#85C1E9', width=2,
     )
 
@@ -409,21 +459,28 @@ def add_topoplot_inset(img, mean_topo_lap):
     return img
 
 
-def build_composite(panel_b_img, verbal_text=None, mean_topo_lap=None, base_path=None):
-    """Paste Panel B into the composite figure, add topoplot and verbal to Panel C."""
+def build_composite(panel_b_img, panel_c_img=None, verbal_text=None,
+                    mean_topo_lap=None, base_path=None):
+    """Paste Panel B (and optionally C) into the composite figure."""
     if base_path is None:
         base_path = BACKUP_PATH if BACKUP_PATH.exists() else COMPOSITE_PATH
 
     base = Image.open(str(base_path)).convert('RGBA')
     result = base.copy()
 
-    # White out the old Panel B region
+    # White out and paste Panel B
     draw = ImageDraw.Draw(result)
     draw.rectangle([PANEL_B_LEFT, 0, PANEL_B_RIGHT, base.size[1]], fill='white')
-
-    # Scale new Panel B to fit
     pb_scaled = panel_b_img.resize((PANEL_B_W, PANEL_B_H), Image.LANCZOS)
     result.paste(pb_scaled, (PANEL_B_LEFT, PANEL_B_TOP))
+
+    # White out and paste Panel C (if re-rendered)
+    if panel_c_img is not None:
+        draw = ImageDraw.Draw(result)
+        # White out entire Panel C area below the title
+        draw.rectangle([PANEL_C_LEFT - 20, PANEL_C_TOP, PANEL_C_RIGHT + 40, PANEL_C_BOTTOM], fill='white')
+        pc_scaled = panel_c_img.resize((PANEL_C_W, PANEL_C_H), Image.LANCZOS)
+        result.paste(pc_scaled, (PANEL_C_LEFT, PANEL_C_TOP))
 
     # Add topoplot inset to Panel C
     if mean_topo_lap is not None:
