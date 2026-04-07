@@ -113,7 +113,7 @@ def draw_panel_b(outpath='paper_materials/figures/_panel_b.png', topoplot_fn=Non
     _text(ax, 518, 586, "Template\nRefinement &\nGFP-weighted\nAveraging", size=11.8)
     _poly_arrow(ax, [(518, 407), (518, 436)], lw=1.9, ms=13)
     _poly_arrow(ax, [(518, 508), (518, 538)], lw=1.9, ms=13)
-    _poly_arrow(ax, [(518, 635), (518, 671)], lw=1.9, ms=13)
+    _poly_arrow(ax, [(518, 635), (518, 715)], lw=1.9, ms=13)
 
     _text(ax, 518, 730, "Localization", size=12.8)
 

@@ -173,7 +173,7 @@ def draw_panel_b_rda(outpath='paper_materials/figures/_panel_b_rda.png',
     _rounded_box(ax, 448, 555, 140, 55, COLORS["right_inner"], radius=12)
     _text(ax, RX, 582, "Laplacian\ntransform", size=11.5)
 
-    _poly_arrow(ax, [(RX, 610), (RX, 645)], lw=1.9, ms=13)
+    _poly_arrow(ax, [(RX, 610), (RX, 765)], lw=1.9, ms=13)
 
     _text(ax, RX, 780, "Localization", size=12.8)
 
