@@ -2,16 +2,20 @@
 """
 Figure optimization loop using Gemini as visual critic.
 
-Iteratively improves render_figures.py by:
+Iteratively improves figure generation scripts by:
 1. Rendering current figures
 2. Sending to Gemini for visual critique
-3. Rewriting the render code based on feedback
+3. Rewriting the code based on feedback
 4. Re-rendering and repeating
 
-Usage:
-    conda run -n morgoth python paper_materials/optimize_figures.py
+Supports multiple figure groups: characterization examples, PD pipeline,
+RDA pipeline, and raw EEG examples.
 
-Requires: google-genai package (pip install google-genai)
+Usage:
+    conda run -n morgoth python paper_materials/optimize_figures.py [--group GROUP] [--rounds N]
+
+    Groups: characterization, pd_pipeline, rda_pipeline, fig1_examples, all
+    Default: all groups, 3 rounds each
 """
 
 import os
@@ -20,60 +24,116 @@ import sys
 import json
 import base64
 import shutil
+import argparse
 import subprocess
 from pathlib import Path
 from datetime import datetime
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-RENDER_SCRIPT = SCRIPT_DIR / 'render_figures.py'
-PICK = '{"lpd":[1,15,9],"gpd":[17,2,9],"lrda":[11,3,6],"grda":[0,4,9]}'
-FIGURE_FILES = [
-    SCRIPT_DIR / 'figure_lpd_examples.png',
-    SCRIPT_DIR / 'figure_gpd_examples.png',
-    SCRIPT_DIR / 'figure_lrda_examples.png',
-    SCRIPT_DIR / 'figure_grda_examples.png',
-]
+FIGURES_DIR = SCRIPT_DIR / 'figures'
 
 GOOGLE_API_KEY = "REDACTED-GOOGLE-API-KEY"
 MODEL_NAME = "gemini-2.5-flash"
-MAX_ROUNDS = 3
 LOG_DIR = SCRIPT_DIR / 'optimization_logs'
 LOG_DIR.mkdir(exist_ok=True)
 
-FIGURE_CAPTION = """Publication figures showing EEG characterization examples for
+# ── Figure Groups ──
+
+FIGURE_GROUPS = {
+    'characterization': {
+        'name': 'Characterization Examples (Fig 5-8)',
+        'script': SCRIPT_DIR / 'render_figures.py',
+        'render_cmd': [sys.executable, str(SCRIPT_DIR / 'render_figures.py'),
+                       '--pick', '{"lpd":[0,1,2],"gpd":[0,1,2],"lrda":[0,1,2],"grda":[0,1,2]}'],
+        'figure_files': [
+            SCRIPT_DIR / 'figure_lpd_examples.png',
+            SCRIPT_DIR / 'figure_gpd_examples.png',
+            SCRIPT_DIR / 'figure_lrda_examples.png',
+            SCRIPT_DIR / 'figure_grda_examples.png',
+        ],
+        'copy_targets': {
+            'figure_lpd_examples.png': FIGURES_DIR / 'fig5_lpd_characterization.png',
+            'figure_gpd_examples.png': FIGURES_DIR / 'fig6_gpd_characterization.png',
+            'figure_lrda_examples.png': FIGURES_DIR / 'fig7_lrda_characterization.png',
+            'figure_grda_examples.png': FIGURES_DIR / 'fig8_grda_characterization.png',
+        },
+        'caption': """Publication figures showing EEG characterization examples for
 periodic and rhythmic patterns (LPD, GPD, LRDA, GRDA). Each figure contains 3 examples
 at different difficulty levels (Easy/Medium/Hard based on inter-rater agreement).
-Each row shows: (left) 10-second 18-channel bipolar EEG with discharge timing markers
-and hemisphere shading, (center) MNE-interpolated topoplot showing spatial distribution
-of channel involvement scores, (right) ACNS 2021 verbal description.
-Target journal: high-impact neurology/neuroscience journal."""
+Each row shows: (left) 10-second 19-channel average reference EEG with discharge timing
+markers (PD) or narrowband overlay (RDA) and hemisphere shading, (right) Laplacian
+topoplot (inferno colormap) with electrode labels and ACNS 2021 verbal description.
+All 4 figures must have IDENTICAL styling — only the data differs.""",
+    },
+    'pd_pipeline': {
+        'name': 'PD Pipeline (Fig 2)',
+        'script': SCRIPT_DIR / 'generate_fig2_pd_pipeline.py',
+        'render_cmd': [sys.executable, str(SCRIPT_DIR / 'generate_fig2_pd_pipeline.py')],
+        'figure_files': [FIGURES_DIR / 'fig2_pd_pipeline.png'],
+        'copy_targets': {},
+        'caption': """Figure 2: PD Characterization Pipeline. Three-panel horizontal composite.
+Panel A (left, 30%): Real 19-channel LPD EEG in average reference montage. Channels grouped
+as L parasagittal, L temporal, midline, R parasagittal, R temporal with gaps between groups.
+Panel B (center, 40%): Architecture flowchart — ChannelPD-Net (blue) at top feeds into 3
+colored branches: Laterality Detection (green), HemiCET+DP Discharge Detection (red/salmon),
+Discharge-Locked Topographic Localization (orange). Output boxes at bottom.
+Panel C (right, 30%): Same EEG as Panel A but with red dashed discharge markers on involved
+hemisphere, light blue hemisphere shading. Laplacian topoplot (inferno) inset in lower-right
+corner with electrode labels. Verbal description text below topoplot.""",
+    },
+    'rda_pipeline': {
+        'name': 'RDA Pipeline (Fig 3)',
+        'script': SCRIPT_DIR / 'generate_fig3_rda_pipeline.py',
+        'render_cmd': [sys.executable, str(SCRIPT_DIR / 'generate_fig3_rda_pipeline.py')],
+        'figure_files': [FIGURES_DIR / 'fig3_rda_pipeline.png'],
+        'copy_targets': {},
+        'caption': """Figure 3: RDA Characterization Pipeline. Three-panel horizontal composite.
+Panel A (left, 30%): Real 19-channel LRDA EEG in average reference montage.
+Panel B (center, 40%): Architecture flowchart — W05 Iterative Narrowband Refinement (blue)
+with Pass 1 (coarse) and Pass 2 (narrowband), feeding into 3 branches: Laterality Detection
+(green), PLV×Amplitude Spatial Extent (purple), Narrowband Amplitude Topographic Localization (orange).
+Panel C (right, 30%): Same EEG with green narrowband overlay at estimated frequency, light blue
+hemisphere shading on involved side. Laplacian topoplot (inferno) inset in lower-right.
+Verbal description text below topoplot.""",
+    },
+    'fig1_examples': {
+        'name': 'Raw EEG Examples (Fig 1)',
+        'script': SCRIPT_DIR / 'generate_fig0_examples.py',
+        'render_cmd': [sys.executable, str(SCRIPT_DIR / 'generate_fig0_examples.py')],
+        'figure_files': [FIGURES_DIR / 'fig1_eeg_examples.png'],
+        'copy_targets': {},
+        'caption': """Figure 1: Examples of periodic and rhythmic EEG patterns. 3×2 grid of
+10-second EEG recordings in average reference montage (19 electrodes, standard 10-20).
+A: Clear LPD (96% agreement). B: Clear GPD (90%). C: Clear LRDA (92%). D: Clear GRDA (86%).
+E: Ambiguous LPD (58%). F: Ambiguous GRDA (50%). No algorithm annotations — raw EEG only.
+Black traces on white background, scale bar in each panel. Clean, minimal, publication-ready.""",
+    },
+}
 
 STYLE_GUIDE = """You are reviewing scientific EEG figures for publication in a top neurology journal.
 
-Key standards for these figures:
-- Clean, minimal design suitable for print at column width (~7 inches)
+Key standards:
+- Clean, minimal design suitable for print at column width (~7 inches) or full page
 - Fonts: 7-9pt for labels, 10-12pt for titles. All text must be readable when printed
 - EEG traces: clean black lines on white background, consistent line width
 - Channel labels: left-aligned, readable, properly spaced
-- Topoplots: smooth interpolation, clear colorbar with scale, head outline visible
+- Topoplots: smooth interpolation, clear colorbar, head outline visible, electrode labels readable
 - Hemisphere shading: subtle light blue, not distracting
-- Discharge markers: visible red dashed lines at correct locations
+- Discharge markers (PD): visible red dashed lines at correct locations
+- Narrowband overlay (RDA): green traces overlaid on EEG channels
 - Verbal descriptions: readable, properly positioned
-- Consistent style across all 4 figures (LPD, GPD, LRDA, GRDA)
-- Difficulty badges: clear but not dominant
-- Time axis: clear 0-10s markings
+- Flowchart boxes: clean rounded rectangles, distinct colors per branch, clear arrows
 - White background throughout
 - No unnecessary visual clutter
 - Professional, publication-ready appearance
-
-IMPORTANT: All 4 figures must have IDENTICAL styling — only the data differs."""
+- Consistent styling across related figures"""
 
 
 def image_to_base64(path: Path) -> str:
     return base64.b64encode(path.read_bytes()).decode("ascii")
 
 
-def call_gemini(prompt: str, images_b64: list[str] | None = None) -> str:
+def call_gemini(prompt: str, images_b64: list = None) -> str:
     from google import genai
     from google.genai import types
 
@@ -99,77 +159,83 @@ def call_gemini(prompt: str, images_b64: list[str] | None = None) -> str:
     return response.text
 
 
-def render_figures() -> bool:
-    """Run render_figures.py and return True if successful."""
-    result = subprocess.run(
-        [sys.executable, str(RENDER_SCRIPT), '--pick', PICK],
-        capture_output=True, text=True, timeout=300,
-    )
-    if result.returncode != 0:
-        print(f"  RENDER FAILED: {result.stderr[-500:]}")
+def render_group(group: dict) -> bool:
+    """Run the render command for a figure group. Return True if successful."""
+    try:
+        result = subprocess.run(
+            group['render_cmd'],
+            capture_output=True, text=True, timeout=600,
+        )
+        if result.returncode != 0:
+            print(f"  RENDER FAILED: {result.stderr[-500:]}")
+            return False
+        # Copy to final locations
+        for src_name, dst_path in group.get('copy_targets', {}).items():
+            src_path = SCRIPT_DIR / src_name
+            if src_path.exists():
+                shutil.copy(src_path, dst_path)
+        print(f"  Rendered successfully")
+        return True
+    except subprocess.TimeoutExpired:
+        print(f"  RENDER TIMED OUT")
         return False
-    print(f"  Rendered successfully")
-    return True
 
 
-def critique_figures(round_num: int) -> str:
-    """Send all 4 figures to Gemini for critique."""
+def critique_group(group: dict, round_num: int) -> str:
+    """Send figures to Gemini for critique."""
     images = []
-    for fp in FIGURE_FILES:
+    for fp in group['figure_files']:
         if fp.exists():
             images.append(image_to_base64(fp))
 
     prompt = f"""{STYLE_GUIDE}
 
-Here are the current versions of 4 EEG characterization figures (iteration {round_num}).
-The figures show LPD, GPD, LRDA, and GRDA examples respectively.
+Here are the current versions of the figure(s) for "{group['name']}" (iteration {round_num}).
 
-Figure caption: {FIGURE_CAPTION}
+Figure caption: {group['caption']}
 
 Please critique these figures for publication readiness. Focus on:
 1. Layout and spacing — are panels well-organized? Is there wasted space?
 2. Typography — are fonts consistent, readable, properly sized?
 3. EEG traces — are they clean, well-scaled, properly labeled?
 4. Topoplots — smooth interpolation, clear color scale, head outline?
-5. Discharge markers — visible, correctly placed on involved hemisphere?
+5. Any markers/overlays — visible, correctly placed?
 6. Hemisphere shading — subtle but informative?
 7. Verbal descriptions — readable, properly formatted?
-8. Cross-figure consistency — do all 4 figures have identical styling?
+8. Flowchart (if applicable) — clean boxes, clear arrows, readable text?
 9. Overall professional appearance for a top journal
 
 Be specific and actionable. List the top 5-8 most impactful improvements.
 Do NOT suggest changes to the data — only the visual presentation and styling.
 Focus on changes that can be made in matplotlib code."""
 
-    print(f"  Sending {len(images)} figures to Gemini for critique...")
+    print(f"  Sending {len(images)} figure(s) to Gemini for critique...")
     return call_gemini(prompt, images)
 
 
-def rewrite_code(current_code: str, critique: str, round_num: int) -> str:
+def rewrite_code(current_code: str, critique: str, group: dict, round_num: int) -> str:
     """Have Gemini rewrite the plotting code to address the critique."""
     prompt = f"""You are improving a matplotlib figure generation script for publication-quality EEG figures.
 
-Here is the current critique (iteration {round_num}):
+Here is the current critique (iteration {round_num}) for "{group['name']}":
 {critique}
 
-Here is the current Python code that generates the figures:
+Here is the current Python code that generates the figure(s):
 ```python
 {current_code}
 ```
 
 Please rewrite the COMPLETE Python script, incorporating the improvements suggested
 in the critique. Rules:
-1. Keep ALL data loading, JSON parsing, and computation logic exactly the same
-2. Only modify plotting/styling/layout code (colors, fonts, spacing, sizes, etc.)
+1. Keep ALL data loading, JSON parsing, computation, and algorithm logic exactly the same
+2. Only modify plotting/styling/layout code (colors, fonts, spacing, sizes, positions, etc.)
 3. The script must remain self-contained and runnable
-4. Do NOT change file paths, data sources, or the --pick argument handling
-5. Do NOT add any new library imports that aren't already imported (matplotlib, numpy, json, mne, scipy are available)
-6. Keep the same overall structure: render_subtype() calls draw_eeg_panel(), draw_topoplot(), draw_info_panel()
-7. Keep MNE's plot_topomap for the topoplot (do not replace with manual interpolation)
-8. All 4 figures must have IDENTICAL styling
-9. Keep the notch filter + bandpass preprocessing in draw_eeg_panel
-10. Keep the hemisphere shading logic (light blue, involved side only for LPD/LRDA, both for GPD/GRDA)
-11. Keep discharge markers (red dashed lines on involved hemisphere)
+4. Do NOT change file paths, data sources, or CLI argument handling
+5. Do NOT add new library imports beyond what's already imported
+6. Keep the same overall function structure
+7. Keep MNE's plot_topomap for topoplots if present
+8. Keep all EEG preprocessing (filtering, referencing) the same
+9. Keep hemisphere shading and marker logic the same (only adjust styling)
 
 Return ONLY the Python code inside a single ```python ... ``` block.
 The code must be the COMPLETE script, not just changed parts."""
@@ -184,72 +250,87 @@ The code must be the COMPLETE script, not just changed parts."""
     return ""
 
 
-def main():
-    print("=" * 70)
-    print("  Figure Optimization Loop (Gemini Critic)")
-    print("=" * 70)
+def optimize_group(group_name: str, group: dict, max_rounds: int):
+    """Run the optimization loop for one figure group."""
+    print(f"\n{'='*70}")
+    print(f"  Optimizing: {group['name']}")
+    print(f"{'='*70}")
+
+    script_path = group['script']
 
     # Initial render
-    print("\n[Initial] Rendering figures...")
-    if not render_figures():
-        print("Initial render failed!")
+    print(f"\n[Initial] Rendering...")
+    if not render_group(group):
+        print("Initial render failed! Skipping this group.")
         return
 
-    # Read current code
-    current_code = RENDER_SCRIPT.read_text()
+    current_code = script_path.read_text()
 
-    for round_num in range(1, MAX_ROUNDS + 1):
-        print(f"\n{'='*50}")
-        print(f"  Round {round_num}/{MAX_ROUNDS}")
-        print(f"{'='*50}")
+    for round_num in range(1, max_rounds + 1):
+        print(f"\n--- Round {round_num}/{max_rounds} ---")
 
-        # Backup current code
-        backup_path = LOG_DIR / f'render_figures_round{round_num-1}.py'
+        # Backup
+        backup_path = LOG_DIR / f'{group_name}_round{round_num-1}.py'
         backup_path.write_text(current_code)
-
-        # Backup current figures
-        for fp in FIGURE_FILES:
+        for fp in group['figure_files']:
             if fp.exists():
-                shutil.copy(fp, LOG_DIR / f'{fp.stem}_round{round_num-1}.png')
+                shutil.copy(fp, LOG_DIR / f'{fp.stem}_{group_name}_round{round_num-1}.png')
 
         # Critique
-        print(f"\n[Round {round_num}] Getting critique...")
-        critique = critique_figures(round_num)
-        print(f"\n  Critique:\n{critique[:1000]}...")
-
-        # Save critique
-        (LOG_DIR / f'critique_round{round_num}.md').write_text(critique)
+        print(f"[Round {round_num}] Getting critique...")
+        critique = critique_group(group, round_num)
+        print(f"\n  Critique preview:\n{critique[:800]}...\n")
+        (LOG_DIR / f'{group_name}_critique_round{round_num}.md').write_text(critique)
 
         # Rewrite
-        print(f"\n[Round {round_num}] Rewriting code...")
-        new_code = rewrite_code(current_code, critique, round_num)
+        print(f"[Round {round_num}] Rewriting code...")
+        new_code = rewrite_code(current_code, critique, group, round_num)
 
         if not new_code:
-            print("  Code rewrite failed. Stopping.")
+            print("  Code rewrite failed. Stopping this group.")
             break
 
-        # Save new code
-        (LOG_DIR / f'render_figures_round{round_num}.py').write_text(new_code)
-
-        # Write to actual render script
-        RENDER_SCRIPT.write_text(new_code)
+        (LOG_DIR / f'{group_name}_round{round_num}.py').write_text(new_code)
+        script_path.write_text(new_code)
 
         # Re-render
-        print(f"\n[Round {round_num}] Re-rendering...")
-        if render_figures():
+        print(f"[Round {round_num}] Re-rendering...")
+        if render_group(group):
             current_code = new_code
             print(f"  Round {round_num} complete!")
         else:
             print(f"  Render FAILED. Reverting to previous version.")
-            RENDER_SCRIPT.write_text(current_code)
-            render_figures()
+            script_path.write_text(current_code)
+            render_group(group)
             break
 
-    # Final summary
+    print(f"\n  {group['name']} optimization complete.")
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Figure Optimization Loop (Gemini Critic)')
+    parser.add_argument('--group', type=str, default='all',
+                        choices=['all', 'characterization', 'pd_pipeline', 'rda_pipeline', 'fig1_examples'],
+                        help='Which figure group to optimize')
+    parser.add_argument('--rounds', type=int, default=3, help='Max optimization rounds per group')
+    args = parser.parse_args()
+
+    print("=" * 70)
+    print("  Figure Optimization Loop (Gemini Critic)")
+    print(f"  Groups: {args.group}, Rounds: {args.rounds}")
+    print("=" * 70)
+
+    if args.group == 'all':
+        groups_to_run = list(FIGURE_GROUPS.keys())
+    else:
+        groups_to_run = [args.group]
+
+    for group_name in groups_to_run:
+        group = FIGURE_GROUPS[group_name]
+        optimize_group(group_name, group, args.rounds)
+
     print(f"\n{'='*70}")
-    print(f"  Optimization complete after {min(round_num, MAX_ROUNDS)} rounds")
-    print(f"  Logs saved to: {LOG_DIR}")
-    print(f"  Final figures: {[fp.name for fp in FIGURE_FILES]}")
+    print(f"  All optimizations complete. Logs in: {LOG_DIR}")
     print(f"{'='*70}")
 
 
