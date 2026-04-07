@@ -57,7 +57,7 @@ def draw_panel_b(outpath='paper_materials/figures/_panel_b.png', topoplot_fn=Non
     _rounded_box(ax, 221, 103, 192, 84, COLORS["top_box"], radius=15)
     _text(ax, 317, 145, "ChannelPD-Net\n(CNN+Attention)", size=15, linespacing=0.95)
 
-    _text(ax, 241, 219, "PD Probability", size=11.9)
+    _text(ax, 220, 219, "PD Probability", size=11.9)
     _text(ax, 451, 219, "Frequency Estimate", size=11.9)
 
     _poly_arrow(ax, [(296, 187), (296, 245), (104, 245), (104, 267)], lw=1.9, ms=13)
@@ -65,7 +65,7 @@ def draw_panel_b(outpath='paper_materials/figures/_panel_b.png', topoplot_fn=Non
     _poly_arrow(ax, [(355, 187), (355, 245), (519, 245), (519, 267)], lw=1.9, ms=13)
 
     _rounded_box(ax, 32, 267, 150, 517, COLORS["left_panel"], ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
-    _rounded_box(ax, 189, 266, 241, 418, COLORS["center_panel"], ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
+    _rounded_box(ax, 189, 266, 241, 518, COLORS["center_panel"], ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
     _rounded_box(ax, 437, 267, 163, 517, COLORS["right_panel"], ec=COLORS["dash"], lw=1.1, radius=13, dashed=True, z=1)
 
     _text(ax, 107, 307, "Laterality\nDetection", size=13.7, weight="bold")
