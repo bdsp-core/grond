@@ -320,93 +320,134 @@ def plot_eeg_traces(ax, eeg_data, title, discharge_times=None,
 
 
 def draw_flowchart(ax):
-    """Draw the architecture flowchart in Panel B."""
+    """Draw architecture flowchart in PaperBanana style — white/gray boxes, thin borders, stacked sub-steps."""
     ax.set_xlim(0, 10)
     ax.set_ylim(0, 10)
     ax.axis('off')
 
-    def add_box(x, y, w, h, text, facecolor='#E8F4FD', edgecolor='#2C3E50',
-                fontsize=9.5, text_color='#1A2B3C', linewidth=2.0, alpha=0.9): # IMPROVEMENT 1: Base fontsize 9.5
-        """Add a rounded rectangle with centered text."""
+    # PaperBanana style: white/light gray fills, thin dark borders, compact
+    BG_DARK = '#4A4A4A'      # dark header boxes
+    BG_LIGHT = '#F5F5F5'     # light step boxes
+    BG_WHITE = '#FFFFFF'      # white sub-step boxes
+    BORDER = '#888888'        # thin gray borders
+    TEXT_DARK = '#222222'
+    TEXT_WHITE = '#FFFFFF'
+
+    def add_box(x, y, w, h, text, facecolor=BG_LIGHT, edgecolor=BORDER,
+                fontsize=8, text_color=TEXT_DARK, linewidth=1.0, bold_first=True):
         box = FancyBboxPatch((x - w/2, y - h/2), w, h,
-                             boxstyle="round,pad=0.15",
+                             boxstyle="round,pad=0.1",
                              facecolor=facecolor, edgecolor=edgecolor,
-                             linewidth=linewidth, alpha=alpha, zorder=2)
+                             linewidth=linewidth, zorder=2)
         ax.add_patch(box)
         lines = text.split('\n')
         n_lines = len(lines)
-        # Adjusted line spacing for better fit with increased font sizes
-        line_spacing = min(fontsize * 0.3, h / (n_lines + 0.5))
+        line_spacing = min(fontsize * 0.22, h / (n_lines + 0.5))
         start_y = y + (n_lines - 1) * line_spacing / 2
         for i, line in enumerate(lines):
             fs = fontsize
-            fw = 'normal'
-            if i == 0: # First line is bold and slightly larger
-                fw = 'bold'
-                fs = fontsize + 1.0 # IMPROVEMENT 1: e.g., 9.5 -> 10.5
+            fw = 'bold' if (i == 0 and bold_first) else 'normal'
+            if i == 0 and bold_first:
+                fs = fontsize + 0.5
             ax.text(x, start_y - i * line_spacing, line, ha='center', va='center',
                     fontsize=fs, fontweight=fw, color=text_color, zorder=3)
 
-    def add_arrow(x1, y1, x2, y2, color='#1A2B3C'):
-        """Add a straight arrow with enhanced visibility."""
+    def add_arrow(x1, y1, x2, y2):
         ax.annotate('', xy=(x2, y2), xytext=(x1, y1),
-                    arrowprops=dict(arrowstyle='->', color=color,
-                                    lw=3.0, connectionstyle='arc3,rad=0')) # Increased line width for arrows
+                    arrowprops=dict(arrowstyle='->', color='#555', lw=1.2))
 
-    # ── Top box: ChannelPD-Net ──
-    # IMPROVEMENT 1: Adjusted y for better vertical centering of title, h for content, and fontsize
-    add_box(5, 9.2, 8.5, 1.3,
-            "ChannelPD-Net\nPer-channel CNN+Attention (\u00d718)\n18 PD Probabilities + 18 Frequency Estimates",
-            facecolor='#D6EAF8', edgecolor='#2471A3', fontsize=9.5) # IMPROVEMENT 1: Base fontsize for text
+    # Title
+    ax.text(5, 9.8, 'B. Pipeline Architecture', ha='center', va='bottom',
+            fontsize=11, fontweight='bold')
 
-    # Arrows from top box to three branches (adjusted y coordinates for new box positions)
-    add_arrow(2.5, 8.55, 2.0, 6.8)
-    add_arrow(5.0, 8.55, 5.0, 6.8)
-    add_arrow(7.5, 8.55, 8.0, 6.8)
+    # ── Top: Input description ──
+    ax.text(5, 9.45, '18 Independent Bipolar Channels', ha='center', fontsize=7, color='#666')
 
-    # ── Branch 1 (left, green): Laterality Detection ──
-    # IMPROVEMENT 1: Adjusted y, h, and fontsize for better readability and vertical distribution
-    add_box(2.0, 6.0, 3.2, 2.5,
-            "Laterality Detection\n\nL vs R hemisphere\nmean PD probability\n\nOutput: Left / Right\nAUC = 0.963",
-            facecolor='#D5F5E3', edgecolor='#1E8449', fontsize=9.5)
+    # ── ChannelPD-Net (dark highlighted box) ──
+    add_box(5, 8.9, 6.0, 0.7, "ChannelPD-Net\n(CNN+Attention)",
+            facecolor=BG_DARK, edgecolor='#333', text_color=TEXT_WHITE, fontsize=8.5, linewidth=1.5)
 
-    # ── Branch 2 (center, red): HemiCET+DP ──
-    # IMPROVEMENT 1: Adjusted y, h, and fontsize for better readability and vertical distribution
-    # IMPROVEMENT 4: Replaced Unicode subscripts with standard text subscripts for robustness
-    add_box(5.0, 5.6, 3.2, 3.3,
-            "HemiCET+DP\nDischarge Detection\n\n8-ch CET-UNet \u2192 Evidence\nCNN+ACF Frequency Prior\nDP with Periodic Prior\nEM Refinement + Filtering\n\nOutput: t_1, t_2, ..., t_n\nFreq = 1 / median(IPI)",
-            facecolor='#FADBD8', edgecolor='#C0392B', fontsize=9.5)
+    # Two output labels below ChannelPD-Net
+    ax.text(3.2, 8.45, 'PD Probability', ha='center', fontsize=6.5, color='#666', style='italic')
+    ax.text(6.8, 8.45, 'Frequency Estimate', ha='center', fontsize=6.5, color='#666', style='italic')
 
-    # ── Branch 3 (right, orange): Topographic Localization ──
-    # IMPROVEMENT 1: Adjusted y, h, and fontsize for better readability and vertical distribution
-    add_box(8.0, 6.0, 3.2, 2.5,
-            "Discharge-Locked\nTopographic Localization\n\nLaplacian-GFP Alignment\nTwo-Pass Template Refinement\nGFP\u00b2-Weighted Averaging\n\u2192 Topoplot + Description",
-            facecolor='#FDEBD0', edgecolor='#E67E22', fontsize=9.5)
+    # Horizontal line below
+    ax.plot([1.5, 8.5], [8.3, 8.3], color='#999', linewidth=0.8, zorder=1)
 
-    # Arrows down to output boxes (adjusted y coordinates for new box positions)
-    # Arrows now point to the top edge of the raised output boxes
-    add_arrow(2.0, 4.7, 2.0, 3.75)
-    add_arrow(5.0, 3.9, 5.0, 3.75)
-    add_arrow(8.0, 4.7, 8.0, 3.75)
+    # Three vertical arrows down from the line
+    add_arrow(2.0, 8.3, 2.0, 7.9)
+    add_arrow(5.0, 8.3, 5.0, 7.9)
+    add_arrow(8.0, 8.3, 8.0, 7.9)
 
-    # ── Output boxes (bottom) ──
-    # Raised output boxes for better visual integration with branches
-    # IMPROVEMENT 1: Explicit fontsize 10 for single-line output
-    add_box(2.0, 3.3, 2.8, 0.9,
-            "Laterality",
-            facecolor='#D5F5E3', edgecolor='#1E8449', fontsize=10)
+    # ── Branch 1: Laterality Detection ──
+    add_box(2.0, 7.55, 2.8, 0.55, "Laterality\nDetection",
+            facecolor=BG_LIGHT, fontsize=8, linewidth=1.0)
+    # Sub-steps
+    add_box(2.0, 6.85, 2.6, 0.4, "L vs R Mean\nPD Probability",
+            facecolor=BG_WHITE, fontsize=6.5, bold_first=False)
+    add_arrow(2.0, 7.27, 2.0, 7.06)
 
-    add_box(5.0, 3.3, 2.8, 0.9,
-            "Timing + Frequency",
-            facecolor='#FADBD8', edgecolor='#C0392B', fontsize=10)
+    add_box(2.0, 6.3, 2.6, 0.35, "Output: Left / Right",
+            facecolor=BG_WHITE, fontsize=6.5, bold_first=False)
+    add_arrow(2.0, 6.64, 2.0, 6.48)
 
-    add_box(8.0, 3.3, 2.8, 0.9,
-            "Spatial Localization",
-            facecolor='#FDEBD0', edgecolor='#E67E22', fontsize=10)
+    ax.text(2.0, 5.95, 'AUC = 0.963', ha='center', fontsize=6, color='#888', style='italic')
 
-    # IMPROVEMENT 1: Title: Vertically centered more closely above the "ChannelPD-Net" box
-    ax.text(5, 10.0, 'B. Pipeline Architecture', ha='center', va='bottom',
-            fontsize=12, fontweight='bold')
+    # ── Branch 2: Discharge Detection ──
+    add_box(5.0, 7.55, 2.8, 0.55, "Discharge\nDetection",
+            facecolor=BG_LIGHT, fontsize=8, linewidth=1.0)
+
+    steps_b2 = [
+        ("8-channel\nCET-UNet", 6.9),
+        ("CNN+ACF\nFrequency Prior", 6.3),
+        ("Dynamic\nProgramming", 5.7),
+        ("EM Template\nRefinement + Filtering", 5.1),
+    ]
+    for text, cy in steps_b2:
+        add_box(5.0, cy, 2.6, 0.45, text, facecolor=BG_WHITE, fontsize=6.5, bold_first=False)
+
+    add_arrow(5.0, 7.27, 5.0, 7.13)
+    add_arrow(5.0, 6.67, 5.0, 6.53)
+    add_arrow(5.0, 6.07, 5.0, 5.93)
+    add_arrow(5.0, 5.47, 5.0, 5.33)
+
+    add_box(5.0, 4.55, 2.6, 0.4, "Discharge Times: t\u2081, t\u2082, ...\nFreq = 1/median(IPI)",
+            facecolor=BG_WHITE, fontsize=6.5, bold_first=False)
+    add_arrow(5.0, 4.87, 5.0, 4.76)
+
+    # ── Branch 3: Topographic Localization ──
+    add_box(8.0, 7.55, 2.8, 0.55, "Topographic\nLocalization",
+            facecolor=BG_LIGHT, fontsize=8, linewidth=1.0)
+
+    steps_b3 = [
+        ("Laplacian-GFP\nAlignment", 6.9),
+        ("Template\nRefinement", 6.3),
+        ("GFP\u00b2-Weighted\nAveraging", 5.7),
+    ]
+    for text, cy in steps_b3:
+        add_box(8.0, cy, 2.6, 0.45, text, facecolor=BG_WHITE, fontsize=6.5, bold_first=False)
+
+    add_arrow(8.0, 7.27, 8.0, 7.13)
+    add_arrow(8.0, 6.67, 8.0, 6.53)
+    add_arrow(8.0, 6.07, 8.0, 5.93)
+
+    add_box(8.0, 5.15, 2.6, 0.4, "Topoplot + Verbal\nDescription",
+            facecolor=BG_WHITE, fontsize=6.5, bold_first=False)
+    add_arrow(8.0, 5.47, 8.0, 5.36)
+
+    # ── Output row (bottom) ──
+    # Arrows to output
+    add_arrow(2.0, 5.75, 2.0, 4.0)
+    add_arrow(5.0, 4.34, 5.0, 4.0)
+    add_arrow(8.0, 4.94, 8.0, 4.0)
+
+    out_y = 3.65
+    add_box(2.0, out_y, 2.6, 0.55, "Laterality",
+            facecolor=BG_DARK, text_color=TEXT_WHITE, fontsize=8.5, linewidth=1.5)
+    add_box(5.0, out_y, 2.6, 0.55, "Timing + Frequency",
+            facecolor=BG_DARK, text_color=TEXT_WHITE, fontsize=8.5, linewidth=1.5)
+    add_box(8.0, out_y, 2.6, 0.55, "Spatial Localization",
+            facecolor=BG_DARK, text_color=TEXT_WHITE, fontsize=8.5, linewidth=1.5)
 
 
 def main():
@@ -499,7 +540,7 @@ def main():
     # ── Panel A: Input EEG ──
     ax_a = fig.add_subplot(gs[0, 0])
     plot_eeg_traces(ax_a, mono_filt,
-                    title='A. Input: 19-Channel EEG (10s, 200 Hz)')
+                    title='A. Input')
 
     # ── Panel B: Architecture Flowchart ──
     ax_b = fig.add_subplot(gs[0, 1])
@@ -510,7 +551,7 @@ def main():
     ax_c = fig.add_subplot(gs[0, 2])
     is_left = laterality == 'left'
     plot_eeg_traces(ax_c, mono_filt,
-                    title='C. Output: Characterized LPD',
+                    title='C. Output',
                     discharge_times=discharge_times,
                     highlight_left=is_left)
 
