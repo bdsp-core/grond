@@ -429,8 +429,21 @@ def main():
     pd_mats, pd_expert, pd_mean, pd_subtypes = get_spatial_segments(ann, ['lpd', 'gpd'])
     print(f"  {len(pd_mats)} segments with spatial extent from >= 2 raters", flush=True)
 
-    print("Running PDCharacterizer inference...", flush=True)
-    pd_scores = get_pd_channel_scores(pd_mats, pd_subtypes)
+    from spatial_cache_utils import use_cache, load_spatial_cache
+    _use_cache = use_cache()
+    _cache = load_spatial_cache() if _use_cache else None
+
+    if _use_cache and _cache:
+        print("Loading PDCharacterizer scores from cache...", flush=True)
+        pd_scores = np.full((len(pd_mats), 18), np.nan)
+        for i, mf in enumerate(pd_mats):
+            entry = _cache.get(mf, {})
+            probs = entry.get('pdchar_channel_probs')
+            if probs is not None:
+                pd_scores[i] = probs
+    else:
+        print("Running PDCharacterizer inference...", flush=True)
+        pd_scores = get_pd_channel_scores(pd_mats, pd_subtypes)
 
     print("Sweeping PD thresholds...", flush=True)
     pd_results = sweep_metrics(pd_scores, pd_expert, pd_mean, pd_subtypes, THRESHOLDS)
@@ -440,8 +453,17 @@ def main():
     rda_mats, rda_expert, rda_mean, rda_subtypes = get_spatial_segments(ann, ['lrda', 'grda'])
     print(f"  {len(rda_mats)} segments with spatial extent from >= 2 raters", flush=True)
 
-    print("Running RDA-PLV inference...", flush=True)
-    rda_scores = get_rda_channel_scores(rda_mats, sl)
+    if _use_cache and _cache:
+        print("Loading RDA-PLV scores from cache...", flush=True)
+        rda_scores = np.full((len(rda_mats), 18), np.nan)
+        for i, mf in enumerate(rda_mats):
+            entry = _cache.get(mf, {})
+            scores = entry.get('rda_channel_scores')
+            if scores is not None:
+                rda_scores[i] = scores
+    else:
+        print("Running RDA-PLV inference...", flush=True)
+        rda_scores = get_rda_channel_scores(rda_mats, sl)
 
     print("Sweeping RDA thresholds...", flush=True)
     rda_results = sweep_metrics(rda_scores, rda_expert, rda_mean, rda_subtypes, THRESHOLDS)

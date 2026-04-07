@@ -402,7 +402,6 @@ def run_pdchar_spatial(mat_files, subtypes_list):
 
 def run_tautan_spatial(mat_files):
     """Run Tautan et al. on segments, return spatial extent array."""
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'code' / 'archive' / 'pd_detector_alternate'))
     from pd_detect_alternate import pd_detect_alternate
 
     results = np.full(len(mat_files), np.nan)
@@ -431,7 +430,6 @@ def run_tautan_spatial(mat_files):
 
 def run_tautan_frequency(mat_files):
     """Run Tautan et al. for frequency estimation."""
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'code' / 'archive' / 'pd_detector_alternate'))
     from pd_detect_alternate import pd_detect_alternate
 
     results = np.full(len(mat_files), np.nan)
@@ -797,22 +795,35 @@ def main():
     print(f"  RDA spatial segments with >=2 experts: {len(rda_spat_mats)}")
 
     # ──────────────────────────────────────────────────────────────
-    # RUN MODEL INFERENCE FOR SPATIAL EXTENT
+    # RUN MODEL INFERENCE FOR SPATIAL EXTENT (or load from cache)
     # ──────────────────────────────────────────────────────────────
-    print("\n── Running PDCharacterizer for PD spatial extent ──")
-    pd_pdchar_spat = run_pdchar_spatial(pd_spat_mats, pd_spat_subtypes)
+    from spatial_cache_utils import use_cache, load_spatial_cache, \
+        get_cached_pdchar_spatial, get_cached_tautan_spatial, get_cached_rda_spatial
 
-    print("\n── Running Tautan for PD spatial extent ──")
-    pd_tautan_spat = run_tautan_spatial(pd_spat_mats)
+    if use_cache():
+        print("\n── Loading spatial results from cache ──")
+        _cache = load_spatial_cache()
+        pd_pdchar_spat = get_cached_pdchar_spatial(_cache, pd_spat_mats)
+        pd_tautan_spat = get_cached_tautan_spatial(_cache, pd_spat_mats)
+        rda_tautan_spat = get_cached_tautan_spatial(_cache, rda_spat_mats)
+        rda_plv_spat_thr = get_cached_rda_spatial(_cache, rda_spat_mats, mode='threshold')
+        rda_plv_spat_cont = get_cached_rda_spatial(_cache, rda_spat_mats, mode='continuous')
+        print(f"  Loaded from cache: PD={np.sum(~np.isnan(pd_pdchar_spat))}, RDA={np.sum(~np.isnan(rda_plv_spat_thr))}")
+    else:
+        print("\n── Running PDCharacterizer for PD spatial extent ──")
+        pd_pdchar_spat = run_pdchar_spatial(pd_spat_mats, pd_spat_subtypes)
 
-    print("\n── Running Tautan for RDA spatial extent ──")
-    rda_tautan_spat = run_tautan_spatial(rda_spat_mats)
+        print("\n── Running Tautan for PD spatial extent ──")
+        pd_tautan_spat = run_tautan_spatial(pd_spat_mats)
 
-    print("\n── Running RDA-PLV for RDA spatial extent (threshold mode) ──")
-    rda_plv_spat_thr = run_rda_plv_spatial(rda_spat_mats, sl, mode='threshold')
+        print("\n── Running Tautan for RDA spatial extent ──")
+        rda_tautan_spat = run_tautan_spatial(rda_spat_mats)
 
-    print("\n── Running RDA-PLV for RDA spatial extent (continuous mode) ──")
-    rda_plv_spat_cont = run_rda_plv_spatial(rda_spat_mats, sl, mode='continuous')
+        print("\n── Running RDA-PLV for RDA spatial extent (threshold mode) ──")
+        rda_plv_spat_thr = run_rda_plv_spatial(rda_spat_mats, sl, mode='threshold')
+
+        print("\n── Running RDA-PLV for RDA spatial extent (continuous mode) ──")
+        rda_plv_spat_cont = run_rda_plv_spatial(rda_spat_mats, sl, mode='continuous')
 
     # Also run Tautan frequency for segments missing cached values
     # (Use cached values from segment_labels where available)

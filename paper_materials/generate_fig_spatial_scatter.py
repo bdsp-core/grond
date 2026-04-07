@@ -119,55 +119,68 @@ def main():
         n = sum(1 for s in segments if s['subtype'] == sub)
         print(f"    {sub.upper()}: {n}")
 
-    # Run inference
-    from pd_characterizer import PDCharacterizer
-    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'code' / 'archive' / 'pd_detector_alternate'))
-    import pd_detect_alternate as pddeta
-    from rda_spatial_extent import rda_spatial_extent
+    # Run inference (or load from cache)
+    from spatial_cache_utils import use_cache, load_spatial_cache
 
-    pc = PDCharacterizer()
-
-    print("\nRunning inference...")
-    for i, seg in enumerate(segments):
-        if (i + 1) % 50 == 0 or (i + 1) == len(segments):
-            print(f"  {i+1}/{len(segments)}...")
-
-        mono, bipolar = load_eeg(seg['mat_file'])
-        if mono is None:
-            seg['pred_ours'] = np.nan
-            seg['pred_tautan'] = np.nan
-            continue
-
-        # Our method
-        sub = seg['subtype']
-        try:
-            if sub in ('lpd', 'gpd'):
-                result = pc.characterize(bipolar[:18], subtype=sub)
-                probs = np.array(result['channel_probs'])
-                seg['pred_ours'] = float(np.sum(probs > PD_THRESHOLD)) / 18.0
-            else:
-                freq = seg['freq_hz']
-                if not np.isfinite(freq) or freq <= 0:
-                    seg['pred_ours'] = np.nan
-                else:
-                    result = rda_spatial_extent(bipolar[:18], freq, threshold=RDA_THRESHOLD, metric='plv_amp')
-                    seg['pred_ours'] = float(result['spatial_extent'])
-        except Exception:
-            seg['pred_ours'] = np.nan
-
-        # Tautan
-        try:
-            result_t = pddeta.pd_detect_alternate(mono.copy(), FS, pk_detect='apd')
-            if isinstance(result_t, dict):
-                se = result_t.get('spatial_extent', np.nan)
-            else:
-                se = getattr(result_t, 'spatial_extent', np.nan)
-            if se is not None and np.isfinite(se):
-                seg['pred_tautan'] = float(se)
-            else:
+    if use_cache():
+        print("\nLoading inference results from cache...")
+        _cache = load_spatial_cache()
+        for seg in segments:
+            entry = _cache.get(seg['mat_file'], {})
+            seg['pred_ours'] = entry.get('pdchar_spatial_extent', entry.get('rda_spatial_extent', np.nan))
+            seg['pred_tautan'] = entry.get('tautan_spatial_extent', np.nan)
+            if seg['pred_tautan'] is None:
                 seg['pred_tautan'] = np.nan
-        except Exception:
-            seg['pred_tautan'] = np.nan
+        n_valid = sum(1 for s in segments if np.isfinite(s.get('pred_ours', np.nan)))
+        print(f"  Loaded {n_valid}/{len(segments)} from cache")
+    else:
+        from pd_characterizer import PDCharacterizer
+        import pd_detect_alternate as pddeta
+        from rda_spatial_extent import rda_spatial_extent
+
+        pc = PDCharacterizer()
+
+        print("\nRunning inference...")
+        for i, seg in enumerate(segments):
+            if (i + 1) % 50 == 0 or (i + 1) == len(segments):
+                print(f"  {i+1}/{len(segments)}...")
+
+            mono, bipolar = load_eeg(seg['mat_file'])
+            if mono is None:
+                seg['pred_ours'] = np.nan
+                seg['pred_tautan'] = np.nan
+                continue
+
+            # Our method
+            sub = seg['subtype']
+            try:
+                if sub in ('lpd', 'gpd'):
+                    result = pc.characterize(bipolar[:18], subtype=sub)
+                    probs = np.array(result['channel_probs'])
+                    seg['pred_ours'] = float(np.sum(probs > PD_THRESHOLD)) / 18.0
+                else:
+                    freq = seg['freq_hz']
+                    if not np.isfinite(freq) or freq <= 0:
+                        seg['pred_ours'] = np.nan
+                    else:
+                        result = rda_spatial_extent(bipolar[:18], freq, threshold=RDA_THRESHOLD, metric='plv_amp')
+                        seg['pred_ours'] = float(result['spatial_extent'])
+            except Exception:
+                seg['pred_ours'] = np.nan
+
+            # Tautan
+            try:
+                result_t = pddeta.pd_detect_alternate(mono.copy(), FS, pk_detect='apd')
+                if isinstance(result_t, dict):
+                    se = result_t.get('spatial_extent', np.nan)
+                else:
+                    se = getattr(result_t, 'spatial_extent', np.nan)
+                if se is not None and np.isfinite(se):
+                    seg['pred_tautan'] = float(se)
+                else:
+                    seg['pred_tautan'] = np.nan
+            except Exception:
+                seg['pred_tautan'] = np.nan
 
     # Plot
     print("\nGenerating figure...")

@@ -8,6 +8,7 @@ Usage:
 """
 
 import argparse
+import os
 import subprocess
 import sys
 import time
@@ -67,7 +68,7 @@ FIGURES = [
 ]
 
 
-def run_figure(fig, dry_run=False):
+def run_figure(fig, dry_run=False, from_scratch=False):
     script_path = SCRIPT_DIR / fig['script']
     if not script_path.exists():
         print(f"  SKIP: {fig['script']} not found")
@@ -83,9 +84,13 @@ def run_figure(fig, dry_run=False):
         return True
 
     t0 = time.time()
+    env = dict(os.environ)
+    if not from_scratch:
+        env['USE_SPATIAL_CACHE'] = '1'
     result = subprocess.run(
         [sys.executable, str(script_path)],
         capture_output=True, text=True, timeout=600,
+        env=env,
     )
     elapsed = time.time() - t0
 
@@ -109,10 +114,22 @@ def main():
     parser = argparse.ArgumentParser(description='Generate all publication figures')
     parser.add_argument('--figure', type=str, help='Generate only this figure (e.g., 2, S1)')
     parser.add_argument('--dry-run', action='store_true', help='Show what would be run')
+    parser.add_argument('--from-scratch', action='store_true',
+                        help='Re-run all inference from raw EEG (slow, ~10 min). '
+                             'Default: use cached intermediate results (fast, ~30 sec).')
     args = parser.parse_args()
 
+    # Check if spatial cache exists for fast mode
+    cache_path = SCRIPT_DIR / 'spatial_inference_cache.json'
+    if not args.from_scratch and not cache_path.exists():
+        print("No spatial_inference_cache.json found.")
+        print("Run: python paper_materials/precompute_spatial_cache.py")
+        print("Or use --from-scratch to re-run all inference.")
+        print()
+
     print("=" * 60)
-    print("Generating Publication Figures")
+    mode = "FROM SCRATCH (re-running inference)" if args.from_scratch else "FROM CACHE (fast)"
+    print(f"Generating Publication Figures — {mode}")
     print("=" * 60)
 
     figures = FIGURES
@@ -125,7 +142,7 @@ def main():
 
     ok, fail = 0, 0
     for fig in figures:
-        if run_figure(fig, dry_run=args.dry_run):
+        if run_figure(fig, dry_run=args.dry_run, from_scratch=args.from_scratch):
             ok += 1
         else:
             fail += 1
