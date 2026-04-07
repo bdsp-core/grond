@@ -1,36 +1,45 @@
 # Table 7: Model Architecture Comparison
 
+*Auto-generated from model evaluation result files.*
+*Regenerate: `conda run -n morgoth python paper_materials/tables/generate_table7.py`*
+
 ## End-to-End vs Structured Inference
 
-| Model | Architecture | Params | F1 | Notes |
-|---|---|---:|---|---|
-| **HemiCET v2 + DP** | **CET-UNet + DP** | **525K** | **0.889** | **Neural evidence + structured DP** |
-| PDNetV2 | 18ch U-Net + Transformer | 3.4M | 0.460 | Severe overfitting |
-| HemiNet Design A | 8ch U-Net + Transformer | 2.3M | 0.624 | Overfitting despite smaller input |
-| HemiNet Design B | 8ch dilated conv | 2.2M | 0.626 | Similar to Design A |
-| HemiNet Design D | HPP wrapper | 262K | 0.605 | Most stable, lowest F1 |
-| HemiNet + MAE pretrain | 8ch U-Net + Transformer | 2.3M | 0.620 | Self-supervised pretraining, minimal gain |
-
-With ~1,000 training examples, end-to-end neural models cannot learn the temporal structure that DP encodes as a prior. The winning strategy is neural evidence generation (HemiCET) + structured inference (DP).
-
-## HemiCET+DP Configuration Variants
-
-| Configuration | F1 | LPD | GPD | Description |
-|---|---|---|---|---|
-| C1 (PRODUCTION) | **0.891** | 0.881 | 0.913 | Optimized DP + evidence threshold + post-hoc filter |
-| E3: Post-hoc filtering | 0.891 | 0.880 | 0.914 | Threshold=50%, ratio=0.4 |
-| E5: Midline 10ch | 0.877 | 0.863 | 0.905 | Adding midline channels hurt |
-| Baseline (HemiCET v2) | 0.873 | 0.865 | 0.890 | Clean labels, default DP params |
-| E2: DP re-optimization | 0.873 | 0.865 | 0.890 | α=1.5 (minimal gain from DP tuning alone) |
-| Oracle (gold freq + C1 DP) | 0.919 | 0.931 | 0.893 | Theoretical ceiling with perfect frequency |
-
-## RDA Pipeline (W05) vs Alternatives
-
-| Method | Lat AUC | Freq ρ | Strategy |
+| Model | F1 | Freq ρ | Source |
 |---|---|---|---|
-| **W05_DomOnly_IterRefine** | **0.837** | 0.635 | Iterative narrowband + dom-side freq |
-| W07_AutoChannel_FreqAgreement | 0.790 | **0.686** | MAD-based channel selection |
-| V04_PLVSelected | 0.809 | 0.682 | Phase coherence channel selection |
-| L24_EnvelopeAmplitude (lat only) | 0.826 | — | Simple envelope amplitude ratio |
+| **CET-UNet + DP (production)** | **0.740** | **0.718** | cet_cache/consolidated_results.json |
+| PDNetV2 (18ch U-Net+Transformer) | — | — | pdnet_v2_cache/evaluation_results.json |
+| E2E-CNN (phase 1) | 0.006 | 0.001 | e2e_cache/e2e_phase1_results.json |
+| HemiNet exp1_1 | — | — | hemi_cache/exp1_1/eval_results.json |
+| HemiNet exp1_2 | — | — | hemi_cache/exp1_2/eval_results.json |
+| HemiNet exp1_4 | — | — | hemi_cache/exp1_4/eval_results.json |
+| HemiNet exp1_5_finetune | — | — | hemi_cache/exp1_5_finetune/eval_results.json |
 
-76 methods evaluated in V5 lateralization contest (1,295 LRDA + 2,958 GRDA).
+With ~1,000 training examples, end-to-end neural models cannot learn the temporal structure that DP encodes as a prior. The winning strategy is neural evidence generation (CET-UNet) + structured inference (DP).
+
+## CET-UNet + DP Configuration Variants
+
+| Configuration | F1 | Freq ρ | Source |
+|---|---|---|---|
+| iterative_freq | — | — | improvement_iterative_freq_results.json |
+| learned_combine | — | — | improvement_learned_combine_results.json |
+| posthoc | — | — | improvement_posthoc_results.json |
+| stage_ab | — | — | improvement_stage_ab_results.json |
+
+## RDA Pipeline — Top Methods (V5 Contest)
+
+| Rank | Method | Lat AUC | Freq ρ |
+|---|---|---|---|
+| 1 | V25_FreqBandEnvRatio | 0.853 | — |
+| 2 | W05_DomOnly_IterRefine | 0.837 | 0.635 |
+| 3 | L24_EnvelopeAmplitude | 0.826 | — |
+| 4 | V12_IterativeRefine | 0.825 | 0.595 |
+| 5 | V04_PLVSelected | 0.809 | 0.682 |
+| 6 | L05_RMSAmplitude | 0.797 | — |
+| 7 | U10_MultiCh_HilbertFreq | 0.790 | 0.601 |
+| 8 | V01_DomHemi_Top3Hilbert | 0.790 | 0.575 |
+| 9 | V02_PowerWeightedHilbert | 0.790 | 0.619 |
+| 10 | V22_EnvAmp_DomHilbert | 0.790 | 0.650 |
+
+76 methods evaluated on 4,253 segments.
+

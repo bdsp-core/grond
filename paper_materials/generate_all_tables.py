@@ -23,6 +23,11 @@ TABLES_DIR = SCRIPT_DIR / 'tables'
 # Tables with auto-generation scripts
 AUTO_GENERATED = {
     'table1_dataset.md': 'tables/generate_table1.py',
+    'table3_lateralization.md': 'tables/generate_table3.py',
+    'table4_spatial.md': 'tables/generate_table4.py',
+    'table5_frequency.md': 'tables/generate_table5.py',
+    'table6_timing.md': 'tables/generate_table6.py',
+    'table7_model_variants.md': 'tables/generate_table7.py',
 }
 
 TABLES = [
