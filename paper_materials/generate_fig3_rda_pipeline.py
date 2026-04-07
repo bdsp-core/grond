@@ -448,25 +448,14 @@ def main():
     # Topoplot as inset in lower-right corner
     c_pos = ax_c.get_position()
     topo_size = 0.13
-    # Shift inset left slightly to make space for the colorbar
-    inset_left = c_pos.x1 - topo_size - 0.01 - 0.015 
+    inset_left = c_pos.x1 - topo_size - 0.01
     inset_bottom = c_pos.y0 + 0.02
     ax_topo_inset = fig.add_axes([inset_left, inset_bottom, topo_size, topo_size * (22/9)])
-    
-    # Capture the image object returned by generate_topoplot_on_ax for the colorbar
-    image = generate_topoplot_on_ax(ax_topo_inset, lap_amplitude, MONO_CHANNELS, title='')
+    generate_topoplot_on_ax(ax_topo_inset, lap_amplitude, MONO_CHANNELS, title='')
     for spine in ax_topo_inset.spines.values():
         spine.set_visible(True)
         spine.set_linewidth(0.5)
         spine.set_color('#666')
-
-    # Improvement 3: Add a Colorbar to the Topoplot
-    cbar_ax = inset_axes(ax_topo_inset, width="8%", height="90%", loc='center right',
-                         bbox_to_anchor=(1.05, 0., 1, 1), bbox_transform=ax_topo_inset.transAxes, borderpad=0)
-    fig.colorbar(image, cax=cbar_ax, orientation='vertical', label='Laplacian Amplitude (a.u.)',
-                 ticks=matplotlib.ticker.MaxNLocator(nbins=5)) # Add ticks for clarity
-    cbar_ax.yaxis.label.set_fontsize(7) # Adjust colorbar label font size
-    cbar_ax.tick_params(labelsize=6) # Adjust colorbar tick label font size
 
     # Verbal description below topoplot inset
     wrapped = verbal

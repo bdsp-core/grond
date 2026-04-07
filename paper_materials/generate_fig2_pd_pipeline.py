@@ -506,44 +506,29 @@ def main():
     draw_flowchart(ax_b)
 
     # ── Panel C: Output Visualization ──
-    # Create a nested gridspec for Panel C to separate EEG from topoplot/verbal
-    # This ensures consistent figure height and better alignment
-    gs_c = gridspec.GridSpecFromSubplotSpec(2, 1, subplot_spec=gs[0, 2],
-                                            height_ratios=[0.7, 0.3], hspace=0.15)
-
-    ax_c_eeg = fig.add_subplot(gs_c[0, 0])
+    # Full-height EEG (same as Panel A), topoplot overlaid in lower-right
+    ax_c = fig.add_subplot(gs[0, 2])
     is_left = laterality == 'left'
-    plot_eeg_traces(ax_c_eeg, mono_filt,
+    plot_eeg_traces(ax_c, mono_filt,
                     title='C. Output: Characterized LPD',
                     discharge_times=discharge_times,
                     highlight_left=is_left)
 
-    # Sub-gridspec for topoplot and verbal description in the bottom part of Panel C
-    # IMPROVEMENT 5: Increased topoplot's share of width for larger size
-    gs_c_bottom = gridspec.GridSpecFromSubplotSpec(1, 2, subplot_spec=gs_c[1, 0],
-                                                    width_ratios=[0.7, 0.3], wspace=0.05)
-    ax_topo = fig.add_subplot(gs_c_bottom[0, 0])
-    ax_verbal = fig.add_subplot(gs_c_bottom[0, 1])
-
-    # Generate topoplot and get the image for the colorbar
-    image = generate_topoplot_on_ax(ax_topo, mean_topo_lap, MONO_CHANNELS)
-
-    # Add colorbar adjacent to the topoplot
-    cbar = fig.colorbar(image, ax=ax_topo, orientation='vertical', fraction=0.04, pad=0.04)
-    # IMPROVEMENT 1: Increased colorbar tick label size
-    cbar.ax.tick_params(labelsize=9)
-    # IMPROVEMENT 1: Increased colorbar label font size
-    cbar.set_label('Laplacian Amplitude (\u00b5V)', fontsize=10)
-
-    # Add thin border around topoplot for visual separation
-    for spine in ax_topo.spines.values():
+    # Topoplot as inset in lower-right corner of Panel C
+    c_pos = ax_c.get_position()
+    topo_size = 0.13
+    inset_left = c_pos.x1 - topo_size - 0.01
+    inset_bottom = c_pos.y0 + 0.02
+    ax_topo_inset = fig.add_axes([inset_left, inset_bottom, topo_size, topo_size * (22/9)])
+    generate_topoplot_on_ax(ax_topo_inset, mean_topo_lap, MONO_CHANNELS)
+    for spine in ax_topo_inset.spines.values():
         spine.set_visible(True)
         spine.set_linewidth(0.5)
         spine.set_color('#666')
 
-    # Relocate Verbal Description to its dedicated axes, ensuring consistent sizing and professional placement
+    # Verbal description below topoplot inset
     wrapped = verbal
-    if len(verbal) > 45: # Word wrap for longer descriptions
+    if len(verbal) > 45:
         words = verbal.split()
         lines = []
         current = []
@@ -556,9 +541,19 @@ def main():
             lines.append(' '.join(current))
         wrapped = '\n'.join(lines)
 
-    # IMPROVEMENT 1: Increased verbal description font size
-    # IMPROVEMENT 7: Removed the thin border around the verbal description text box
-    ax_verbal.text(0.5, 0.5, wrapped,
+    fig.text(inset_left + topo_size / 2, inset_bottom - 0.01, wrapped,
+             ha='center', va='top', fontsize=7, fontstyle='italic',
+             fontfamily='sans-serif', color='#333',
+             bbox=dict(boxstyle='round,pad=0.3', facecolor='#f8f8f0',
+                       edgecolor='#ccc', alpha=0.9))
+
+    # (verbal description placed via fig.text above)
+    # Dummy to satisfy any remaining code expecting ax_verbal
+    class _Dummy:
+        def text(self, *a, **kw): pass
+        def axis(self, *a, **kw): pass
+    ax_verbal = _Dummy()
+    ax_verbal.text(0.5, 0.5, '',
                    ha='center', va='center', fontsize=10, fontstyle='italic',
                    color='#333',
                    bbox=dict(boxstyle='round,pad=0.3', facecolor='#f8f8f0',
