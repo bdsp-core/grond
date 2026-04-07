@@ -121,6 +121,7 @@ def main():
 
     # Run inference
     from pd_characterizer import PDCharacterizer
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'code' / 'archive' / 'pd_detector_alternate'))
     import pd_detect_alternate as pddeta
     from rda_spatial_extent import rda_spatial_extent
 

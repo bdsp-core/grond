@@ -402,6 +402,7 @@ def run_pdchar_spatial(mat_files, subtypes_list):
 
 def run_tautan_spatial(mat_files):
     """Run Tautan et al. on segments, return spatial extent array."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'code' / 'archive' / 'pd_detector_alternate'))
     from pd_detect_alternate import pd_detect_alternate
 
     results = np.full(len(mat_files), np.nan)
@@ -430,6 +431,7 @@ def run_tautan_spatial(mat_files):
 
 def run_tautan_frequency(mat_files):
     """Run Tautan et al. for frequency estimation."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'code' / 'archive' / 'pd_detector_alternate'))
     from pd_detect_alternate import pd_detect_alternate
 
     results = np.full(len(mat_files), np.nan)

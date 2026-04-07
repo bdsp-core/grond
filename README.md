@@ -135,83 +135,110 @@ data/
 
 ```
 code/
-├── Core Pipelines (root — 16 files, imported by everything)
+├── Core Pipeline
 │   ├── pd_characterizer.py           Unified PD pipeline (main entry point)
 │   ├── discharge_detector.py         HemiCET+DP discharge detection
-│   ├── pd_pointiness_acf.py          Core signal processing (ACF, pointiness, getBanana)
+│   ├── pd_pointiness_acf.py          Signal processing (ACF, pointiness, getBanana)
 │   ├── bipd_detector.py              BIPD vs GPD classification
-│   ├── optimization_harness_v2.py    PD evaluation framework (LOPO CV)
-│   ├── rda_optimization_harness.py   RDA evaluation framework
+│   ├── rda_spatial_extent.py         RDA-PLV spatial extent
 │   └── browse_results.py             Interactive EEG browser
 │
-├── models/                           Neural network architectures & training
-│   ├── cet_model/                    CET-UNet (per-channel evidence, 13 files)
-│   ├── hemi_detector/                HemiCET (8-channel hemisphere, 16 files)
-│   ├── pd_channel_detector/          ChannelPD-Net (per-channel PD prob, 12 files)
-│   ├── unified_model/                Unified multi-task model (4 files)
-│   ├── pdnet_v2/                     PDNet v2 architecture (5 files)
-│   └── dl/                           General deep learning utilities (14 files)
+├── Models & Training
+│   ├── cet_model/                    CET-UNet — per-channel discharge evidence
+│   ├── hemi_detector/                HemiCET — 8-channel hemisphere evidence
+│   ├── pd_channel_detector/          ChannelPD-Net — per-channel PD detection
+│   ├── unified_model/                Unified multi-task model
+│   ├── pdnet_v2/                     PDNet v2 architecture
+│   └── e2e_model/                    End-to-end comparison model
 │
-├── detectors/                        Pattern-specific detectors
-│   ├── pd_detector/                  Original McGraw et al. PD detector (9 files)
-│   ├── pd_detector_alternate/        Enhanced PD detector (2 files)
-│   └── rda_detector/                 RDA detectors: FFT/FOOOF/Hilbert (6 files)
+├── Data & Labels
+│   ├── data_management/              Data harvesting, download, segment extraction
+│   └── label_pipeline/               Label management, pseudolabel generation
 │
-├── contests/                         Contest frameworks & methods
-│   ├── rda_contest/                  RDA analysis contest (45 methods, 11 files)
-│   ├── spatial_contest/              PD spatial localization (26 methods, 9 files)
-│   └── lateralization_contest/       LRDA vs GRDA classification (76 methods, 24 files)
+├── Evaluation
+│   └── evaluation/                   Evaluation & validation scripts
 │
-├── experiments/                      Historical experiment scripts (60 files)
-│   ├── pd_frequency/                 PD frequency optimization (11 files)
-│   ├── pd_timing/                    PD timing & laterality experiments (6 files)
-│   ├── rda/                          RDA-specific experiments (5 files)
-│   ├── rounds/                       Round-based experiments r3-r12 (27 files)
-│   └── misc/                         One-off experiments (12 files)
+├── Tools
+│   ├── generators/labeling/          Interactive annotation tool generators (11)
+│   ├── generators/review/            Label review tool generators (9)
+│   ├── generators/dashboards/        Summary dashboards (3)
+│   ├── generators/figures/           Analysis figure generators
+│   └── visualization/               Plotting & interactive browsing
 │
-├── generators/                       HTML viewer/dashboard/figure builders (30 files)
-│   ├── labeling/                     Annotation tool generators (9 files)
-│   ├── review/                       Review tool generators (9 files)
-│   ├── dashboards/                   Dashboard generators (3 files)
-│   └── figures/                      Publication figure generators (9 files)
-│
-├── evaluation/                       Evaluation & validation scripts (11 files)
-├── data_management/                  Data harvesting, download, cleanup (16 files)
-├── visualization/                    Plotting & interactive browsing (6 files)
-├── label_pipeline/                   Label management tools (10 files)
-├── archive/                          Superseded scripts (7 files)
-└── imageGeneration/                  EEG plotting utilities (2 files)
+└── archive/                          Historical: experiments, contests, legacy code
 
-docs/                                 Archived approach review documents (v1-v6)
-paper_materials/                      Paper writeup, figures, pipeline specs
-APPROACH_REVIEW_v17.md                Current approach, results, and system architecture
+paper_materials/
+├── figures/                          Publication figures (Figs 1-8, S1-S3)
+├── tables/                           Publication tables (Tables 1-7)
+├── methods/                          Formal math writeups (10 methods)
+├── build_fig2.py                     Fig 2: PD pipeline (fully from data)
+├── build_fig3.py                     Fig 3: RDA pipeline (fully from data)
+├── render_figures.py                 Figs 5-8: characterization examples
+├── generate_all_figures.py           Wrapper: generate all figures
+├── generate_all_tables.py            Wrapper: verify all tables
+├── figure_legends.md                 Figure legends for all 11 figures
+└── archive/                          Optimization logs, old figure versions
+
+docs/approach_review_history/         APPROACH_REVIEW versions v7-v16
+APPROACH_REVIEW_v17.md                Current approach & results
 ```
 
-## Usage
+## Quick Start
 
-### Run Experiments
+### Reproduce All Figures
 
 ```bash
-conda activate foe
+conda activate morgoth
 
-# Run a PD frequency experiment
-python code/experiments/pd_frequency/exp_t1_expanded_features.py
+# Generate all publication figures
+python paper_materials/generate_all_figures.py
 
-# Run an RDA experiment
-python code/experiments/rda/exp_rda_task_a.py
+# Generate a single figure
+python paper_materials/generate_all_figures.py --figure 2
 
-# Update the optimization dashboard
-python code/update_dashboard_v2.py
+# Verify all tables
+python paper_materials/generate_all_tables.py
 ```
 
-### Process Full Dataset
+### Run on New Data
 
 ```bash
-cd code
-python extract_frequency_spatial_extent.py
+conda activate morgoth
+
+# PD characterization (laterality, timing, frequency, spatial, verbal description)
+python -c "
+from code.pd_characterizer import PDCharacterizer
+import scipy.io as sio
+eeg = sio.loadmat('your_segment.mat')['data']  # 18×2000 bipolar
+result = PDCharacterizer().characterize(eeg, subtype='lpd')
+print(result)
+"
 ```
 
-Processes all EEG files, runs multiple detector variants, saves results to `results/`.
+### Retrain Models
+
+```bash
+conda activate morgoth
+
+# Train ChannelPD-Net (5-fold CV)
+python code/pd_channel_detector/train_cnn_attention.py
+
+# Train HemiCET-UNet (5-fold CV)
+python code/hemi_detector/train_hemi_cet.py
+
+# Train CET-UNet (5-fold CV)
+python code/cet_model/train_cet.py
+```
+
+### Interactive Labeling
+
+```bash
+# Generate labeling tool for PD discharge timing
+python code/generators/labeling/generate_hpp_labeler.py
+
+# Generate labeling tool for RDA frequency
+python code/generators/labeling/generate_rda_freq_labeler.py
+```
 
 ### Interactive Browser
 
@@ -285,7 +312,7 @@ The RDA analysis pipeline classifies LRDA vs GRDA, determines laterality, and es
 
 Best unified method: **W05_DomOnly_IterRefine** — two-pass iterative narrowband refinement with frequency estimated strictly from the predicted-dominant hemisphere. Achieves AUC 0.837 (LRDA vs GRDA classification) and Spearman ρ=0.635 (frequency estimation).
 
-76 methods benchmarked across 5 contest rounds. See [APPROACH_REVIEW_v16.md](APPROACH_REVIEW_v16.md) Appendix A for full results and the [V5 leaderboard](results/v4_lateralization_leaderboard.html).
+76 methods benchmarked across 5 contest rounds. See [APPROACH_REVIEW_v17.md](APPROACH_REVIEW_v17.md) Appendix A for full results.
 
 ### Verbal Descriptions
 
