@@ -374,9 +374,8 @@ def draw_topoplot(ax, ax_cbar, case, is_pd):
         # Decode base64 PNG and display as image
         img_bytes = base64.b64decode(topo_b64)
         img = Image.open(io.BytesIO(img_bytes))
-        # Use extent to map image coordinates, with equal aspect to keep circle
-        ax.imshow(img, extent=[-1, 1, -1, 1], origin='upper')
-        ax.set_aspect('equal')
+        # Display image with equal aspect — no extent mapping, just show pixels
+        ax.imshow(img, aspect='equal')
         ax.axis('off')
     else:
         # Fallback: old region_scores approach using MNE
@@ -492,21 +491,6 @@ def render_subtype(subtype, cases, is_pd):
         ax_topo = fig.add_subplot(inner_gs_right_col[0])
         ax_cbar = ax_topo  # dummy — draw_topoplot will just hide it
         draw_topoplot(ax_topo, ax_cbar, case, is_pd)
-        # Force square aspect by adjusting the axes position
-        pos = ax_topo.get_position()
-        # Make width = height (in figure coords), centered
-        w = pos.width
-        h = pos.height
-        if h > w:
-            # Too tall — shrink height to match width, center vertically
-            new_h = w * (fig.get_figwidth() / fig.get_figheight())
-            offset = (h - new_h) / 2
-            ax_topo.set_position([pos.x0, pos.y0 + offset, pos.width, new_h])
-        elif w > h:
-            # Too wide — shrink width to match height
-            new_w = h * (fig.get_figheight() / fig.get_figwidth())
-            offset = (w - new_w) / 2
-            ax_topo.set_position([pos.x0 + offset, pos.y0, new_w, pos.height])
 
         ax_info = fig.add_subplot(inner_gs_right_col[1])
         draw_info_panel(ax_info, case)
