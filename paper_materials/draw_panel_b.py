@@ -85,10 +85,13 @@ def draw_panel_b(outpath='paper_materials/figures/_panel_b.png', topoplot_fn=Non
     _rounded_box(ax, 318, 335, 103, 62, COLORS["center_inner"], radius=12)
     _text(ax, 252.5, 366, "8-channel\nCET-UNet", size=12.3)
     _text(ax, 369.5, 366, "CNN+ACF\nEnsemble", size=12.3)
-    _text(ax, 252.5, 443, "Evidence\nTrace", size=12.2)
-    _text(ax, 369.5, 443, "Frequency\nPrior", size=12.2)
     _poly_arrow(ax, [(252.5, 397), (252.5, 496)], lw=1.9, ms=13)
     _poly_arrow(ax, [(369.5, 397), (369.5, 496)], lw=1.9, ms=13)
+    _label_bbox = dict(boxstyle='square,pad=0.5', facecolor=COLORS["center_panel"], edgecolor='none')
+    ax.text(252.5, 443, "Evidence\nTrace", fontsize=12.2, ha="center", va="center",
+            linespacing=0.92, color="black", zorder=6, bbox=_label_bbox)
+    ax.text(369.5, 443, "Frequency\nPrior", fontsize=12.2, ha="center", va="center",
+            linespacing=0.92, color="black", zorder=6, bbox=_label_bbox)
     _rounded_box(ax, 239, 495, 142, 58, COLORS["center_inner"], radius=12)
     _text(ax, 310, 524, "Dynamic\nProgramming", size=12.3)
     _poly_arrow(ax, [(310, 553), (310, 591)], lw=1.9, ms=13)
