@@ -250,61 +250,93 @@ def generate_topoplot_on_ax(ax, mean_topo, ch_names_orig):
 
 
 def plot_eeg_traces(ax, eeg_data, title, discharge_times=None,
-                    highlight_left=False, spacing=120.0): # IMPROVEMENT 2: Increased base spacing
-    """Plot 19-channel average reference EEG traces.
-
-    Args:
-        ax: matplotlib axes
-        eeg_data: (19, N_SAMPLES) filtered average-reference data
-        title: panel title
-        discharge_times: optional list of times (sec) for red dashed lines
-        highlight_left: if True, shade left hemisphere channels light blue
-        spacing: vertical spacing between channels in uV
-    """
+                    highlight_left=False, spacing=120.0, label_discharges=False):
+    """Plot 19-channel average reference EEG traces with channel group labels."""
     n_samples = eeg_data.shape[1]
     t = np.arange(n_samples) / FS
+
+    # Channel groups for labeling
+    GROUPS = [
+        ('Left\nparasagittal', [0, 1, 2, 3]),
+        ('Left\ntemporal', [4, 5, 6, 7]),
+        ('Midline', [8, 9, 10]),
+        ('Right\nparasagittal', [11, 12, 13, 14]),
+        ('Right\ntemporal', [15, 16, 17, 18]),
+    ]
 
     y_pos = 0
     yticks = []
     yticklabels = []
-    channel_y_positions = {}  # idx -> y_pos
+    channel_y_positions = {}
+    group_y_ranges = {}  # group_name -> (y_top, y_bottom)
+
+    group_idx = 0
+    channels_in_group = []
 
     for idx in DISPLAY_ORDER:
         if idx == -1:
-            # IMPROVEMENT 6: Significantly increased vertical spacing between channel groups
-            y_pos -= spacing * 2.0
+            # Save group range
+            if channels_in_group and group_idx < len(GROUPS):
+                gname = GROUPS[group_idx][0]
+                ys = [channel_y_positions[c] for c in channels_in_group]
+                group_y_ranges[gname] = (max(ys) + spacing * 0.4, min(ys) - spacing * 0.4)
+                group_idx += 1
+                channels_in_group = []
+            y_pos -= spacing * 1.5
             continue
-        # IMPROVEMENT 2: Increased vertical amplitude of EEG traces for better visibility
         trace = eeg_data[idx] * 2.5
-        ax.plot(t, trace + y_pos, color='black', linewidth=0.4, clip_on=True)
+        ax.plot(t, trace + y_pos, color='black', linewidth=0.5, clip_on=True)
         yticks.append(y_pos)
         yticklabels.append(MONO_CHANNELS[idx])
         channel_y_positions[idx] = y_pos
+        channels_in_group.append(idx)
         y_pos -= spacing
 
+    # Save last group
+    if channels_in_group and group_idx < len(GROUPS):
+        gname = GROUPS[group_idx][0]
+        ys = [channel_y_positions[c] for c in channels_in_group]
+        group_y_ranges[gname] = (max(ys) + spacing * 0.4, min(ys) - spacing * 0.4)
+
     ax.set_xlim(0, 10)
-    # Adjusted top/bottom limits to account for increased spacing and amplitude
     y_top = spacing * 0.8
     y_bottom = y_pos + spacing * 0.4
     ax.set_ylim(y_bottom, y_top)
 
     ax.set_yticks(yticks)
-    # IMPROVEMENT 1: Channel labels: consistent font size and weight for readability
-    ax.set_yticklabels(yticklabels, fontsize=10, fontweight='bold')
-    # IMPROVEMENT 1: Add a Time Axis Label to Panel A (and C)
-    ax.set_xlabel('Time (s)', fontsize=10)
-    ax.tick_params(axis='x', labelsize=9) # IMPROVEMENT 1: Increased x-axis tick label size
+    ax.set_yticklabels(yticklabels, fontsize=8)
+    ax.set_xlabel('(sec)', fontsize=8)
+    ax.tick_params(axis='x', labelsize=7)
 
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     ax.spines['left'].set_visible(False)
     ax.tick_params(axis='y', length=0)
 
-    # Discharge time markers (red dashed vertical lines)
+    # Channel group labels (rotated, left side)
+    for gname, (yt, yb) in group_y_ranges.items():
+        ymid = (yt + yb) / 2
+        ax.text(-0.8, ymid, gname, ha='center', va='center', fontsize=6,
+                fontstyle='italic', color='#555', rotation=90,
+                transform=ax.get_yaxis_transform(), clip_on=False)
+
+    # Discharge time markers
     if discharge_times is not None:
-        for dt in discharge_times:
-            if 0 <= dt <= 10:
-                ax.axvline(x=dt, color='red', linestyle='--', linewidth=0.7, alpha=0.7)
+        for i, dt_val in enumerate(discharge_times):
+            if 0 <= dt_val <= 10:
+                ax.axvline(x=dt_val, color='red', linestyle='--', linewidth=0.7, alpha=0.6)
+                # Label discharge times (t1, t2, ... tn) at top
+                if label_discharges:
+                    if i < 4:
+                        label = f't$_{i+1}$'
+                    elif i == 4:
+                        label = '...'
+                    elif i == len(discharge_times) - 1:
+                        label = f't$_n$'
+                    else:
+                        continue
+                    ax.text(dt_val, y_top - spacing * 0.1, label, ha='center', va='bottom',
+                            fontsize=6, color='red', fontstyle='italic', clip_on=False)
 
     # Light blue shading on left hemisphere channels
     if highlight_left:
@@ -315,34 +347,36 @@ def plot_eeg_traces(ax, eeg_data, title, discharge_times=None,
             y_lo = min(left_y_vals) - spacing * 0.5
             ax.axhspan(y_lo, y_hi, color='lightblue', alpha=0.15, zorder=0)
 
-    # IMPROVEMENT 1: Panel title: consistent font size (10-12pt) and weight
-    ax.set_title(title, fontsize=12, fontweight='bold')
+    ax.set_title(title, fontsize=11, fontweight='bold')
 
 
 def draw_flowchart(ax):
-    """Draw architecture flowchart in PaperBanana style — white/gray boxes, thin borders, stacked sub-steps."""
+    """Draw architecture flowchart — PaperBanana style with colored group panels."""
     ax.set_xlim(0, 10)
     ax.set_ylim(0, 10)
     ax.axis('off')
 
-    # PaperBanana style: white/light gray fills, thin dark borders, compact
-    BG_DARK = '#4A4A4A'      # dark header boxes
-    BG_LIGHT = '#F5F5F5'     # light step boxes
-    BG_WHITE = '#FFFFFF'      # white sub-step boxes
-    BORDER = '#888888'        # thin gray borders
-    TEXT_DARK = '#222222'
-    TEXT_WHITE = '#FFFFFF'
+    # Colors matching PaperBanana: tinted group panels, white sub-boxes
+    GREEN_BG = '#E8F5E9'   # laterality group
+    GREEN_BD = '#66BB6A'
+    SALMON_BG = '#FBE9E7'  # discharge detection group
+    SALMON_BD = '#EF9A9A'
+    BLUE_BG = '#E3F2FD'    # topographic localization group
+    BLUE_BD = '#90CAF9'
+    BOX_BG = '#FAFAFA'     # sub-step boxes
+    BOX_BD = '#BDBDBD'
+    DARK_BG = '#424242'    # ChannelPD-Net
 
-    def add_box(x, y, w, h, text, facecolor=BG_LIGHT, edgecolor=BORDER,
-                fontsize=8, text_color=TEXT_DARK, linewidth=1.0, bold_first=True):
+    def add_box(x, y, w, h, text, facecolor=BOX_BG, edgecolor=BOX_BD,
+                fontsize=7.5, text_color='#333', linewidth=0.8, bold_first=True):
         box = FancyBboxPatch((x - w/2, y - h/2), w, h,
-                             boxstyle="round,pad=0.1",
+                             boxstyle="round,pad=0.08",
                              facecolor=facecolor, edgecolor=edgecolor,
-                             linewidth=linewidth, zorder=2)
+                             linewidth=linewidth, zorder=3)
         ax.add_patch(box)
         lines = text.split('\n')
         n_lines = len(lines)
-        line_spacing = min(fontsize * 0.22, h / (n_lines + 0.5))
+        line_spacing = min(fontsize * 0.2, h / (n_lines + 0.5))
         start_y = y + (n_lines - 1) * line_spacing / 2
         for i, line in enumerate(lines):
             fs = fontsize
@@ -350,104 +384,106 @@ def draw_flowchart(ax):
             if i == 0 and bold_first:
                 fs = fontsize + 0.5
             ax.text(x, start_y - i * line_spacing, line, ha='center', va='center',
-                    fontsize=fs, fontweight=fw, color=text_color, zorder=3)
+                    fontsize=fs, fontweight=fw, color=text_color, zorder=4)
+
+    def add_panel(x, y, w, h, facecolor, edgecolor):
+        """Add a colored background panel (group region)."""
+        box = FancyBboxPatch((x - w/2, y - h/2), w, h,
+                             boxstyle="round,pad=0.15",
+                             facecolor=facecolor, edgecolor=edgecolor,
+                             linewidth=1.0, alpha=0.6, zorder=1)
+        ax.add_patch(box)
 
     def add_arrow(x1, y1, x2, y2):
         ax.annotate('', xy=(x2, y2), xytext=(x1, y1),
-                    arrowprops=dict(arrowstyle='->', color='#555', lw=1.2))
+                    arrowprops=dict(arrowstyle='->', color='#555', lw=1.0))
 
     # Title
-    ax.text(5, 9.8, 'B. Pipeline Architecture', ha='center', va='bottom',
+    ax.text(5, 9.85, 'B. Pipeline Architecture', ha='center', va='bottom',
             fontsize=11, fontweight='bold')
 
-    # ── Top: Input description ──
-    ax.text(5, 9.45, '18 Independent Bipolar Channels', ha='center', fontsize=7, color='#666')
+    # ── Input text + ChannelPD-Net ──
+    ax.text(2.8, 9.35, '18 Independent\nBipolar Channels', ha='center', va='center',
+            fontsize=7, color='#555')
+    ax.annotate('', xy=(4.2, 9.35), xytext=(3.6, 9.35),
+                arrowprops=dict(arrowstyle='->', color='#555', lw=1.0))
 
-    # ── ChannelPD-Net (dark highlighted box) ──
-    add_box(5, 8.9, 6.0, 0.7, "ChannelPD-Net\n(CNN+Attention)",
-            facecolor=BG_DARK, edgecolor='#333', text_color=TEXT_WHITE, fontsize=8.5, linewidth=1.5)
+    add_box(6.0, 9.35, 3.5, 0.6, "ChannelPD-Net\n(CNN+Attention)",
+            facecolor=DARK_BG, edgecolor='#333', text_color='white', fontsize=9, linewidth=1.5)
 
-    # Two output labels below ChannelPD-Net
-    ax.text(3.2, 8.45, 'PD Probability', ha='center', fontsize=6.5, color='#666', style='italic')
-    ax.text(6.8, 8.45, 'Frequency Estimate', ha='center', fontsize=6.5, color='#666', style='italic')
+    # Output labels
+    ax.text(4.5, 8.85, 'PD Probability', ha='center', fontsize=6.5, color='#666', style='italic')
+    ax.text(7.5, 8.85, 'Frequency Estimate', ha='center', fontsize=6.5, color='#666', style='italic')
 
-    # Horizontal line below
-    ax.plot([1.5, 8.5], [8.3, 8.3], color='#999', linewidth=0.8, zorder=1)
+    # Horizontal line + arrows down
+    ax.plot([1.5, 8.5], [8.7, 8.7], color='#999', linewidth=0.8, zorder=1)
+    add_arrow(2.2, 8.7, 2.2, 8.3)
+    add_arrow(5.0, 8.7, 5.0, 8.3)
+    add_arrow(7.8, 8.7, 7.8, 8.3)
 
-    # Three vertical arrows down from the line
-    add_arrow(2.0, 8.3, 2.0, 7.9)
-    add_arrow(5.0, 8.3, 5.0, 7.9)
-    add_arrow(8.0, 8.3, 8.0, 7.9)
+    # ── Colored group panels ──
+    add_panel(2.2, 6.5, 3.0, 3.4, GREEN_BG, GREEN_BD)    # Laterality
+    add_panel(5.0, 5.9, 3.0, 4.6, SALMON_BG, SALMON_BD)  # Discharge Detection
+    add_panel(7.8, 6.3, 3.0, 3.8, BLUE_BG, BLUE_BD)      # Topographic Localization
 
-    # ── Branch 1: Laterality Detection ──
-    add_box(2.0, 7.55, 2.8, 0.55, "Laterality\nDetection",
-            facecolor=BG_LIGHT, fontsize=8, linewidth=1.0)
-    # Sub-steps
-    add_box(2.0, 6.85, 2.6, 0.4, "L vs R Mean\nPD Probability",
-            facecolor=BG_WHITE, fontsize=6.5, bold_first=False)
-    add_arrow(2.0, 7.27, 2.0, 7.06)
+    # ── Branch 1: Laterality Detection (green) ──
+    ax.text(2.2, 8.05, 'Laterality\nDetection', ha='center', va='center',
+            fontsize=8.5, fontweight='bold', color='#2E7D32')
 
-    add_box(2.0, 6.3, 2.6, 0.35, "Output: Left / Right",
-            facecolor=BG_WHITE, fontsize=6.5, bold_first=False)
-    add_arrow(2.0, 6.64, 2.0, 6.48)
+    add_box(2.2, 7.15, 2.5, 0.5, "Compare\nL vs R Mean\nProbabilities",
+            fontsize=7)
+    add_arrow(2.2, 7.65, 2.2, 7.42)
 
-    ax.text(2.0, 5.95, 'AUC = 0.963', ha='center', fontsize=6, color='#888', style='italic')
+    ax.text(2.2, 6.65, 'Laterality\n(Side)', ha='center', va='center',
+            fontsize=7.5, fontweight='bold', color='#333')
+    add_arrow(2.2, 6.88, 2.2, 6.78)
 
-    # ── Branch 2: Discharge Detection ──
-    add_box(5.0, 7.55, 2.8, 0.55, "Discharge\nDetection",
-            facecolor=BG_LIGHT, fontsize=8, linewidth=1.0)
+    # ── Branch 2: Discharge Detection (salmon) ──
+    ax.text(5.0, 8.05, 'Discharge\nDetection', ha='center', va='center',
+            fontsize=8.5, fontweight='bold', color='#C62828')
 
-    steps_b2 = [
-        ("8-channel\nCET-UNet", 6.9),
-        ("CNN+ACF\nFrequency Prior", 6.3),
-        ("Dynamic\nProgramming", 5.7),
-        ("EM Template\nRefinement + Filtering", 5.1),
-    ]
-    for text, cy in steps_b2:
-        add_box(5.0, cy, 2.6, 0.45, text, facecolor=BG_WHITE, fontsize=6.5, bold_first=False)
+    add_box(4.3, 7.2, 1.2, 0.45, "8-channel\nCET-UNet", fontsize=6.5)
+    add_box(5.7, 7.2, 1.2, 0.45, "CNN+ACF\nEnsemble", fontsize=6.5)
+    add_arrow(4.6, 7.65, 4.3, 7.44)
+    add_arrow(5.4, 7.65, 5.7, 7.44)
 
-    add_arrow(5.0, 7.27, 5.0, 7.13)
-    add_arrow(5.0, 6.67, 5.0, 6.53)
-    add_arrow(5.0, 6.07, 5.0, 5.93)
-    add_arrow(5.0, 5.47, 5.0, 5.33)
+    ax.text(4.3, 6.8, 'Evidence\nTrace', ha='center', fontsize=6, color='#666')
+    ax.text(5.7, 6.8, 'Frequency\nPrior', ha='center', fontsize=6, color='#666')
 
-    add_box(5.0, 4.55, 2.6, 0.4, "Discharge Times: t\u2081, t\u2082, ...\nFreq = 1/median(IPI)",
-            facecolor=BG_WHITE, fontsize=6.5, bold_first=False)
-    add_arrow(5.0, 4.87, 5.0, 4.76)
+    add_arrow(4.6, 6.65, 5.0, 6.3)
+    add_arrow(5.4, 6.65, 5.0, 6.3)
 
-    # ── Branch 3: Topographic Localization ──
-    add_box(8.0, 7.55, 2.8, 0.55, "Topographic\nLocalization",
-            facecolor=BG_LIGHT, fontsize=8, linewidth=1.0)
+    add_box(5.0, 6.05, 2.3, 0.45, "Dynamic\nProgramming", fontsize=7)
 
-    steps_b3 = [
-        ("Laplacian-GFP\nAlignment", 6.9),
-        ("Template\nRefinement", 6.3),
-        ("GFP\u00b2-Weighted\nAveraging", 5.7),
-    ]
-    for text, cy in steps_b3:
-        add_box(8.0, cy, 2.6, 0.45, text, facecolor=BG_WHITE, fontsize=6.5, bold_first=False)
+    add_arrow(5.0, 5.82, 5.0, 5.55)
+    add_box(5.0, 5.3, 2.3, 0.45, "EM Template\nRefinement & Filtering", fontsize=6.5)
 
-    add_arrow(8.0, 7.27, 8.0, 7.13)
-    add_arrow(8.0, 6.67, 8.0, 6.53)
-    add_arrow(8.0, 6.07, 8.0, 5.93)
+    add_arrow(5.0, 5.06, 5.0, 4.8)
+    ax.text(5.0, 4.55, 'Discharge Times (t\u2081 \u00b7\u00b7\u00b7 t$_n$)\nFrequency', ha='center',
+            fontsize=7.5, fontweight='bold', color='#333')
 
-    add_box(8.0, 5.15, 2.6, 0.4, "Topoplot + Verbal\nDescription",
-            facecolor=BG_WHITE, fontsize=6.5, bold_first=False)
-    add_arrow(8.0, 5.47, 8.0, 5.36)
+    # ── Branch 3: Topographic Localization (blue) ──
+    ax.text(7.8, 8.05, 'Topographic\nLocalization', ha='center', va='center',
+            fontsize=8.5, fontweight='bold', color='#1565C0')
 
-    # ── Output row (bottom) ──
-    # Arrows to output
-    add_arrow(2.0, 5.75, 2.0, 4.0)
-    add_arrow(5.0, 4.34, 5.0, 4.0)
-    add_arrow(8.0, 4.94, 8.0, 4.0)
+    add_box(7.8, 7.2, 2.3, 0.5, "Extract\nMonopolar\nVoltage", fontsize=6.5)
+    add_arrow(7.8, 7.65, 7.8, 7.47)
 
-    out_y = 3.65
-    add_box(2.0, out_y, 2.6, 0.55, "Laterality",
-            facecolor=BG_DARK, text_color=TEXT_WHITE, fontsize=8.5, linewidth=1.5)
-    add_box(5.0, out_y, 2.6, 0.55, "Timing + Frequency",
-            facecolor=BG_DARK, text_color=TEXT_WHITE, fontsize=8.5, linewidth=1.5)
-    add_box(8.0, out_y, 2.6, 0.55, "Spatial Localization",
-            facecolor=BG_DARK, text_color=TEXT_WHITE, fontsize=8.5, linewidth=1.5)
+    add_arrow(7.8, 6.94, 7.8, 6.7)
+    add_box(7.8, 6.4, 2.3, 0.55, "Laplacian-GFP\nAlignment\n(\u00b125ms)", fontsize=6.5)
+
+    add_arrow(7.8, 6.12, 7.8, 5.9)
+    add_box(7.8, 5.6, 2.3, 0.55, "Template\nRefinement &\nGFP-weighted\nAveraging", fontsize=6.5)
+
+    add_arrow(7.8, 5.32, 7.8, 5.1)
+    # Small topoplot icon placeholder
+    circle = plt.Circle((7.8, 4.85), 0.2, facecolor='#FFF3E0', edgecolor='#E65100',
+                         linewidth=0.8, zorder=3)
+    ax.add_patch(circle)
+    ax.text(7.8, 4.85, '\u2609', ha='center', va='center', fontsize=10, color='#E65100')
+
+    ax.text(7.8, 4.45, 'Localization', ha='center',
+            fontsize=7.5, fontweight='bold', color='#333')
 
 
 def main():
@@ -553,7 +589,8 @@ def main():
     plot_eeg_traces(ax_c, mono_filt,
                     title='C. Output',
                     discharge_times=discharge_times,
-                    highlight_left=is_left)
+                    highlight_left=is_left,
+                    label_discharges=True)
 
     # Topoplot as inset in lower-right corner of Panel C
     c_pos = ax_c.get_position()
@@ -582,11 +619,13 @@ def main():
             lines.append(' '.join(current))
         wrapped = '\n'.join(lines)
 
-    fig.text(inset_left + topo_size / 2, inset_bottom - 0.01, wrapped,
+    # Verbal description in clean rounded box at bottom of Panel C
+    c_pos2 = ax_c.get_position()
+    fig.text(c_pos2.x0 + c_pos2.width / 2, c_pos2.y0 - 0.01, verbal,
              ha='center', va='top', fontsize=7, fontstyle='italic',
              fontfamily='sans-serif', color='#333',
-             bbox=dict(boxstyle='round,pad=0.3', facecolor='#f8f8f0',
-                       edgecolor='#ccc', alpha=0.9))
+             bbox=dict(boxstyle='round,pad=0.4', facecolor='#F5F5F5',
+                       edgecolor='#999', linewidth=0.8, alpha=0.95))
 
     # (verbal description placed via fig.text above)
     # Dummy to satisfy any remaining code expecting ax_verbal
