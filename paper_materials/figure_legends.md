@@ -1,0 +1,51 @@
+# Figure Legends
+
+## Main Figures
+
+### Figure 1. Representative EEG examples of periodic and rhythmic patterns.
+
+Six 10-second EEG segments displayed in average-reference montage (19 channels, 200 Hz, bandpass 0.5–20 Hz). Channels are grouped by hemisphere: left parasagittal (Fp1, F3, C3, P3), left temporal (F7, T3, T5, O1), midline (Fz, Cz, Pz), right parasagittal (Fp2, F4, C4, P4), and right temporal (F8, T4, T6, O2). **(A)** Clear lateralized periodic discharges (LPD). **(B)** Clear generalized periodic discharges (GPD). **(C)** Clear lateralized rhythmic delta activity (LRDA). **(D)** Clear generalized rhythmic delta activity (GRDA). **(E)** Ambiguous LPD case with lower inter-rater agreement. **(F)** Ambiguous GRDA case with lower inter-rater agreement. Clear cases (A–D) were selected from segments with ≥80% agreement among ≥10 IIIC expert raters; ambiguous cases (E–F) have lower agreement, illustrating the challenge of pattern classification. Scale bar: 100 µV.
+
+### Figure 2. PD characterization pipeline architecture and example output.
+
+Three-panel overview of the periodic discharge (PD) characterization pipeline applied to an example LPD segment. **(A)** Input: raw 19-channel average-reference EEG (10 seconds, 200 Hz). No annotations or hemisphere shading are shown, as laterality has not yet been determined. **(B)** Pipeline architecture: 18 independent bipolar channels are processed by ChannelPD-Net (CNN+Attention), which produces per-channel PD probabilities and frequency estimates. Three downstream modules operate in parallel: (1) Laterality Detection compares left vs. right hemisphere mean probabilities; (2) Discharge Detection uses 8-channel CET-UNet evidence and CNN+ACF frequency prior fed into dynamic programming with EM template refinement, yielding individual discharge times and IPI-derived frequency; (3) Topographic Localization extracts monopolar voltage at discharge peaks, applies Laplacian-GFP alignment with two-pass template refinement and GFP²-weighted averaging to produce a spatial localization map. **(C)** Output: the same EEG with red dashed lines marking detected discharge times (left hemisphere channels only, reflecting the lateralized nature of the pattern), light blue shading on the involved hemisphere, a Laplacian topoplot (inferno colormap) showing the discharge topography, and a verbal description following ACNS 2021 standardized nomenclature. Scale bar: 100 µV. Example segment: sub-S0001114959966_20150425125519.
+
+### Figure 3. RDA characterization pipeline architecture and example output.
+
+Three-panel overview of the rhythmic delta activity (RDA) characterization pipeline applied to an example LRDA segment, following the same layout as Figure 2. **(A)** Input: raw 19-channel average-reference EEG (10 seconds, 200 Hz), shown without annotations. **(B)** Pipeline architecture: the same bipolar channels are processed by the W05 iterative narrowband refinement algorithm. Pass 1 performs coarse analysis with broadband (0.5–3.5 Hz) filtering, estimating lateralization via per-hemisphere mean variance and frequency via Hilbert instantaneous frequency from the top-3 dominant channels. Pass 2 refines both estimates using narrowband filtering at the estimated frequency ±0.4 Hz, with envelope amplitude for lateralization and Hilbert frequency on the dominant hemisphere only. Three output branches produce: (1) Laterality (left/right) from narrowband amplitude asymmetry; (2) Spatial Extent + Frequency via per-channel phase coherence (PLV) with the dominant hemisphere, weighted by narrowband amplitude, with a threshold applied to yield the fraction of involved channels; (3) Topographic Localization via per-channel Hilbert amplitude envelope with Laplacian transform. **(C)** Output: the same EEG with light blue hemisphere shading on the involved side, a Laplacian amplitude topoplot (inferno colormap), and a verbal description. No discharge markers are shown, as RDA is a continuous rhythmic pattern rather than discrete discharges. Scale bar: 100 µV. Example segment: sub-S0001115633229_20190719143934.
+
+### Figure 4. Frequency estimation performance across all four IIIC subtypes.
+
+Scatter plots comparing algorithm-predicted frequency (y-axis) against expert-reviewed frequency (x-axis) for each subtype. **(Top row)** PDCharacterizer (PD subtypes: CNN+ACF frequency prior refined by IPI from detected discharges) and W05 (RDA subtypes: iterative narrowband Hilbert). **(Bottom row)** Tautan et al. signal processing baseline. Columns from left to right: LPD (n=1,226; ρ=0.786), GPD (n=1,089; ρ=0.846), LRDA (n=640; ρ=0.674), GRDA (n=1,310; ρ=0.712). Spearman correlation (ρ) and mean absolute error (MAE, in Hz) are shown for each panel. Expert frequency is the mean across available raters (LB, PH, SZ, MW). Segments were included if any of: (1) MW reviewed the frequency, (2) all three expert raters (LB, PH, SZ) provided independent labels, or (3) ≥10 IIIC crowd votes with ≥80% pattern agreement. Dashed diagonal line indicates perfect agreement.
+
+### Figure 5. LPD characterization examples at three difficulty levels.
+
+Three representative lateralized periodic discharge (LPD) cases selected to span the range of inter-rater agreement, illustrating pipeline performance from easy to challenging patterns. Each row shows one case with: (left) 19-channel average-reference EEG (10 seconds, bandpass 0.3–50 Hz, amplitude clipped at ±250 µV) with detected discharge times marked as red dashed vertical lines on the involved hemisphere and light blue shading indicating the lateralized side; (right) Laplacian topoplot (inferno colormap, fixed color scale: 0.459–0.729) with electrode labels, and ACNS 2021 verbal description including subtype, laterality, frequency, and spatial localization. Difficulty badge (top right of each EEG panel) shows the IIIC crowd agreement percentage. **(Top)** Easy case (agreement ≥95%): clear, stereotyped discharges with unambiguous lateralization. **(Middle)** Medium case (agreement 70–80%): recognizable pattern with some morphological variability. **(Bottom)** Hard case (agreement 45–60%): subtle or atypical pattern where expert raters disagreed. Scale bar: 100 µV.
+
+### Figure 6. GPD characterization examples at three difficulty levels.
+
+Three representative generalized periodic discharge (GPD) cases, following the same format as Figure 5. Discharge markers span both hemispheres, reflecting the generalized distribution. Light blue shading covers all channels. Laplacian topoplot color scale: 0.459–0.729 (same as LPD). Scale bar: 100 µV.
+
+### Figure 7. LRDA characterization examples at three difficulty levels.
+
+Three representative lateralized rhythmic delta activity (LRDA) cases, following the same format as Figure 5. No discharge markers are shown (RDA is a continuous rhythmic pattern). Light blue shading indicates the dominant hemisphere. Laplacian amplitude topoplot color scale: 0.442–0.697. Scale bar: 100 µV.
+
+### Figure 8. GRDA characterization examples at three difficulty levels.
+
+Three representative generalized rhythmic delta activity (GRDA) cases, following the same format as Figure 5. No discharge markers are shown. Light blue shading covers all channels, reflecting the generalized distribution. Laplacian amplitude topoplot color scale: 0.442–0.697. Scale bar: 100 µV.
+
+---
+
+## Supplementary Figures
+
+### Figure S1. Inter-rater reliability comparison: expert-expert vs. algorithm-expert.
+
+Bar charts comparing intraclass correlation coefficients (ICC(3,1)) and percentage agreement (PA) for frequency and spatial extent estimation. **(Top row)** RDA (LRDA + GRDA combined). **(Bottom row)** PD (LPD + GPD combined). Each row shows four panels: (A) Frequency ICC, (B) Frequency PA by frequency bin (<1, 1–1.5, 1.5–2, 2–2.5, 2.5–3, >3 Hz), (C) Spatial extent ICC, (D) Spatial extent PA by channel count bin (1–4, 5–10, 11–14, 15–18 channels). Three conditions are compared: expert-expert agreement (blue), expert vs. PDCharacterizer/W05 (orange), and expert vs. Tautan et al. (green). W05 for RDA frequency achieves ICC=0.860, matching expert-expert ICC=0.852. PDCharacterizer for PD spatial extent achieves ICC=0.852 after threshold optimization, exceeding expert-expert ICC=0.845.
+
+### Figure S2. Spatial extent scatter plots by subtype.
+
+Scatter plots comparing algorithm-predicted spatial extent (y-axis, fraction of 18 channels involved) against expert spatial extent (x-axis, mean across raters) for each subtype. **(Top row)** PDCharacterizer (PD; threshold=0.62) and RDA-PLV (RDA; threshold=0.15). **(Bottom row)** Tautan et al. Columns: LPD, GPD, LRDA, GRDA. Per-rater data points are shown with distinct markers for each expert rater (LB, PH, SZ, MW). Spearman ρ and MAE are reported per panel. Segments with ≥2 expert spatial extent ratings are included.
+
+### Figure S3. Spatial extent threshold optimization.
+
+Effect of binarization threshold on spatial extent prediction accuracy, evaluated on segments with ≥2 expert raters. **(Top row)** PD (LPD + GPD). **(Bottom row)** RDA (LRDA + GRDA). Three metrics are shown across threshold values (0.01–0.99): (A) Mean absolute error (MAE), (B) Pearson correlation, (C) ICC(3,1) treating the algorithm as an additional rater. Optimal thresholds are marked: PD ≈ 0.38–0.62 (broad plateau), RDA ≈ 0.15. Subtype-specific curves are shown in distinct colors (LPD: orange, GPD: yellow, LRDA: green, GRDA: blue).
