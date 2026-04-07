@@ -63,73 +63,63 @@ aws s3 sync s3://bdsp-opendata-credentialed/iiic-freq3/data/ data/
 This requires AWS credentials with access to the `bdsp-opendata-credentialed` bucket. To request access, visit the [Brain Data Science Platform (BDSP)](https://bdsp.io).
 
 The `data/` directory contains:
-- `eeg/` — ~11,800 .mat files (10s bipolar EEG segments, 18ch at 200 Hz)
-- `labels/` — canonical label files (see below)
-- `dl_cache/`, `cet_cache/`, `pd_channel_cache/`, `hemi_cache/` — model weights
-- `_archive/` — raw source annotation files
+- `eeg/` — 13,556 .mat files (10s monopolar EEG segments, 19ch at 200 Hz)
+- `labels/` — canonical label files (see Label System below)
+- `cet_cache/`, `pd_channel_cache/`, `hemi_cache/` — model weights (5-fold CV)
 
 ### Data Structure
 
 ```
 data/
-├── eeg/                  ~11,800 .mat files (18ch × 2000 samples @ 200 Hz)
+├── eeg/                       13,556 .mat files (19ch × 2000 samples @ 200 Hz)
 ├── labels/
-│   ├── segment_labels.csv    Canonical labels — one row per EEG segment (11,817 rows)
-│   ├── annotations.csv       Per-rater detailed annotations (5,160 rows)
-│   ├── segments.csv          File registry: segment_id → mat_file mapping
-│   ├── discharge_times.json  PD per-discharge timing (712 cases)
-│   ├── rda_wave_labels.json  RDA per-wave timing (549 cases)
-│   ├── channel_involvement.json    Spatial ground truth (594 cases)
-│   ├── channel_pseudolabels.json   Channel detection training labels
-│   └── archive_labels/       Raw source files (IIIC votes, deprecated patients.csv, etc.)
-├── cet_cache/            CET-UNet model weights (5-fold)
-├── pd_channel_cache/     CNN+Attention model weights (5-fold)
-├── hemi_cache/           HemiCET model weights + experiment results
-├── dl_cache/             External segment pool
-└── _archive/             Raw source annotation files (by task/round)
+│   ├── labels.csv             Unified per-rater labels (44,449 rows)
+│   │                          One row per (segment, rater, label_type)
+│   │                          All human annotations in one file
+│   ├── segments.csv           Segment registry (13,556 rows)
+│   │                          One row per EEG file: metadata + algo predictions
+│   ├── segment_labels.csv     Consolidated summary (13,556 rows)
+│   │                          One row per segment, aggregating labels.csv + segments.csv
+│   ├── annotations.csv        Legacy per-rater annotations (10,727 rows)
+│   ├── discharge_times.json   PD per-discharge timing (2,938 entries)
+│   ├── rda_wave_labels.json   RDA per-wave timing (549 entries)
+│   ├── channel_involvement.json   Spatial ground truth (594 entries)
+│   ├── channel_pseudolabels.json  Channel detection training labels
+│   └── archive_labels/        Raw labeling session outputs, backups, deprecated files
+├── cet_cache/                 CET-UNet model weights (5-fold)
+├── pd_channel_cache/          ChannelPD-Net model weights (5-fold)
+├── hemi_cache/                HemiCET model weights (5-fold)
+└── e2e_cache/                 End-to-end model weights
 ```
 
 ### Label System
 
-**All labels live at the segment level.** The canonical label file is `segment_labels.csv` — one row per EEG file on disk, consolidating all label sources.
+The label system has three tiers:
 
-**`segment_labels.csv`** columns:
+1. **`labels.csv`** (44,449 rows) — the unified per-rater label store. Each row is one (segment, rater, label_type, value) tuple. All human annotations — frequency, spatial extent, spatial channels, discharge timing, wave timing, pattern class, laterality — live here. This is where new annotations go.
 
-| Column group | Columns | Description |
-|-------------|---------|-------------|
-| Identity | `mat_file`, `segment_id`, `patient_id` | File and patient identifiers |
-| Subtype | `subtype`, `subtype_source` | Best subtype label and how it was assigned |
-| IIIC votes | `iiic_vote_{other,seizure,lpd,gpd,lrda,grda}`, `iiic_n_votes`, `iiic_plurality`, `iiic_plurality_frac` | Per-segment expert vote vector (195 segments matched) |
-| Frequency | `mw_freq`, `mw_freq_rater`, `auto_freq` | MW-reviewed vs algorithm-assigned frequency |
-| Spatial | `spatial_channels`, `spatial_raters` | Brain region annotations |
-| Laterality | `laterality`, `laterality_rater` | Left/right/bilateral |
-| Exclusion | `excluded`, `exclusion_reason` | Exclusion flags |
-| Audit trail | `subtype_original`, `freq_original`, `laterality_original` | Pre-correction labels (never updated) |
-| Other labels | `has_discharge_timing`, `has_wave_timing`, `has_channel_involvement` | Boolean flags for JSON label files |
-| Provenance | `original_source`, `original_filename`, `annotators` | Where the EEG came from, who annotated it |
+2. **`segments.csv`** (13,556 rows) — segment registry. One row per EEG file on disk. Contains physical metadata (montage, sampling rate, duration) and algorithm predictions (algo_freq_hz, pdchar_freq_hz, tautan_freq_hz). No human labels.
 
-**Supporting files:**
+3. **`segment_labels.csv`** (13,556 rows) — consolidated read-only summary. One row per segment, aggregating expert labels from labels.csv with algorithm predictions from segments.csv. **Regenerated** by `python code/data_management/build_segment_labels.py`.
 
-- **`annotations.csv`** — Per-segment per-rater annotations (frequency, spatial channels). One row per rater per segment. Includes `mat_file` for direct lookup.
-- **`segments.csv`** — File registry mapping `segment_id` → `mat_file` with physical metadata (montage, sampling rate, provenance).
-- **JSON files** — Specialized per-event label types (discharge timing, wave timing, channel involvement).
+**JSON label files** store per-event annotations that don't fit a single-value-per-segment model:
+- **`discharge_times.json`** — per-discharge peak times within each PD segment
+- **`rda_wave_labels.json`** — per-wave times within each RDA segment
+- **`channel_involvement.json`** — per-channel binary involvement labels
 
-**To regenerate `segment_labels.csv`:** Run `python code/data_management/build_segment_labels.py`. This consolidates all sources (segments.csv, annotations.csv, IIIC votes, JSON files) into the single canonical file.
+**To add new labels:** Add rows to `labels.csv`, then re-run `build_segment_labels.py`.
 
-**To add new labels:** Add rows to `annotations.csv`, then re-run `build_segment_labels.py`.
+### Label Coverage by Subtype
 
-### Label Coverage
-
-| Label type | Segments |
-|-----------|----------|
-| IIIC per-segment votes | 195 |
-| MW/expert frequency | 3,607 |
-| Auto-assigned frequency | 4,368 |
-| Spatial annotations | 965 |
-| Laterality | 2,674 |
-| Discharge timing | 2,400 |
-| Wave timing | 549 |
-| Channel involvement | 2,228 |
+| Label type | LPD | GPD | LRDA | GRDA | Total |
+|---|---:|---:|---:|---:|---:|
+| Expert-reviewed frequency | 1,499 | 1,539 | 654 | 1,381 | 5,073 |
+| Discharge timing | 917 | 1,036 | — | — | 1,953 |
+| Wave timing | — | — | 189 | 313 | 502 |
+| Channel involvement / spatial | 352 | 260 | 29 | 177 | 818 |
+| Laterality | 1,336 | 249 | 1,039 | 789 | 3,413 |
+| IIIC crowd votes (≥10 raters) | 1,846 | 1,024 | 239 | 420 | 3,529 |
+| **Total MW annotations** | **1,888** | **1,944** | **1,079** | **1,983** | **7,547** |
 
 ## Repository Structure
 
