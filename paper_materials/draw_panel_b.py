@@ -49,7 +49,8 @@ def draw_panel_b(outpath='paper_materials/figures/_panel_b.png', topoplot_fn=Non
     ax.set_xlim(0, W); ax.set_ylim(H, 0)
     ax.set_aspect("equal"); ax.axis("off")
 
-    _text(ax, 24, 32, "B. PDCharacterizer Architecture", size=22, weight="bold", ha="left")
+    # Title is now drawn externally in build_fig2.py for font consistency
+    # _text(ax, 24, 32, "B. PDCharacterizer Architecture", size=22, weight="bold", ha="left")
 
     _text(ax, 106, 145, "18 Independent\nBipolar Channels", size=13.2, linespacing=1.02)
     for y_off in [-16, -5.5, 5.5, 16]:

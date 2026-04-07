@@ -248,7 +248,9 @@ def draw_eeg_panel(ax, case, is_pd):
     shade_color = (100/255, 160/255, 255/255, 0.15)
 
     # Determine which hemispheres to shade
-    if subtype in ('gpd', 'grda'):
+    if case.get('no_shading'):
+        shade_hemis = set()
+    elif subtype in ('gpd', 'grda'):
         shade_hemis = {'L', 'R', 'M'}  # bilateral + midline for generalized
     elif 'left' in lat:
         shade_hemis = {'L'}
@@ -285,13 +287,13 @@ def draw_eeg_panel(ax, case, is_pd):
                                if e['hemi'] == 'L' and y_positions[i] is not None]
                     if left_ys:
                         ax.plot([dt, dt], [min(left_ys) - 0.4, max(left_ys) + 0.4],
-                                color='red', linestyle='--', linewidth=0.8, alpha=0.7, zorder=1)
+                                color='red', linestyle='--', linewidth=1.4, alpha=0.7, zorder=1)
                 if lat in ('right', 'bilateral', 'bilateral, right-predominant'):
                     right_ys = [y_positions[i] for i, e in enumerate(DISPLAY_ORDER)
                                 if e['hemi'] == 'R' and y_positions[i] is not None]
                     if right_ys:
                         ax.plot([dt, dt], [min(right_ys) - 0.4, max(right_ys) + 0.4],
-                                color='red', linestyle='--', linewidth=0.8, alpha=0.7, zorder=1)
+                                color='red', linestyle='--', linewidth=1.4, alpha=0.7, zorder=1)
                 if lat in ('bilateral/symmetric', 'bilateral'):
                     ax.axvline(dt, color='red', linestyle='--', linewidth=0.8, alpha=0.7, zorder=1)
 

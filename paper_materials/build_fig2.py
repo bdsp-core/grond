@@ -316,29 +316,83 @@ def render_panel_b(topoplot_fn):
     return img
 
 
-def render_panel_c(mono_filt, discharge_times, laterality, subtype='lpd'):
-    """Render Panel C (Output EEG with lateralized discharge markers)."""
-    import matplotlib.gridspec as gridspec
-    sys.path.insert(0, str(SCRIPT_DIR))
-    from generate_fig2_pd_pipeline import plot_eeg_traces
+def _render_eeg_panel(case, is_pd, figsize=(6, 8), show_scale_bar=True):
+    """Render a single EEG panel using render_figures.draw_eeg_panel.
 
-    fig = plt.figure(figsize=(6, 7.5), facecolor='white')
-    ax = fig.add_subplot(111)
-    is_left = laterality == 'left'
-    plot_eeg_traces(ax, mono_filt,
-                    title='',
-                    discharge_times=discharge_times,
-                    highlight_left=is_left,
-                    label_discharges=True)
+    Same code used for figs 5-8, ensuring visual consistency.
+    Post-processes to: move scale bar inside plot, remove difficulty badge.
+    """
+    from render_figures import draw_eeg_panel
+
+    fig, ax = plt.subplots(figsize=figsize, facecolor='white')
+    draw_eeg_panel(ax, case, is_pd=is_pd)
+
+    # Remove difficulty badge and original scale bar
+    from matplotlib.patches import FancyArrowPatch
+    for txt in list(ax.texts):
+        text_content = txt.get_text()
+        if 'Agreement' in text_content or any(d in text_content.upper() for d in ['EASY', 'MEDIUM', 'HARD']):
+            txt.remove()
+        elif 'µV' in text_content:
+            txt.remove()
+
+    for patch in list(ax.patches):
+        if isinstance(patch, FancyArrowPatch):
+            patch.remove()
+
+    # Redraw scale bar inside the plot (only if requested)
+    if show_scale_bar:
+        z_scale = 0.012
+        scale_uv = 100.0
+        scale_height = scale_uv * z_scale
+        scale_x = 8.8
+        y_lim = ax.get_ylim()
+        scale_y_bot = y_lim[0] + 1.0
+        scale_y_top = scale_y_bot + scale_height
+        scale_y_mid = (scale_y_bot + scale_y_top) / 2
+
+        arrow_up = FancyArrowPatch((scale_x, scale_y_mid + 0.02), (scale_x, scale_y_top),
+                                    arrowstyle='-|>', mutation_scale=10, color='black', lw=1.0, zorder=5)
+        arrow_dn = FancyArrowPatch((scale_x, scale_y_mid - 0.02), (scale_x, scale_y_bot),
+                                    arrowstyle='-|>', mutation_scale=10, color='black', lw=1.0, zorder=5)
+        ax.add_patch(arrow_up)
+        ax.add_patch(arrow_dn)
+        ax.text(scale_x + 0.15, scale_y_mid, f'{int(scale_uv)} µV',
+                fontsize=9, va='center', ha='left', color='black', zorder=5)
+
+    # Force identical layout so both panels produce the same pixel size
+    ax.set_xlim(-0.05, 10.05)
+    fig.subplots_adjust(left=0.12, right=0.98, top=0.98, bottom=0.06)
 
     import tempfile
     tmp = tempfile.NamedTemporaryFile(suffix='.png', delete=False)
     tmp.close()
-    fig.savefig(tmp.name, dpi=300, bbox_inches='tight', facecolor='white')
+    fig.savefig(tmp.name, dpi=300, facecolor='white')
     plt.close(fig)
     img = Image.open(tmp.name)
     Path(tmp.name).unlink()
     return img
+
+
+def _build_case_dict(mono_raw, discharge_times, laterality, subtype):
+    """Build a case dict compatible with render_figures.draw_eeg_panel.
+
+    Downsamples from 200 Hz to 100 Hz (1000 samples) to match the format
+    used in figs 5-8.
+    """
+    from scipy.signal import resample
+
+    # Downsample from 200 Hz (2000 samples) to 100 Hz (1000 samples)
+    mono_ds = resample(mono_raw, 1000, axis=1)
+
+    return {
+        'mono_data': mono_ds.tolist(),
+        'subtype': subtype,
+        'pred_lat': laterality,
+        'gt_discharge_times': discharge_times,
+        'difficulty': '',
+        'agreement_pct': 0,
+    }
 
 
 def _split_verbal_at_comma(text):
@@ -358,13 +412,13 @@ def _split_verbal_at_comma(text):
     return text[:best_comma+1] + '\n' + text[best_comma+1:].lstrip()
 
 
-def add_verbal_description(img, verbal_text):
+def add_verbal_description(img, verbal_text, pc_left=None, pc_right=None):
     """Draw verbal description in a light blue box overlaid on bottom of Panel C."""
     draw = ImageDraw.Draw(img)
     w, h = img.size
 
-    panel_c_left = PANEL_B_RIGHT
-    panel_c_right = w
+    panel_c_left = pc_left if pc_left is not None else PANEL_B_RIGHT
+    panel_c_right = pc_right if pc_right is not None else w
 
     font_size = 58
     try:
@@ -413,10 +467,10 @@ def add_verbal_description(img, verbal_text):
     return img
 
 
-def add_topoplot_inset(img, mean_topo_lap):
+def add_topoplot_inset(img, mean_topo_lap, pc_left=None, pc_right=None):
     """Add a small topoplot inset in the lower-right corner of Panel C."""
-    panel_c_left = PANEL_B_RIGHT
     w, h = img.size
+    panel_c_right = pc_right if pc_right is not None else w
 
     # Render topoplot to a temporary figure
     name_map = {'T3': 'T7', 'T4': 'T8', 'T5': 'P7', 'T6': 'P8'}
@@ -452,8 +506,8 @@ def add_topoplot_inset(img, mean_topo_lap):
     topo_img = topo_img.resize((inset_size, inset_size), Image.LANCZOS)
 
     # Position: lower-right of Panel C, above the verbal description
-    inset_x = w - inset_size - 40
-    inset_y = 2080
+    inset_x = panel_c_right - inset_size - 120
+    inset_y = 2150
 
     img.paste(topo_img, (inset_x, inset_y), topo_img)
     return img
@@ -493,6 +547,86 @@ def build_composite(panel_b_img, panel_c_img=None, verbal_text=None,
     return result.convert('RGB')
 
 
+def build_full_figure(panel_a, panel_b, panel_c, verbal_text, mean_topo_lap):
+    """Composite all three panels into the final figure with titles."""
+    from PIL import ImageFont
+
+    # Target size matching the backup figure dimensions
+    W, H = 5782, 2618
+    gap = 5  # minimal gap between panels
+
+    # Panel widths: A=30%, B=40%, C=30% — A and C must be equal
+    usable_w = W - 2 * gap
+    b_w = int(usable_w * 0.40)
+    a_w = (usable_w - b_w) // 2
+    c_w = a_w  # force identical
+
+    title_h = 150  # space for titles above panels
+    panel_h = H - title_h
+
+    # Scale each panel to fit its slot
+    pa = panel_a.resize((a_w, panel_h), Image.LANCZOS)
+    pb = panel_b.resize((b_w, panel_h), Image.LANCZOS)
+    pc = panel_c.resize((c_w, panel_h), Image.LANCZOS)
+
+    # Build composite
+    comp = Image.new('RGB', (W, H), 'white')
+    x = 0
+    comp.paste(pa, (x, title_h))
+    a_end = x + a_w
+
+    x = a_end + gap
+    # Panel B starts higher (closer to title) for better vertical centering
+    b_y_offset = title_h - 40
+    comp.paste(pb, (x, b_y_offset))
+    b_end = x + b_w
+
+    x = b_end + gap
+    comp.paste(pc, (x, title_h))
+
+    # Draw panel A and C titles to match Panel B's title style
+    # Panel B title is "B. PDCharacterizer Architecture" at ~y=50 in the composite
+    # rendered by draw_panel_b.py in bold DejaVu Sans at size 22 (in 820px canvas)
+    # After scaling to 2618px, that's roughly equivalent to Pillow font size ~58
+    draw = ImageDraw.Draw(comp)
+    try:
+        title_font = ImageFont.truetype('/System/Library/Fonts/Helvetica.ttc', 110)
+        # Try to get bold variant
+        try:
+            title_font = ImageFont.truetype('/System/Library/Fonts/Helvetica.ttc', 110, index=1)
+        except Exception:
+            pass
+    except Exception:
+        title_font = ImageFont.load_default()
+
+    # Match vertical position to Panel B's title (roughly y=50 in composite)
+    title_y = 45
+    draw.text((30, title_y), 'A. Input', fill='black', font=title_font)
+    # Center Panel B title over Panel B area
+    b_title = 'B. PDCharacterizer Architecture'
+    b_bbox = draw.textbbox((0, 0), b_title, font=title_font)
+    b_title_w = b_bbox[2] - b_bbox[0]
+    b_center = a_end + gap + b_w // 2
+    draw.text((b_center - b_title_w // 2, title_y), b_title, fill='black', font=title_font)
+    draw.text((b_end + gap + 30, title_y), 'C. Output', fill='black', font=title_font)
+
+    # Store panel C position for overlays
+    pc_left = b_end + gap
+    pc_right = pc_left + c_w
+
+    # Add topoplot inset to Panel C area
+    if mean_topo_lap is not None:
+        comp = comp.convert('RGBA')
+        comp = add_topoplot_inset(comp, mean_topo_lap, pc_left=pc_left, pc_right=pc_right)
+        comp = comp.convert('RGB')
+
+    # Add verbal description
+    if verbal_text:
+        comp = add_verbal_description(comp, verbal_text, pc_left=pc_left, pc_right=pc_right)
+
+    return comp
+
+
 def main():
     print("=" * 50)
     print("Building Fig 2 composite")
@@ -501,15 +635,34 @@ def main():
     # Step 1: Compute all data from EEG segment
     data = compute_segment_data(MAT_FILE, subtype='lpd')
 
-    # Step 2: Render Panel B (no topoplot — just "Localization" text)
+    # Step 2: Build case dict for EEG panels (same format as figs 5-8)
+    mono_raw = load_monopolar(MAT_FILE)
+    case = _build_case_dict(
+        mono_raw, data['discharge_times'], data['laterality'], 'lpd',
+    )
+
+    # Step 3: Render Panel A (input EEG — no discharge markers)
+    print("Rendering Panel A...")
+    case_a = dict(case)
+    case_a['gt_discharge_times'] = []  # no markers for input
+    case_a['no_shading'] = True  # raw input — no laterality known yet
+    panel_a = _render_eeg_panel(case_a, is_pd=False)
+    print(f"  Panel A size: {panel_a.size}")
+
+    # Step 4: Render Panel B
     print("Rendering Panel B...")
     panel_b = render_panel_b(topoplot_fn=None)
     print(f"  Panel B size: {panel_b.size}")
 
-    # Step 3: Composite with topoplot inset and verbal description on Panel C
+    # Step 5: Render Panel C (output EEG — with discharge markers + shading)
+    print("Rendering Panel C...")
+    panel_c = _render_eeg_panel(case, is_pd=True, show_scale_bar=False)
+    print(f"  Panel C size: {panel_c.size}")
+
+    # Step 6: Composite everything
     print("Compositing...")
-    result = build_composite(
-        panel_b,
+    result = build_full_figure(
+        panel_a, panel_b, panel_c,
         verbal_text=data['verbal'],
         mean_topo_lap=data['mean_topo_lap'],
     )
