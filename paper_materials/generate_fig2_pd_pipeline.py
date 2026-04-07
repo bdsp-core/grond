@@ -569,14 +569,14 @@ def main():
 
     # Three panels: A (30%), B (40%), C (30%)
     # Adjusted top/bottom for more vertical margin
-    gs = gridspec.GridSpec(1, 3, width_ratios=[0.30, 0.40, 0.30],
-                           left=0.03, right=0.97, top=0.94, bottom=0.06,
-                           wspace=0.08)
+    gs = gridspec.GridSpec(1, 3, width_ratios=[0.28, 0.44, 0.28],
+                           left=0.04, right=0.96, top=0.94, bottom=0.06,
+                           wspace=0.06)
 
     # ── Panel A: Input EEG ──
     ax_a = fig.add_subplot(gs[0, 0])
     plot_eeg_traces(ax_a, mono_filt,
-                    title='A. Input')
+                    title='')
 
     # ── Panel B: Architecture Flowchart ──
     ax_b = fig.add_subplot(gs[0, 1])
@@ -587,7 +587,7 @@ def main():
     ax_c = fig.add_subplot(gs[0, 2])
     is_left = laterality == 'left'
     plot_eeg_traces(ax_c, mono_filt,
-                    title='C. Output',
+                    title='',
                     discharge_times=discharge_times,
                     highlight_left=is_left,
                     label_discharges=True)
