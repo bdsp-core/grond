@@ -13,10 +13,17 @@ Usage:
     conda run -n morgoth python paper_materials/generate_all_tables.py
 """
 
+import subprocess
+import sys
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 TABLES_DIR = SCRIPT_DIR / 'tables'
+
+# Tables with auto-generation scripts
+AUTO_GENERATED = {
+    'table1_dataset.md': 'tables/generate_table1.py',
+}
 
 TABLES = [
     ('table1_dataset.md', 'Table 1: Dataset Statistics'),
@@ -31,15 +38,32 @@ TABLES = [
 
 def main():
     print("=" * 60)
-    print("Publication Tables Status")
+    print("Publication Tables")
     print("=" * 60)
 
+    # Auto-generate tables that have scripts
+    for filename, script in AUTO_GENERATED.items():
+        script_path = SCRIPT_DIR / script
+        if script_path.exists():
+            print(f"\n  Generating {filename}...")
+            result = subprocess.run(
+                [sys.executable, str(script_path)],
+                capture_output=True, text=True, timeout=60,
+            )
+            if result.returncode == 0:
+                print(f"  OK  (auto-generated from label files)")
+            else:
+                print(f"  FAILED: {result.stderr[-200:]}")
+
+    # Check all tables
+    print()
     all_ok = True
     for filename, title in TABLES:
         path = TABLES_DIR / filename
         if path.exists():
             lines = path.read_text().strip().split('\n')
-            print(f"  OK  {title}")
+            auto = " [auto-generated]" if filename in AUTO_GENERATED else ""
+            print(f"  OK  {title}{auto}")
             print(f"      -> {filename} ({len(lines)} lines)")
         else:
             print(f"  MISSING  {title}")
