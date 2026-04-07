@@ -300,7 +300,7 @@ def add_verbal_description(img, verbal_text, pc_left, pc_right):
     box_w = text_w + 2 * pad_x
     box_h = text_h + 2 * pad_y
 
-    box_x = pc_left + 350
+    box_x = pc_left + 200
     max_right = pc_right - 350
     if box_x + box_w > max_right:
         box_x = max_right - box_w
