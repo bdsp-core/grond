@@ -1,136 +1,180 @@
 #!/usr/bin/env python3
 """
-Auto-generate Table 5 (Frequency Estimation Performance) from segment_labels.csv.
+Auto-generate Table 5 (Frequency Estimation Performance) from primary data.
 
-Computes Spearman ρ and MAE between expert and predicted frequencies for
-PDCharacterizer/W05 and Tautan et al., per subtype.
+Replicates the EXACT quality filtering used in generate_fig6.py:
+  - MW reviewed, OR
+  - LB+PH+SZ consensus, OR
+  - IIIC ≥10 votes with ≥80% agreement
+
+Expert frequency = mean across all raters in annotations.csv.
 
 Usage:
     conda run -n morgoth python paper_materials/tables/generate_table5.py
 """
 
 import csv
+import json
 import numpy as np
+import pandas as pd
 from scipy.stats import spearmanr
 from pathlib import Path
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent.parent
 LABELS_DIR = PROJECT_DIR / 'data' / 'labels'
+CONTEST_DIR = PROJECT_DIR / 'results' / 'lateralization_contest_v4'
 OUTPUT_PATH = Path(__file__).resolve().parent / 'table5_frequency.md'
 
 SUBTYPES = ['lpd', 'gpd', 'lrda', 'grda']
 
 
-def load_freq_data():
-    """Load frequency data per subtype from segment_labels.csv."""
-    data = {s: {'expert': [], 'pdchar': [], 'tautan': []} for s in SUBTYPES}
+def load_data_and_filter():
+    """Load expert freq + model predictions, apply quality filter.
 
-    with open(LABELS_DIR / 'segment_labels.csv') as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            sub = row.get('subtype', '').lower()
-            if sub not in SUBTYPES:
-                continue
-            if row.get('excluded', '').lower() in ('true', '1', 'yes'):
-                continue
+    Same logic as generate_fig6.py for consistency.
+    """
+    ann = pd.read_csv(LABELS_DIR / 'annotations.csv')
+    sl = pd.read_csv(LABELS_DIR / 'segment_labels.csv')
 
-            expert = row.get('expert_freq_hz', '').strip()
-            pdchar = row.get('pdchar_freq_hz', '').strip()
-            tautan = row.get('tautan_freq_hz', '').strip()
+    # Expert frequency: mean across all raters in annotations.csv
+    has_freq = ann[ann.frequency_hz.notna()].copy()
+    has_freq['frequency_hz'] = pd.to_numeric(has_freq['frequency_hz'], errors='coerce')
+    freq_agg = has_freq.groupby('segment_id').agg(
+        mean_freq=('frequency_hz', 'mean'),
+        n_raters=('rater', 'nunique'),
+    ).reset_index()
+    expert_freq = dict(zip(freq_agg.segment_id, zip(freq_agg.mean_freq, freq_agg.n_raters)))
 
-            try:
-                ef = float(expert)
-            except (ValueError, TypeError):
-                continue  # no expert freq → skip
+    # Also MW-only from segment_labels
+    for _, row in sl[sl.expert_freq_rater == 'MW'].iterrows():
+        sid = row['mat_file'].replace('.mat', '')
+        if sid not in expert_freq and pd.notna(row.get('expert_freq_hz')):
+            expert_freq[sid] = (float(row['expert_freq_hz']), 1)
 
-            if not np.isfinite(ef) or ef <= 0:
-                continue
+    # Per-segment rater sets (for quality filter)
+    freq_raters = has_freq.groupby('segment_id').agg(
+        raters=('rater', lambda x: set(x)),
+    ).reset_index()
+    rater_info = dict(zip(freq_raters.segment_id, freq_raters.raters))
 
-            try:
-                pf = float(pdchar) if pdchar and pdchar not in ('nan', 'NaN', '') else np.nan
-            except (ValueError, TypeError):
-                pf = np.nan
+    # IIIC vote info
+    vote_info = {}
+    for _, row in sl.iterrows():
+        sid = row['mat_file'].replace('.mat', '')
+        nv = pd.to_numeric(row.get('iiic_n_votes'), errors='coerce')
+        pf = pd.to_numeric(row.get('iiic_plurality_frac'), errors='coerce')
+        if np.isfinite(nv):
+            vote_info[sid] = (int(nv), float(pf) if np.isfinite(pf) else 0)
 
-            try:
-                tf = float(tautan) if tautan and tautan not in ('nan', 'NaN', '') else np.nan
-            except (ValueError, TypeError):
-                tf = np.nan
+    def passes_quality(sid):
+        raters = rater_info.get(sid, set())
+        if 'MW' in raters:
+            return True
+        if {'LB', 'PH', 'SZ'}.issubset(raters):
+            return True
+        nv, pf = vote_info.get(sid, (0, 0))
+        if nv >= 10 and pf >= 0.80:
+            return True
+        return False
 
-            data[sub]['expert'].append(ef)
-            data[sub]['pdchar'].append(pf)
-            data[sub]['tautan'].append(tf)
+    # Build results
+    results = {sub: [] for sub in SUBTYPES}
+    for _, row in sl.iterrows():
+        sid = row['mat_file'].replace('.mat', '')
+        subtype = row.get('subtype')
+        if subtype not in results:
+            continue
+        if row.get('excluded') == True:
+            continue
+        pdchar = pd.to_numeric(row.get('pdchar_freq_hz'), errors='coerce')
+        tautan = pd.to_numeric(row.get('tautan_freq_hz'), errors='coerce')
+        if not np.isfinite(pdchar):
+            continue
+        if sid not in expert_freq:
+            continue
+        gt, n_raters = expert_freq[sid]
+        if not np.isfinite(gt) or gt <= 0:
+            continue
 
-    return data
+        results[subtype].append({
+            'gt': float(gt),
+            'pdchar': float(pdchar),
+            'tautan': float(tautan) if np.isfinite(tautan) else np.nan,
+            'passes_quality': passes_quality(sid),
+        })
+
+    return results
 
 
-def compute_metrics(expert, predicted):
-    """Compute Spearman ρ and MAE for valid pairs."""
-    expert = np.array(expert)
-    predicted = np.array(predicted)
-    valid = np.isfinite(expert) & np.isfinite(predicted) & (expert > 0) & (predicted > 0)
+def compute_metrics(items, pred_key, quality_filtered=True):
+    """Compute Spearman ρ and MAE."""
+    if quality_filtered:
+        items = [x for x in items if x['passes_quality']]
+    gt = np.array([x['gt'] for x in items])
+    pred = np.array([x[pred_key] for x in items])
+    valid = np.isfinite(gt) & np.isfinite(pred) & (gt > 0) & (pred > 0)
     if valid.sum() < 5:
         return None, None, 0
-    e, p = expert[valid], predicted[valid]
-    rho, _ = spearmanr(e, p)
-    mae = np.mean(np.abs(e - p))
+    rho, _ = spearmanr(gt[valid], pred[valid])
+    mae = np.mean(np.abs(gt[valid] - pred[valid]))
     return rho, mae, int(valid.sum())
 
 
 def main():
-    print("Generating Table 5 from segment_labels.csv...")
-
-    data = load_freq_data()
+    print("Generating Table 5 from segment_labels.csv + annotations.csv...")
+    data = load_data_and_filter()
 
     lines = []
     lines.append("# Table 5: Frequency Estimation Performance")
     lines.append("")
-    lines.append("*Auto-generated from `data/labels/segment_labels.csv`.*")
+    lines.append("*Auto-generated from `segment_labels.csv` + `annotations.csv` with quality filtering.*")
+    lines.append("*Quality filter: MW reviewed OR LB+PH+SZ consensus OR IIIC ≥10 votes with ≥80% agreement.*")
+    lines.append("*Expert frequency = mean across raters. Same logic as generate_fig6.py.*")
     lines.append("*Regenerate: `conda run -n morgoth python paper_materials/tables/generate_table5.py`*")
     lines.append("")
 
-    # Per-subtype performance
     lines.append("## Per-Subtype Performance (Quality-Filtered)")
     lines.append("")
-    lines.append("| Subtype | N (PDChar) | PDChar/W05 ρ | PDChar MAE (Hz) | N (Tautan) | Tautan ρ | Tautan MAE (Hz) |")
+    lines.append("| Subtype | N | PDChar/W05 ρ | MAE (Hz) | N (Tautan) | Tautan ρ | Tautan MAE |")
     lines.append("|---|---:|---|---|---:|---|---|")
 
     for sub in SUBTYPES:
-        d = data[sub]
-        rho_p, mae_p, n_p = compute_metrics(d['expert'], d['pdchar'])
-        rho_t, mae_t, n_t = compute_metrics(d['expert'], d['tautan'])
+        rho_p, mae_p, n_p = compute_metrics(data[sub], 'pdchar', quality_filtered=True)
+        rho_t, mae_t, n_t = compute_metrics(data[sub], 'tautan', quality_filtered=True)
 
-        rho_p_str = f"**{rho_p:.3f}**" if rho_p is not None else "—"
-        mae_p_str = f"{mae_p:.3f}" if mae_p is not None else "—"
-        rho_t_str = f"{rho_t:.3f}" if rho_t is not None else "—"
-        mae_t_str = f"{mae_t:.3f}" if mae_t is not None else "—"
+        rho_p_s = f"**{rho_p:.3f}**" if rho_p is not None else "—"
+        mae_p_s = f"{mae_p:.3f}" if mae_p is not None else "—"
+        rho_t_s = f"{rho_t:.3f}" if rho_t is not None else "—"
+        mae_t_s = f"{mae_t:.3f}" if mae_t is not None else "—"
 
-        print(f"  {sub.upper()}: PDChar n={n_p} ρ={rho_p_str}, Tautan n={n_t} ρ={rho_t_str}")
-
-        lines.append(f"| {sub.upper()} | {n_p:,} | {rho_p_str} | {mae_p_str} | {n_t:,} | {rho_t_str} | {mae_t_str} |")
+        print(f"  {sub.upper()}: n={n_p}, PDChar ρ={rho_p_s}, Tautan n={n_t} ρ={rho_t_s}")
+        lines.append(f"| {sub.upper()} | {n_p:,} | {rho_p_s} | {mae_p_s} | {n_t:,} | {rho_t_s} | {mae_t_s} |")
 
     lines.append("")
-    lines.append("Quality filter: segments with expert-reviewed frequency (expert_freq_hz) and valid algorithm prediction.")
+
+    # Also show unfiltered for reference
+    lines.append("## Per-Subtype Performance (All Segments, Unfiltered)")
+    lines.append("")
+    lines.append("| Subtype | N | PDChar/W05 ρ | MAE (Hz) |")
+    lines.append("|---|---:|---|---|")
+    for sub in SUBTYPES:
+        rho_p, mae_p, n_p = compute_metrics(data[sub], 'pdchar', quality_filtered=False)
+        rho_p_s = f"{rho_p:.3f}" if rho_p is not None else "—"
+        mae_p_s = f"{mae_p:.3f}" if mae_p is not None else "—"
+        lines.append(f"| {sub.upper()} | {n_p:,} | {rho_p_s} | {mae_p_s} |")
     lines.append("")
 
-    # RDA frequency top methods (from contest results)
-    contest_dir = PROJECT_DIR / 'results' / 'lateralization_contest_v4'
-    if contest_dir.exists():
-        import json
+    # RDA contest
+    if CONTEST_DIR.exists():
         methods = []
-        for jf in sorted(contest_dir.glob('*.json')):
+        for jf in sorted(CONTEST_DIR.glob('*.json')):
             try:
                 with open(jf) as f:
                     r = json.load(f)
-                if isinstance(r, dict) and 'primary_auc' in r and 'freq_rho' in r:
-                    if r['freq_rho'] is not None and r['freq_rho'] > 0:
-                        methods.append({
-                            'name': jf.stem,
-                            'auc': r['primary_auc'],
-                            'freq_rho': r['freq_rho'],
-                        })
+                if isinstance(r, dict) and r.get('freq_rho') and r['freq_rho'] > 0:
+                    methods.append({'name': jf.stem, 'auc': r['primary_auc'], 'freq_rho': r['freq_rho']})
             except Exception:
                 pass
-
         if methods:
             methods.sort(key=lambda x: x['freq_rho'], reverse=True)
             lines.append("## RDA Frequency — Top Methods (V5 Contest)")
@@ -139,8 +183,6 @@ def main():
             lines.append("|---|---|---|---|")
             for i, m in enumerate(methods[:10]):
                 lines.append(f"| {i+1} | {m['name']} | {m['auc']:.3f} | {m['freq_rho']:.3f} |")
-            lines.append("")
-            lines.append(f"{len(methods)} methods evaluated on LRDA vs GRDA classification + frequency estimation.")
             lines.append("")
 
     OUTPUT_PATH.write_text('\n'.join(lines) + '\n')

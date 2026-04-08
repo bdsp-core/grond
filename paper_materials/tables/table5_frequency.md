@@ -1,18 +1,27 @@
 # Table 5: Frequency Estimation Performance
 
-*Auto-generated from `data/labels/segment_labels.csv`.*
+*Auto-generated from `segment_labels.csv` + `annotations.csv` with quality filtering.*
+*Quality filter: MW reviewed OR LB+PH+SZ consensus OR IIIC ≥10 votes with ≥80% agreement.*
+*Expert frequency = mean across raters. Same logic as generate_fig6.py.*
 *Regenerate: `conda run -n morgoth python paper_materials/tables/generate_table5.py`*
 
 ## Per-Subtype Performance (Quality-Filtered)
 
-| Subtype | N (PDChar) | PDChar/W05 ρ | PDChar MAE (Hz) | N (Tautan) | Tautan ρ | Tautan MAE (Hz) |
+| Subtype | N | PDChar/W05 ρ | MAE (Hz) | N (Tautan) | Tautan ρ | Tautan MAE |
 |---|---:|---|---|---:|---|---|
-| LPD | 1,499 | **0.733** | 0.274 | 1,482 | 0.142 | 0.600 |
-| GPD | 1,539 | **0.640** | 0.603 | 1,509 | 0.362 | 0.845 |
-| LRDA | 654 | **0.665** | 0.241 | 500 | 0.145 | 0.571 |
-| GRDA | 1,381 | **0.705** | 0.220 | 1,041 | 0.213 | 0.541 |
+| LPD | 1,226 | **0.786** | 0.265 | 1,212 | 0.184 | 0.581 |
+| GPD | 1,089 | **0.846** | 0.172 | 1,061 | 0.248 | 0.469 |
+| LRDA | 640 | **0.674** | 0.233 | 486 | 0.135 | 0.573 |
+| GRDA | 1,310 | **0.712** | 0.215 | 971 | 0.218 | 0.546 |
 
-Quality filter: segments with expert-reviewed frequency (expert_freq_hz) and valid algorithm prediction.
+## Per-Subtype Performance (All Segments, Unfiltered)
+
+| Subtype | N | PDChar/W05 ρ | MAE (Hz) |
+|---|---:|---|---|
+| LPD | 1,496 | 0.796 | 0.240 |
+| GPD | 1,539 | 0.879 | 0.140 |
+| LRDA | 654 | 0.668 | 0.239 |
+| GRDA | 1,380 | 0.711 | 0.218 |
 
 ## RDA Frequency — Top Methods (V5 Contest)
 
@@ -28,6 +37,4 @@ Quality filter: segments with expert-reviewed frequency (expert_freq_hz) and val
 | 8 | V22_EnvAmp_DomHilbert | 0.790 | 0.650 |
 | 9 | V23_CherryPick | 0.790 | 0.650 |
 | 10 | W01_DomOnly_StrictHilbert | 0.790 | 0.650 |
-
-46 methods evaluated on LRDA vs GRDA classification + frequency estimation.
 
