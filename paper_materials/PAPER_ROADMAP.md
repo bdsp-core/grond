@@ -121,6 +121,12 @@ Adapt the HPP algorithm for RDA waves:
 5. GBT classifier on ~18 handcrafted features from the two timing sequences
 **Status**: Plan complete, BIPD screener built, 21 cases confirmed. Need per-hemisphere timing labels before implementing classifier.
 
+**Future plan (post-paper-writing):**
+- Expand the LPD vs GPD RF classifier (AUC=0.931) to 3-way LPD vs GPD vs BIPD discrimination
+- Retrain primary models (ChannelPD-Net, HemiCET+DP) with BIPD as a third class
+- Verify no regression on LPD/GPD performance while adding BIPD capability
+- BIPD should show distinctive spatial pattern in channel probabilities: both hemispheres active but with independent timing
+
 ---
 
 ## Method Names and Abbreviations

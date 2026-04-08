@@ -1,0 +1,14 @@
+{
+  "task": "LPD vs GPD subtype classification",
+  "method": "RF 300 trees on ChannelPD-Net channel probabilities",
+  "cv": "5-fold patient-stratified",
+  "n_patients": 7037,
+  "n_lpd": 3952,
+  "n_gpd": 3085,
+  "n_segments": 7505,
+  "auc": 0.8752,
+  "accuracy": 0.7937,
+  "sensitivity_gpd": 0.7404,
+  "specificity_lpd": 0.8353,
+  "features": "18 per-channel PD probabilities from ChannelPD-Net"
+}

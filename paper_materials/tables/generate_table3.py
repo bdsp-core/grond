@@ -187,9 +187,17 @@ def main():
         lines.append("| Hemisphere AUC (L vs R) | *run inference first* | — | L vs R hemisphere mean PD probability |")
         print("  PD Hemisphere AUC: predictions.json not found — run code/evaluation/run_all_inference.py")
 
-    # Note: LPD vs GPD AUC (0.931) uses a trained RF classifier on multiple features,
-    # not just asymmetry. That requires running the RF evaluation separately.
-    lines.append("| LPD vs GPD AUC | 0.931 | — | RF 300 trees on ChannelPD-Net features (from evaluation) |")
+    # LPD vs GPD classification from RF evaluation
+    subtype_result_path = PROJECT_DIR / 'data' / 'evaluation_results' / 'subtype_classification.json'
+    if subtype_result_path.exists():
+        with open(subtype_result_path) as f:
+            sub_result = json.load(f)
+        sub_auc = sub_result.get('auc', '—')
+        sub_n = sub_result.get('n_patients', '—')
+        lines.append(f"| LPD vs GPD AUC | **{sub_auc}** | {sub_n:,} | {sub_result.get('method', 'RF 300 trees')} |")
+        print(f"  LPD vs GPD AUC: {sub_auc} (n={sub_n})")
+    else:
+        lines.append("| LPD vs GPD AUC | *run eval_subtype_classification.py* | — | RF 300 trees |")
 
     # Production model metrics
     if Path(COMPARISON_PATH).exists():

@@ -9,7 +9,7 @@
 | Metric | Value | N | Method |
 |---|---|---:|---|
 | Hemisphere AUC (L vs R) | **0.989** | 1,274 | L vs R hemisphere mean PD probability |
-| LPD vs GPD AUC | 0.931 | — | RF 300 trees on ChannelPD-Net features (from evaluation) |
+| LPD vs GPD AUC | **0.8752** | 7,037 | RF 300 trees on ChannelPD-Net channel probabilities |
 | Timing F1 (production) | 0.889 | 582 | HemiCET v2 + DP |
 | Frequency ρ (IPI) | 0.891 | 582 | IPI-derived from detected discharges |
 
