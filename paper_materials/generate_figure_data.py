@@ -404,10 +404,10 @@ def process_pd_case(case, discharge_times_dict):
     topo_img_lap = generate_topoplot_b64(mean_topo_lap, MONO_CHANNELS,
                                           title='Laplacian\ntopography')
 
-    # Laterality: use PDCharacterizer (primary) with topo fallback
+    # Laterality: use PDProfiler (primary) with topo fallback
     try:
-        from pd_characterizer import PDCharacterizer
-        pc = PDCharacterizer()
+        from pd_profiler import PDProfiler
+        pc = PDProfiler()
         bipolar_raw = mono_to_bipolar(mono)
         char_result = pc.characterize(bipolar_raw[:18, :2000], subtype=subtype)
         laterality = char_result.get('laterality', None)

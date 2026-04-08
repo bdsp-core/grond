@@ -106,7 +106,7 @@ def main():
 
     fig, axes = plt.subplots(2, 4, figsize=(18, 9), facecolor='white')
     subtypes = [('lpd', 'LPD'), ('gpd', 'GPD'), ('lrda', 'LRDA'), ('grda', 'GRDA')]
-    method_names = ['PDCharacterizer', 'Signal Proc.\n(Tautan et al.)']
+    method_names = ['PDProfiler', 'Signal Proc.\n(Tautan et al.)']
     pred_keys = ['pred_cnn', 'pred_alex']
 
     # IIIC-standard colors matching the Jing et al. UMAP figure
@@ -169,7 +169,7 @@ def main():
                 ax.set_title(f'\u03c1={rho:.3f}, MAE={mae:.3f}', fontsize=10)
             ax.legend(fontsize=6, loc='upper left')
 
-    fig.text(0.01, 0.73, 'PDCharacterizer\n(CNN+PLV+DP)', fontsize=12, fontweight='bold',
+    fig.text(0.01, 0.73, 'PDProfiler\n(CNN+PLV+DP)', fontsize=12, fontweight='bold',
              va='center', ha='left', rotation=90, color='#333')
     fig.text(0.01, 0.28, 'Signal Proc.\n(Tautan et al.)', fontsize=12, fontweight='bold',
              va='center', ha='left', rotation=90, color='#333')

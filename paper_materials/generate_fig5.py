@@ -102,9 +102,9 @@ def get_rater_regions(ann, subtype, raters):
 
 
 def run_model_on_segments(segment_ids_mat, subtype, sl):
-    """Run PDCharacterizer on segments, return dict[segment_id] -> set of regions."""
-    from pd_characterizer import PDCharacterizer
-    charzer = PDCharacterizer()
+    """Run PDProfiler on segments, return dict[segment_id] -> set of regions."""
+    from pd_profiler import PDProfiler
+    charzer = PDProfiler()
 
     results = {}
     total = len(segment_ids_mat)
@@ -384,8 +384,8 @@ def main():
             else:
                 seg_mat_pairs.append((seg_id, seg_id + '.mat'))
 
-        # PDCharacterizer (CNN+PLV)
-        print(f"\nRunning PDCharacterizer on {subtype.upper()} segments...")
+        # PDProfiler (CNN+PLV)
+        print(f"\nRunning PDProfiler on {subtype.upper()} segments...")
         model_results = run_model_on_segments(seg_mat_pairs, subtype, sl)
         for seg_id, regions in model_results.items():
             if seg_id in data_dict:

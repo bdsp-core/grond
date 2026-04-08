@@ -2,11 +2,11 @@
 
 ## Problem
 
-PDCharacterizer achieves excellent frequency estimation for LPD (Spearman ρ = 0.677, MAE = 0.224 Hz) but performs poorly on GPD (ρ = 0.180, MAE = 0.441 Hz). GPD frequency estimation should be *easier* than LPD since the discharges are bilateral and typically more prominent.
+PDProfiler achieves excellent frequency estimation for LPD (Spearman ρ = 0.677, MAE = 0.224 Hz) but performs poorly on GPD (ρ = 0.180, MAE = 0.441 Hz). GPD frequency estimation should be *easier* than LPD since the discharges are bilateral and typically more prominent.
 
 ## How the Current System Works
 
-### PDCharacterizer Pipeline for Frequency Estimation
+### PDProfiler Pipeline for Frequency Estimation
 
 ```
 Input: 18-channel bipolar EEG (10 seconds @ 200 Hz)
@@ -41,11 +41,11 @@ Input: 18-channel bipolar EEG (10 seconds @ 200 Hz)
 
 ### What Goes Wrong for GPD
 
-**Observation**: PDCharacterizer predicts ~1.35 Hz for 69% of GPD cases, regardless of actual frequency.
+**Observation**: PDProfiler predicts ~1.35 Hz for 69% of GPD cases, regardless of actual frequency.
 
 ```
 GPD Expert GT:    mean=0.98 Hz, std=0.31, range=[0.33, 2.45]
-PDCharacterizer:  mean=1.39 Hz, std=0.23, range=[0.83, 2.60]  ← very narrow!
+PDProfiler:  mean=1.39 Hz, std=0.23, range=[0.83, 2.60]  ← very narrow!
 Alexandra's:      mean=1.00 Hz, std=0.43, range=[0.47, 3.48]  ← much wider
 ```
 
@@ -79,7 +79,7 @@ All methods keep LPD path unchanged; only modify GPD frequency estimation.
 | 6 | D2_Alpha20 | 0.264 | 0.368 | Stricter DP (α=2.0) |
 | 7 | C1_MedianEv | 0.232 | 0.428 | Median evidence instead of weighted mean |
 | ... | | | | |
-| 14 | **Baseline** | **0.180** | **0.441** | Current PDCharacterizer |
+| 14 | **Baseline** | **0.180** | **0.441** | Current PDProfiler |
 | ... | | | | |
 | 26 | B4_WelchPrior | 0.094 | 0.535 | Welch PSD peak as prior |
 

@@ -1,8 +1,8 @@
-# End-to-End Differentiable PDCharacterizer
+# End-to-End Differentiable PDProfiler
 
 ## Goal
 
-Replace the modular PDCharacterizer pipeline with a single end-to-end differentiable model that can be trained with gradient descent from raw EEG to discharge times, frequency, and laterality. Run training on cloud GPU (AWS or GCP).
+Replace the modular PDProfiler pipeline with a single end-to-end differentiable model that can be trained with gradient descent from raw EEG to discharge times, frequency, and laterality. Run training on cloud GPU (AWS or GCP).
 
 ## Current Pipeline (Modular, Partially Non-Differentiable)
 
@@ -248,7 +248,7 @@ gcloud compute ssh pdchar-train -- 'cd pdchar && nohup python train_e2e.py &'
 
 ### Step 3: Local validation (1 day)
 - [ ] Train Phase 1 locally on MPS (small batch, few epochs) to verify convergence
-- [ ] Compare against PDCharacterizer baseline on held-out fold
+- [ ] Compare against PDProfiler baseline on held-out fold
 - [ ] Debug any issues with Hungarian matching or gradient flow
 
 ### Step 4: Cloud training (1 day)
@@ -258,7 +258,7 @@ gcloud compute ssh pdchar-train -- 'cd pdchar && nohup python train_e2e.py &'
 - [ ] Download trained weights
 
 ### Step 5: Integration (1 day)
-- [ ] Wrap trained model in PDCharacterizer-compatible interface
+- [ ] Wrap trained model in PDProfiler-compatible interface
 - [ ] Run full contest evaluation to compare
 - [ ] If better: make default; if worse: keep as experimental
 

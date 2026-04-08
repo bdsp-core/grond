@@ -1,4 +1,4 @@
-"""Evaluate the unified PDCharacterizer pipeline on all 4 tasks.
+"""Evaluate the unified PDProfiler pipeline on all 4 tasks.
 
 Task 1: Laterality (LPD only) — AUC
 Task 2: Spatial localization — Composite (MacF1, Jaccard, AUC)
@@ -12,7 +12,7 @@ from scipy.stats import spearmanr
 from sklearn.metrics import roc_auc_score, f1_score
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from pd_characterizer import PDCharacterizer
+from pd_profiler import PDProfiler
 
 PROJECT = Path(__file__).resolve().parent.parent
 DATA_DIR = PROJECT / 'data'
@@ -81,10 +81,10 @@ def compute_timing_f1(pred_times, gold_times, tol=0.1):
 
 def main():
     print("=" * 70)
-    print("  Unified PDCharacterizer — Full Pipeline Evaluation")
+    print("  Unified PDProfiler — Full Pipeline Evaluation")
     print("=" * 70)
 
-    charzer = PDCharacterizer()
+    charzer = PDProfiler()
 
     pat = pd.read_csv(str(LABELS_DIR / 'patients.csv'))
     pat['patient_id'] = pat['patient_id'].astype(str)
@@ -117,7 +117,7 @@ def main():
         true_lat = 1 if row['laterality_clean'] == 'right' else 0
         # Use confidence as score (positive = right)
         probs = np.array(result['channel_probs'])
-        from pd_characterizer import LEFT_INDICES, RIGHT_INDICES
+        from pd_profiler import LEFT_INDICES, RIGHT_INDICES
         score = np.mean(probs[RIGHT_INDICES]) - np.mean(probs[LEFT_INDICES])
         lat_true.append(true_lat)
         lat_scores.append(score)

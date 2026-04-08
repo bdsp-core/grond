@@ -2,7 +2,7 @@
 """
 Pre-compute spatial inference results for all figure generators.
 
-Runs PDCharacterizer, Tautan et al., and RDA-PLV on all segments with
+Runs PDProfiler, Tautan et al., and RDA-PLV on all segments with
 spatial ground truth, caching results to JSON for instant figure generation.
 
 This only needs to be re-run when:
@@ -101,11 +101,11 @@ def main():
     print(f"Found {len(segments)} segments with spatial GT")
 
     # Initialize models
-    from pd_characterizer import PDCharacterizer
+    from pd_profiler import PDProfiler
     from pd_detect_alternate import pd_detect_alternate
     from rda_spatial_extent import rda_spatial_extent
 
-    pc = PDCharacterizer()
+    pc = PDProfiler()
 
     cache = {}
     n_ok, n_fail = 0, 0
@@ -122,7 +122,7 @@ def main():
         entry = {'subtype': info['subtype']}
 
         try:
-            # PDCharacterizer (PD subtypes)
+            # PDProfiler (PD subtypes)
             if info['subtype'] in ('lpd', 'gpd'):
                 bip = mono_to_bipolar(mono)
                 result = pc.characterize(bip, subtype=info['subtype'])

@@ -230,7 +230,7 @@ This performance substantially exceeded two earlier pipeline versions: the full 
 | SZ | 0.773 | 0.716 | 1.000 | 0.662 |
 | Model | 0.693 | 0.837 | 0.662 | 1.000 |
 
-After threshold optimization (threshold = 0.62) and quality filtering (excluding SZ spatial_extent = 0 entries), the PDCharacterizer spatial ICC was 0.852, exceeding the expert-expert ICC of 0.845 (figure S1). In comparison, Tautan et al. [10] achieved a PD spatial ICC of 0.764 on the same segments.
+After threshold optimization (threshold = 0.62) and quality filtering (excluding SZ spatial_extent = 0 entries), the PDProfiler spatial ICC was 0.852, exceeding the expert-expert ICC of 0.845 (figure S1). In comparison, Tautan et al. [10] achieved a PD spatial ICC of 0.764 on the same segments.
 
 #### 3.4.2 RDA Spatial Extent
 
@@ -367,7 +367,7 @@ The system produces ACNS 2021-formatted verbal descriptions suitable for clinica
 
 **Figure 8.** GRDA characterization examples at three difficulty levels. Three representative generalized rhythmic delta activity (GRDA) cases, following the same format as figure 5. No discharge markers are shown. Light blue shading covers all channels, reflecting the generalized distribution. Scale bar: 100 uV.
 
-**Figure S1.** Inter-rater reliability comparison: expert-expert versus algorithm-expert. Bar charts comparing ICC(3,1) and percentage agreement for frequency and spatial extent estimation. Top row: RDA (LRDA + GRDA combined). Bottom row: PD (LPD + GPD combined). Three conditions compared: expert-expert agreement (blue), present system (orange), and Tautan et al. (green). W05 for RDA frequency achieves ICC = 0.860, matching expert-expert ICC = 0.852. PDCharacterizer for PD spatial extent achieves ICC = 0.852 after threshold optimization, exceeding expert-expert ICC = 0.845.
+**Figure S1.** Inter-rater reliability comparison: expert-expert versus algorithm-expert. Bar charts comparing ICC(3,1) and percentage agreement for frequency and spatial extent estimation. Top row: RDA (LRDA + GRDA combined). Bottom row: PD (LPD + GPD combined). Three conditions compared: expert-expert agreement (blue), present system (orange), and Tautan et al. (green). W05 for RDA frequency achieves ICC = 0.860, matching expert-expert ICC = 0.852. PDProfiler for PD spatial extent achieves ICC = 0.852 after threshold optimization, exceeding expert-expert ICC = 0.845.
 
 **Figure S2.** Spatial extent scatter plots by subtype. Scatter plots comparing algorithm-predicted spatial extent (y-axis, fraction of 18 channels involved) against expert spatial extent (x-axis, mean across raters) for each subtype. Per-rater data points shown with distinct markers for each expert rater (LB, PH, SZ, MW). Spearman rho and MAE are reported per panel.
 

@@ -227,9 +227,9 @@ def compute_segment_data(mat_file, subtype='lpd'):
         discharge_times = []
     print(f"  {len(discharge_times)} discharge times")
 
-    # Laterality via PDCharacterizer
+    # Laterality via PDProfiler
     print("Computing laterality...")
-    from pd_characterizer import PDCharacterizer
+    from pd_profiler import PDProfiler
     bipolar_pairs = [
         ('Fp1', 'F7'), ('F7', 'T3'), ('T3', 'T5'), ('T5', 'O1'),
         ('Fp2', 'F8'), ('F8', 'T4'), ('T4', 'T6'), ('T6', 'O2'),
@@ -241,7 +241,7 @@ def compute_segment_data(mat_file, subtype='lpd'):
     bipolar_raw = np.zeros((18, N_SAMPLES))
     for i, (a, b) in enumerate(bipolar_pairs):
         bipolar_raw[i] = mono_raw[ch_idx[a]] - mono_raw[ch_idx[b]]
-    charzer = PDCharacterizer()
+    charzer = PDProfiler()
     laterality = charzer.characterize(bipolar_raw, subtype=subtype).get('laterality', 'unknown')
     print(f"  Laterality: {laterality}")
 
@@ -535,7 +535,7 @@ def build_full_figure(panel_a, panel_b, panel_c, verbal_text, mean_topo_lap):
     comp.paste(pc, (x, title_h))
 
     # Draw panel A and C titles to match Panel B's title style
-    # Panel B title is "B. PDCharacterizer Architecture" at ~y=50 in the composite
+    # Panel B title is "B. PDProfiler Architecture" at ~y=50 in the composite
     # rendered by draw_panel_b.py in bold DejaVu Sans at size 22 (in 820px canvas)
     # After scaling to 2618px, that's roughly equivalent to Pillow font size ~58
     draw = ImageDraw.Draw(comp)

@@ -1,10 +1,11 @@
 """
-Unified PD Characterization Pipeline
+PD-Profiler: Unified PD Characterization Pipeline
 
 Given a 10-second EEG segment labeled as LPD or GPD, this pipeline produces:
-  1. Lateralization (LPD only): left vs right (AUC 0.98)
+  1. Lateralization (LPD only): left vs right (AUC 0.989)
   2. Spatial localization: which brain regions are involved (Hybrid CNN+PLV)
-  3. Discharge timing: when each discharge occurs (HemiCET+DP with CNN-weighted evidence)
+  3. Discharge timing: when each discharge occurs (HemiCET-UNet + DP with
+     CNN-weighted evidence)
   4. Frequency: median 1/IPI (Hz)
 
 Architecture:
@@ -14,7 +15,7 @@ Architecture:
     → evidence weighting: weight channels by PD probability before aggregation
     → spatial localization: CNN picks reference channels, PLV finds connected regions
 
-  HemiCET (8-channel U-Net per hemisphere)
+  HemiCET-UNet (8-channel U-Net per hemisphere)
     → frame-level discharge evidence trace
     → combined with handcrafted evidence (pointiness + TKEO)
     → product-boosted: max(HPP, CET) + 3×HPP×CET
@@ -25,9 +26,9 @@ Architecture:
     → post-hoc filtering
 
 Usage:
-    from pd_characterizer import PDCharacterizer
-    charzer = PDCharacterizer()
-    result = charzer.characterize(eeg_18ch, subtype='lpd')
+    from pd_profiler import PDProfiler
+    profiler = PDProfiler()
+    result = profiler.characterize(eeg_18ch, subtype='lpd')
     # result['laterality'] = 'left'
     # result['regions'] = ['LF', 'LT', 'LCP', 'LO']
     # result['region_scores'] = {'LF': 0.82, 'RF': 0.31, ...}
@@ -66,8 +67,8 @@ REGION_TO_CHANNELS = {
 }
 
 
-class PDCharacterizer:
-    """Unified pipeline for PD characterization."""
+class PDProfiler:
+    """Unified pipeline for PD characterization (manuscript: PD-Profiler)."""
 
     def __init__(self, device=None):
         if device is None:
@@ -367,10 +368,10 @@ class PDCharacterizer:
 if __name__ == '__main__':
     import scipy.io as sio
 
-    print("PD Characterizer — Quick Test")
+    print("PD-Profiler — Quick Test")
     print("=" * 50)
 
-    charzer = PDCharacterizer()
+    profiler = PDProfiler()
 
     # Load a test segment
     mat = sio.loadmat('data/eeg/111353221_seg000.mat')
@@ -382,7 +383,7 @@ if __name__ == '__main__':
 
     for subtype in ['lpd', 'gpd']:
         print(f"\n--- {subtype.upper()} ---")
-        result = charzer.characterize(seg, subtype=subtype)
+        result = profiler.characterize(seg, subtype=subtype)
         print(f"  Laterality: {result['laterality']} (conf={result['laterality_confidence']:.3f})")
         print(f"  Regions: {result['regions']}")
         print(f"  Region scores: {', '.join(f'{r}={s:.2f}' for r, s in result['region_scores'].items())}")

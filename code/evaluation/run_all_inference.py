@@ -95,15 +95,15 @@ def save_segments(rows, fieldnames):
 
 
 def run_pd_inference(segments, predictions):
-    """Run PDCharacterizer on LPD/GPD segments."""
-    from pd_characterizer import PDCharacterizer
-    pc = PDCharacterizer()
+    """Run PDProfiler on LPD/GPD segments."""
+    from pd_profiler import PDProfiler
+    pc = PDProfiler()
 
     pd_segs = [s for s in segments
                 if s.get('subtype', '').lower() in ('lpd', 'gpd')
                 and s.get('excluded', '').lower() not in ('true', '1', 'yes')]
 
-    print(f"\nRunning PDCharacterizer on {len(pd_segs)} PD segments...")
+    print(f"\nRunning PDProfiler on {len(pd_segs)} PD segments...")
     t0 = time.time()
     n_ok, n_fail = 0, 0
 

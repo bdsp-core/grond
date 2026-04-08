@@ -5,7 +5,7 @@ Generates HTML viewers where MW can review and correct model-predicted
 spatial localization (which brain regions are involved with periodic/rhythmic
 discharges).
 
-For LPD/GPD: uses PDCharacterizer for channel_probs and region_scores.
+For LPD/GPD: uses PDProfiler for channel_probs and region_scores.
 For LRDA/GRDA: uses PLV-based scoring (bandpass 0.5-3.5 Hz, reference channel,
 PLV per channel, map to regions).
 
@@ -77,15 +77,15 @@ REGION_TO_CHANNELS = {
     'MID': [16, 17],  # Fz-Cz, Cz-Pz
 }
 
-# ── PDCharacterizer (lazy loaded) ──
-_pd_characterizer = None
+# ── PDProfiler (lazy loaded) ──
+_pd_profiler = None
 
-def _get_pd_characterizer():
-    global _pd_characterizer
-    if _pd_characterizer is None:
-        from pd_characterizer import PDCharacterizer
-        _pd_characterizer = PDCharacterizer()
-    return _pd_characterizer
+def _get_pd_profiler():
+    global _pd_profiler
+    if _pd_profiler is None:
+        from pd_profiler import PDProfiler
+        _pd_profiler = PDProfiler()
+    return _pd_profiler
 
 
 def _load_monopolar(mat_file):
@@ -125,7 +125,7 @@ def load_segment(mat_file):
 
 
 def predict_spatial_pd(seg, subtype):
-    """Use PDCharacterizer for LPD/GPD spatial prediction.
+    """Use PDProfiler for LPD/GPD spatial prediction.
 
     Returns:
         channel_probs: list of 18 floats
@@ -134,7 +134,7 @@ def predict_spatial_pd(seg, subtype):
         confidence: float (mean of top region scores)
     """
     try:
-        pc = _get_pd_characterizer()
+        pc = _get_pd_profiler()
         result = pc.characterize(seg, subtype=subtype)
         channel_probs = result.get('channel_probs', [0.5] * 18)
         region_scores = result.get('region_scores', {r: 0.5 for r in REGIONS})
@@ -146,7 +146,7 @@ def predict_spatial_pd(seg, subtype):
             confidence = 0.0
         return channel_probs, region_scores, predicted_regions, confidence
     except Exception as e:
-        print(f"  PDCharacterizer failed: {e}")
+        print(f"  PDProfiler failed: {e}")
         return [0.5] * 18, {r: 0.5 for r in REGIONS}, [], 0.0
 
 
@@ -348,7 +348,7 @@ def main():
             try:
                 import mne
                 mne.set_log_level('ERROR')
-                pc = _get_pd_characterizer()
+                pc = _get_pd_profiler()
                 result = pc.characterize(seg, subtype=subtype)
                 discharge_times = result.get('discharge_times', [])
 

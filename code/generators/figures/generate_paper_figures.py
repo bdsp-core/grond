@@ -77,15 +77,15 @@ LEFT_CHANNELS = set([0, 1, 2, 3, 8, 9, 10, 11])  # Fp1-F7, F7-T3, T3-T5, T5-O1, 
 RIGHT_CHANNELS = set([4, 5, 6, 7, 12, 13, 14, 15])  # Fp2-F8, F8-T4, T4-T6, T6-O2, Fp2-F4, F4-C4, C4-P4, P4-O2
 MID_CHANNELS = set([16, 17])  # Fz-Cz, Cz-Pz
 
-# ── PDCharacterizer (lazy loaded) ──
-_pd_characterizer = None
+# ── PDProfiler (lazy loaded) ──
+_pd_profiler = None
 
-def _get_pd_characterizer():
-    global _pd_characterizer
-    if _pd_characterizer is None:
-        from pd_characterizer import PDCharacterizer
-        _pd_characterizer = PDCharacterizer()
-    return _pd_characterizer
+def _get_pd_profiler():
+    global _pd_profiler
+    if _pd_profiler is None:
+        from pd_profiler import PDProfiler
+        _pd_profiler = PDProfiler()
+    return _pd_profiler
 
 
 def parse_regions(s):
@@ -130,9 +130,9 @@ def load_segment(mat_file):
 
 
 def predict_spatial_pd(seg, subtype):
-    """Use PDCharacterizer for LPD/GPD spatial prediction."""
+    """Use PDProfiler for LPD/GPD spatial prediction."""
     try:
-        pc = _get_pd_characterizer()
+        pc = _get_pd_profiler()
         result = pc.characterize(seg, subtype=subtype)
         channel_probs = result.get('channel_probs', [0.5] * 18)
         region_scores = result.get('region_scores', {r: 0.5 for r in REGIONS})
@@ -143,7 +143,7 @@ def predict_spatial_pd(seg, subtype):
         confidence = float(np.mean([region_scores[r] for r in predicted_regions])) if predicted_regions else 0.0
         return channel_probs, region_scores, predicted_regions, confidence, discharge_times, frequency, laterality
     except Exception as e:
-        print(f"  PDCharacterizer failed: {e}")
+        print(f"  PDProfiler failed: {e}")
         return [0.5] * 18, {r: 0.5 for r in REGIONS}, [], 0.0, [], 0, '?'
 
 

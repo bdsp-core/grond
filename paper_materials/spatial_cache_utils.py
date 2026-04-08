@@ -1,7 +1,7 @@
 """Utilities for loading pre-computed spatial inference cache.
 
 The spatial inference cache (spatial_inference_cache.json) stores per-segment
-results from PDCharacterizer, Tautan et al., and RDA-PLV, avoiding the need
+results from PDProfiler, Tautan et al., and RDA-PLV, avoiding the need
 to re-run inference (~5 minutes) every time a figure is regenerated.
 
 To generate the cache:
@@ -35,7 +35,7 @@ def use_cache():
 
 
 def get_cached_pdchar_spatial(cache, mat_files, default=np.nan):
-    """Get PDCharacterizer spatial extent from cache for a list of mat files."""
+    """Get PDProfiler spatial extent from cache for a list of mat files."""
     results = np.full(len(mat_files), default)
     for i, mf in enumerate(mat_files):
         entry = cache.get(mf, {})

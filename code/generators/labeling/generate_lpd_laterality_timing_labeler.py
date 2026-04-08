@@ -165,19 +165,19 @@ def compute_evidence(seg, laterality=None):
         return np.maximum(left_med, right_med)
 
 
-_pd_characterizer = None
+_pd_profiler = None
 
-def _get_pd_characterizer():
-    """Lazy-load PDCharacterizer (loads CNN weights once)."""
-    global _pd_characterizer
-    if _pd_characterizer is None:
-        from pd_characterizer import PDCharacterizer
-        _pd_characterizer = PDCharacterizer()
-    return _pd_characterizer
+def _get_pd_profiler():
+    """Lazy-load PDProfiler (loads CNN weights once)."""
+    global _pd_profiler
+    if _pd_profiler is None:
+        from pd_profiler import PDProfiler
+        _pd_profiler = PDProfiler()
+    return _pd_profiler
 
 
 def predict_laterality(seg):
-    """Predict laterality, frequency, and discharge times using PDCharacterizer.
+    """Predict laterality, frequency, and discharge times using PDProfiler.
 
     Uses the full CNN pipeline (ChannelPD-Net + HemiCET+DP) — the best PD model
     we have (laterality AUC 0.963, timing F1 0.684, freq ρ 0.681).
@@ -185,7 +185,7 @@ def predict_laterality(seg):
     Returns dict with laterality_index, predicted_side, left_score, right_score, est_freq.
     """
     try:
-        pc = _get_pd_characterizer()
+        pc = _get_pd_profiler()
         result = pc.characterize(seg, subtype='lpd')
 
         # Extract laterality from channel_probs
@@ -211,7 +211,7 @@ def predict_laterality(seg):
             'est_freq': round(max(0.25, min(4.5, est_freq)), 2),
         }
     except Exception as e:
-        print(f"  PDCharacterizer failed: {e}")
+        print(f"  PDProfiler failed: {e}")
         return {
             'laterality_index': 0.0,
             'predicted_side': 'left',

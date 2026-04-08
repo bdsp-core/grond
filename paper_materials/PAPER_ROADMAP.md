@@ -211,14 +211,14 @@ Adapt the HPP algorithm for RDA waves:
 
 ### Framing
 
-The paper presents **PDCharacterizer** — a unified pipeline that characterizes periodic and rhythmic EEG patterns in a single pass: laterality, spatial localization, discharge/wave timing, and frequency estimation. The pipeline combines CNNs for feature extraction with dynamic programming for temporal structure, achieving near-expert-level performance across all tasks.
+The paper presents **PDProfiler** — a unified pipeline that characterizes periodic and rhythmic EEG patterns in a single pass: laterality, spatial localization, discharge/wave timing, and frequency estimation. The pipeline combines CNNs for feature extraction with dynamic programming for temporal structure, achieving near-expert-level performance across all tasks.
 
 ### Title
-"PDCharacterizer: Automated Lateralization, Spatial Localization, Timing, and Frequency Estimation for Periodic and Rhythmic EEG Patterns"
+"PDProfiler: Automated Lateralization, Spatial Localization, Timing, and Frequency Estimation for Periodic and Rhythmic EEG Patterns"
 
 ### Abstract
 - Problem: Characterizing PD/RDA properties (laterality, spatial extent, frequency, timing) is subjective and time-consuming
-- What we did: unified pipeline (PDCharacterizer) combining ChannelPD-Net + Hybrid CNN+PLV + HemiCET+DP, trained with iterative human-in-the-loop label refinement
+- What we did: unified pipeline (PDProfiler) combining ChannelPD-Net + Hybrid CNN+PLV + HemiCET+DP, trained with iterative human-in-the-loop label refinement
 - Key results: Lat AUC 0.984, Freq ρ 0.663, Timing F1 0.506, Spatial Jaccard 0.731 (97.3% of human agreement)
 - Key innovation: single-hemisphere CET-UNet evidence + DP inference; spatial localization matching expert inter-rater reliability
 - Significance: first system to jointly characterize all properties of periodic and rhythmic patterns with quantitative performance benchmarks against multi-rater expert annotations
@@ -240,7 +240,7 @@ The paper presents **PDCharacterizer** — a unified pipeline that characterizes
 
 ### 3. Methods
 
-- **3.1 PDCharacterizer pipeline overview**
+- **3.1 PDProfiler pipeline overview**
   - **Figure 3**: System diagram — EEG input → ChannelPD-Net (per-channel PD probability) → laterality + spatial (Hybrid CNN+PLV) → discharge timing (HemiCET+DP) → frequency (IPI) → ACNS verbal description
   - Single-pass inference; all components use the same 18-channel bipolar EEG input
   - **Table 2**: Component summary — architecture, parameters, training data, role
@@ -254,9 +254,9 @@ The paper presents **PDCharacterizer** — a unified pipeline that characterizes
   - **Motivation**: Expert ratings of "spatial extent" (% channels involved) showed poor inter-rater reliability (ICC 0.43-0.69), making threshold-based channel counting an unreliable ground truth. Because our HemiCET+DP pipeline localizes discharge peaks with <1ms accuracy, we can directly compute the voltage topography at each discharge — a principled, ground-truth-free approach to localization.
   - **Method**: Laplacian-GFP aligned discharge averaging with two-pass template refinement and GFP²-weighted averaging to suppress phantom discharges
   - **Output**: MNE spherical spline topoplots (both monopolar and Laplacian/CSD), with standardized ACNS 2021 verbal descriptions using 16 brain regions from the morgoth-viewer IED localization module
-  - **Spatial extent comparison** (retained for benchmarking against Tautan et al.): PDCharacterizer CNN+PLV threshold (T=0.62), RDA-PLV×Amp (T=0.15). PDCharacterizer exceeds expert-expert ICC for PD spatial (0.852 vs 0.845)
+  - **Spatial extent comparison** (retained for benchmarking against Tautan et al.): PDProfiler CNN+PLV threshold (T=0.62), RDA-PLV×Amp (T=0.15). PDProfiler exceeds expert-expert ICC for PD spatial (0.852 vs 0.845)
   - Region mapping: 16 regions including transitional zones (frontotemporal, centro-parietal, fronto-central, parieto-occipital) via morgoth-viewer
-  - ACNS 2021 verbal description: laterality from PDCharacterizer, localization from discharge-locked topography
+  - ACNS 2021 verbal description: laterality from PDProfiler, localization from discharge-locked topography
 
 - **3.4 Discharge timing** — HemiCET+DP
   - HemiCET: 8-channel CET-UNet (one hemisphere → frame-level evidence)
@@ -294,7 +294,7 @@ The paper presents **PDCharacterizer** — a unified pipeline that characterizes
     - Interactive viewer with 3 montages (bipolar, average ref, Laplacian) — **DONE**
   - **Spatial extent comparison** (benchmarking against Tautan et al.)
     - Expert-expert spatial ICC: 0.845 (after removing SZ zeros)
-    - PDCharacterizer (T=0.62): ICC=**0.852** (exceeds experts), MAE=0.095
+    - PDProfiler (T=0.62): ICC=**0.852** (exceeds experts), MAE=0.095
     - Tautan: ICC=0.764, MAE=0.310
     - **Figure spatial scatter**: per-rater dots, 4 subtypes — **DONE**
     - **Figure IRR**: ICC/PA bars for spatial — **DONE**
@@ -310,7 +310,7 @@ The paper presents **PDCharacterizer** — a unified pipeline that characterizes
     - GRDA: ρ=0.712, MAE=0.215 Hz (n=1,310)
   - Label quality analysis: segments with <60% expert agreement have 2.4× higher discrepancy than those with 100% agreement
   - Discrepancy review: MW reviewed all |model - MW| > 0.5 Hz cases; 94% of PD and 61% of RDA accepted model over original MW label
-  - **Figure 6**: 2×4 frequency scatter (PDCharacterizer vs Tautan et al., 4 subtypes) — **DONE**
+  - **Figure 6**: 2×4 frequency scatter (PDProfiler vs Tautan et al., 4 subtypes) — **DONE**
   - **Figure IRR**: Inter-rater reliability comparison (ICC/PA bars) — expert-expert vs expert-algorithm for frequency and spatial extent, all 4 subtypes — **DONE**
   - **Table 5**: Frequency method comparison with quality-filtered labels
 
@@ -324,7 +324,7 @@ The paper presents **PDCharacterizer** — a unified pipeline that characterizes
   - **Figure 6**: LRDA/GRDA characterization examples — **DONE**
   - **Table 6**: Timing performance metrics
 
-- **4.5 Unified PDCharacterizer evaluation**
+- **4.5 Unified PDProfiler evaluation**
   - All metrics on the same test set (expanded labels: 880 lat, 842 freq, 882 timing)
   - Preprocessing optimization contest: 10 variants tested, baseline wins
   - V1 confirmed best vs V3 retrained and E2E DETR attempt
@@ -408,7 +408,7 @@ Optimized via 3-round Gemini critic loop (`paper_materials/optimize_figures.py`)
 | Table | Description | Status | File |
 |-------|-------------|--------|------|
 | Table 1 | Dataset statistics by subtype (segments, patients, label coverage) | **DONE** | `tables/table1_dataset.md` |
-| Table 2 | PDCharacterizer component summary (architecture, params, training data, role) | **DONE** | `tables/table2_architecture.md` |
+| Table 2 | PDProfiler component summary (architecture, params, training data, role) | **DONE** | `tables/table2_architecture.md` |
 | Table 3 | Lateralization performance by subtype (PD AUC 0.984, RDA AUC 0.837) | **DONE** | `tables/table3_lateralization.md` |
 | Table 4 | Spatial inter-rater Jaccard matrix (LB, PH, SZ, Model) | **DONE** | `tables/table4_spatial.md` |
 | Table 5 | Frequency method comparison (PDChar/W05 vs Tautan et al.) | **DONE** | `tables/table5_frequency.md` |
@@ -445,14 +445,14 @@ Optimized via 3-round Gemini critic loop (`paper_materials/optimize_figures.py`)
 ## Priority Order for Remaining Work
 
 ### Tier 1 — Required for paper
-1. ~~**PD timing**~~ — **DONE** (PDCharacterizer V1 F1=0.506 on expanded test set)
+1. ~~**PD timing**~~ — **DONE** (PDProfiler V1 F1=0.506 on expanded test set)
 2. ~~**PD frequency**~~ — **DONE** (quality-filtered: LPD ρ=0.758, GPD ρ=0.767)
 3. ~~**LPD laterality**~~ — **DONE** (AUC 0.984, 95% accuracy on 880 segments)
 4. ~~**Spatial localization**~~ — **DONE** (Jaccard 0.731, 97.3% of human; threshold optimized)
 5. ~~**Publication figures**~~ — **DONE** (Figs 1-2 characterization, Fig 5 spatial, Fig 6 frequency)
 6. ~~**Frequency label review**~~ — **DONE** (313 PD + 299 RDA discrepancies reviewed, labels corrected)
 7. ~~**GPD labeling expansion**~~ — **DONE** (808 GPD with freq+timing, balanced with 811 LPD)
-8. **System diagram figure** (Fig 4) — PDCharacterizer pipeline overview
+8. **System diagram figure** (Fig 4) — PDProfiler pipeline overview
 9. **Write methods + results sections** — using outline above
 
 ### Tier 2 — Strengthens paper
@@ -464,7 +464,7 @@ Optimized via 3-round Gemini critic loop (`paper_materials/optimize_figures.py`)
 
 ### Tier 3 — Future work
 15. **BIPD timing + classifier** (21 confirmed cases, plan complete)
-16. **End-to-end differentiable model** (plan at docs/PLAN_end_to_end_pdcharacterizer.md; needs >1000 labeled examples)
+16. **End-to-end differentiable model** (plan at docs/plans/PLAN_end_to_end_pdprofiler.md; needs >1000 labeled examples)
 17. **Phase-amplitude coupling analysis**
 18. **Longitudinal pattern tracking**
 
@@ -472,7 +472,7 @@ Optimized via 3-round Gemini critic loop (`paper_materials/optimize_figures.py`)
 
 | Category | Done | Remaining |
 |----------|------|-----------|
-| **PD Characterization** | PDCharacterizer V1: Lat AUC 0.984, Freq ρ 0.663, Timing F1 0.506, Spatial Jaccard 0.731 | System diagram figure |
+| **PD Characterization** | PDProfiler V1: Lat AUC 0.984, Freq ρ 0.663, Timing F1 0.506, Spatial Jaccard 0.731 | System diagram figure |
 | **RDA Characterization** | V5 lateralization contest (76 methods, AUC 0.837, Freq ρ 0.635) | Spatial labels, wave timing, freq labels |
 | **Spatial Localization** | Inter-rater analysis (model=97.3% of human), threshold 0.38 optimized, 106 LPD labels | ~1750 LPD + 1034 GPD spatial labeling |
 | **Labels** | 880 lat, 842 freq, 882 timing, 106 spatial (LPD); 1,214 lat (LRDA) | GPD/LRDA/GRDA spatial; RDA timing/freq expansion |

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate spatial extent scatter plots (like Fig 6 but for spatial involvement).
 
-2×4 layout: rows = PDCharacterizer/RDA-PLV vs Tautan et al., cols = LPD/GPD/LRDA/GRDA.
+2×4 layout: rows = PDProfiler/RDA-PLV vs Tautan et al., cols = LPD/GPD/LRDA/GRDA.
 Expert GT = mean spatial_extent across available raters (LB, PH, SZ).
 Algorithm predictions computed at threshold=0.62.
 
@@ -25,7 +25,7 @@ EEG_DIR = PROJECT_DIR / 'data' / 'eeg'
 LABELS_DIR = PROJECT_DIR / 'data' / 'labels'
 
 FS = 200
-PD_THRESHOLD = 0.62   # Optimized for PD (PDCharacterizer channel_probs)
+PD_THRESHOLD = 0.62   # Optimized for PD (PDProfiler channel_probs)
 RDA_THRESHOLD = 0.15  # Optimized for RDA (PLV×Amp) post SZ cleanup
 
 MONO_CHANNELS = [
@@ -134,11 +134,11 @@ def main():
         n_valid = sum(1 for s in segments if np.isfinite(s.get('pred_ours', np.nan)))
         print(f"  Loaded {n_valid}/{len(segments)} from cache")
     else:
-        from pd_characterizer import PDCharacterizer
+        from pd_profiler import PDProfiler
         import pd_detect_alternate as pddeta
         from rda_spatial_extent import rda_spatial_extent
 
-        pc = PDCharacterizer()
+        pc = PDProfiler()
 
         print("\nRunning inference...")
         for i, seg in enumerate(segments):

@@ -1,4 +1,4 @@
-# Table 2: PDCharacterizer Pipeline Components
+# Table 2: PDProfiler Pipeline Components
 
 | Component | Architecture | Parameters | Input | Output | Training Data | Role |
 |---|---|---:|---|---|---:|---|

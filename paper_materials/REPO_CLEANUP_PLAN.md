@@ -14,7 +14,7 @@ The published repo should allow users to:
 ```
 code/
 ├── pipeline/                    # Core inference pipeline (run on new data)
-│   ├── pd_characterizer.py      # Main PD entry point
+│   ├── pd_profiler.py      # Main PD entry point
 │   ├── discharge_detector.py    # HemiCET+DP discharge detection
 │   ├── rda_characterizer.py     # Main RDA entry point (W05)
 │   ├── rda_spatial_extent.py    # RDA-PLV spatial

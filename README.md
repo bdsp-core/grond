@@ -31,7 +31,7 @@ Headline numbers from the manuscript (see [paper_materials/manuscript.tex](paper
 
 ### PD-Profiler
 
-The PD characterization pipeline (referred to in code as `PDCharacterizer`) uses a single per-channel CNN (**ChannelPD-Net**) as a backbone serving three roles: laterality detection, spatial reference selection, and evidence channel weighting. Laterality detection feeds forward into both downstream modules — constraining the spatial localizer to seed from the ipsilateral hemisphere and restricting the discharge detector to ipsilateral channels. See [paper_materials/unified_pd_pipeline.md](paper_materials/unified_pd_pipeline.md) for the design doc and [paper_materials/manuscript.tex](paper_materials/manuscript.tex) §2.2 + appendix B for the formal mathematical specification.
+The PD characterization pipeline (referred to in code as `PDProfiler`) uses a single per-channel CNN (**ChannelPD-Net**) as a backbone serving three roles: laterality detection, spatial reference selection, and evidence channel weighting. Laterality detection feeds forward into both downstream modules — constraining the spatial localizer to seed from the ipsilateral hemisphere and restricting the discharge detector to ipsilateral channels. See [paper_materials/unified_pd_pipeline.md](paper_materials/unified_pd_pipeline.md) for the design doc and [paper_materials/manuscript.tex](paper_materials/manuscript.tex) §2.2 + appendix B for the formal mathematical specification.
 
 ## Overview
 
@@ -161,7 +161,7 @@ The label system has three tiers:
 ```
 code/
 ├── Core Pipeline
-│   ├── pd_characterizer.py           Unified PD pipeline (main entry point)
+│   ├── pd_profiler.py           Unified PD pipeline (main entry point)
 │   ├── discharge_detector.py         HemiCET+DP discharge detection
 │   ├── pd_pointiness_acf.py          Signal processing (ACF, pointiness, getBanana)
 │   ├── bipd_detector.py              BIPD vs GPD classification
@@ -241,10 +241,10 @@ conda activate morgoth
 
 # PD characterization (laterality, timing, frequency, spatial, verbal description)
 python -c "
-from code.pd_characterizer import PDCharacterizer
+from code.pd_profiler import PDProfiler
 import scipy.io as sio
 eeg = sio.loadmat('your_segment.mat')['data']  # 18×2000 bipolar
-result = PDCharacterizer().characterize(eeg, subtype='lpd')
+result = PDProfiler().characterize(eeg, subtype='lpd')
 print(result)
 "
 ```
@@ -331,7 +331,7 @@ Key dashboards:
 
 ### PD-Profiler
 
-Standalone callable: `code/pd_characterizer.py` (class `PDCharacterizer`). A single per-channel CNN (**ChannelPD-Net**) serves as the backbone for all PD tasks:
+Standalone callable: `code/pd_profiler.py` (class `PDProfiler`). A single per-channel CNN (**ChannelPD-Net**) serves as the backbone for all PD tasks:
 
 - **Laterality**: Compare hemisphere mean PD probabilities (AUC = 0.989, n = 1,274)
 - **Spatial**: Hybrid-PLV — CNN picks ipsilateral reference channels, PLV finds connected regions. Inter-rater agreement: Model Jaccard 0.731 vs human 0.751 (97.3% of expert–expert agreement, n = 211 with 3-rater ground truth)

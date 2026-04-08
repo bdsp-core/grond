@@ -175,7 +175,7 @@ This gracefully handles asymmetric GPD (where one hemisphere has cleaner signal)
 
 ### Phase 4: Integration
 
-1. Wire confidence-weighted fusion into PDCharacterizer
+1. Wire confidence-weighted fusion into PDProfiler
 2. Add BIPD classification output
 3. Update verbal description generator for BIPD:
    - "BIPD: left hemisphere at 1.2 Hz, right hemisphere at 0.8 Hz"

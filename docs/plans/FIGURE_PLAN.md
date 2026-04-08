@@ -1,4 +1,4 @@
-# Figure Plan: PDCharacterizer Paper
+# Figure Plan: PDProfiler Paper
 
 ## Main Text Figures
 
@@ -59,7 +59,7 @@
 ### Figure 4: Frequency Estimation Results — Scatter Plots
 - **Current file**: `fig6_frequency_scatter.png`
 - **Generator**: `paper_materials/generate_fig6.py`
-- **Content**: 2×4 scatter plot grid. Rows: PDCharacterizer/W05 (top) vs Tautan et al. (bottom). Columns: LPD, GPD, LRDA, GRDA. Each panel shows predicted frequency (y) vs expert frequency (x) with Spearman ρ and MAE. Black stars = ≥3 expert raters, colored circles = 1-2 raters. IIIC-standard subtype colors.
+- **Content**: 2×4 scatter plot grid. Rows: PDProfiler/W05 (top) vs Tautan et al. (bottom). Columns: LPD, GPD, LRDA, GRDA. Each panel shows predicted frequency (y) vs expert frequency (x) with Spearman ρ and MAE. Black stars = ≥3 expert raters, colored circles = 1-2 raters. IIIC-standard subtype colors.
 - **Paper section**: Results 4.1
 - **Purpose**: Primary quantitative result for frequency estimation
 - **No PaperBanana update needed** — this is a pure data figure generated from code.

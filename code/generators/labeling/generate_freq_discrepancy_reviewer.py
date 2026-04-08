@@ -193,22 +193,22 @@ def downsample(arr, target_len):
         return arr[:, indices].tolist()
 
 
-# ---------- PDCharacterizer ----------
+# ---------- PDProfiler ----------
 
-_pd_characterizer = None
+_pd_profiler = None
 
-def _get_pd_characterizer():
-    global _pd_characterizer
-    if _pd_characterizer is None:
-        from pd_characterizer import PDCharacterizer
-        _pd_characterizer = PDCharacterizer()
-    return _pd_characterizer
+def _get_pd_profiler():
+    global _pd_profiler
+    if _pd_profiler is None:
+        from pd_profiler import PDProfiler
+        _pd_profiler = PDProfiler()
+    return _pd_profiler
 
 
 def predict_laterality(seg, subtype='lpd'):
-    """Predict laterality, frequency, and discharge times using PDCharacterizer."""
+    """Predict laterality, frequency, and discharge times using PDProfiler."""
     try:
-        pc = _get_pd_characterizer()
+        pc = _get_pd_profiler()
         result = pc.characterize(seg, subtype=subtype)
         channel_probs = result.get('channel_probs', [0.5] * 18)
         left_score = float(np.mean([channel_probs[i] for i in LEFT_INDICES]))
@@ -227,7 +227,7 @@ def predict_laterality(seg, subtype='lpd'):
             'est_freq': round(max(0.25, min(4.5, est_freq)), 2),
         }
     except Exception as e:
-        print(f"  PDCharacterizer failed: {e}")
+        print(f"  PDProfiler failed: {e}")
         return {
             'laterality_index': 0.0,
             'predicted_side': 'left',

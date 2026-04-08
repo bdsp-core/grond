@@ -251,29 +251,29 @@ def w05_estimate_freq(seg_bi):
     return dom_freq, dom_side
 
 
-# ---------- PDCharacterizer frequency estimation (for PD) ----------
+# ---------- PDProfiler frequency estimation (for PD) ----------
 
 _pd_char = None
 
-def _get_pd_characterizer():
+def _get_pd_profiler():
     global _pd_char
     if _pd_char is None:
-        from pd_characterizer import PDCharacterizer
-        _pd_char = PDCharacterizer()
+        from pd_profiler import PDProfiler
+        _pd_char = PDProfiler()
     return _pd_char
 
 
 def pd_estimate_freq(seg_bi, subtype):
-    """Use PDCharacterizer for LPD/GPD frequency estimation."""
+    """Use PDProfiler for LPD/GPD frequency estimation."""
     try:
-        pc = _get_pd_characterizer()
+        pc = _get_pd_profiler()
         result = pc.characterize(seg_bi, subtype=subtype)
         freq = result['frequency']
         if freq is not None and np.isfinite(freq) and freq > 0:
             return float(freq)
         return 1.0
     except Exception as e:
-        print(f"    PDCharacterizer error: {e}")
+        print(f"    PDProfiler error: {e}")
         return 1.0
 
 
@@ -388,7 +388,7 @@ def prepare_pd_cases(candidates):
         # HPP results at all frequency buttons
         hpp_results = precompute_hpp_results(evidence, FREQ_BUTTONS)
 
-        # PDCharacterizer default frequency
+        # PDProfiler default frequency
         model_freq = pd_estimate_freq(seg, subtype)
         default_freq = min(FREQ_BUTTONS, key=lambda f: abs(f - model_freq))
 

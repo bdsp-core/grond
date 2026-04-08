@@ -1,7 +1,7 @@
 """
 Generate threshold sweep figure: spatial extent agreement vs threshold.
 
-For PD (PDCharacterizer) and RDA (RDA-PLV), sweep the threshold used to
+For PD (PDProfiler) and RDA (RDA-PLV), sweep the threshold used to
 binarize per-channel scores, converting to spatial extent = count(score > T) / 18.
 Plot MAE, Pearson r, and ICC(3,1) as functions of the threshold.
 
@@ -178,9 +178,9 @@ def get_spatial_segments(ann, subtypes):
 # ═══════════════════════════════════════════════════════════════════
 
 def get_pd_channel_scores(mat_files, subtype_list):
-    """Run PDCharacterizer, return (n, 18) channel probability matrix."""
-    from pd_characterizer import PDCharacterizer
-    pc = PDCharacterizer()
+    """Run PDProfiler, return (n, 18) channel probability matrix."""
+    from pd_profiler import PDProfiler
+    pc = PDProfiler()
 
     scores = np.full((len(mat_files), 18), np.nan)
     n_ok = 0
@@ -324,7 +324,7 @@ def plot_figure(pd_results, rda_results, thresholds):
     ]
 
     row_data = [
-        ('PD (PDCharacterizer)', pd_results, ['lpd', 'gpd']),
+        ('PD (PDProfiler)', pd_results, ['lpd', 'gpd']),
         ('RDA (RDA-PLV)', rda_results, ['lrda', 'grda']),
     ]
 
@@ -434,7 +434,7 @@ def main():
     _cache = load_spatial_cache() if _use_cache else None
 
     if _use_cache and _cache:
-        print("Loading PDCharacterizer scores from cache...", flush=True)
+        print("Loading PDProfiler scores from cache...", flush=True)
         pd_scores = np.full((len(pd_mats), 18), np.nan)
         for i, mf in enumerate(pd_mats):
             entry = _cache.get(mf, {})
@@ -442,7 +442,7 @@ def main():
             if probs is not None:
                 pd_scores[i] = probs
     else:
-        print("Running PDCharacterizer inference...", flush=True)
+        print("Running PDProfiler inference...", flush=True)
         pd_scores = get_pd_channel_scores(pd_mats, pd_subtypes)
 
     print("Sweeping PD thresholds...", flush=True)
@@ -473,7 +473,7 @@ def main():
     plot_figure(pd_results, rda_results, THRESHOLDS)
 
     # ── Print optimal thresholds ──
-    print_optimal_thresholds(pd_results, 'PD (PDCharacterizer)', THRESHOLDS)
+    print_optimal_thresholds(pd_results, 'PD (PDProfiler)', THRESHOLDS)
     print_optimal_thresholds(rda_results, 'RDA (RDA-PLV)', THRESHOLDS)
 
     print("\nDone!", flush=True)

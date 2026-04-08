@@ -60,7 +60,7 @@ Same morgoth-viewer `describe_ied_topoplot()` function:
 | **Noise robustness** | √N averaging across discharges | Inherent in envelope computation (smooths fast noise) |
 | **Polarity** | Both positive and negative voltage | Always non-negative (amplitude envelope) |
 | **Colormap** | RdBu_r (diverging, shows polarity) | Hot/inferno (sequential, amplitude only) |
-| **Laterality source** | PDCharacterizer | W05_DomOnly_IterRefine |
+| **Laterality source** | PDProfiler | W05_DomOnly_IterRefine |
 
 ## Colormap Choice
 

@@ -366,13 +366,13 @@ def generate_verbal_from_topo(subtype, frequency, mean_topo_mono, laterality_fro
     """Generate ACNS 2021 verbal description using morgoth-viewer's IED localization.
 
     Uses describe_ied_topoplot() from morgoth-viewer for regional localization,
-    and PDCharacterizer for primary laterality determination (left vs right).
+    and PDProfiler for primary laterality determination (left vs right).
 
     Args:
         subtype: 'lpd' or 'gpd'
         frequency: Hz (from IPI)
         mean_topo_mono: (19,) monopolar voltage at discharge peaks
-        laterality_from_pdchar: 'left' or 'right' or None (from PDCharacterizer)
+        laterality_from_pdchar: 'left' or 'right' or None (from PDProfiler)
     """
     # morgoth-viewer is expected as a sibling git checkout. Override with the
     # MORGOTH_VIEWER_PATH environment variable if it lives elsewhere.
@@ -396,7 +396,7 @@ def generate_verbal_from_topo(subtype, frequency, mean_topo_mono, laterality_fro
     is_lateralized = subtype in ('lpd', 'lrda')
 
     if is_lateralized:
-        # Use PDCharacterizer laterality as primary (left/right determination)
+        # Use PDProfiler laterality as primary (left/right determination)
         # Use topo laterality for unilateral vs bilateral assessment
         side = laterality_from_pdchar or topo_laterality
         if side in ('bilateral', 'midline'):
@@ -439,14 +439,14 @@ def build_case_data(case_info):
     topo_img_mono = generate_topoplot_b64(mean_topo_mono, MONO_CHANNELS, title='Average Reference')
     topo_img_lap = generate_topoplot_b64(mean_topo_lap, MONO_CHANNELS, title='Laplacian')
 
-    # Get laterality from PDCharacterizer (primary L/R determination)
+    # Get laterality from PDProfiler (primary L/R determination)
     subtype = case_info['subtype']
     bipolar_raw = mono_to_bipolar(mono)
     pdchar_laterality = None
     try:
         sys.path.insert(0, str(PROJECT_DIR / 'code'))
-        from pd_characterizer import PDCharacterizer
-        pc = PDCharacterizer()
+        from pd_profiler import PDProfiler
+        pc = PDProfiler()
         char_result = pc.characterize(bipolar_raw[:18, :2000], subtype=subtype)
         pdchar_laterality = char_result.get('laterality', None)  # 'left' or 'right'
     except Exception:

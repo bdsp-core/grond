@@ -160,16 +160,16 @@ Output:
 
 ## Code
 
-Standalone callable: `code/pd_characterizer.py`
+Standalone callable: `code/pd_profiler.py`
 
 Pipeline figure: `paper_materials/figures/fig2-unified-pipeline.png`
 
 Contest results: `results/leaderboards/spatial_contest/` (26 methods), `results/leaderboards/rda_contest/` (45 methods)
 
 ```python
-from pd_characterizer import PDCharacterizer
+from pd_profiler import PDProfiler
 
-charzer = PDCharacterizer()
+charzer = PDProfiler()
 result = charzer.characterize(eeg_18ch, subtype='lpd')
 
 # result keys:

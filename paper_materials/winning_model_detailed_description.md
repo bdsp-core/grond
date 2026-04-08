@@ -1,4 +1,4 @@
-# Unified PD Characterization: PDCharacterizer
+# Unified PD Characterization: PDProfiler
 
 ## Overview
 
@@ -6,7 +6,7 @@ The system characterizes periodic discharges (LPD/GPD) in 10-second EEG segments
 
 **Performance**: Laterality AUC=0.98, Spatial Composite=0.811, Timing F1=0.68, Frequency ρ=0.744.
 
-**Code**: `code/pd_characterizer.py`
+**Code**: `code/pd_profiler.py`
 
 **Full pipeline specification**: See [unified_pd_pipeline.md](unified_pd_pipeline.md).
 

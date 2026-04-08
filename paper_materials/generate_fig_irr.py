@@ -2,7 +2,7 @@
 Generate IRR comparison figure: expert-expert vs expert-algorithm reliability.
 
 Computes ICC(3,1), Percentage Agreement, and MAE for frequency and spatial extent.
-Compares 4 expert raters (LB, PH, SZ, MW) with PDCharacterizer (W05) and Tautan et al.
+Compares 4 expert raters (LB, PH, SZ, MW) with PDProfiler (W05) and Tautan et al.
 
 Layout: 2x4 subplot
   Row 1: RDA (LRDA + GRDA)
@@ -367,9 +367,9 @@ def mono_to_bipolar(mono_19ch):
 
 
 def run_pdchar_spatial(mat_files, subtypes_list):
-    """Run PDCharacterizer on LPD/GPD segments, return spatial extent array."""
-    from pd_characterizer import PDCharacterizer
-    charzer = PDCharacterizer()
+    """Run PDProfiler on LPD/GPD segments, return spatial extent array."""
+    from pd_profiler import PDProfiler
+    charzer = PDProfiler()
 
     results = np.full(len(mat_files), np.nan)
     n_ok = 0
@@ -810,7 +810,7 @@ def main():
         rda_plv_spat_cont = get_cached_rda_spatial(_cache, rda_spat_mats, mode='continuous')
         print(f"  Loaded from cache: PD={np.sum(~np.isnan(pd_pdchar_spat))}, RDA={np.sum(~np.isnan(rda_plv_spat_thr))}")
     else:
-        print("\n── Running PDCharacterizer for PD spatial extent ──")
+        print("\n── Running PDProfiler for PD spatial extent ──")
         pd_pdchar_spat = run_pdchar_spatial(pd_spat_mats, pd_spat_subtypes)
 
         print("\n── Running Tautan for PD spatial extent ──")
