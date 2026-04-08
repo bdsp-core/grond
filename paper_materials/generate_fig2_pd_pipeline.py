@@ -13,6 +13,7 @@ Usage:
     conda run -n morgoth python paper_materials/generate_fig2_pd_pipeline.py
 """
 
+import os
 import sys
 import json
 import numpy as np
@@ -36,7 +37,10 @@ mne.set_log_level('WARNING')
 PROJECT_DIR = Path(__file__).resolve().parent.parent
 CODE_DIR = PROJECT_DIR / 'code'
 sys.path.insert(0, str(CODE_DIR))
-sys.path.insert(0, '/Users/mwestover/GithubRepos/morgoth-viewer')
+# morgoth-viewer is expected as a sibling git checkout. Override with the
+# MORGOTH_VIEWER_PATH environment variable if it lives elsewhere.
+_default_morgoth_viewer = PROJECT_DIR.parent / 'morgoth-viewer'
+sys.path.insert(0, os.environ.get('MORGOTH_VIEWER_PATH', str(_default_morgoth_viewer)))
 
 DATA_DIR = PROJECT_DIR / 'data'
 LABELS_DIR = DATA_DIR / 'labels'

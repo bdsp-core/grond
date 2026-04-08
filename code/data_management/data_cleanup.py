@@ -10,7 +10,7 @@ import shutil
 import pandas as pd
 from collections import defaultdict
 
-BASE = '/Users/mwestover/GithubRepos/IIIC-Frequency-Functions-For-Morgoth'
+BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 LABELS = os.path.join(BASE, 'data', 'labels')
 EEG_DIR = os.path.join(BASE, 'data', 'eeg')
 ARCHIVE = os.path.join(BASE, 'data', '_archive')

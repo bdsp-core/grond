@@ -20,7 +20,7 @@ import pandas as pd
 import scipy.io as sio
 
 # ─── Paths ────────────────────────────────────────────────────────────────────
-PROJECT = "/Users/mwestover/GithubRepos/IIIC-Frequency-Functions-For-Morgoth"
+PROJECT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 EEG_DIR = os.path.join(PROJECT, "data", "eeg")
 LABELS_DIR = os.path.join(PROJECT, "data", "labels")
 RESULTS_DIR = os.path.join(PROJECT, "results")

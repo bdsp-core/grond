@@ -27,8 +27,16 @@ S3_BUCKET = 's3://bdsp-opendata-credentialed'
 S3_PREFIX = 'morgoth1/data/internal_dataset/IIIC/segments_raw'
 AWS_REGION = 'us-east-1'
 
-# AWS credentials
-AWS_KEYS_PATH = Path('/Users/mwestover/Library/CloudStorage/Box-Box/Brandon - PHI/AWSKeys/bdsp_opendata_write_accessKeys.csv')
+# Path to a CSV file with the columns "Access key ID" and "Secret access key"
+# (the format produced by AWS IAM when you download a new access key). Override
+# by exporting AWS_KEYS_PATH or by setting AWS_ACCESS_KEY_ID and
+# AWS_SECRET_ACCESS_KEY directly in the environment.
+AWS_KEYS_PATH = Path(
+    os.environ.get(
+        'AWS_KEYS_PATH',
+        Path.home() / '.aws' / 'bdsp_opendata_write_accessKeys.csv',
+    )
+)
 
 FS = 200
 SEGMENT_DURATION = 10  # seconds
@@ -36,6 +44,15 @@ CENTER_OFFSET = 300  # seconds into the 10-min recording
 
 
 def load_aws_credentials():
+    """Load AWS credentials, preferring the standard environment variables."""
+    if 'AWS_ACCESS_KEY_ID' in os.environ and 'AWS_SECRET_ACCESS_KEY' in os.environ:
+        return os.environ['AWS_ACCESS_KEY_ID'], os.environ['AWS_SECRET_ACCESS_KEY']
+    if not AWS_KEYS_PATH.exists():
+        raise FileNotFoundError(
+            f"AWS credentials not found. Either set AWS_ACCESS_KEY_ID and "
+            f"AWS_SECRET_ACCESS_KEY in your environment, or place a credentials "
+            f"CSV at {AWS_KEYS_PATH} (or set AWS_KEYS_PATH to point at one)."
+        )
     keys = pd.read_csv(str(AWS_KEYS_PATH))
     return keys.iloc[0]['Access key ID'], keys.iloc[0]['Secret access key']
 

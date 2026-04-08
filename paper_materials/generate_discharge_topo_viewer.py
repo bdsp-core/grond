@@ -13,6 +13,7 @@ Usage:
     conda run -n morgoth python paper_materials/generate_discharge_topo_viewer.py
 """
 
+import os
 import sys
 import json
 import numpy as np
@@ -373,7 +374,10 @@ def generate_verbal_from_topo(subtype, frequency, mean_topo_mono, laterality_fro
         mean_topo_mono: (19,) monopolar voltage at discharge peaks
         laterality_from_pdchar: 'left' or 'right' or None (from PDCharacterizer)
     """
-    sys.path.insert(0, '/Users/mwestover/GithubRepos/morgoth-viewer')
+    # morgoth-viewer is expected as a sibling git checkout. Override with the
+    # MORGOTH_VIEWER_PATH environment variable if it lives elsewhere.
+    _default_morgoth_viewer = Path(__file__).resolve().parent.parent.parent / 'morgoth-viewer'
+    sys.path.insert(0, os.environ.get('MORGOTH_VIEWER_PATH', str(_default_morgoth_viewer)))
     from morgoth_viewer_app.processing.ied_localization import describe_ied_topoplot
 
     # Use absolute values for localization (polarity doesn't matter for region)

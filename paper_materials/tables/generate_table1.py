@@ -40,6 +40,7 @@ def count_segment_labels():
     """Count labels per subtype from segment_labels.csv."""
     counts = defaultdict(lambda: defaultdict(int))
     patients = defaultdict(set)
+    all_patients_nonexcluded = set()  # deduplicated across subtypes
 
     with open(LABELS_DIR / 'segment_labels.csv') as f:
         reader = csv.DictReader(f)
@@ -55,7 +56,9 @@ def count_segment_labels():
                 continue
 
             counts[sub]['total'] += 1
-            patients[sub].add(row.get('patient_id', ''))
+            pid = row.get('patient_id', '')
+            patients[sub].add(pid)
+            all_patients_nonexcluded.add(pid)
 
             # Expert frequency
             if is_valid(row.get('expert_freq_hz')):
@@ -97,6 +100,8 @@ def count_segment_labels():
 
     for sub in SUBTYPES:
         counts[sub]['patients'] = len(patients[sub])
+
+    counts['__dedup_patients_total__'] = len(all_patients_nonexcluded)
 
     return counts
 
@@ -151,7 +156,8 @@ def generate_table(counts, rater_counts):
     lines.append("|---|---:|---:|---:|---:|---:|")
     lines.append(f"| Segments (non-excluded) | {fmt(counts['lpd']['total'])} | {fmt(counts['gpd']['total'])} | {fmt(counts['lrda']['total'])} | {fmt(counts['grda']['total'])} | {fmt(total_segs)} |")
     lines.append(f"| Excluded | {fmt(counts['lpd']['excluded'])} | {fmt(counts['gpd']['excluded'])} | {fmt(counts['lrda']['excluded'])} | {fmt(counts['grda']['excluded'])} | {fmt(total_excl)} |")
-    lines.append(f"| Unique patients | {fmt(counts['lpd']['patients'])} | {fmt(counts['gpd']['patients'])} | {fmt(counts['lrda']['patients'])} | {fmt(counts['grda']['patients'])} | — |")
+    dedup_total = counts.get('__dedup_patients_total__', 0)
+    lines.append(f"| Unique patients | {fmt(counts['lpd']['patients'])} | {fmt(counts['gpd']['patients'])} | {fmt(counts['lrda']['patients'])} | {fmt(counts['grda']['patients'])} | {fmt(dedup_total)} |")
     lines.append("")
     lines.append("All segments: 19-channel monopolar EEG, 10 seconds at 200 Hz (2,000 samples). Common average reference montage.")
     lines.append("")
@@ -238,8 +244,11 @@ def main():
     # Print summary
     for sub in SUBTYPES:
         c = counts[sub]
-        print(f"  {sub.upper()}: {c['total']} segments, {c['expert_freq']} expert freq, "
-              f"{c['discharge_timing']} discharge timing, {c['laterality']} laterality")
+        print(f"  {sub.upper()}: {c['total']} segments, {c['patients']} unique patients, "
+              f"{c['expert_freq']} expert freq, {c['discharge_timing']} discharge timing, "
+              f"{c['laterality']} laterality")
+    print(f"  Deduplicated unique patients across all 4 subtypes: "
+          f"{counts.get('__dedup_patients_total__', 0)}")
 
     table_md = generate_table(counts, rater_counts)
 

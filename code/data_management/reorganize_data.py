@@ -25,7 +25,7 @@ import scipy.io as sio
 
 warnings.filterwarnings("ignore")
 
-ROOT = Path("/Users/mwestover/GithubRepos/IIIC-Frequency-Functions-For-Morgoth")
+ROOT = Path(__file__).resolve().parent.parent.parent
 DATA = ROOT / "data"
 EEG_OUT = DATA / "eeg"
 LABELS_OUT = DATA / "labels"
