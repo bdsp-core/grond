@@ -45,7 +45,7 @@ PROJECT_DIR = Path(__file__).resolve().parent.parent.parent
 CODE_DIR = PROJECT_DIR / 'code'
 sys.path.insert(0, str(CODE_DIR))
 
-from pd_characterizer import PDCharacterizer
+from pd_profiler import PDProfiler
 from pd_pointiness_acf import fcn_getBanana, pd_detect_pointiness_acf
 from pd_pointiness_acf import compute_acf_frequency, compute_pointiness_trace
 from discharge_detector import (
@@ -207,7 +207,7 @@ def precompute_segment(mat_file, subtype, pc, det):
 
     seg_bi = fcn_getBanana(data[:, :n_samples])
 
-    # Run full PDCharacterizer for baseline
+    # Run full PDProfiler for baseline
     result = pc.characterize(seg_bi, subtype=subtype)
 
     # Per-channel evidence
@@ -884,7 +884,7 @@ def main():
 
     # Initialize models
     print("\nInitializing models...")
-    pc = PDCharacterizer()
+    pc = PDProfiler()
     det = DischargeDetector()
     print("  Models loaded.")
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Evaluate PDCharacterizer with v3 weights on the retrain contest dataset.
+"""Evaluate PDProfiler with v3 weights on the retrain contest dataset.
 
 Runs baseline (entry A) from retrain_contest.py but with v3 model weights:
   - CNN Attention: v3_cnn_attn_fold{0-4}.pt
@@ -36,16 +36,16 @@ RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def create_v3_characterizer():
-    """Create PDCharacterizer with v3 weight paths.
+    """Create PDProfiler with v3 weight paths.
 
     Monkey-patches the weight loading to use v3_ prefixed files.
     """
     import torch
-    from pd_characterizer import PDCharacterizer
+    from pd_profiler import PDProfiler
     from pd_channel_detector.channel_cnn import ChannelPDNetAttention
     from cet_model.cet import CETUNet
 
-    pc = PDCharacterizer()
+    pc = PDProfiler()
 
     # Override CNN attention loading with v3 weights
     cnn_dir = ROOT_DIR / 'data' / 'pd_channel_cache'
@@ -133,7 +133,7 @@ def load_evaluation_data():
 def main():
     t0 = time.time()
     print("=" * 70)
-    print("V3 PDCharacterizer Evaluation (Curated dataset + expert labels)")
+    print("V3 PDProfiler Evaluation (Curated dataset + expert labels)")
     print("=" * 70)
 
     print("\nLoading v3 models...")

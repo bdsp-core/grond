@@ -5,7 +5,7 @@ Generates HTML viewers where MW can label spatial extent (% channels involved).
 The algorithm predicts a default using optimized thresholds, and MW can accept
 or override with a different percentage via N/18 channel buttons.
 
-For LPD/GPD: PDCharacterizer channel_probs, threshold 0.62.
+For LPD/GPD: PDProfiler channel_probs, threshold 0.62.
 For LRDA/GRDA: rda_spatial_extent PLV channel_scores, threshold 0.30.
 
 Targets: segments with spatial_extent from >=2 of LB/PH/SZ, non-excluded,
@@ -69,14 +69,14 @@ BIPOLAR_DISPLAY_ORDER = [0, 1, 2, 3, -1, 8, 9, 10, 11, -1, 16, 17, -1, 12, 13, 1
 
 # ── Lazy-loaded algorithm modules ──
 
-_pd_characterizer = None
+_pd_profiler = None
 
-def _get_pd_characterizer():
-    global _pd_characterizer
-    if _pd_characterizer is None:
-        from pd_characterizer import PDCharacterizer
-        _pd_characterizer = PDCharacterizer()
-    return _pd_characterizer
+def _get_pd_profiler():
+    global _pd_profiler
+    if _pd_profiler is None:
+        from pd_profiler import PDProfiler
+        _pd_profiler = PDProfiler()
+    return _pd_profiler
 
 
 # ── EEG I/O ──
@@ -116,14 +116,14 @@ def downsample(arr, target_len):
 # ── Algorithm predictions ──
 
 def predict_pd_channel_scores(seg_bi, subtype):
-    """Use PDCharacterizer for LPD/GPD channel probabilities."""
+    """Use PDProfiler for LPD/GPD channel probabilities."""
     try:
-        pc = _get_pd_characterizer()
+        pc = _get_pd_profiler()
         result = pc.characterize(seg_bi, subtype=subtype)
         channel_probs = result.get('channel_probs', [0.5] * 18)
         return [float(p) for p in channel_probs]
     except Exception as e:
-        print(f"  PDCharacterizer failed: {e}")
+        print(f"  PDProfiler failed: {e}")
         return [0.5] * 18
 
 

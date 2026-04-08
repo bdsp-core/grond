@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""PDCharacterizer Optimization Contest — preprocessing/postprocessing variants.
+"""PDProfiler Optimization Contest — preprocessing/postprocessing variants.
 
-Runs PDCharacterizer with different pre- and post-processing on all labeled LPD
+Runs PDProfiler with different pre- and post-processing on all labeled LPD
 segments. No retraining — uses existing trained weights. Evaluates laterality,
 frequency, and discharge timing metrics. Generates an HTML leaderboard.
 
-Contest entries (all use the same trained PDCharacterizer weights):
-  A: Baseline — current PDCharacterizer as-is
-  B: Bandpass 0.5-20 Hz before PDCharacterizer
-  C: Bandpass 1-15 Hz before PDCharacterizer (aggressive HF removal)
-  D: Notch 60 Hz before PDCharacterizer
-  E: Detrend + bandpass 0.5-30 Hz before PDCharacterizer
+Contest entries (all use the same trained PDProfiler weights):
+  A: Baseline — current PDProfiler as-is
+  B: Bandpass 0.5-20 Hz before PDProfiler
+  C: Bandpass 1-15 Hz before PDProfiler (aggressive HF removal)
+  D: Notch 60 Hz before PDProfiler
+  E: Detrend + bandpass 0.5-30 Hz before PDProfiler
   F: Edge padding — mirror-pad 1s on each side, run, trim (fix edge effects)
   G: Evidence smoothing — wider Gaussian σ (reduce spurious peaks)
   H: Relaxed DP — lower alpha (less strict periodicity prior)
@@ -39,7 +39,7 @@ CODE_DIR = Path(__file__).resolve().parent.parent
 ROOT_DIR = CODE_DIR.parent
 sys.path.insert(0, str(CODE_DIR))
 
-from pd_characterizer import PDCharacterizer
+from pd_profiler import PDProfiler
 from pd_pointiness_acf import fcn_getBanana
 
 # Constants
@@ -50,7 +50,7 @@ RESULTS_DIR = ROOT_DIR / 'results' / 'hemi_retrain_contest'
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # ═══════════════════════════════════════════════════════════════════════
-# Preprocessing functions — applied to 18-ch bipolar EEG before PDCharacterizer
+# Preprocessing functions — applied to 18-ch bipolar EEG before PDProfiler
 # ═══════════════════════════════════════════════════════════════════════
 
 def preproc_none(seg_bi):
@@ -128,7 +128,7 @@ DP_STRICT = {
 
 ENTRIES = {
     'A_Baseline': {
-        'description': 'Current PDCharacterizer, no changes',
+        'description': 'Current PDProfiler, no changes',
         'preproc': preproc_none,
         'edge_pad': False,
         'dp_params': None,
@@ -246,7 +246,7 @@ def load_evaluation_data():
 # ═══════════════════════════════════════════════════════════════════════
 
 def run_entry(entry_name, entry_config, lpd, dt_by_matfile):
-    """Run PDCharacterizer with the given preprocessing/postprocessing on all LPD data."""
+    """Run PDProfiler with the given preprocessing/postprocessing on all LPD data."""
     print(f"\n{'='*60}")
     print(f"Entry: {entry_name} — {entry_config['description']}")
     print(f"{'='*60}")
@@ -256,8 +256,8 @@ def run_entry(entry_name, entry_config, lpd, dt_by_matfile):
     dp_params = entry_config['dp_params']
     evidence_sigma = entry_config['evidence_sigma']
 
-    # Create PDCharacterizer — may need to monkey-patch for DP/evidence params
-    pc = PDCharacterizer()
+    # Create PDProfiler — may need to monkey-patch for DP/evidence params
+    pc = PDProfiler()
 
     # If we need custom DP params or evidence sigma, patch the discharge_detector module
     if dp_params is not None:
@@ -507,7 +507,7 @@ def update_leaderboard():
     ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     html = f"""<!DOCTYPE html>
-<html><head><title>PDCharacterizer Optimization Contest</title>
+<html><head><title>PDProfiler Optimization Contest</title>
 <meta http-equiv="refresh" content="10">
 <style>
 body {{ background:#111; color:#eee; font-family:Consolas,monospace; padding:20px; }}
@@ -519,7 +519,7 @@ th {{ background:#222; color:#888; position:sticky; top:0; }}
 tr:hover {{ background:#1a1a1a; }}
 .note {{ color:#888; font-size:12px; margin-top:10px; }}
 </style></head><body>
-<h1>PDCharacterizer Optimization Contest &mdash; {n_entries} entries</h1>
+<h1>PDProfiler Optimization Contest &mdash; {n_entries} entries</h1>
 <p class="note">Same trained model weights throughout. Only preprocessing and DP parameters vary.</p>
 <p class="note">Sorted by Freq rho (primary). Test case: sub-S0001116940915 (GT: right, 1.75 Hz, ~18 discharges)</p>
 

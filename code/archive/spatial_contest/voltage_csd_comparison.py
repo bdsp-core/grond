@@ -2,7 +2,7 @@
 Voltage topography and CSD-based spatial localization for LPD/GPD.
 
 Compares 4 methods on multi-rater segments:
-  1. CNN+PLV (current) -- from PDCharacterizer
+  1. CNN+PLV (current) -- from PDProfiler
   2. Voltage at peak  -- mean discharge voltage topography -> regions
   3. CSD at peak      -- CSD of mean discharge voltage -> regions
   4. Hybrid CNN+CSD   -- average of CNN+PLV and CSD scores
@@ -29,7 +29,7 @@ CODE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_DIR = CODE_DIR.parent
 sys.path.insert(0, str(CODE_DIR))
 
-from pd_characterizer import PDCharacterizer
+from pd_profiler import PDProfiler
 from pd_pointiness_acf import fcn_getBanana
 
 DATA_DIR = PROJECT_DIR / 'data'
@@ -214,7 +214,7 @@ def main():
         return
 
     # Initialize
-    pc = PDCharacterizer()
+    pc = PDProfiler()
     mne_info = make_mne_info()
 
     # Storage for all methods' region scores per segment

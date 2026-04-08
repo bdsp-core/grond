@@ -436,13 +436,13 @@ def main():
         discharge_times = []
     print(f"  {len(discharge_times)} discharge times", flush=True)
 
-    # ── Run PDCharacterizer for laterality ──
-    print("Running PDCharacterizer...", flush=True)
+    # ── Run PDProfiler for laterality ──
+    print("Running PDProfiler...", flush=True)
     sys.path.insert(0, str(CODE_DIR))
-    from pd_characterizer import PDCharacterizer
-    charzer = PDCharacterizer()
+    from pd_profiler import PDProfiler
+    charzer = PDProfiler()
 
-    # PDCharacterizer expects 18-ch bipolar
+    # PDProfiler expects 18-ch bipolar
     bipolar_pairs = [
         ('Fp1', 'F7'), ('F7', 'T3'), ('T3', 'T5'), ('T5', 'O1'),
         ('Fp2', 'F8'), ('F8', 'T4'), ('T4', 'T6'), ('T6', 'O2'),
