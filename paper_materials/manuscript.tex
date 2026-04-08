@@ -1,0 +1,710 @@
+%% Manuscript: Automated Characterization of PDs and RDA
+%% Using iopjournal class
+
+\documentclass{iopjournal}
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+
+\begin{document}
+
+\articletype{Paper}
+
+\title{Automated Characterization of Periodic Discharges and Rhythmic Delta Activity in Continuous EEG}
+
+\author{Jin~Jing$^{1,\dagger}$, ChenXi~Sun$^{1,2,\dagger}$, Tianyu~Zhang$^{1}$, Matthew~Byrd$^{1}$, Alexandra-Maria~T\u{a}u\c{t}an$^{3}$, Lara~Basovic$^{3}$, Peter~N~Hadar$^{3}$, Marta~P~Fernandes$^{3}$, Daniel~Goldenholz$^{1}$, Jennifer~Kim$^{4}$, Aaron~F~Struck$^{5}$, Sahar~F~Zafar$^{3,\ddagger}$, M~Brandon~Westover$^{1,2,\ddagger,*}$}
+
+\affil{$^1$Department of Neurology, Clinical Data Animation Center, Beth Israel Deaconess Medical Center/Harvard Medical School, Boston, MA, USA}
+
+\affil{$^2$Stanford University, Palo Alto, CA, USA}
+
+\affil{$^3$Department of Neurology, Massachusetts General Hospital/Harvard Medical School, Boston, MA, USA}
+
+\affil{$^4$Department of Neurology, Yale University School of Medicine, New Haven, CT, USA}
+
+\affil{$^5$Department of Neurology, Washington University in St.~Louis, St.~Louis, MO, USA}
+
+\affil{$^\dagger$These authors contributed equally as co-first authors.}
+
+\affil{$^\ddagger$These authors contributed equally as co-senior authors.}
+
+\affil{$^*$Author to whom any correspondence should be addressed.}
+
+\email{mwestover@mgh.harvard.edu}
+
+\keywords{EEG, periodic discharges, rhythmic delta activity, deep learning, signal processing}
+
+\begin{abstract}
+\textbf{Objective.} Periodic discharges (PDs) and rhythmic delta activity (RDA) are common electroencephalographic (EEG) patterns in critically ill patients that require detailed characterization---including lateralization, spatial localization, discharge timing, and frequency estimation---according to the American Clinical Neurophysiology Society (ACNS) 2021 standardized terminology. Manual characterization is subjective, time-consuming, and exhibits substantial inter-rater variability. This study presents a comprehensive automated system for characterizing all four major subtypes: lateralized periodic discharges (LPD), generalized periodic discharges (GPD), lateralized rhythmic delta activity (LRDA), and generalized rhythmic delta activity (GRDA).
+
+\textbf{Approach.} Two complementary pipelines were developed: the PD-Profiler and the RDA-Profiler. The PD-Profiler combines a per-channel convolutional neural network (ChannelPD-Net) with hemisphere-specific learned evidence traces (HemiCET-UNet), dynamic programming with an approximately-periodic prior, and discharge-locked topographic localization. The RDA-Profiler uses iterative narrowband Hilbert refinement (NB-Hilbert) for frequency and lateralization, with phase-locking value (PLV) analysis for spatial extent. Both pipelines were trained and evaluated on 12,238 EEG segments from 11,578 unique patients, annotated by four expert electroencephalographers through iterative human-in-the-loop label refinement.
+
+\textbf{Main results.} The system matched or exceeded expert inter-rater agreement on every characterization task. For RDA frequency estimation, the algorithm--expert intraclass correlation coefficient (ICC) of 0.860 slightly exceeded the expert--expert ICC of 0.852. This is the first automated method to match expert-level agreement for any continuous EEG-pattern attribute. PD discharge timing achieved an F1 of 0.889 at single-sample precision (1.0~ms median timing error at 200~Hz). PD hemisphere lateralization reached an area under the receiver operating characteristic curve (AUC) of 0.989 ($n = 1{,}274$), and LPD versus GPD classification reached an AUC of 0.911 ($n = 7{,}037$). RDA lateralization reached an AUC of 0.837 ($n = 4{,}253$). Frequency estimation Spearman correlations were 0.786 (LPD) and 0.846 (GPD), three to five times higher than the prior signal-processing state of the art. Spatial localization reached 97.3\% of expert inter-rater agreement for PDs (Jaccard 0.731 versus expert--expert 0.751) and matched expert--expert ICC for RDA (0.371 versus 0.373).
+
+\textbf{Significance.} This work presents the first system to jointly characterize lateralization, spatial localization, discharge timing, and frequency for both periodic and rhythmic EEG patterns, achieving algorithm--expert agreement at the level of expert--expert agreement across all tasks. In post-hoc review of discordant cases, experts judged the algorithm's frequency estimates more accurate than the original expert labels in 94\% of cases. Automated characterization can now both substitute for and improve manual annotation in critical-care EEG.
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+\label{sec:introduction}
+
+Continuous EEG (cEEG) monitoring is widely used across acute-care settings---including neurological, medical, and surgical intensive care units (ICUs), emergency departments, and step-down units---for detecting seizures and identifying patterns associated with secondary brain injury in critically ill patients~\cite{claassen2004,zafar2020}. Among the most clinically significant findings are periodic discharges (PDs) and rhythmic delta activity (RDA), which lie along the ictal--interictal continuum and are associated with increased risk of seizures, neuronal injury, and poor outcomes~\cite{chong2005,rodriguez2017,vespa2016,struck2016,tao2020,parikh2023}. The ACNS standardized critical care EEG terminology, revised in 2021, provides a framework for describing these patterns along multiple dimensions: main term (periodic vs.\ rhythmic), lateralization (lateralized vs.\ generalized vs.\ bilateral independent), spatial distribution (e.g., frontal predominant, hemispheric), and quantitative features including repetition frequency and regularity~\cite{hirsch2021}.
+
+Despite the standardization of terminology, manual characterization of PDs and RDA remains subjective and labor-intensive. A trained electroencephalographer must identify the pattern type, determine its spatial distribution across the scalp, estimate its repetition frequency, and describe its temporal evolution---all from visual inspection of multi-channel EEG tracings. Inter-rater reliability for these characterization tasks varies widely: lateralization (generalized vs.\ lateralized) shows moderate to good agreement, while spatial extent and frequency estimation exhibit substantially lower reliability~\cite{gaspard2014,leitinger2015,jing2023irr}. The clinical similarity of LRDA to lateralized periodic discharges further complicates pattern classification at the boundary between rhythmic and periodic phenomena~\cite{gaspard2013}. The need for expert review creates bottlenecks in clinical workflow, particularly during overnight monitoring when specialist coverage is limited.
+
+Prior automated systems have addressed pattern detection and classification but not the full characterization problem. Early signal-processing systems such as the ACNS-based detector of F\"urbass et al.~\cite{furbass2015} and the NeuroTrend platform~\cite{herta2015} demonstrated feasibility of automated pattern recognition in critical care EEG; McGraw et al.~\cite{mcgraw2024} introduced a method for automated quantification of periodic discharge bursts. The IIIC (Interictal--Ictal-Injury Continuum) dataset introduced by Jing et al.~\cite{jing2023} provides expert consensus labels for pattern classification (LPD, GPD, LRDA, GRDA, seizure, other) based on crowd-sourced annotations from 10 or more expert raters per segment, and deep learning models trained on this dataset---and on related datasets of epileptiform discharges~\cite{jing2020}---achieve high classification accuracy for distinguishing among pattern types~\cite{ge2023,zheng2022}. None of these systems, however, addresses lateralization, spatial localization, individual discharge timing, and frequency simultaneously. The closest prior attempt is T\u{a}u\c{t}an et al.~\cite{tautan2025}, which recently described a signal-processing approach to joint frequency and spatial-extent estimation using autocorrelation and spectral analysis; that work demonstrated the feasibility of automated characterization but reported Spearman frequency correlations below 0.25 for all subtypes and limited agreement with expert spatial-extent annotations.
+
+The present work addresses the full characterization problem: given a 10-second EEG segment containing a periodic or rhythmic pattern, the system automatically determines (1) lateralization (left, right, or bilateral/generalized), (2) spatial localization (which brain regions are involved), (3) frequency of the periodic or rhythmic pattern, (4) for PDs, the precise timing of each individual discharge, and (5) for PDs, whether the pattern represents bilateral independent periodic discharges (BIPD). The system produces a structured verbal description following ACNS 2021 nomenclature (e.g., ``LPD, left-sided, at 1.5~Hz, left frontotemporal predominant'').
+
+This work makes four contributions. First, we present a modular pipeline architecture that combines learned neural evidence (convolutional neural networks) with structured temporal inference (dynamic programming) for PD characterization, and iterative narrowband signal processing for RDA characterization. Second, we introduce discharge-locked topographic localization---a novel spatial-localization method that computes the mean voltage topography at the moment of each detected discharge, bypassing the subjective channel-counting approach used in prior work. Third, we describe a systematic ``contest of methods'' framework in which 76 algorithm variants were compared for RDA characterization and over 30 variants for PD spatial localization, providing empirical evidence for design decisions. Fourth, we benchmark all results against multi-rater expert annotations with quantitative inter-rater reliability analysis, enabling direct comparison of algorithm--expert agreement with expert--expert agreement across all characterization tasks.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Methods}
+\label{sec:methods}
+
+\subsection{Dataset and Annotations}
+\label{sec:dataset}
+
+\subsubsection{Ethics statement.}
+
+This study was conducted under protocols approved by the institutional review boards of Massachusetts General Hospital (protocols \#2023P000487 and \#2024P002630) and Beth Israel Deaconess Medical Center (protocols \#2022P000481 and \#2022P000417). Both review boards waived the requirement for informed consent for this retrospective analysis of de-identified EEG recordings.
+
+\subsubsection{EEG Data.}
+
+We drew 12,238 non-excluded EEG segments from three sources (table~\ref{tab:dataset}). Each segment consisted of 10 seconds of 19-channel monopolar EEG recorded at 200~Hz in common average reference montage (2,000 samples per channel). Segments were classified into four subtypes based on the dominant pattern: LPD ($n = 4{,}170$), GPD ($n = 3{,}337$), LRDA ($n = 1{,}408$), and GRDA ($n = 3{,}323$). An additional 990 segments were excluded during quality review. Representative examples of each pattern type, including both clear and ambiguous cases, are shown in figure~\ref{fig:eeg_examples}.
+
+The first data source consisted of segments from the IIIC dataset~\cite{jing2023}, comprising 10-minute recordings from which the center 10-second segment (the labeled epoch) was extracted. Each of these segments had pattern classification votes from 10 or more expert electroencephalographers (3,529 segments: 1,846 LPD, 1,024 GPD, 239 LRDA, 420 GRDA). The second source consisted of segments selected from pattern-specific clinical EEG databases and classified by a single expert rater (MW). The third source was a 38-patient expert dataset annotated independently by four raters (LB, PH, SZ, MW) for pattern classification, frequency, spatial extent, and discharge timing.
+
+\begin{table}[t]
+\caption{Dataset statistics. The ``Unique patients'' total (11,578) is the deduplicated count across all four subtypes; only one patient contributed segments to more than one subtype, so the total is essentially the column sum.}
+\centering
+\begin{tabular}{l r r r r r}
+\hline
+ & LPD & GPD & LRDA & GRDA & Total \\
+\hline
+Segments (non-excluded) & 4,170 & 3,337 & 1,408 & 3,323 & 12,238 \\
+Unique patients & 3,953 & 3,086 & 1,381 & 3,159 & 11,578 \\
+Expert-reviewed frequency & 1,499 & 1,539 & 654 & 1,381 & 5,073 \\
+Discharge/wave timing & 917 & 1,036 & 189 & 313 & 2,159/502 \\
+Spatial annotations & 352 & 260 & 29 & 177 & 818 \\
+IIIC crowd votes ($\geq$10 raters) & 1,846 & 1,024 & 239 & 420 & 3,529 \\
+\hline
+\end{tabular}
+\label{tab:dataset}
+\end{table}
+
+\subsubsection{Annotation Framework.}
+
+We developed a multi-layer annotation framework with task-specific interactive review tools.
+
+\textbf{Pattern classification and laterality.} For IIIC crowd-labeled segments, pattern subtype was assigned based on the majority vote across expert raters. For MW-labeled segments, classification was performed during visual review. Dedicated review using a symmetric channel-layout viewer yielded laterality annotations (left vs.\ right hemisphere dominance) for 1,336 LPD segments and 1,039 LRDA segments. We reviewed 1,374 LRDA segments across three batches and rejected 338 as not meeting LRDA criteria; the rejected segments were excluded from subsequent analysis.
+
+\textbf{Frequency.} Expert raters reviewed frequency labels for 5,073 segments across all four subtypes. For PD subtypes, MW annotated frequency during combined timing--frequency--laterality review. For RDA subtypes, MW reviewed frequency using an interactive viewer that displayed the NB-Hilbert algorithm estimate as a default value, with a narrowband-filtered overlay for visual confirmation. The reviewer could accept the default, type any other frequency judged correct, or reject the segment; MW reviewed 993 RDA segments, yielding 399 frequency corrections and 594 confirmations. We added 453 LRDA/GRDA frequency labels from segments with at least 50\% IIIC crowd agreement. Three additional expert raters (LB, PH, SZ) independently annotated frequency for 1,060 segments ($\sim$265 per subtype) from the expert dataset.
+
+\textbf{Discharge timing.} An expert (MW) annotated individual discharge times for 1,953 PD segments (917 LPD, 1,036 GPD) through three rounds of iterative model-assisted review. In the first round, MW annotated discharge times de novo. In subsequent rounds, the HemiCET-UNet + DP algorithm generated candidate discharge times that MW reviewed and corrected, yielding 61 corrected discharge sequences and 15 rejected segments across three review cycles.
+
+\textbf{Spatial extent and channel involvement.} Three expert raters (LB, PH, SZ) annotated per-channel spatial involvement for 818 segments (352 LPD, 260 GPD, 29 LRDA, 177 GRDA) using an interactive topoplot viewer with per-channel toggling. An additional 1,980 IIIC segments received MW spatial extent annotations. Region-level spatial descriptions followed the 16-region parcellation from the morgoth-viewer module, which includes transitional zones (frontotemporal, centro-parietal, fronto-central, parieto-occipital) compatible with ACNS 2021 nomenclature.
+
+\subsubsection{Evaluation Framework.}
+
+All evaluations used patient-stratified cross-validation to ensure no patient appeared in both training and evaluation sets. For models trained with $k$-fold cross-validation (ChannelPD-Net, HemiCET-UNet), 5-fold patient-stratified splits were used, and evaluation was performed on the held-out fold for each patient. For methods not requiring training (NB-Hilbert, RDA-PLV), leave-one-patient-out (LOPO) cross-validation was not applicable, and all available labeled segments were used for evaluation.
+
+We evaluated frequency estimation using quality-filtered labels to reduce the influence of annotation noise. A segment qualified for quality-filtered evaluation if any of the following criteria were met: (1) MW reviewed the frequency, (2) all three expert raters (LB, PH, SZ) provided independent labels, or (3) at least 10 IIIC crowd votes with at least 80\% pattern agreement were available. For multi-rater segments, we defined expert frequency as the mean across available raters.
+
+To enable direct comparison with prior work, we quantified inter-rater reliability using the intraclass correlation coefficient (ICC(3,1)) of Shrout and Fleiss~\cite{shrout1979} and percentage agreement, following the framework of T\u{a}u\c{t}an et al.~\cite{tautan2025}. We treated the algorithm as an additional rater in the ICC computation, enabling direct comparison of algorithm--expert agreement with expert--expert agreement.
+
+\subsubsection{Contest-of-methods development strategy.}
+\label{sec:contest_strategy}
+
+The PD-Profiler and RDA-Profiler were each developed through a systematic ``contest of methods'' in which a wide variety of candidate algorithms was implemented and compared empirically before any single approach was selected for the production pipeline. Across all subtasks (PD frequency estimation, PD spatial localization, PD discharge timing, RDA lateralization, and RDA frequency estimation), more than 300 distinct method variants were implemented and evaluated. PD frequency estimation alone progressed through nine refinement rounds comprising 192 experiments, spanning autocorrelation, fast Fourier transform (FFT), peak counting, Teager--Kaiser energy, harmonic product spectrum, matched filters, multi-montage estimators, ridge regression on log-frequency targets, and CNN-based approaches. PD spatial localization was selected from 26 contest entries spanning amplitude-based, phase-coherence-based, and CNN-probability-based methods. The RDA lateralization contest evaluated 76 algorithm variants on 4,253 segments, and a separate GPD-specific frequency contest compared 25 variants. After identifying each subtask's best-performing approach in isolation, we combined the winning components and refined the integrated pipeline; appendix~\ref{app:contest} documents the contest naming convention and references the complete contest logs. This empirical, contest-driven development was essential because no single signal-processing or machine-learning paradigm proved best for all subtasks, and several methods that performed well in isolation degraded when naively combined with others.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig1_eeg_examples.png}
+\caption{Representative EEG examples of periodic and rhythmic patterns. Six 10-second EEG segments displayed in average-reference montage (19 channels, 200~Hz, bandpass 0.5--20~Hz). Channels are grouped by hemisphere: left parasagittal (Fp1, F3, C3, P3), left temporal (F7, T3, T5, O1), midline (Fz, Cz, Pz), right parasagittal (Fp2, F4, C4, P4), and right temporal (F8, T4, T6, O2). \textbf{(A)}~Clear lateralized periodic discharges (LPD). \textbf{(B)}~Clear generalized periodic discharges (GPD). \textbf{(C)}~Clear lateralized rhythmic delta activity (LRDA). \textbf{(D)}~Clear generalized rhythmic delta activity (GRDA). \textbf{(E)}~Ambiguous LPD case with lower inter-rater agreement. \textbf{(F)}~Ambiguous GRDA case with lower inter-rater agreement. Clear cases (A--D) were selected from segments with at least 80\% agreement among at least 10 IIIC expert raters; ambiguous cases (E--F) have lower agreement, illustrating the challenge of pattern classification. Scale bar: 100~$\mu$V.}
+\label{fig:eeg_examples}
+\end{figure}
+
+\subsection{PD Characterization Pipeline (PD-Profiler)}
+\label{sec:pd_pipeline}
+
+The PD characterization pipeline, hereafter referred to as the PD-Profiler (figure~\ref{fig:pd_pipeline}), processed 19-channel monopolar EEG segments in a single forward pass, producing lateralization, spatial localization, discharge timing, frequency estimation, and a structured verbal description. The pipeline comprised five components operating on a shared 18-channel bipolar representation derived from the monopolar input using standard longitudinal and transverse bipolar pairs.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig2_pd_pipeline.png}
+\caption{The PD-Profiler combines neural evidence with structured dynamic-programming inference to characterize PDs. Three-panel overview of the periodic discharge (PD) characterization pipeline applied to an example LPD segment. \textbf{(A)}~Input: raw 19-channel average-reference EEG (10 seconds, 200~Hz). \textbf{(B)}~Pipeline architecture: 18 independent bipolar channels are processed by ChannelPD-Net (CNN+Attention), which produces per-channel PD probabilities and frequency estimates. Three downstream modules operate in parallel: (1)~Laterality Detection compares left versus right hemisphere mean probabilities; (2)~Discharge Detection uses 8-channel HemiCET-UNet evidence and CNN+ACF frequency prior fed into dynamic programming with expectation-maximization (EM) template refinement, yielding individual discharge times and IPI-derived frequency; (3)~Topographic Localization extracts monopolar voltage at discharge peaks, applies Laplacian--GFP alignment with two-pass template refinement and GFP-squared-weighted averaging to produce a spatial localization map. \textbf{(C)}~Output: the same EEG with red dashed lines marking detected discharge times, light blue shading on the involved hemisphere, a Laplacian topoplot showing the discharge topography, and a verbal description following ACNS 2021 standardized nomenclature. Scale bar: 100~$\mu$V.}
+\label{fig:pd_pipeline}
+\end{figure}
+
+\begin{table}[t]
+\caption{PD-Profiler components.}
+\centering
+\begin{tabular}{l l r l}
+\hline
+Component & Architecture & Parameters & Role \\
+\hline
+ChannelPD-Net & CNN + Attention & ${\sim}$50K & Per-channel PD detection and frequency \\
+HemiCET-UNet & Encoder--decoder U-Net & ${\sim}$525K & Frame-level discharge evidence \\
+HPP & Pointiness + TKEO & -- & Handcrafted Peak Prior evidence \\
+Dynamic Programming & Viterbi-style DP & -- & Temporal inference with periodic prior \\
+CNN+ACF Ensemble & ChannelPD-Net + ACF & -- & Frequency prior for DP \\
+Hybrid-PLV & Phase-locking value & -- & Spatial localization (channel scoring) \\
+Discharge-locked topo & Laplacian--GFP alignment & -- & Topographic localization \\
+\hline
+\end{tabular}
+\label{tab:pd_components}
+\end{table}
+
+\subsubsection{ChannelPD-Net.}
+
+ChannelPD-Net was a lightweight one-dimensional convolutional neural network (CNN) with temporal attention pooling that operated independently on each of 18 bipolar EEG channels. Given a single 10-second z-scored channel (2,000 samples at 200~Hz), the model jointly predicted (i) the probability that a periodic discharge pattern was present and (ii) the log-frequency of the pattern. The architecture comprised four convolutional blocks (kernel sizes 51, 25, 13, 7; channels 16, 32, 64, 64; stride 2 throughout) with batch normalization, Gaussian Error Linear Unit (GELU) activation, and dropout (0.1--0.2), downsampling the temporal dimension by a factor of 16 to 125 time steps. A learned temporal attention mechanism projected each 64-dimensional feature vector to a scalar logit via a $1 \times 1$ convolution, applied softmax normalization across time, and computed an attention-weighted context vector. Two independent linear heads produced a PD probability (sigmoid output) and a log-frequency estimate (linear output).
+
+The model was trained with a multi-task loss combining binary cross-entropy for detection and mean squared error for log-frequency estimation (masked to PD-positive channels, weighted by 0.5). Training used 5-fold patient-stratified cross-validation with data augmentation including amplitude scaling ($0.8$--$1.2\times$), additive Gaussian noise (20--40~dB signal-to-noise ratio, SNR), and circular time shifts ($\pm 50$ samples). The 5-fold ensemble prediction was the arithmetic mean across fold models.
+
+\textbf{Laterality detection.} ChannelPD-Net determined hemisphere laterality by comparing the mean PD probability across left-hemisphere channels versus right-hemisphere channels in the bipolar montage, assigning the hemisphere with higher mean probability as the dominant side.
+
+\textbf{CNN frequency estimate.} ChannelPD-Net computed the segment-level CNN frequency as a PD-probability-weighted average of per-channel log-frequency predictions, converted back to linear frequency and clipped to the physiological range of 0.3--3.5~Hz.
+
+\subsubsection{Discharge Timing: HemiCET-UNet and Dynamic Programming.}
+
+\textbf{HemiCET-UNet.} HemiCET-UNet (Hemisphere-restricted Convolutional Evidence-Trace U-Net) generated frame-level discharge evidence using a one-dimensional U-Net encoder--decoder architecture with $\sim$525,000 parameters. Unlike ChannelPD-Net, which provides a single summary probability per channel, HemiCET-UNet produces a dense evidence trace at the full 200~Hz resolution indicating the instantaneous likelihood of a discharge at each time point. The encoder mirrored the ChannelPD-Net backbone (four stride-2 convolutional stages), while the decoder progressively upsampled through transposed convolutions with skip connections from corresponding encoder stages, producing a sigmoid-activated output of dimension 2,000.
+
+Training targets were constructed from expert-annotated discharge times as Gaussian peaks ($\sigma = 10$~ms). The loss function combined weighted binary cross-entropy (positive weight $= 20$ to address temporal sparsity), a sharpness penalty encouraging sparse evidence (weight 0.1), and a floor loss ensuring learned evidence at labeled discharge locations was at least as strong as handcrafted evidence (weight 0.05). The model was trained with 5-fold patient-stratified cross-validation on 675 segments with ground-truth discharge timing, with data augmentation including amplitude scaling, additive noise, channel dropout ($p = 0.15$), and discharge time jitter ($\sigma = 5$~ms).
+
+The HemiCET-UNet operated on 8-channel hemisphere input rather than the full 18-channel bipolar montage. For LPD segments, the model processed the affected hemisphere only; for GPD segments, both hemispheres were processed independently and the result with higher overall evidence was retained. This hemisphere-specific design avoided contamination from the uninvolved hemisphere in lateralized patterns and improved performance compared to full 18-channel processing.
+
+\textbf{Handcrafted Peak Prior (HPP).} Complementary evidence was computed from two handcrafted signal features. The pointiness trace captured the sharpness of transient waveforms by computing the ratio of squared prominence to half-width at half-prominence for each local maximum. The Teager--Kaiser energy operator (TKEO) responded to instantaneous energy and frequency. Both traces were z-scored and combined with fixed weights (0.6 pointiness, 0.4 TKEO), Gaussian-smoothed ($\sigma = 15$~ms), and clipped to non-negative values.
+
+\textbf{Product-boosted evidence combination.} We combined the aggregated HPP and CET evidence traces using a product-boost formula that amplified regions of agreement: $E(t) = \max(E_\mathrm{hpp}, E_\mathrm{cet}) + 3.0 \cdot E_\mathrm{hpp} \cdot E_\mathrm{cet}$, where both traces are normalized to $[0,1]$ and the CET trace is thresholded at the 80th percentile of nonzero values with a floor of 0.3.
+
+\textbf{CNN+ACF frequency ensemble.} We obtained the frequency prior for dynamic programming by combining the CNN frequency estimate (PD-probability-weighted average across channels) with an autocorrelation-function-based estimate (ACF; first prominent peak in the normalized autocorrelation of the pointiness trace within the 0.33--3.5~Hz range), using fixed weights (0.8 CNN, 0.2 ACF).
+
+\textbf{Dynamic programming.} A forward dynamic programming algorithm with an approximately-periodic prior detected individual discharge times. Candidate peaks were extracted from the combined evidence trace within an automatically detected active interval. The DP algorithm selected the optimal approximately-periodic subsequence of candidates by maximizing a score function with superlinear evidence rewards ($E(c)^{1.5}$ minus an existence cost of 0.05), quadratic penalties for deviations from the expected period ($\alpha = 1.275$), and skip penalties allowing up to 3 consecutive missed discharges ($\beta = 0.3$ per skip); the optimal path was recovered by backtracking from the highest-scoring endpoint. Full mathematical specifications, including pseudocode and parameter values, are provided in appendix~\ref{app:math_methods}.
+
+\textbf{Post-processing.} Discharge times were refined through three rounds of expectation-maximization-style (EM-style) template refinement, in which the mean discharge template was cross-correlated with the full evidence trace to generate improved candidates, followed by re-running the DP. A post-hoc confidence filter removed detections with evidence below 30\% of the median peak evidence.
+
+\textbf{IPI-derived frequency.} We computed the final frequency estimate as the reciprocal of the median inter-peak interval (IPI) across detected discharges. This estimate is more accurate than the CNN+ACF prior because it leverages the actual detected timing sequence.
+
+\subsubsection{Spatial Localization.}
+
+We used two complementary approaches for spatial localization of periodic discharges.
+
+\textbf{Hybrid-PLV spatial extent.} We scored per-channel involvement using a hybrid of CNN probabilities and phase-locking value (PLV) analysis. The top-3 channels by ChannelPD-Net probability served as references (with contralateral suppression for LPD); we bandpass-filtered all channels to 0.5--3.5~Hz and computed the PLV between each channel and the circular-mean reference phase. The combined score ($0.5 \times \text{CNN probability} + 0.5 \times \text{PLV}$) maps to 8 anatomical regions (left/right frontal, temporal, centro-parietal, occipital) by taking the maximum channel score per region. We classified regions exceeding a threshold of 0.4 as involved and report spatial extent as the fraction of involved regions.
+
+\textbf{Discharge-locked topographic localization.} A novel approach to spatial localization computed the mean voltage topography at the moment of each detected discharge (figure~\ref{fig:pd_pipeline}C). The 19-channel monopolar EEG was bandpass-filtered (0.5--20~Hz) and transformed to the surface Laplacian to sharpen spatial resolution. For each discharge time from the HemiCET-UNet + DP pipeline, the global field power (GFP) peak was located within $\pm 25$~ms to align to the moment of maximal scalp field strength. A two-pass template refinement procedure was applied: the first pass extracted $\pm 50$~ms epochs around each GFP-aligned peak and averaged them to create a template; the second pass cross-correlated each individual epoch's GFP profile with the template to correct residual jitter. The mean topography was computed as a GFP-squared-weighted average across all refined discharge epochs, where the squared weighting strongly suppressed phantom discharges (time points where the DP algorithm interpolated a discharge at a location where no true electrographic transient existed) that exhibited low GFP near the baseline level.
+
+The resulting 19-electrode topography vector was rendered using MNE-Python~\cite{gramfort2013} spherical spline interpolation with the inferno colormap. Verbal spatial descriptions were generated by mapping electrode amplitudes to 16 anatomical brain regions using the morgoth-viewer localization module, combined with ChannelPD-Net laterality to produce ACNS 2021-formatted descriptions (e.g., ``LPD, left-sided, at 1.5~Hz, left frontotemporal predominant'').
+
+\subsection{RDA Characterization Pipeline (RDA-Profiler)}
+\label{sec:rda_pipeline}
+
+The RDA characterization pipeline, hereafter referred to as the RDA-Profiler (figure~\ref{fig:rda_pipeline}), characterized LRDA and GRDA patterns using signal-processing methods operating on the same 18-channel bipolar EEG representation.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig3_rda_pipeline.png}
+\caption{The RDA-Profiler uses two-pass iterative narrowband refinement to characterize continuous rhythmic activity. Three-panel overview of the rhythmic delta activity (RDA) characterization pipeline applied to an example LRDA segment, following the same layout as figure~\ref{fig:pd_pipeline}. \textbf{(A)}~Input: raw 19-channel average-reference EEG. \textbf{(B)}~Pipeline architecture: the NB-Hilbert iterative narrowband refinement algorithm performs two passes. Pass~1: coarse analysis with broadband (0.5--3.5~Hz) filtering, estimating lateralization via per-hemisphere mean variance and frequency via Hilbert instantaneous frequency from the top-3 dominant channels. Pass~2: narrowband filtering at the estimated frequency $\pm 0.4$~Hz, with envelope amplitude for refined lateralization and Hilbert frequency on the dominant hemisphere only. Three output branches produce laterality, spatial extent (via per-channel PLV with the dominant hemisphere), and frequency. \textbf{(C)}~Output: the same EEG with hemisphere shading, a Laplacian amplitude topoplot, and a verbal description. No discharge markers are shown, as RDA is a continuous rhythmic pattern. Scale bar: 100~$\mu$V.}
+\label{fig:rda_pipeline}
+\end{figure}
+
+\subsubsection{NB-Hilbert: Iterative Narrowband Hilbert Refinement.}
+
+Lateralization and frequency of RDA patterns were estimated using a two-pass iterative narrowband Hilbert refinement procedure (NB-Hilbert; identified as contest entry W05 in appendix~\ref{app:contest}). In the first pass, all 18 channels were bandpass-filtered at 0.5--3.5~Hz (third-order Butterworth, zero-phase). Coarse lateralization was determined by comparing mean broadband variance between left-hemisphere and right-hemisphere channel groups, and the dominant hemisphere was assigned to the side with higher variance. Coarse frequency was estimated using Hilbert-based instantaneous frequency analysis on the top-3 channels (by variance) of the dominant hemisphere, with the median of valid instantaneous frequency samples (within 0.3--4.0~Hz) taken as the estimate.
+
+In the second pass, all channels were re-filtered using a narrow bandpass centered on the first-pass frequency estimate ($\pm 0.4$~Hz). Lateralization was refined by comparing the mean envelope amplitude (via Hilbert transform) between hemispheres, and frequency was re-estimated from the Hilbert instantaneous frequency of the top-3 narrowband channels on the refined dominant hemisphere. LRDA versus GRDA classification was based on an amplitude asymmetry index $A = |L_\mathrm{score} - R_\mathrm{score}| / (L_\mathrm{score} + R_\mathrm{score})$, with LRDA assigned when asymmetry exceeded a threshold calibrated against expert labels.
+
+NB-Hilbert was selected as the best unified (lateralization plus frequency) method from a systematic contest of 76 algorithm variants evaluated on 4,253 RDA segments (1,295 LRDA, 2,958 GRDA; the subset of the 4,731 labeled non-excluded LRDA/GRDA segments in table~\ref{tab:dataset} for which valid 18-channel EEG data could be loaded from disk), achieving a lateralization AUC of 0.837 and frequency Spearman correlation of 0.635. Alternative methods evaluated included single-pass envelope amplitude (entry L24, AUC 0.826, no frequency output), PLV-selected channels (entry V04, AUC 0.809, frequency $\rho = 0.682$), and automatic channel selection with frequency consensus (entry V05, AUC 0.790, frequency $\rho = 0.686$). The iterative refinement approach provided the best lateralization performance by suppressing non-RDA activity through narrowband filtering tuned to the estimated pattern frequency. The full contest naming scheme is described in appendix~\ref{app:contest}.
+
+\subsubsection{RDA-PLV: Spatial Extent.}
+
+Spatial extent of RDA patterns was quantified using a PLV-amplitude product metric. Each bipolar channel was narrowband-filtered at the NB-Hilbert-estimated frequency ($\pm 0.4$~Hz). A reference signal was constructed as the mean of the top-3 narrowband channels on the dominant hemisphere. For each channel, the PLV with the reference was computed and multiplied by the normalized mean envelope amplitude. Channels with a PLV-amplitude product exceeding 0.15 were classified as involved, and spatial extent was reported as the fraction of involved channels. The PLV-amplitude product penalized channels with high PLV but negligible amplitude (noise-driven phase locking) and channels with high amplitude but poor phase coherence (non-rhythmic activity).
+
+\subsection{BIPD Detection}
+\label{sec:bipd}
+
+Bilateral independent periodic discharges (BIPD)---defined by independent periodic discharge trains on each hemisphere with distinct timing sequences---were detected using a two-stage approach. In the first stage, the HemiCET-UNet + DP pipeline was run independently on each hemisphere, yielding two discharge time sequences. In the second stage, a gradient-boosted tree (GBT) classifier was trained on features computed from the bilateral timing sequences. Features included the frequency ratio between hemispheres, inter-pulse interval regularity (coefficient of variation), matched fraction (proportion of temporally coincident discharges within 100~ms), phase consistency (mean resultant length of the cross-hemisphere phase relationship), and asymmetry measures (sequence length ratio, frequency asymmetry, count asymmetry).
+
+The GBT classifier was trained on synthetic data to overcome the rarity of confirmed BIPD cases (21 out of 198 candidates screened). Synthetic BIPD examples were constructed by pairing independent LPD sequences from different patients. Synthetic GPD examples were created by phase-shifting a single LPD sequence with random jitter ($\pm 25$~ms) to simulate synchronous bilateral discharges. The full 3-way classification (LPD vs.\ GPD vs.\ BIPD) used 29 features comprising 18 per-channel PD probabilities from ChannelPD-Net plus 11 timing-derived features.
+
+\subsection{Statistical Analysis}
+\label{sec:statistics}
+
+Lateralization and classification performance was evaluated using the area under the receiver operating characteristic curve (AUC). Frequency estimation was assessed using Spearman rank correlation ($\rho$) and mean absolute error (MAE) against expert labels. Discharge timing accuracy was evaluated using F1 score (at $\pm 100$~ms tolerance), sensitivity, precision, and timing MAE (in milliseconds). Spatial localization was assessed using the Jaccard index (intersection over union) for PD region sets and the ICC(3,1) for spatial extent as a continuous measure. For inter-rater reliability analyses, 95\% confidence intervals were computed using bootstrap resampling (1,000 iterations).
+
+Reported evaluation $n$ values are smaller than the corresponding label totals in table~\ref{tab:dataset} for two reasons: (i) under 5-fold patient-stratified cross-validation, an out-of-fold prediction is computed only for segments whose patient appears in a held-out fold (segments from patients used only for training appear in no fold's evaluation set), and (ii) frequency estimation is reported on the quality-filtered subset described above. The label-to-evaluation gap is therefore expected and method-specific; for example, the LPD versus GPD classifier is evaluated on the 7,037 (of 7,507 LPD+GPD) segments with both an out-of-fold prediction and the required RF feature set, the PD hemisphere lateralization task is evaluated on the 1,274 (of 1,336 LPD-laterality-annotated) segments with both an out-of-fold ChannelPD-Net prediction and a confirmed left/right label, and frequency-quality-filtered $n$ values are smaller than the expert-reviewed totals in table~\ref{tab:dataset} because the quality filter additionally requires a single-rater MW review or three-rater agreement.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results}
+\label{sec:results}
+
+\subsection{Lateralization and Subtype Classification}
+\label{sec:lateralization}
+
+\textbf{PD lateralization.} ChannelPD-Net achieved a hemisphere lateralization AUC of 0.989 ($n = 1{,}274$) for determining whether PDs were left-dominant or right-dominant, based on the difference in mean PD probability between left and right hemisphere channels (table~\ref{tab:lateralization}). This near-ceiling performance indicated that the per-channel CNN reliably detected the lateralized nature of LPD patterns.
+
+\textbf{LPD versus GPD classification.} A random forest (RF) classifier (300 trees) trained on 18 per-channel PD probabilities plus 8 handcrafted features achieved an AUC of 0.911 ($n = 7{,}037$) for distinguishing LPD from GPD. The features capturing spatial asymmetry in PD probability across channels were the primary drivers of classification performance.
+
+\textbf{3-way PD classification (LPD vs.\ GPD vs.\ BIPD).} The 3-way classifier incorporating timing-derived features achieved a macro AUC of 0.862 ($n = 5{,}064$; LPD AUC 0.832, GPD AUC 0.835, BIPD AUC 0.920). In the clinically relevant binary comparison of BIPD versus GPD, the classifier achieved an AUC of 0.937 ($n = 2{,}308$), demonstrating strong discrimination between synchronous generalized discharges and bilateral independent discharge trains. The dataset comprised 2,756 LPD, 2,298 GPD, and 10 confirmed BIPD segments. The most discriminative features for BIPD detection were matched fraction and phase consistency, which captured the defining characteristic of temporal independence between hemispheres.
+
+\textbf{RDA lateralization (LRDA vs.\ GRDA).} The NB-Hilbert iterative narrowband refinement method achieved a lateralization AUC of 0.837 on 4,253 segments (1,295 LRDA, 2,958 GRDA) in the V5 lateralization contest (table~\ref{tab:lateralization}). This method outperformed 75 alternative approaches, including simple amplitude asymmetry (entry L24, AUC 0.826), PLV-based lateralization (entry V04, AUC 0.809), and various multi-channel Hilbert methods (AUC 0.790). The key to NB-Hilbert's superiority was that the narrowband filtering in pass~2 removed non-RDA activity, sharpening the lateralization signal. Clean per-segment labels proved critical: the same hemisphere-independent methods achieved only AUC 0.58 with noisy patient-level labels in earlier experiments, rising to 0.84 after label correction. Contest entry codes (L24, V04, etc.) refer to the V5 lateralization contest naming scheme described in appendix~\ref{app:contest}.
+
+\begin{table}[t]
+\caption{Lateralization and classification performance.}
+\centering
+\begin{tabular}{l l c r}
+\hline
+Task & Method & AUC & $N$ \\
+\hline
+PD hemisphere (L vs.\ R) & ChannelPD-Net mean probability & 0.989 & 1,274 \\
+LPD vs.\ GPD & RF on channel probs + features & 0.911 & 7,037 \\
+3-way macro (LPD/GPD/BIPD) & RF on channel probs + timing & 0.862 & 5,064 \\
+BIPD vs.\ GPD & Timing features (GBT) & 0.937 & 2,308 \\
+LRDA vs.\ GRDA & NB-Hilbert (iterative narrowband) & 0.837 & 4,253 \\
+\hline
+\end{tabular}
+\label{tab:lateralization}
+\end{table}
+
+\subsection{Frequency Estimation}
+\label{sec:frequency}
+
+\textbf{PD frequency.} On quality-filtered segments, the PD-Profiler (IPI-derived frequency from HemiCET-UNet + DP) achieved Spearman correlations of 0.786 for LPD ($n = 1{,}226$, MAE $= 0.265$~Hz) and 0.846 for GPD ($n = 1{,}089$, MAE $= 0.172$~Hz) (table~\ref{tab:frequency}, figure~\ref{fig:freq_scatter}). These results represented substantial improvements over the signal-processing baseline of Tautan et al.~\cite{tautan2025}, which achieved correlations of 0.184 (LPD, MAE $= 0.581$~Hz) and 0.248 (GPD, MAE $= 0.469$~Hz) on the same segments. The improvement was approximately four-fold for both subtypes.
+
+The superior performance of IPI-derived frequency over direct CNN prediction ($\rho \approx 0.55$) or CNN+ACF ensemble ($\rho \approx 0.60$) confirmed that leveraging detected discharge timing for frequency estimation was substantially more accurate than spectral or regression-based approaches. The HemiCET-UNet + DP pipeline achieved a timing-derived frequency Spearman correlation of 0.891 on the 582 production evaluation cases, with a frequency MAE of 0.183~Hz.
+
+\textbf{RDA frequency.} The NB-Hilbert iterative narrowband method achieved Spearman correlations of 0.674 for LRDA ($n = 640$, MAE $= 0.233$~Hz) and 0.712 for GRDA ($n = 1{,}310$, MAE $= 0.215$~Hz) on quality-filtered segments (table~\ref{tab:frequency}, figure~\ref{fig:freq_scatter}). Tautan et al.\ achieved correlations of 0.135 (LRDA, MAE $= 0.573$~Hz) and 0.218 (GRDA, MAE $= 0.546$~Hz), representing a five-fold and three-fold improvement, respectively.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig4_frequency_scatter.png}
+\caption{Algorithm frequency estimates correlate three- to five-fold more strongly with expert labels than the prior signal-processing state of the art. Scatter plots comparing algorithm-predicted frequency ($y$-axis) against expert-reviewed frequency ($x$-axis) for each subtype. Top row: present system (PD: CNN+ACF frequency prior refined by IPI from detected discharges; RDA: NB-Hilbert iterative narrowband Hilbert refinement). Bottom row: T\u{a}u\c{t}an et al.\ signal-processing baseline. Columns from left to right: LPD ($n = 1{,}226$; $\rho = 0.786$), GPD ($n = 1{,}089$; $\rho = 0.846$), LRDA ($n = 640$; $\rho = 0.674$), GRDA ($n = 1{,}310$; $\rho = 0.712$). Spearman correlation ($\rho$) and mean absolute error (MAE, in Hz) are shown for each panel. Expert frequency is the mean across available raters. Dashed diagonal line indicates perfect agreement.}
+\label{fig:freq_scatter}
+\end{figure}
+
+On 68 segments with three-expert frequency annotations, NB-Hilbert reached an algorithm--expert ICC of 0.860---slightly exceeding the expert--expert ICC of 0.852 (figure~\ref{fig:irr}). For RDA frequency estimation, the algorithm therefore agreed with experts as well as experts agreed with each other. For PD frequency, the algorithm ICC was 0.572 compared to expert-expert ICC of 0.662, indicating room for further improvement.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/figS1_irr_comparison.png}
+\caption{Inter-rater reliability comparison: expert--expert versus algorithm--expert. Bar charts comparing ICC(3,1) and percentage agreement for frequency and spatial extent estimation. Top row: RDA (LRDA + GRDA combined). Bottom row: PD (LPD + GPD combined). Three conditions compared: expert--expert agreement (blue), present system (orange), and T\u{a}u\c{t}an et al.\ (green). NB-Hilbert (RDA-Profiler) for RDA frequency achieves ICC $= 0.860$, slightly exceeding expert--expert ICC $= 0.852$. PD-Profiler for PD spatial extent achieves ICC $= 0.852$ after threshold optimization, exceeding expert--expert ICC $= 0.845$. T\u{a}u\c{t}an et al.~\cite{tautan2025} included for direct comparison.}
+\label{fig:irr}
+\end{figure}
+
+\begin{table}[t]
+\caption{Frequency estimation performance (quality-filtered).}
+\centering
+\begin{tabular}{l r c c c c}
+\hline
+Subtype & $N$ & Algorithm $\rho$ & Algorithm MAE (Hz) & Tautan $\rho$ & Tautan MAE (Hz) \\
+\hline
+LPD & 1,226 & 0.786 & 0.265 & 0.184 & 0.581 \\
+GPD & 1,089 & 0.846 & 0.172 & 0.248 & 0.469 \\
+LRDA & 640 & 0.674 & 0.233 & 0.135 & 0.573 \\
+GRDA & 1,310 & 0.712 & 0.215 & 0.218 & 0.546 \\
+\hline
+\end{tabular}
+\label{tab:frequency}
+\end{table}
+
+\textbf{Label quality analysis.} The quality of ground-truth frequency labels substantially influenced apparent algorithm performance. Segments with less than 60\% expert agreement on pattern classification exhibited 2.4-fold higher frequency discrepancy between algorithm and expert than segments with 100\% agreement. When MW re-reviewed all cases where the algorithm--expert frequency discrepancy exceeded 0.5~Hz, the original MW label was corrected in favor of the algorithm estimate in 94\% of PD cases and 61\% of RDA cases. This bidirectional quality improvement---algorithm predictions revealing annotation errors, which in turn improved the evaluation benchmark---was a recurring theme throughout development.
+
+\subsection{Discharge Timing}
+\label{sec:timing}
+
+On 582 evaluation cases at $\pm 100$~ms tolerance, the HemiCET-UNet + DP pipeline achieved a discharge detection F1 of 0.889 (sensitivity 0.921, precision 0.859; table~\ref{tab:timing}). The 582 evaluation cases were a quality-filtered subset of the 675 training segments described in section~\ref{sec:pd_pipeline}, excluding cases without a documented discharge-timing review pass. The median timing MAE was 1.0~ms, indicating that detected discharges were localized to within a single sample (5~ms at 200~Hz) of the expert-annotated timing. The IPI-derived frequency from detected discharges achieved Spearman $\rho$ of 0.891 with expert-reviewed frequency.
+
+This performance substantially exceeded two earlier pipeline versions: the full 18-channel pipeline (F1 $= 0.726$, timing MAE $= 17.7$~ms) and the per-hemisphere baseline using handcrafted evidence only (F1 $= 0.719$, timing MAE $= 19.4$~ms). The HemiCET approach also exceeded an Oracle baseline that used expert-annotated frequency as the DP prior with handcrafted evidence (F1 $= 0.664$, timing MAE $= 10.9$~ms). This finding demonstrated that learned evidence from the 8-channel HemiCET-UNet was superior to handcrafted features, more than compensating for imperfect frequency knowledge. The 8-channel hemisphere design outperformed the full 18-channel approach because it avoided noise from the uninvolved hemisphere (for LPD) and learned cross-channel patterns within a hemisphere directly.
+
+\begin{table}[t]
+\caption{Discharge timing performance.}
+\centering
+\begin{tabular}{l c c c c c}
+\hline
+Method & F1 & Sensitivity & Precision & Freq $\rho$ & Timing MAE (ms) \\
+\hline
+HemiCET-UNet + DP (production) & 0.889 & 0.921 & 0.859 & 0.891 & 1.0 \\
+Oracle (expert freq + HPP) & 0.664 & 0.569 & 0.799 & 0.910 & 10.9 \\
+Full 18-channel pipeline & 0.726 & 0.722 & 0.730 & 0.765 & 17.7 \\
+Per-hemisphere baseline & 0.719 & 0.724 & 0.715 & 0.778 & 19.4 \\
+\hline
+\end{tabular}
+\label{tab:timing}
+\end{table}
+
+\subsection{Spatial Localization}
+\label{sec:spatial}
+
+\subsubsection{PD Spatial Localization.}
+
+\textbf{Discharge-locked topographic localization.} The primary spatial localization method for PDs computed the mean discharge topography using the two-pass Laplacian--GFP alignment procedure described in section~\ref{sec:pd_pipeline}. Representative topographic maps are shown in figures~\ref{fig:lpd_char}--\ref{fig:gpd_char}. The Laplacian transform sharpened spatial resolution by removing volume-conducted contributions, producing focal peaks corresponding to cortical generators. The GFP-squared weighting reduced the effective contribution of phantom discharges by a factor of 4--10 relative to uniform averaging, and the two-pass alignment reduced cross-epoch jitter by approximately 8--12~ms compared to single-pass GFP alignment.
+
+\textbf{Spatial extent (Jaccard agreement).} The Hybrid-PLV spatial method was evaluated against three expert raters (LB, PH, SZ) on PD segments with 3-rater ground truth (table~\ref{tab:spatial_jaccard}; per-subtype scatter in supplementary figure~\ref{fig:spatial_scatter}). The choice of binarization threshold influenced model--expert agreement (supplementary figure~\ref{fig:threshold_sweep}); at the optimized threshold of 0.38, the mean model--expert Jaccard index was 0.731 ($\pm 0.076$), compared to a mean expert--expert Jaccard of 0.751 ($\pm 0.025$), representing 97.3\% of human inter-rater agreement. Notably, the model-PH agreement (Jaccard 0.837) exceeded all expert--expert pairs (maximum: LB--SZ at 0.773), indicating that the model acted as a ``virtual fourth rater'' with agreement patterns within the range of expert variation.
+
+\begin{table}[t]
+\caption{PD spatial inter-rater agreement (Jaccard, threshold $= 0.38$).}
+\centering
+\begin{tabular}{l r r r r}
+\hline
+ & LB & PH & SZ & Model \\
+\hline
+LB & 1.000 & 0.762 & 0.773 & 0.693 \\
+PH & 0.762 & 1.000 & 0.716 & 0.837 \\
+SZ & 0.773 & 0.716 & 1.000 & 0.662 \\
+Model & 0.693 & 0.837 & 0.662 & 1.000 \\
+\hline
+\end{tabular}
+\label{tab:spatial_jaccard}
+\end{table}
+
+After threshold optimization (threshold $= 0.62$) and quality filtering (excluding SZ spatial\_extent $= 0$ entries), the PD-Profiler spatial ICC was 0.852, exceeding the expert-expert ICC of 0.845 (figure~\ref{fig:irr}). In comparison, Tautan et al.~\cite{tautan2025} achieved a PD spatial ICC of 0.764 on the same segments.
+
+\subsubsection{RDA Spatial Extent.}
+
+The RDA-PLV method achieved an ICC of 0.371 when the algorithm was treated as a fourth rater alongside the three experts, compared to an expert-expert ICC of 0.373 ($n = 211$ segments with 3-rater spatial ground truth). The algorithm MAE of 0.215 was better than some expert-expert pairs (e.g., LB vs.\ SZ MAE $= 0.484$). Tautan et al.\ achieved an RDA spatial ICC of 0.215, substantially below both expert agreement and the present method.
+
+The low absolute ICC values (approximately 0.37) for RDA spatial extent---for both the algorithm and expert raters---reflected the inherent difficulty of this task. Unlike PD spatial localization, where discrete discharges create identifiable transients, RDA produces continuous rhythmic activity whose boundaries are gradual and subjective. The near-parity between algorithm and expert ICC indicated that the PLV-amplitude method captured the same information experts used when judging spatial extent, while acknowledging that spatial extent is inherently a low-reliability measure even among trained electroencephalographers.
+
+\subsection{End-to-End Characterization Examples}
+\label{sec:examples}
+
+Figures~\ref{fig:lpd_char}--\ref{fig:grda_char} present representative characterization examples for all four subtypes at three difficulty levels (easy, medium, hard), selected to span the range of inter-rater agreement. Each example shows the 19-channel EEG with pipeline outputs overlaid: detected discharge times (red dashed lines, PD only), hemisphere shading (light blue), Laplacian topographic map (inferno colormap), and ACNS 2021 verbal description.
+
+For LPD examples (figure~\ref{fig:lpd_char}), the easy case (IIIC agreement $\geq 95\%$) exhibited clear, stereotyped discharges with unambiguous lateralization and a sharp focal maximum in the topographic map. The medium case (70--80\% agreement) showed recognizable periodicity with some morphological variability; the pipeline correctly lateralized and detected most discharges, though one or two marginal peaks were missed. The hard case (45--60\% agreement) featured subtle, atypical discharges where expert raters themselves disagreed; the pipeline produced a reasonable characterization, though the topographic map was more diffuse, reflecting the ambiguity of the pattern.
+
+For GPD examples (figure~\ref{fig:gpd_char}), discharge markers spanned both hemispheres, and the topographic maps showed bilateral, often frontally predominant distributions. For LRDA and GRDA examples (figures~\ref{fig:lrda_char}--\ref{fig:grda_char}), no discharge markers were shown (RDA being a continuous rhythmic pattern), but hemisphere shading and amplitude topographic maps correctly identified the spatial distribution.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig5_lpd_characterization.png}
+\caption{LPD characterization examples at three difficulty levels. Three representative lateralized periodic discharge (LPD) cases selected to span the range of inter-rater agreement. Each row shows one case with: (left) 19-channel average-reference EEG (10 seconds, bandpass 0.3--50~Hz, amplitude clipped at $\pm 250$~$\mu$V) with detected discharge times marked as red dashed vertical lines on the involved hemisphere and light blue shading indicating the lateralized side; (right) Laplacian topoplot (inferno colormap) with electrode labels, and ACNS 2021 verbal description. Top: easy case (agreement $\geq 95\%$). Middle: medium case (agreement 70--80\%). Bottom: hard case (agreement 45--60\%). Scale bar: 100~$\mu$V.}
+\label{fig:lpd_char}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig6_gpd_characterization.png}
+\caption{GPD characterization examples at three difficulty levels. Three representative generalized periodic discharge (GPD) cases, following the same format as figure~\ref{fig:lpd_char}. Discharge markers span both hemispheres, reflecting the generalized distribution. Scale bar: 100~$\mu$V.}
+\label{fig:gpd_char}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig7_lrda_characterization.png}
+\caption{LRDA characterization examples at three difficulty levels. Three representative lateralized rhythmic delta activity (LRDA) cases, following the same format as figure~\ref{fig:lpd_char}. No discharge markers are shown. Light blue shading indicates the dominant hemisphere. Scale bar: 100~$\mu$V.}
+\label{fig:lrda_char}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/fig8_grda_characterization.png}
+\caption{GRDA characterization examples at three difficulty levels. Three representative generalized rhythmic delta activity (GRDA) cases, following the same format as figure~\ref{fig:lpd_char}. No discharge markers are shown. Light blue shading covers all channels, reflecting the generalized distribution. Scale bar: 100~$\mu$V.}
+\label{fig:grda_char}
+\end{figure}
+
+\subsection{Model Architecture Comparison}
+\label{sec:architecture}
+
+A comparison of neural architecture strategies (table~\ref{tab:architecture}) confirmed the value of combining learned evidence with structured inference. The production HemiCET-UNet + DP pipeline (F1 $= 0.889$, frequency $\rho = 0.891$) substantially outperformed an end-to-end CNN approach (E2E-CNN; F1 $= 0.006$, frequency $\rho = 0.001$), which failed completely with the available training data size of 675 labeled examples. With current data volumes, end-to-end neural models could not learn the temporal structure that DP encoded as a prior. The winning strategy combined neural evidence generation (HemiCET-UNet learning what a discharge looks like) with structured inference (DP learning when discharges should occur, given periodicity constraints).
+
+\begin{table}[t]
+\caption{End-to-end versus structured inference.}
+\centering
+\begin{tabular}{l c c l}
+\hline
+Model & F1 & Freq $\rho$ & Notes \\
+\hline
+HemiCET-UNet + DP (production) & 0.889 & 0.891 & Neural evidence + DP \\
+E2E-CNN (direct prediction) & 0.006 & 0.001 & Failed with ${\sim}$675 training examples \\
+\hline
+\end{tabular}
+\label{tab:architecture}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Comparison with Prior Work}
+\label{sec:comparison}
+
+The most directly comparable prior work is that of T\u{a}u\c{t}an et al.~\cite{tautan2025}, who described a signal-processing approach to PD and RDA characterization using autocorrelation-based frequency estimation and spectral spatial analysis. The present system achieved substantially higher performance across all characterization tasks (table~\ref{tab:frequency}). For frequency estimation, the improvement ranged from three-fold (GRDA: $\rho$ 0.712 vs.\ 0.218) to five-fold (LRDA: $\rho$ 0.674 vs.\ 0.135) in Spearman correlation, and from two-fold to three-fold reduction in MAE. For spatial extent, the present system achieved ICC values matching or exceeding expert-expert agreement (PD: 0.852 vs.\ expert 0.845; RDA: 0.371 vs.\ expert 0.373), while Tautan et al.\ achieved lower ICC values (PD: 0.764; RDA: 0.215).
+
+Several factors contributed to these improvements. First, the use of learned evidence (HemiCET-UNet) rather than purely handcrafted features enabled the PD-Profiler to capture discharge morphology patterns that are difficult to specify algorithmically. Second, the IPI-derived frequency from detected discharge timing provided a more direct and accurate frequency estimate than spectral methods, which are sensitive to harmonics, non-stationarity, and contamination from non-periodic activity. Third, the iterative narrowband refinement in the RDA-Profiler (NB-Hilbert) leveraged the estimated frequency to isolate the pattern of interest before computing lateralization and refined frequency estimates, reducing the influence of confounding signals. Fourth, the phase-locking value approach to spatial extent quantified the functional coherence of each channel with the dominant pattern, providing a more principled metric than amplitude-based channel counting.
+
+No prior work has reported automated discharge-level timing for individual periodic discharges or bilateral independent PD detection, making direct comparison on these tasks impossible. McGraw et al.~\cite{mcgraw2024} described an automated method for quantifying \emph{burst-level} periodic discharge activity, but did not address per-discharge timing, lateralization, or BIPD detection. The present F1 of 0.889 for discharge detection and AUC of 0.937 for BIPD versus GPD classification establish baseline benchmarks for future studies.
+
+\subsection{Learned Evidence versus Handcrafted Features}
+\label{sec:learned_vs_handcrafted}
+
+A key finding of this work was that the HemiCET-UNet evidence trace (a learned 1D U-Net operating on single channels) outperformed handcrafted features (pointiness + TKEO) when combined with the same DP inference framework. HemiCET-UNet + DP achieved F1 $= 0.889$ compared to the per-hemisphere handcrafted baseline F1 $= 0.719$---a 24\% improvement. More strikingly, learned evidence with imperfect CNN+ACF frequency exceeded the Oracle configuration that used expert-annotated frequency with handcrafted evidence (F1 $= 0.889$ vs.\ $0.664$), showing that the quality of discharge evidence mattered more than the accuracy of the frequency prior.
+
+This result supports a hybrid architecture in which neural networks handle perceptual tasks (recognizing discharge morphology in raw EEG) while domain knowledge encodes structural constraints (periodicity in the DP algorithm). Pure end-to-end approaches, which must learn both the perceptual and structural components from labeled data, failed at the current training set size of 675 labeled segments. This finding is consistent with the broader machine learning literature on combining neural perception with model-based reasoning for structured prediction tasks~\cite{lake2017}, and parallels the long-standing success of hybrid neural-plus-structured-decoding architectures in adjacent biomedical signal-processing problems where labeled data are similarly limited and the underlying signal has strong temporal structure---most notably automatic speech recognition, which routinely combines a learned acoustic model with a structured decoder.
+
+The complementary value of handcrafted and learned evidence was confirmed by the product-boost combination formula, which yielded better performance than either source alone. The handcrafted pointiness trace captured sharp transients that the HemiCET-UNet occasionally missed (particularly low-amplitude discharges in noisy channels), while the HemiCET-UNet identified discharges with atypical morphology that did not trigger the pointiness detector.
+
+\subsection{Label Quality Discovery}
+\label{sec:label_quality}
+
+Repeatedly, apparent algorithm limitations traced to label noise rather than algorithm deficiency. Three examples illustrate this phenomenon.
+
+First, the original per-patient label system (patients.csv) aggregated IIIC crowd votes across all 10-second segments within a 10-minute recording, such that a patient labeled ``LRDA'' might have had most individual segments voted as ``other'' by the crowd. Migration to per-segment labels (segment\_labels.csv) improved RDA lateralization AUC from 0.58 to 0.84 using the same algorithms.
+
+Second, MW's systematic frequency review of 993 RDA segments identified that the NB-Hilbert algorithm estimate matched the expert exactly in 59\% of cases and was within 0.25~Hz in 85\% of cases. Among the 399 corrections, many involved ambiguous segments where frequency estimation was inherently uncertain.
+
+Third, in a post-hoc analysis of PD frequency discrepancies exceeding 0.5~Hz, MW re-reviewed all discordant cases and judged the algorithm estimate to be correct (more consistent with the visual pattern) in 94\% of cases, leading to ground-truth label corrections. These findings underscore the importance of iterative, bidirectional quality improvement between algorithm development and annotation refinement.
+
+\subsection{Clinical Implications}
+\label{sec:clinical}
+
+The automated characterization system has several potential clinical applications. First, it can reduce the burden on electroencephalographers during prolonged cEEG monitoring by providing structured ACNS 2021 descriptions that serve as a starting point for expert review, rather than requiring de novo characterization. Second, standardized quantitative characterization enables large-scale studies of PD and RDA epidemiology, evolution, and association with clinical outcomes, which are currently limited by the labor intensity of manual annotation. Third, the discharge-locked topographic maps provide a quantitative spatial representation that is more objective and reproducible than verbal descriptions of field distribution.
+
+The BIPD detection capability, though limited by the small number of confirmed cases (10 in the evaluation set), addresses a clinically important distinction. BIPDs have different prognostic implications than unilateral LPDs or bilateral synchronous GPDs, and their identification requires comparison of independent hemisphere timing sequences---a task that is cognitively demanding for human reviewers but naturally suited to algorithmic analysis.
+
+The discharge timing capability (F1 $= 0.889$, timing MAE $= 1.0$~ms) enables analyses that were previously impractical at scale, including IPI variability assessment (relevant to the ACNS ``nearly regular'' criterion), discharge-locked averaging for morphology analysis, and temporal relationship analysis between discharge patterns and other physiological signals.
+
+\subsection{Limitations and Future Work}
+\label{sec:limitations}
+
+First, the BIPD evaluation was limited to 10 confirmed cases due to the rarity of the pattern (21 confirmed from 198 candidates screened, 10.6\% yield). The 3-way classification results (macro AUC 0.862) should be interpreted with caution given this sample size imbalance. Future work should expand the BIPD training dataset (21 confirmed cases are available but only 10 were used) and evaluate the classifier on a larger held-out set.
+
+Second, RDA wave timing (identifying the onset, peak, and offset of each rhythmic delta wave cycle) was not addressed in this work. While 502 segments have been labeled with wave timing annotations, the automated method for wave detection remains under development. Wave-level timing would enable phase-locked analyses (e.g., whether fast activity occurs at a specific RDA phase) and wave-by-wave frequency estimation.
+
+Third, the discharge-locked topographic localization approach, while providing a principled and ground-truth-free spatial representation, has not been formally validated against a gold standard. The Jaccard analysis of spatial extent (table~\ref{tab:spatial_jaccard}) demonstrated near-expert agreement for threshold-based channel involvement, but the topographic maps themselves were evaluated only qualitatively through expert visual review. Future work should develop quantitative validation methods, potentially using intracranial EEG recordings as ground truth.
+
+Fourth, the evaluation of all methods relied on a single institution's EEG data (though drawn from thousands of patients) and annotations from a limited number of expert raters (primarily one rater for frequency and timing, three raters for spatial extent). Multi-center validation with independent expert panels would strengthen the generalizability of these results.
+
+Fifth, the system operates on isolated 10-second EEG segments and does not model temporal evolution of patterns across longer recordings. Clinical monitoring generates hours to days of continuous data, and characterization of pattern evolution (e.g., frequency trending, spatial spread) would enhance clinical utility. Integration with existing pattern detection systems (e.g., Morgoth~\cite{jing2023}) that provide real-time classification of continuous EEG is a natural extension.
+
+Sixth, the current system does not address seizure patterns, which share features with PDs and RDA but require distinct characterization. Extension to the full ACNS critical care EEG terminology, including seizures, brief potentially ictal rhythmic discharges (BIRDs), and stimulus-induced patterns, is an important direction.
+
+Finally, training data volume remains a constraint, particularly for the HemiCET-UNet (675 labeled segments) and BIPD classifier (10 evaluation cases). Self-supervised pretraining on unlabeled EEG data and transfer learning from larger datasets may help overcome this limitation.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusion}
+\label{sec:conclusion}
+
+This work presents a comprehensive automated system for characterizing periodic discharges and rhythmic delta activity in continuous EEG, addressing lateralization, spatial localization, discharge timing, frequency estimation, and BIPD detection within a unified framework. The PD-Profiler combines learned neural evidence (HemiCET-UNet) with structured dynamic programming inference, while the RDA-Profiler uses iterative narrowband signal processing with phase-coherence analysis. Across all characterization tasks, the system achieves performance approaching or matching expert inter-rater agreement, with frequency estimation correlations 3--5 times higher than the previous state of the art.
+
+The key technical insight is that a hybrid architecture---neural networks for perceptual feature extraction combined with domain-knowledge-encoded temporal priors---outperforms both purely handcrafted and purely end-to-end approaches at current data scales. The discharge-locked topographic localization method provides a principled, threshold-free spatial representation that directly computes the voltage field distribution at discharge peaks. The iterative, bidirectional relationship between algorithm development and annotation refinement---where algorithm predictions reveal label errors and corrected labels improve algorithm evaluation---was essential to achieving reliable performance benchmarks.
+
+The system produces ACNS 2021-formatted verbal descriptions suitable for clinical reporting and provides a foundation for large-scale quantitative analysis of periodic and rhythmic EEG patterns. We have made all code and evaluation scripts publicly available.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+
+\section{Contest of methods: naming scheme and entry codes}
+\label{app:contest}
+
+Throughout development, candidate algorithms for RDA lateralization, RDA frequency, and PD spatial localization were compared in a series of systematic ``contests of methods.'' The text of this paper retains the original short codes for non-winning contest entries that are referenced for direct comparison; the winning RDA method (W05) has been renamed NB-Hilbert in the main text for readability. This appendix documents the naming scheme so that the contest codes appearing in tables and the Results section can be unambiguously identified.
+
+\subsection{Naming scheme}
+
+Each contest entry is identified by a one- or two-letter prefix indicating the contest cohort, followed by a two-digit serial number assigned in the order in which the variant was implemented. The prefixes used in this paper are as follows:
+
+\begin{itemize}
+\item \textbf{V} (``variance/PLV'') --- channel-selection variants for the V5 RDA lateralization contest, generally based on per-channel variance, envelope amplitude, or phase-locking value (PLV) to a reference signal.
+\item \textbf{L} (``laterality'') --- single-pass lateralization variants for the same V5 contest, typically using simple per-hemisphere amplitude or variance asymmetry.
+\item \textbf{W} (``winner candidate'') --- two-pass iterative narrowband refinement variants. W05 was selected as the overall winner of the V5 lateralization contest and is referred to as NB-Hilbert throughout the main text.
+\item \textbf{C} (``configuration'') --- discrete configurations of the discharge-timing pipeline, distinguished by combinations of evidence sources, frequency priors, and post-processing settings. The production configuration is referred to as configuration~C1 in the original contest log; in this paper it is described directly as ``HemiCET-UNet + DP'' or ``HemiCET-UNet (production)''.
+\end{itemize}
+
+\subsection{Entries referenced in this paper}
+
+\begin{table}[h]
+\caption{Contest entries referenced in the main text. The V5 RDA lateralization contest comprised 76 algorithm variants evaluated on 4{,}253 RDA segments (1{,}295 LRDA, 2{,}958 GRDA); only the variants discussed in this paper are listed here.}
+\centering
+\begin{tabular}{l l c c l}
+\hline
+Code & Method & Lat.\ AUC & Freq.\ $\rho$ & Section \\
+\hline
+W05 (NB-Hilbert) & Two-pass iterative narrowband Hilbert refinement & 0.837 & 0.635 & \ref{sec:rda_pipeline}, \ref{sec:lateralization} \\
+L24             & Single-pass envelope amplitude asymmetry           & 0.826 & --    & \ref{sec:lateralization} \\
+V04             & PLV-selected channels                              & 0.809 & 0.682 & \ref{sec:lateralization} \\
+V05             & Auto channel selection + frequency consensus       & 0.790 & 0.686 & \ref{sec:rda_pipeline} \\
+\hline
+\end{tabular}
+\label{tab:contest_entries}
+\end{table}
+
+The complete log of all 76 V5 lateralization contest entries, the 26-method PD spatial localization contest, and the configuration sweeps for the discharge-timing pipeline (the C-series) is maintained in the project's internal evaluation records and is available from the corresponding author on request.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{appendix_math_methods}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Supplementary Material}
+\label{sec:supplementary}
+
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\theHfigure}{S\arabic{figure}}
+\setcounter{figure}{0}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/figS2_spatial_scatter.png}
+\caption{Spatial extent scatter plots by subtype. Scatter plots comparing algorithm-predicted spatial extent ($y$-axis, fraction of 18 channels involved) against expert spatial extent ($x$-axis, mean across raters) for each subtype. Per-rater data points shown with distinct markers for each expert rater (LB, PH, SZ, MW). Spearman $\rho$ and MAE are reported per panel.}
+\label{fig:spatial_scatter}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{figures/figS3_threshold_sweep.png}
+\caption{Spatial extent threshold optimization. Effect of binarization threshold on spatial extent prediction accuracy, evaluated on segments with at least 2 expert raters. Top row: PD (LPD + GPD). Bottom row: RDA (LRDA + GRDA). Three metrics shown across threshold values (0.01--0.99): MAE, Pearson correlation, and ICC(3,1). Optimal thresholds are marked: PD approximately 0.38--0.62 (broad plateau), RDA approximately 0.15.}
+\label{fig:threshold_sweep}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Back matter
+
+\ack{This work was supported by grants from the NIH (R01NS131347).}
+
+\data{The data that support the findings of this study are available at \url{https://bdsp.io}.}
+
+\roles{%
+Jin~Jing: Conceptualization, Methodology, Software, Data Curation, Writing -- Review \& Editing.
+ChenXi~Sun: Methodology, Software, Formal Analysis, Writing -- Review \& Editing.
+Tianyu~Zhang: Software, Formal Analysis, Writing -- Review \& Editing.
+Matthew~Byrd: Software, Formal Analysis, Writing -- Review \& Editing.
+Alexandra-Maria~T\u{a}u\c{t}an: Methodology, Software, Data Curation, Writing -- Review \& Editing.
+Lara~Basovic: Investigation, Data Curation (annotation), Writing -- Review \& Editing.
+Peter~N~Hadar: Investigation, Data Curation (annotation), Writing -- Review \& Editing.
+Marta~P~Fernandes: Investigation, Writing -- Review \& Editing.
+Daniel~Goldenholz: Investigation, Writing -- Review \& Editing.
+Jennifer~Kim: Investigation, Writing -- Review \& Editing.
+Aaron~F~Struck: Investigation, Writing -- Review \& Editing.
+Sahar~F~Zafar: Investigation, Data Curation (annotation), Writing -- Review \& Editing, Supervision.
+M~Brandon~Westover: Conceptualization, Methodology, Software, Validation, Formal Analysis, Investigation, Data Curation, Writing -- Original Draft, Writing -- Review \& Editing, Supervision, Project Administration, Funding Acquisition.%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{References}
+
+\begin{thebibliography}{99}
+
+\bibitem{claassen2004}
+Claassen J, Mayer SA, Kowalski RG, Emerson RG, Hirsch LJ.
+Detection of electrographic seizures with continuous EEG monitoring in critically ill patients.
+\textit{Neurology}. 2004;62(10):1743--1748.
+
+\bibitem{chong2005}
+Chong DJ, Hirsch LJ.
+Which EEG patterns warrant treatment in the critically ill? Reviewing the evidence for treatment of periodic epileptiform discharges and related patterns.
+\textit{J Clin Neurophysiol}. 2005;22(2):79--91.
+
+\bibitem{rodriguez2017}
+Rodriguez Ruiz A, Vlachy J, Lee JW, et al.
+Association of periodic and rhythmic electroencephalographic patterns with seizures in critically ill patients.
+\textit{JAMA Neurol}. 2017;74(2):181--188.
+
+\bibitem{hirsch2021}
+Hirsch LJ, Fong MWK, Leitinger M, et al.
+American Clinical Neurophysiology Society's standardized critical care EEG terminology: 2021 version.
+\textit{J Clin Neurophysiol}. 2021;38(1):1--29.
+
+\bibitem{gaspard2014}
+Gaspard N, Hirsch LJ, LaRoche SM, Hahn CD, Westover MB; Critical Care EEG Monitoring Research Consortium.
+Interrater agreement for critical care EEG terminology.
+\textit{Epilepsia}. 2014;55(9):1366--1373.
+
+\bibitem{leitinger2015}
+Leitinger M, Beniczky S, Rohracher A, et al.
+Salzburg consensus criteria for non-convulsive status epilepticus -- revisited: a critical reappraisal.
+\textit{Epilepsy Behav}. 2015;49:158--163.
+
+\bibitem{zafar2020}
+Zafar SF, Subramaniam T, Osman G, Herlopian A, Struck AF.
+Electrographic seizures and ictal--interictal continuum (IIC) patterns in critically ill patients.
+\textit{Epilepsy Behav}. 2020;106:107037. doi:10.1016/j.yebeh.2020.107037.
+
+\bibitem{vespa2016}
+Vespa P, Tubi M, Claassen J, Buitrago-Blanco M, McArthur D, Velazquez AG, Tu B, Prins M, Nuwer M.
+Metabolic crisis occurs with seizures and periodic discharges after brain trauma.
+\textit{Ann Neurol}. 2016;79(4):579--590. doi:10.1002/ana.24606.
+
+\bibitem{struck2016}
+Struck AF, Westover MB, Hall LT, Deck GM, Cole AJ, Rosenthal ES.
+Metabolic correlates of the ictal--interictal continuum: FDG-PET during continuous EEG.
+\textit{Neurocrit Care}. 2016;24(3):324--331. doi:10.1007/s12028-016-0245-y.
+
+\bibitem{tao2020}
+Tao JX, Qin X, Wang Q.
+Ictal--interictal continuum: a review of recent advancements.
+\textit{Acta Epileptol}. 2020;2:13. doi:10.1186/s42494-020-00021-1.
+
+\bibitem{parikh2023}
+Parikh H, Sun H, Amerineni R, et al.
+Effects of epileptiform activity on discharge outcome in critically ill patients in the USA: a retrospective cross-sectional study.
+\textit{Lancet Digit Health}. 2023;5(8):e495--e502. doi:10.1016/S2589-7500(23)00088-2.
+
+\bibitem{gaspard2013}
+Gaspard N, Manganas L, Rampal N, Petroff OAC, Hirsch LJ.
+Similarity of lateralized rhythmic delta activity to periodic lateralized epileptiform discharges in critically ill patients.
+\textit{JAMA Neurol}. 2013;70(10):1288--1295. doi:10.1001/jamaneurol.2013.3475.
+
+\bibitem{furbass2015}
+F\"urbass F, Hartmann MM, Halford JJ, Koren J, Herta J, Gruber A, Baumgartner C, Kluge T.
+Automatic detection of rhythmic and periodic patterns in critical care EEG based on American Clinical Neurophysiology Society (ACNS) standardized terminology.
+\textit{Neurophysiol Clin}. 2015;45(3):203--213. doi:10.1016/j.neucli.2015.08.001.
+
+\bibitem{herta2015}
+Herta J, Koren J, F\"urbass F, Hartmann M, Kluge T, Baumgartner C, Gruber A.
+Prospective assessment and validation of rhythmic and periodic pattern detection in NeuroTrend: a new approach for screening continuous EEG in the intensive care unit.
+\textit{Epilepsy Behav}. 2015;49:273--279. doi:10.1016/j.yebeh.2015.04.064.
+
+\bibitem{mcgraw2024}
+McGraw CM, Rao S, Manjunath S, Jing J, Westover MB.
+Automated quantification of periodic discharges in human electroencephalogram.
+\textit{Biomed Phys Eng Express}. 2024;10(6):065003. doi:10.1088/2057-1976/ad7165.
+
+\bibitem{jing2020}
+Jing J, Sun H, Kim JA, et al.
+Development of expert-level automated detection of epileptiform discharges during electroencephalogram interpretation.
+\textit{JAMA Neurol}. 2020;77(1):103--108. doi:10.1001/jamaneurol.2019.3485.
+
+\bibitem{jing2023irr}
+Jing J, Ge W, Struck AF, et al.
+Inter-rater reliability of expert electroencephalographers identifying seizures and rhythmic and periodic patterns in EEGs.
+\textit{Neurology}. 2023;100(17):e1737--e1749. doi:10.1212/WNL.0000000000207003.
+
+\bibitem{gramfort2013}
+Gramfort A, Luessi M, Larson E, et al.
+MEG and EEG data analysis with MNE-Python.
+\textit{Front Neurosci}. 2013;7:267. doi:10.3389/fnins.2013.00267.
+
+\bibitem{shrout1979}
+Shrout PE, Fleiss JL.
+Intraclass correlations: uses in assessing rater reliability.
+\textit{Psychol Bull}. 1979;86(2):420--428. doi:10.1037/0033-2909.86.2.420.
+
+\bibitem{jing2023}
+Jing J, Ge W, Hong S, et al.
+Development of expert-level classification of seizures and rhythmic and periodic patterns during EEG interpretation.
+\textit{Neurology}. 2023;100(17):e1750--e1762.
+
+\bibitem{ge2023}
+Ge W, Jing J, An S, et al.
+Deep active learning for interictal ictal injury continuum EEG patterns.
+\textit{J Neurosci Methods}. 2023;390:109835.
+
+\bibitem{zheng2022}
+Zheng WL, Amorim E, Jing J, et al.
+Predicting neurological outcome from electroencephalogram dynamics in comatose patients after cardiac arrest with deep learning.
+\textit{IEEE Trans Biomed Eng}. 2022;69(5):1813--1825.
+
+\bibitem{tautan2025}
+T\u{a}u\c{t}an AM, Jing J, Basovic L, Hadar PN, Sartipi S, Fernandes MP, Kim J, Struck AF, Westover MB, Zafar SF.
+Automated estimation of frequency and spatial extent of periodic and rhythmic epileptiform activity from continuous electroencephalography data.
+\textit{J Neural Eng}. 2025;22(6):066027. doi:10.1088/1741-2552/ae2716.
+
+\bibitem{lake2017}
+Lake BM, Ullman TD, Tenenbaum JB, Gershman SJ.
+Building machines that learn and think like people.
+\textit{Behav Brain Sci}. 2017;40:e253.
+
+\end{thebibliography}
+
+\end{document}
