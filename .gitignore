@@ -54,6 +54,9 @@ foe/
 *.swo
 *~
 
+# Claude Code session state
+.claude/projects/
+
 # OS
 .DS_Store
 .DS_Store?

@@ -3,7 +3,7 @@
 Render publication-quality EEG characterization figures from JSON data.
 
 Self-contained: only requires matplotlib, numpy, scipy, json.
-Reads figure_*_examples_data.json and produces figure_*_examples.png at 300 DPI.
+Reads figure_*_examples_data.json and produces figures/fig{5,6,7,8}_*_characterization.png at 300 DPI.
 """
 
 import json
@@ -497,7 +497,12 @@ def render_subtype(subtype, cases, is_pd):
         ax_info = fig.add_subplot(inner_gs_right_col[1])
         draw_info_panel(ax_info, case)
 
-    out_path = os.path.join(SCRIPT_DIR, f'figure_{subtype}_examples.png')
+    # Write to the canonical figures/ subdirectory used by the manuscript.
+    # Map subtype -> figure number per the manuscript: lpd=fig5, gpd=fig6, lrda=fig7, grda=fig8.
+    fig_num = {'lpd': 5, 'gpd': 6, 'lrda': 7, 'grda': 8}[subtype]
+    figures_dir = os.path.join(SCRIPT_DIR, 'figures')
+    os.makedirs(figures_dir, exist_ok=True)
+    out_path = os.path.join(figures_dir, f'fig{fig_num}_{subtype}_characterization.png')
     fig.savefig(out_path, dpi=300, facecolor='white', bbox_inches='tight')
     plt.close(fig)
     print(f'  Saved: {out_path}')

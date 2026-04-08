@@ -45,7 +45,7 @@ FIGURES = [
         'num': 5,
         'name': 'Figs 5-8: Characterization Examples (LPD, GPD, LRDA, GRDA)',
         'script': 'render_figures.py',
-        'output': 'figure_lpd_examples.png',
+        'output': 'figures/fig5_lpd_characterization.png',
     },
     {
         'num': 'S1',
