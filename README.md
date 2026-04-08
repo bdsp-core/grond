@@ -49,8 +49,8 @@ Supported pattern types: LPD, GPD, LRDA, GRDA.
 The repo uses **two conda environments** for different parts of the pipeline. Most work needs `morgoth`; only a few legacy signal-processing scripts need `foe`.
 
 ```bash
-git clone https://github.com/bdsp-core/IIIC-Frequency-Functions-For-Morgoth.git
-cd IIIC-Frequency-Functions-For-Morgoth
+git clone https://github.com/bdsp-core/pd-rda-profiler.git
+cd pd-rda-profiler
 
 # morgoth (Python 3.11): PyTorch model training/inference, figure
 # generation, the full PD-Profiler / RDA-Profiler pipelines.
@@ -412,7 +412,7 @@ Data provided by BDSP under their Data Use Agreement.
 ## Contact
 
 - **Data access**: [bdsp.io](https://bdsp.io) or support@bdsp.io
-- **Code issues**: [GitHub Issues](https://github.com/bdsp-core/IIIC-Frequency-Analysis-2/issues)
+- **Code issues**: [GitHub Issues](https://github.com/bdsp-core/pd-rda-profiler/issues)
 - **Research collaboration**: Contact the corresponding authors via the publication
 
 ## Acknowledgments

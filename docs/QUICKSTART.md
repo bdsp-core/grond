@@ -1,13 +1,20 @@
 # Quick Start Guide
 
-Get started with IIIC-Frequency-Analysis-2 in minutes!
+> **Legacy notice.** This quick-start describes the predecessor
+> [`IIIC-Frequency-Analysis-2`](https://github.com/bdsp-core/IIIC-Frequency-Analysis-2)
+> API (`rda.rda1b_fft()`, `pd.pd_detect_alternate()`, etc.). It is
+> preserved here for historical reference. For the current
+> `pd-rda-profiler` pipeline, see the [README](../README.md) and
+> [`paper_materials/manuscript.tex`](../paper_materials/manuscript.tex).
+
+Get started in minutes!
 
 ## 1. Installation (5 minutes)
 
 ```bash
 # Clone repository
-git clone https://github.com/bdsp-core/IIIC-Frequency-Analysis-2.git
-cd IIIC-Frequency-Analysis-2
+git clone https://github.com/bdsp-core/pd-rda-profiler.git
+cd pd-rda-profiler
 
 # Create conda environment
 conda env create -f code/environment.yml
@@ -137,12 +144,12 @@ Each detector returns:
 - **Full documentation**: See [README.md](README.md)
 - **Testing guide**: See [TESTING.md](TESTING.md)
 - **Data access**: See [DATASET_INFO.md](DATASET_INFO.md)
-- **Issues**: Open an issue on [GitHub](https://github.com/bdsp-core/IIIC-Frequency-Analysis-2/issues)
+- **Issues**: Open an issue on [GitHub](https://github.com/bdsp-core/pd-rda-profiler/issues)
 
 ## Directory Structure
 
 ```
-IIIC-Frequency-Analysis-2/
+pd-rda-profiler/
 ├── code/                    # Source code
 │   ├── pd_detector/         # Periodic discharge detectors
 │   ├── rda_detector/        # Rhythmic delta activity detectors

@@ -74,7 +74,7 @@ Once approved (typically 1-2 business days), BDSP will add your AWS account to t
 - Confirmation of access approval
 - S3 bucket location and instructions
 
-**Dataset Location:**
+**Dataset Location (legacy IIIC-Frequency-Analysis-2 release):**
 ```
 s3://bdsp-opendata-projects/IIIC-Frequency-Analysis-2/data.zip
 ```
@@ -99,7 +99,7 @@ unzip data.zip
 ### Step 4: Verify Data Structure
 After downloading, verify your directory structure matches:
 ```bash
-cd IIIC-Frequency-Analysis-2
+cd pd-rda-profiler
 ls -R data/
 ```
 

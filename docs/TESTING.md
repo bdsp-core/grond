@@ -1,5 +1,11 @@
 # Testing Guide
 
+> **Legacy notice.** This guide describes the testing workflow for the
+> predecessor [`IIIC-Frequency-Analysis-2`](https://github.com/bdsp-core/IIIC-Frequency-Analysis-2)
+> codebase (functions like `rda.rda1b_fft()` and `pd.pd_detect_alternate()`).
+> It is preserved here for historical reference. For the current
+> `pd-rda-profiler` pipeline, see the README and `paper_materials/manuscript.tex`.
+
 This document describes how to test the repository after setting up.
 
 ## Prerequisites
@@ -166,7 +172,7 @@ conda activate foe
 **Solution:** Ensure data is in correct location
 ```bash
 # Expected structure:
-IIIC-Frequency-Analysis-2/
+pd-rda-profiler/
 ├── code/
 └── data/
     ├── dataset_eeg/
