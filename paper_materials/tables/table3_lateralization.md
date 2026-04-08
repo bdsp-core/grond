@@ -13,6 +13,19 @@
 | Timing F1 (production) | 0.889 | 582 | HemiCET v2 + DP |
 | Frequency ρ (IPI) | 0.891 | 582 | IPI-derived from detected discharges |
 
+## 3-Way Classification (LPD vs GPD vs BIPD)
+
+| Metric | Value | N | Method |
+|---|---|---:|---|
+| Macro AUC (3-way OVR) | **0.8622** | 5,064 | RF 300 trees on 18 channel probs + 11 timing features |
+| LPD AUC (OVR) | 0.8317 | — | |
+| GPD AUC (OVR) | 0.8345 | — | |
+| BIPD AUC (OVR) | 0.9203 | — | |
+| BIPD vs GPD AUC | **0.9366** | 2,308 | Binary BIPD detection from GPD |
+| 3-way accuracy | 0.7559 | 5,064 | |
+
+Dataset: 2,756 LPD + 2,298 GPD + 10 BIPD.
+
 ## RDA Lateralization (LRDA vs GRDA) — V5 Contest
 
 Dataset: 1,295 LRDA + 2,958 GRDA = 4,253 segments.

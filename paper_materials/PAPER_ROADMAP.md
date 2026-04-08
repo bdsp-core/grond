@@ -119,13 +119,18 @@ Adapt the HPP algorithm for RDA waves:
 3. Use synthetic training data (cross-patient LPD pairs, phase-shifted GPD) to overcome small sample size
 4. Features: phase consistency, frequency ratio, cross-correlation, matched fraction
 5. GBT classifier on ~18 handcrafted features from the two timing sequences
-**Status**: Plan complete, BIPD screener built, 21 cases confirmed. Need per-hemisphere timing labels before implementing classifier.
+**Status**: 3-way classifier trained and evaluated. BIPD vs GPD AUC = 0.937 on 10 confirmed BIPD cases.
+
+**Current results** (eval_3way_classification.py):
+- 3-way macro AUC: 0.862 (LPD 0.832, GPD 0.835, BIPD 0.920)
+- BIPD vs GPD binary AUC: 0.937
+- Uses 29 features: 18 channel probs + 11 timing features (phase correlation, matched fraction, frequency ratio, etc.)
+- Dataset: 2,756 LPD + 2,298 GPD + 10 BIPD
 
 **Future plan (post-paper-writing):**
-- Expand the LPD vs GPD RF classifier (AUC=0.931) to 3-way LPD vs GPD vs BIPD discrimination
+- Expand BIPD training data (21 confirmed cases available, only 10 currently used)
 - Retrain primary models (ChannelPD-Net, HemiCET+DP) with BIPD as a third class
 - Verify no regression on LPD/GPD performance while adding BIPD capability
-- BIPD should show distinctive spatial pattern in channel probabilities: both hemispheres active but with independent timing
 
 ---
 

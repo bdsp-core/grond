@@ -209,6 +209,27 @@ def main():
             lines.append(f"| Frequency ρ (IPI) | {prod['freq_rho']:.3f} | {prod.get('n', '—')} | IPI-derived from detected discharges |")
     lines.append("")
 
+    # 3-way LPD/GPD/BIPD classification
+    threeway_path = PROJECT_DIR / 'data' / 'evaluation_results' / 'three_way_classification.json'
+    if threeway_path.exists():
+        with open(threeway_path) as f:
+            tw = json.load(f)
+        lines.append("## 3-Way Classification (LPD vs GPD vs BIPD)")
+        lines.append("")
+        lines.append("| Metric | Value | N | Method |")
+        lines.append("|---|---|---:|---|")
+        lines.append(f"| Macro AUC (3-way OVR) | **{tw['macro_auc']}** | {tw['n_patients']:,} | {tw['method']} |")
+        per_auc = tw.get('per_class_auc', {})
+        for cls in ['LPD', 'GPD', 'BIPD']:
+            auc = per_auc.get(cls)
+            lines.append(f"| {cls} AUC (OVR) | {auc} | — | |")
+        lines.append(f"| BIPD vs GPD AUC | **{tw['bipd_vs_gpd_auc']}** | {tw['n_gpd'] + tw['n_bipd']:,} | Binary BIPD detection from GPD |")
+        lines.append(f"| 3-way accuracy | {tw['accuracy']} | {tw['n_patients']:,} | |")
+        lines.append("")
+        lines.append(f"Dataset: {tw['n_lpd']:,} LPD + {tw['n_gpd']:,} GPD + {tw['n_bipd']} BIPD.")
+        lines.append("")
+        print(f"  3-way macro AUC: {tw['macro_auc']}, BIPD vs GPD: {tw['bipd_vs_gpd_auc']}")
+
     # RDA lateralization
     rda_methods = load_rda_contest_results()
     lines.append("## RDA Lateralization (LRDA vs GRDA) — V5 Contest")
