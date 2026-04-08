@@ -2,12 +2,9 @@
 """
 Auto-generate Table 3 (Lateralization Performance) from primary data.
 
-PD lateralization: from method_comparison_table.json (ChannelPD-Net V1 metrics).
+PD lateralization AUC: computed from per-channel predictions in predictions.json
+  vs laterality ground truth in segment_labels.csv.
 RDA lateralization: from V5 contest result JSONs.
-
-Note: PD lateralization AUC requires running ChannelPD-Net inference on all
-segments, which is not cached in a single result file. The AUC is reported
-from the production model evaluation (ChannelPD-Net V1, 5-fold CV).
 
 Usage:
     conda run -n morgoth python paper_materials/tables/generate_table3.py
@@ -21,12 +18,121 @@ from pathlib import Path
 PROJECT_DIR = Path(__file__).resolve().parent.parent.parent
 LABELS_DIR = PROJECT_DIR / 'data' / 'labels'
 CONTEST_DIR = PROJECT_DIR / 'results' / 'lateralization_contest_v4'
+PREDICTIONS_PATH = LABELS_DIR / 'predictions.json'
 COMPARISON_PATH = PROJECT_DIR / 'paper_materials' / 'method_comparison_table.json'
 OUTPUT_PATH = Path(__file__).resolve().parent / 'table3_lateralization.md'
 
+LEFT_CH = [0, 1, 2, 3, 8, 9, 10, 11]
+RIGHT_CH = [4, 5, 6, 7, 12, 13, 14, 15]
+
+
+def compute_pd_lateralization_auc():
+    """Compute PD lateralization AUC from predictions.json + segment_labels.csv.
+
+    For each LPD segment with a laterality label, compare:
+      - predicted: mean(channel_probs[left]) vs mean(channel_probs[right])
+      - ground truth: laterality label (left/right)
+    """
+    if not PREDICTIONS_PATH.exists():
+        return None, None, 0
+
+    with open(PREDICTIONS_PATH) as f:
+        predictions = json.load(f)
+
+    # Load ground truth laterality for LPD segments
+    gt_labels = {}  # mat_file → 'left' or 'right'
+    subtypes = {}
+    with open(LABELS_DIR / 'segment_labels.csv') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            sub = row.get('subtype', '').lower()
+            if sub != 'lpd':
+                continue
+            if row.get('excluded', '').lower() in ('true', '1', 'yes'):
+                continue
+            lat = row.get('laterality', '').strip().lower()
+            if lat in ('left', 'right'):
+                gt_labels[row['mat_file']] = lat
+                subtypes[row['mat_file']] = sub
+
+    # Compute laterality scores
+    scores = []  # (pred_left_score, gt_is_left)
+    for mat_file, gt_lat in gt_labels.items():
+        pred = predictions.get(mat_file, {})
+        probs = pred.get('channel_probs')
+        if probs is None or len(probs) != 18:
+            continue
+
+        probs = np.array(probs)
+        left_mean = float(np.mean(probs[LEFT_CH]))
+        right_mean = float(np.mean(probs[RIGHT_CH]))
+        # Score: how "left" is this segment (higher = more left)
+        lat_score = left_mean - right_mean
+        gt_is_left = 1 if gt_lat == 'left' else 0
+        scores.append((lat_score, gt_is_left))
+
+    if len(scores) < 10:
+        return None, None, len(scores)
+
+    # Compute AUC
+    from sklearn.metrics import roc_auc_score
+    lat_scores = np.array([s[0] for s in scores])
+    gt_labels_binary = np.array([s[1] for s in scores])
+    auc = roc_auc_score(gt_labels_binary, lat_scores)
+
+    return auc, len(scores), len(scores)
+
+
+def compute_lpd_vs_gpd_auc():
+    """Compute LPD vs GPD classification AUC from channel probabilities.
+
+    Uses mean channel probability as the classifier (higher → more lateralized → LPD).
+    """
+    if not PREDICTIONS_PATH.exists():
+        return None, 0
+
+    with open(PREDICTIONS_PATH) as f:
+        predictions = json.load(f)
+
+    # Load subtype labels
+    segments = {}
+    with open(LABELS_DIR / 'segment_labels.csv') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            sub = row.get('subtype', '').lower()
+            if sub not in ('lpd', 'gpd'):
+                continue
+            if row.get('excluded', '').lower() in ('true', '1', 'yes'):
+                continue
+            segments[row['mat_file']] = sub
+
+    scores = []
+    for mat_file, subtype in segments.items():
+        pred = predictions.get(mat_file, {})
+        probs = pred.get('channel_probs')
+        if probs is None or len(probs) != 18:
+            continue
+
+        probs = np.array(probs)
+        # Asymmetry score: LPD should be more asymmetric than GPD
+        left_mean = float(np.mean(probs[LEFT_CH]))
+        right_mean = float(np.mean(probs[RIGHT_CH]))
+        asymmetry = abs(left_mean - right_mean)
+        is_lpd = 1 if subtype == 'lpd' else 0
+        scores.append((asymmetry, is_lpd))
+
+    if len(scores) < 10:
+        return None, len(scores)
+
+    from sklearn.metrics import roc_auc_score
+    asym_scores = np.array([s[0] for s in scores])
+    gt = np.array([s[1] for s in scores])
+    auc = roc_auc_score(gt, asym_scores)
+    return auc, len(scores)
+
 
 def load_rda_contest_results():
-    """Load RDA lateralization contest results from JSON files."""
+    """Load RDA lateralization contest results."""
     if not CONTEST_DIR.exists():
         return []
     methods = []
@@ -49,67 +155,52 @@ def load_rda_contest_results():
     return methods
 
 
-def load_pd_metrics():
-    """Load PD pipeline metrics from method_comparison_table.json."""
-    if COMPARISON_PATH.exists():
-        with open(COMPARISON_PATH) as f:
-            data = json.load(f)
-        results = data.get('results', {})
-        # Production model
-        prod = results.get('HemiCET v2 + DP (C1)', {})
-        return {
-            'timing_f1': prod.get('f1'),
-            'freq_rho': prod.get('freq_rho'),
-            'n': prod.get('n'),
-        }
-    return {}
-
-
-def count_laterality_segments():
-    """Count segments with laterality labels for PD subtypes."""
-    counts = {'lpd': 0, 'gpd': 0}
-    with open(LABELS_DIR / 'segment_labels.csv') as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            sub = row.get('subtype', '').lower()
-            if sub not in counts:
-                continue
-            if row.get('excluded', '').lower() in ('true', '1', 'yes'):
-                continue
-            lat = row.get('laterality', '').strip()
-            if lat and lat not in ('', 'nan', 'NaN'):
-                counts[sub] += 1
-    return counts
-
-
 def main():
-    print("Generating Table 3 from primary data...")
-
-    rda_methods = load_rda_contest_results()
-    pd_metrics = load_pd_metrics()
-    lat_counts = count_laterality_segments()
+    print("Generating Table 3 from predictions + labels...")
 
     lines = []
     lines.append("# Table 3: Lateralization Performance")
     lines.append("")
-    lines.append("*Auto-generated from contest result JSONs and method_comparison_table.json.*")
+    lines.append("*Auto-generated from `predictions.json` + `segment_labels.csv` + contest results.*")
+    lines.append("*AUC computed on demand from stored per-channel predictions.*")
     lines.append("*Regenerate: `conda run -n morgoth python paper_materials/tables/generate_table3.py`*")
     lines.append("")
 
     # PD lateralization
     lines.append("## PD Lateralization (ChannelPD-Net V1)")
     lines.append("")
+
+    lat_auc, lat_n, _ = compute_pd_lateralization_auc()
+    lpd_gpd_auc, lpd_gpd_n = compute_lpd_vs_gpd_auc()
+
     lines.append("| Metric | Value | N | Method |")
     lines.append("|---|---|---:|---|")
-    lines.append(f"| Hemisphere AUC | 0.963 | {lat_counts['lpd']:,} | L vs R hemisphere mean PD probability |")
-    lines.append(f"| LPD vs GPD AUC | 0.931 | {lat_counts['lpd'] + lat_counts['gpd']:,} | RF 300 trees on ChannelPD-Net features |")
-    if pd_metrics.get('freq_rho'):
-        lines.append(f"| Frequency ρ (IPI) | {pd_metrics['freq_rho']:.3f} | {pd_metrics.get('n', '—')} | HemiCET+DP production model |")
-    lines.append("")
-    lines.append("*Note: Hemisphere AUC (0.963) and LPD vs GPD AUC (0.931) are from ChannelPD-Net V1 5-fold CV evaluation. These require running model inference and are stable across label updates.*")
+
+    if lat_auc is not None:
+        lines.append(f"| Hemisphere AUC (L vs R) | **{lat_auc:.3f}** | {lat_n:,} | L vs R hemisphere mean PD probability |")
+        print(f"  PD Hemisphere AUC: {lat_auc:.3f} (n={lat_n})")
+    else:
+        lines.append("| Hemisphere AUC (L vs R) | *run inference first* | — | L vs R hemisphere mean PD probability |")
+        print("  PD Hemisphere AUC: predictions.json not found — run code/evaluation/run_all_inference.py")
+
+    if lpd_gpd_auc is not None:
+        lines.append(f"| LPD vs GPD AUC | **{lpd_gpd_auc:.3f}** | {lpd_gpd_n:,} | Asymmetry of channel probabilities |")
+        print(f"  LPD vs GPD AUC: {lpd_gpd_auc:.3f} (n={lpd_gpd_n})")
+    else:
+        lines.append("| LPD vs GPD AUC | *run inference first* | — | Asymmetry of channel probabilities |")
+
+    # Production model metrics
+    if Path(COMPARISON_PATH).exists():
+        with open(COMPARISON_PATH) as f:
+            comp = json.load(f)
+        prod = comp.get('results', {}).get('HemiCET v2 + DP (C1)', {})
+        if prod:
+            lines.append(f"| Timing F1 (production) | {prod['f1']:.3f} | {prod.get('n', '—')} | HemiCET v2 + DP |")
+            lines.append(f"| Frequency ρ (IPI) | {prod['freq_rho']:.3f} | {prod.get('n', '—')} | IPI-derived from detected discharges |")
     lines.append("")
 
     # RDA lateralization
+    rda_methods = load_rda_contest_results()
     lines.append("## RDA Lateralization (LRDA vs GRDA) — V5 Contest")
     lines.append("")
     if rda_methods:
