@@ -13,6 +13,8 @@ Usage:
 import base64
 import argparse
 import json
+import os
+import sys
 from pathlib import Path
 from datetime import datetime
 
@@ -21,7 +23,12 @@ FIGURES_DIR = SCRIPT_DIR / 'figures'
 OUTPUT_DIR = SCRIPT_DIR / 'improved_figures'
 OUTPUT_DIR.mkdir(exist_ok=True)
 
-GOOGLE_API_KEY = "REDACTED-GOOGLE-API-KEY"
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+if not GOOGLE_API_KEY:
+    sys.exit(
+        "ERROR: set the GOOGLE_API_KEY environment variable before running this script.\n"
+        "  export GOOGLE_API_KEY=your-key-here"
+    )
 
 # ── Figure descriptions ──
 

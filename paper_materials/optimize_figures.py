@@ -32,7 +32,12 @@ from datetime import datetime
 SCRIPT_DIR = Path(__file__).resolve().parent
 FIGURES_DIR = SCRIPT_DIR / 'figures'
 
-GOOGLE_API_KEY = "REDACTED-GOOGLE-API-KEY"
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+if not GOOGLE_API_KEY:
+    sys.exit(
+        "ERROR: set the GOOGLE_API_KEY environment variable before running this script.\n"
+        "  export GOOGLE_API_KEY=your-key-here"
+    )
 MODEL_NAME = "gemini-2.5-flash"
 LOG_DIR = SCRIPT_DIR / 'optimization_logs'
 LOG_DIR.mkdir(exist_ok=True)

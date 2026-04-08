@@ -28,7 +28,12 @@ GENERATOR_SCRIPT = SCRIPT_DIR / 'generate_fig2_pd_pipeline.py'
 OUTPUT_FIGURE = FIGURES_DIR / 'fig2_pd_pipeline.png'
 TARGET_FIGURE = SCRIPT_DIR / 'improved_figures' / 'paperbanana_fig2_pd_pipeline_target_diagram_stylist_desc0_base64_jpg.png'
 
-GOOGLE_API_KEY = "REDACTED-GOOGLE-API-KEY"
+GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
+if not GOOGLE_API_KEY:
+    sys.exit(
+        "ERROR: set the GOOGLE_API_KEY environment variable before running this script.\n"
+        "  export GOOGLE_API_KEY=your-key-here"
+    )
 MODEL_NAME = "gemini-2.5-flash"
 
 
