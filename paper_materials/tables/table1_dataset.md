@@ -9,7 +9,7 @@
 |---|---:|---:|---:|---:|---:|
 | Segments (non-excluded) | 4,170 | 3,337 | 1,408 | 3,323 | 12,238 |
 | Excluded | 146 | 113 | 564 | 167 | 990 |
-| Unique patients | 3,953 | 3,086 | 1,381 | 3,159 | — |
+| Unique patients | 3,953 | 3,086 | 1,381 | 3,159 | 11,578 |
 
 All segments: 19-channel monopolar EEG, 10 seconds at 200 Hz (2,000 samples). Common average reference montage.
 

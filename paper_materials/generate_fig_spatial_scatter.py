@@ -242,7 +242,7 @@ def main():
              va='center', ha='left', rotation=90, color='#333')
 
     plt.tight_layout(rect=[0.03, 0, 1, 1])
-    out = PROJECT_DIR / 'paper_materials' / 'figures' / 'figS9_spatial_scatter.png'
+    out = PROJECT_DIR / 'paper_materials' / 'figures' / 'figS2_spatial_scatter.png'
     plt.savefig(str(out), dpi=300, bbox_inches='tight', facecolor='white')
     print(f'Saved {out}')
 

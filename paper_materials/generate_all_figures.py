@@ -83,6 +83,12 @@ def run_figure(fig, dry_run=False, from_scratch=False):
         print(f"  [DRY RUN] Would run: python {script_path}")
         return True
 
+    output_path = SCRIPT_DIR / fig['output']
+    # Capture the pre-run mtime so we can detect whether the script actually
+    # rewrote the expected output. Without this check the wrapper has no way
+    # to notice when a generator silently writes to the wrong filename.
+    prev_mtime = output_path.stat().st_mtime if output_path.exists() else None
+
     t0 = time.time()
     env = dict(os.environ)
     if not from_scratch:
@@ -101,12 +107,22 @@ def run_figure(fig, dry_run=False, from_scratch=False):
             print(f"    {line}")
         return False
 
-    output_path = SCRIPT_DIR / fig['output']
-    if output_path.exists():
-        size_mb = output_path.stat().st_size / 1e6
-        print(f"  OK ({elapsed:.1f}s) -> {fig['output']} ({size_mb:.1f} MB)")
-    else:
-        print(f"  OK ({elapsed:.1f}s) but output not found at {fig['output']}")
+    if not output_path.exists():
+        print(f"  FAILED ({elapsed:.1f}s): script ran cleanly but expected output "
+              f"file does not exist: {fig['output']}")
+        return False
+
+    new_mtime = output_path.stat().st_mtime
+    size_mb = output_path.stat().st_size / 1e6
+    if prev_mtime is not None and new_mtime <= prev_mtime:
+        # The expected file exists but was not touched by this run. Almost
+        # certainly means the generator script writes to a different filename
+        # than fig['output'] declares -- a stale-output bug.
+        print(f"  FAILED ({elapsed:.1f}s): expected output {fig['output']} was not "
+              f"updated by the script (writes to a different filename?)")
+        return False
+
+    print(f"  OK ({elapsed:.1f}s) -> {fig['output']} ({size_mb:.1f} MB)")
     return True
 
 
