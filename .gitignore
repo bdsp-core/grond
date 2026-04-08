@@ -1,4 +1,5 @@
 # Large binary data (EEG .mat files, model weights — download via BDSP)
+# All directories below mirror s3://bdsp-opendata-credentialed/iiic-freq3/data/.
 data/eeg/
 data/dl_cache/
 data/cet_cache/
@@ -6,6 +7,14 @@ data/pd_channel_cache/
 data/hemi_cache/
 data/rda_cache/
 data/_archive/
+
+# Large model checkpoints — distributed via S3, not git.
+# Add new cache directories here as they appear.
+data/pdnet_v2_cache/
+data/e2e_cache/
+
+# Loose binary template files
+data/templates_*.npy
 
 # Results (generated HTML/JSON, regenerable)
 results/
