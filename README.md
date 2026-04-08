@@ -1,34 +1,37 @@
-# Automated Frequency Estimation for Periodic and Rhythmic EEG Patterns (LPD, GPD, LRDA, GRDA)
+# Automated Characterization of Periodic Discharges and Rhythmic Delta Activity in Continuous EEG
 
-Algorithms for estimating the frequency of periodic discharges (PD) and rhythmic delta activity (RDA) in continuous EEG, developed for ICU EEG monitoring at Massachusetts General Hospital.
+Algorithms for joint characterization (lateralization, spatial localization, discharge timing, and frequency estimation) of periodic discharges (PD) and rhythmic delta activity (RDA) in continuous EEG, developed for critical-care EEG monitoring at Massachusetts General Hospital and Beth Israel Deaconess Medical Center.
 
-**Paper**: Tautan AM, Jing J, Basovic L, Hadar PN, Sartipi S, Fernandes MP, Kim J, Struck AF, Westover MB, Zafar SF. "Automated estimation of frequency and spatial extent of periodic and rhythmic epileptiform activity from continuous electroencephalography data." *Journal of Neural Engineering*, 22(6), 2025. [PubMed](https://pubmed.ncbi.nlm.nih.gov/41330044/)
+**Manuscript**: Jing J, Sun C, Zhang T, Byrd M, T\u{a}u\c{t}an AM, Basovic L, Hadar PN, Fernandes MP, Goldenholz D, Kim J, Struck AF, Zafar SF, Westover MB. "Automated Characterization of Periodic Discharges and Rhythmic Delta Activity in Continuous EEG." *Journal of Neural Engineering* — manuscript in preparation. Source LaTeX in [paper_materials/manuscript.tex](paper_materials/manuscript.tex).
+
+**Predecessor**: T\u{a}u\c{t}an AM, Jing J, Basovic L, Hadar PN, Sartipi S, Fernandes MP, Kim J, Struck AF, Westover MB, Zafar SF. "Automated estimation of frequency and spatial extent of periodic and rhythmic epileptiform activity from continuous electroencephalography data." *Journal of Neural Engineering*, 22(6):066027, 2025. [doi:10.1088/1741-2552/ae2716](https://doi.org/10.1088/1741-2552/ae2716). The present system substantially improves on this prior work across all characterization tasks.
 
 ## Status
 
+Headline numbers from the manuscript (see [paper_materials/manuscript.tex](paper_materials/manuscript.tex) for full Methods, sample-size reconciliation, and confidence intervals).
+
 | Task | Metric | N | Performance | Method |
 |------|--------|---|-------------|--------|
-| **PD Unified Pipeline** | | | | **PDCharacterizer** |
-| PD discharge timing | F1 | 651 | **0.684** | HemiCET+DP (CNN-weighted) |
-| PD frequency | Spearman ρ | 1,226 / 1,089 | **0.786 / 0.846** (LPD/GPD) | CNN+ACF → IPI |
-| PD spatial extent | ICC | 499 | **0.852** (exceeds expert 0.845) | CNN+PLV @ threshold 0.62 |
-| PD spatial localization | — | 200 | Discharge-locked topoplot | Laplacian-GFP alignment + morgoth regions |
-| Laterality (L vs R) | AUC | 423 | **0.963** | ChannelPD-Net hemisphere |
-| Channel PD detection | AUC | 815 | **0.870** | ChannelPD-Net |
-| Subtype (LPD vs GPD) | AUC | 594 | **0.931** | RF 300 trees |
-| BIPD vs GPD | AUC | 2,305 | **0.840** | HemiCET+GBT (screening) |
-| **RDA Analysis** | | | | |
-| LRDA vs GRDA | AUC | 4,253 | **0.837** | W05_DomOnly_IterRefine |
-| RDA frequency | Spearman ρ | 640 / 1,310 | **0.674 / 0.712** (LRDA/GRDA) | W05_DomOnly_IterRefine |
-| RDA frequency | ICC | 68 | **0.881** (expert 0.878) | W05_DomOnly_IterRefine |
-| RDA spatial extent | ICC | 205 | **0.598** (expert 0.640) | PLV×Amplitude @ threshold 0.15 |
-| LRDA laterality reviewed | — | 1,374 | MW-reviewed | 727 left, 308 right, 338 not-LRDA |
+| **PD-Profiler** | | | | |
+| PD hemisphere lateralization | AUC | 1,274 | **0.989** | ChannelPD-Net mean probability |
+| LPD vs. GPD classification | AUC | 7,037 | **0.911** | RF on per-channel probs + features |
+| 3-way LPD/GPD/BIPD (macro) | AUC | 5,064 | **0.862** | RF on probs + timing features |
+| BIPD vs. GPD | AUC | 2,308 | **0.937** | GBT on timing features |
+| PD discharge timing | F1 | 582 | **0.889** (timing MAE 1.0 ms) | HemiCET-UNet + DP |
+| PD frequency (LPD / GPD) | Spearman ρ | 1,226 / 1,089 | **0.786 / 0.846** | IPI from HemiCET-UNet + DP |
+| PD spatial extent | Jaccard | 211 | **0.731** (expert–expert 0.751, 97.3%) | Hybrid-PLV @ threshold 0.38 |
+| PD spatial localization | — | — | Discharge-locked topoplot | Laplacian–GFP alignment + morgoth-viewer regions |
+| **RDA-Profiler** | | | | |
+| LRDA vs. GRDA | AUC | 4,253 | **0.837** | NB-Hilbert (iterative narrowband Hilbert refinement) |
+| RDA frequency (LRDA / GRDA) | Spearman ρ | 640 / 1,310 | **0.674 / 0.712** | NB-Hilbert |
+| RDA frequency (3-rater IRR) | ICC(3,1) | 68 | **0.860** (expert–expert 0.852) | NB-Hilbert |
+| RDA spatial extent | ICC(3,1) | 211 | **0.371** (expert–expert 0.373) | RDA-PLV @ threshold 0.15 |
 
-**All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [APPROACH_REVIEW_v17.md](APPROACH_REVIEW_v17.md) for details.
+**All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [docs/history/APPROACH_REVIEW_v17.md](docs/history/APPROACH_REVIEW_v17.md) for the development log and [paper_materials/manuscript.tex](paper_materials/manuscript.tex) for the formal Methods.
 
-### Unified PD Pipeline (PDCharacterizer)
+### PD-Profiler
 
-The PD analysis uses a unified pipeline where a single per-channel CNN (**ChannelPD-Net**) serves triple duty: laterality detection, spatial reference selection, and evidence channel weighting. Laterality detection feeds forward into both downstream modules — constraining the spatial localizer to seed from the ipsilateral hemisphere and restricting the discharge detector to ipsilateral channels. See [paper_materials/unified_pd_pipeline.md](paper_materials/unified_pd_pipeline.md) for full architecture description and figure specification.
+The PD characterization pipeline (referred to in code as `PDCharacterizer`) uses a single per-channel CNN (**ChannelPD-Net**) as a backbone serving three roles: laterality detection, spatial reference selection, and evidence channel weighting. Laterality detection feeds forward into both downstream modules — constraining the spatial localizer to seed from the ipsilateral hemisphere and restricting the discharge detector to ipsilateral channels. See [paper_materials/unified_pd_pipeline.md](paper_materials/unified_pd_pipeline.md) for the design doc and [paper_materials/manuscript.tex](paper_materials/manuscript.tex) §2.2 + appendix B for the formal mathematical specification.
 
 ## Overview
 
@@ -44,8 +47,8 @@ Supported pattern types: LPD, GPD, LRDA, GRDA.
 ## Installation
 
 ```bash
-git clone https://github.com/bdsp-core/IIIC-Frequency-Analysis-2.git
-cd IIIC-Frequency-Analysis-2
+git clone https://github.com/bdsp-core/IIIC-Frequency-Functions-For-Morgoth.git
+cd IIIC-Frequency-Functions-For-Morgoth
 conda env create -f code/environment.yml
 conda activate foe
 ```
@@ -190,9 +193,12 @@ code/
 └── archive/                          Historical: experiments, contests, legacy code
 
 paper_materials/
-├── figures/                          Publication figures (Figs 1-8, S1-S3)
+├── manuscript.tex                    Main manuscript (Journal of Neural Engineering format)
+├── appendix_math_methods.tex         Appendix B: full mathematical specifications
+├── iopjournal.cls                    IOP Publishing LaTeX class file
+├── figures/                          Publication figures (Figs 1-9 main, S1-S2 supplement)
 ├── tables/                           Publication tables (Tables 1-7)
-├── methods/                          Formal math writeups (10 methods)
+├── methods/                          Formal math writeups (10 methods, source for appendix B)
 ├── build_fig2.py                     Fig 2: PD pipeline (fully from data)
 ├── build_fig3.py                     Fig 3: RDA pipeline (fully from data)
 ├── render_figures.py                 Figs 5-8: characterization examples
@@ -201,8 +207,14 @@ paper_materials/
 ├── figure_legends.md                 Figure legends for all 11 figures
 └── archive/                          Optimization logs, old figure versions
 
-docs/approach_review_history/         APPROACH_REVIEW versions v7-v16
-APPROACH_REVIEW_v17.md                Current approach & results
+docs/
+├── plans/                            Implementation/design plans (BIPD, HEMI, FIGURE, ...)
+├── history/                          APPROACH_REVIEW versions (v2-v17)
+├── references/                       ACNS reference PDFs and Tăuțan 2025
+├── DATASET_INFO.md
+├── DESCRIPTION_RULES.md
+├── QUICKSTART.md
+└── TESTING.md
 ```
 
 ## Quick Start
@@ -317,24 +329,24 @@ Key dashboards:
 
 ## Algorithm Details
 
-### PD Unified Pipeline (PDCharacterizer)
+### PD-Profiler
 
-Standalone callable: `code/pd_characterizer.py`. A single per-channel CNN (**ChannelPD-Net**) serves as the backbone for all PD tasks:
+Standalone callable: `code/pd_characterizer.py` (class `PDCharacterizer`). A single per-channel CNN (**ChannelPD-Net**) serves as the backbone for all PD tasks:
 
-- **Laterality**: Compare hemisphere mean PD probabilities (AUC = 0.963)
-- **Spatial**: Hybrid-PLV — CNN picks ipsilateral reference channels, PLV finds connected regions (Composite = 0.811). Inter-rater agreement: Model Jaccard 0.731 vs human 0.751 (97.3% of expert agreement, N=220 with 3-rater ground truth)
-- **Timing**: HemiCET+DP — CNN-weighted evidence aggregation + dynamic programming (F1 = 0.684)
-- **Frequency**: CNN+ACF ensemble → IPI-derived (Spearman ρ = 0.681)
+- **Laterality**: Compare hemisphere mean PD probabilities (AUC = 0.989, n = 1,274)
+- **Spatial**: Hybrid-PLV — CNN picks ipsilateral reference channels, PLV finds connected regions. Inter-rater agreement: Model Jaccard 0.731 vs human 0.751 (97.3% of expert–expert agreement, n = 211 with 3-rater ground truth)
+- **Timing**: HemiCET-UNet + DP — learned evidence trace + dynamic programming with periodic prior (F1 = 0.889, timing MAE = 1.0 ms, n = 582)
+- **Frequency**: IPI from detected discharges (Spearman ρ = 0.786 LPD / 0.846 GPD)
 
-Laterality detection feeds forward into both spatial localizer (ipsilateral seed) and discharge detector (hemisphere selection). See `paper_materials/unified_pd_pipeline.md` for full architecture.
+Laterality detection feeds forward into both spatial localizer (ipsilateral seed) and discharge detector (hemisphere selection). See `paper_materials/unified_pd_pipeline.md` for the design doc and `paper_materials/manuscript.tex` §2.2 + appendix B for the formal mathematical specification.
 
-### RDA Pipeline (LRDA/GRDA)
+### RDA-Profiler (LRDA/GRDA)
 
-The RDA analysis pipeline classifies LRDA vs GRDA, determines laterality, and estimates frequency from a single 10-second bipolar EEG segment, processing hemispheres independently.
+The RDA characterization pipeline classifies LRDA vs GRDA, determines laterality, and estimates frequency from a single 10-second bipolar EEG segment.
 
-Best unified method: **W05_DomOnly_IterRefine** — two-pass iterative narrowband refinement with frequency estimated strictly from the predicted-dominant hemisphere. Achieves AUC 0.837 (LRDA vs GRDA classification) and Spearman ρ=0.635 (frequency estimation).
+Best unified method: **NB-Hilbert** (originally `W05_DomOnly_IterRefine` in the contest log) — two-pass iterative narrowband Hilbert refinement with frequency estimated strictly from the predicted-dominant hemisphere. Achieves AUC 0.837 (LRDA vs GRDA classification) and algorithm–expert frequency ICC 0.860 (slightly exceeding the expert–expert ICC of 0.852, n = 68).
 
-76 methods benchmarked across 5 contest rounds. See [APPROACH_REVIEW_v17.md](APPROACH_REVIEW_v17.md) Appendix A for full results.
+76 methods benchmarked across 5 contest rounds. See [docs/history/APPROACH_REVIEW_v17.md](docs/history/APPROACH_REVIEW_v17.md) appendix A for the full leaderboard, and `paper_materials/manuscript.tex` appendix A for the contest naming scheme.
 
 ### Verbal Descriptions
 
@@ -345,7 +357,7 @@ GRDA at 1.8 Hz, frontally predominant.
 GPD at 1.5 Hz, no regional predominance.
 ```
 
-See [DESCRIPTION_RULES.md](DESCRIPTION_RULES.md) for the complete rule set.
+See [docs/DESCRIPTION_RULES.md](docs/DESCRIPTION_RULES.md) for the complete rule set.
 
 ### Paper Figures
 
