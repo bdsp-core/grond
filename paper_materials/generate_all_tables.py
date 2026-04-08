@@ -46,19 +46,45 @@ def main():
     print("Publication Tables")
     print("=" * 60)
 
+    gen_failures = []
+
     # Auto-generate tables that have scripts
     for filename, script in AUTO_GENERATED.items():
         script_path = SCRIPT_DIR / script
-        if script_path.exists():
-            print(f"\n  Generating {filename}...")
-            result = subprocess.run(
-                [sys.executable, str(script_path)],
-                capture_output=True, text=True, timeout=60,
-            )
-            if result.returncode == 0:
-                print(f"  OK  (auto-generated from label files)")
-            else:
-                print(f"  FAILED: {result.stderr[-200:]}")
+        if not script_path.exists():
+            continue
+
+        target = TABLES_DIR / filename
+        # Capture the pre-run mtime so we can detect whether the generator
+        # actually rewrote the expected output. Without this check the wrapper
+        # can silently miss generators that write to the wrong filename.
+        prev_mtime = target.stat().st_mtime if target.exists() else None
+
+        print(f"\n  Generating {filename}...")
+        result = subprocess.run(
+            [sys.executable, str(script_path)],
+            capture_output=True, text=True, timeout=60,
+        )
+
+        if result.returncode != 0:
+            print(f"  FAILED: {result.stderr[-200:]}")
+            gen_failures.append(filename)
+            continue
+
+        if not target.exists():
+            print(f"  FAILED: script ran cleanly but expected output {filename} "
+                  f"does not exist (writes to a different path?)")
+            gen_failures.append(filename)
+            continue
+
+        new_mtime = target.stat().st_mtime
+        if prev_mtime is not None and new_mtime <= prev_mtime:
+            print(f"  FAILED: expected output {filename} was not updated by "
+                  f"the script (writes to a different filename?)")
+            gen_failures.append(filename)
+            continue
+
+        print(f"  OK  (auto-generated from label files)")
 
     # Check all tables
     print()
@@ -76,10 +102,14 @@ def main():
             all_ok = False
 
     print(f"\n{'='*60}")
-    if all_ok:
+    if all_ok and not gen_failures:
         print(f"All {len(TABLES)} tables present in {TABLES_DIR}/")
     else:
-        print("Some tables are missing!")
+        if gen_failures:
+            print(f"Generator failures: {', '.join(gen_failures)}")
+        if not all_ok:
+            print("Some tables are missing!")
+        sys.exit(1)
     print(f"{'='*60}")
 
 
