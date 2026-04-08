@@ -46,14 +46,27 @@ Supported pattern types: LPD, GPD, LRDA, GRDA.
 
 ## Installation
 
+The repo uses **two conda environments** for different parts of the pipeline. Most work needs `morgoth`; only a few legacy signal-processing scripts need `foe`.
+
 ```bash
 git clone https://github.com/bdsp-core/IIIC-Frequency-Functions-For-Morgoth.git
 cd IIIC-Frequency-Functions-For-Morgoth
+
+# morgoth (Python 3.11): PyTorch model training/inference, figure
+# generation, the full PD-Profiler / RDA-Profiler pipelines.
+conda env create -f code/morgoth.yml
+conda activate morgoth
+
+# foe (Python 3.8): legacy signal-processing scripts that depend on
+# fooof, pyhht, pingouin, statsmodels (mostly under code/archive/).
+# Optional unless you are reproducing those specific experiments.
 conda env create -f code/environment.yml
-conda activate foe
 ```
 
-Key dependencies: Python 3.8, MNE 1.0.3, NumPy 1.24, SciPy 1.10, fooof 1.0, pyhht 0.1.
+| Environment | Python | Key dependencies | Used for |
+|---|---|---|---|
+| `morgoth` | 3.11 | torch 2.10, numpy 2.4, scipy 1.17, mne 1.11, scikit-learn 1.8 | Default for everything in this README |
+| `foe` | 3.8 | numpy 1.24, scipy 1.10, mne 1.6, fooof 1.0, pyhht 0.1, pingouin | Legacy frequency-estimation experiments under `code/archive/` |
 
 ## Data Access
 
