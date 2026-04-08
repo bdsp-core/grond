@@ -1,17 +1,17 @@
 # Table 3: Lateralization Performance
 
-*Auto-generated from contest result JSONs and method_comparison_table.json.*
+*Auto-generated from `predictions.json` + `segment_labels.csv` + contest results.*
+*AUC computed on demand from stored per-channel predictions.*
 *Regenerate: `conda run -n morgoth python paper_materials/tables/generate_table3.py`*
 
 ## PD Lateralization (ChannelPD-Net V1)
 
 | Metric | Value | N | Method |
 |---|---|---:|---|
-| Hemisphere AUC | 0.963 | 1,336 | L vs R hemisphere mean PD probability |
-| LPD vs GPD AUC | 0.931 | 1,585 | RF 300 trees on ChannelPD-Net features |
-| Frequency ρ (IPI) | 0.891 | 582 | HemiCET+DP production model |
-
-*Note: Hemisphere AUC (0.963) and LPD vs GPD AUC (0.931) are from ChannelPD-Net V1 5-fold CV evaluation. These require running model inference and are stable across label updates.*
+| Hemisphere AUC (L vs R) | **0.989** | 1,274 | L vs R hemisphere mean PD probability |
+| LPD vs GPD AUC | 0.931 | — | RF 300 trees on ChannelPD-Net features (from evaluation) |
+| Timing F1 (production) | 0.889 | 582 | HemiCET v2 + DP |
+| Frequency ρ (IPI) | 0.891 | 582 | IPI-derived from detected discharges |
 
 ## RDA Lateralization (LRDA vs GRDA) — V5 Contest
 
