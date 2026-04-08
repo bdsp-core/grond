@@ -1,0 +1,20 @@
+{
+  "task": "3-way LPD vs GPD vs BIPD classification",
+  "method": "RF 300 trees on 18 channel probs + 11 timing features",
+  "cv": "5-fold patient-stratified (class-balanced)",
+  "n_patients": 5064,
+  "n_lpd": 2756,
+  "n_gpd": 2298,
+  "n_bipd": 10,
+  "n_features": 29,
+  "accuracy": 0.7559,
+  "macro_auc": 0.8622,
+  "per_class_auc": {
+    "LPD": 0.8317,
+    "GPD": 0.8345,
+    "BIPD": 0.9203
+  },
+  "bipd_vs_gpd_auc": 0.9366,
+  "bipd_sensitivity": null,
+  "bipd_specificity": 0.9982
+}
