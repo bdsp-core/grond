@@ -54,18 +54,50 @@ Key dependencies: Python 3.8, MNE 1.0.3, NumPy 1.24, SciPy 1.10, fooof 1.0, pyhh
 
 ## Data Access
 
-EEG data and expert annotations are stored on AWS S3 (not in this git repository due to size):
+EEG data, expert annotations, and pre-trained model weights are stored on AWS S3 (not in this git repository due to size):
 
 ```bash
+# Download all data needed to reproduce results (~4 GB)
 aws s3 sync s3://bdsp-opendata-credentialed/iiic-freq3/data/ data/
+
+# Download contest results and paper data files
+aws s3 sync s3://bdsp-opendata-credentialed/iiic-freq3/results/ results/
+aws s3 sync s3://bdsp-opendata-credentialed/iiic-freq3/paper_materials/ paper_materials/ --exclude "*.py" --exclude "*.md"
 ```
 
 This requires AWS credentials with access to the `bdsp-opendata-credentialed` bucket. To request access, visit the [Brain Data Science Platform (BDSP)](https://bdsp.io).
 
+### S3 Data Contents
+
+The S3 bucket contains 9,857 labeled EEG segments (all segments with expert annotations used in training and evaluation), pre-trained model weights, label files, and evaluation results:
+
+```
+s3://bdsp-opendata-credentialed/iiic-freq3/
+├── data/
+│   ├── eeg/                       9,857 .mat files (labeled segments only)
+│   ├── labels/                    All label files (see Label System below)
+│   ├── cet_cache/                 CET-UNet model weights (5-fold)
+│   ├── pd_channel_cache/          ChannelPD-Net model weights (5-fold)
+│   ├── hemi_cache/                HemiCET model weights (5-fold)
+│   ├── e2e_cache/                 End-to-end model weights
+│   ├── pdnet_v2_cache/            PDNetV2 model weights
+│   ├── unified_model_cache/       Unified model weights
+│   ├── bipd_cache/                BIPD detection cache
+│   └── rda_cache/                 Pre-computed RDA features (494 files)
+├── results/
+│   ├── lateralization_contest_v4/ 76-method contest results (JSONs)
+│   └── spatial_agreement.json     Spatial inter-rater Jaccard matrix
+└── paper_materials/
+    ├── spatial_inference_cache.json  Pre-computed spatial predictions
+    └── method_comparison_table.json  Timing method comparison data
+```
+
+After downloading, the repository code will find all data files in their expected locations. The `data/` directory on S3 mirrors the local `data/` directory structure.
+
 The `data/` directory contains:
-- `eeg/` — 13,556 .mat files (10s monopolar EEG segments, 19ch at 200 Hz)
+- `eeg/` — 9,857 .mat files (10s monopolar EEG segments, 19ch at 200 Hz, labeled subset)
 - `labels/` — canonical label files (see Label System below)
-- `cet_cache/`, `pd_channel_cache/`, `hemi_cache/` — model weights (5-fold CV)
+- `*_cache/` — pre-trained model weights and evaluation results
 
 ### Data Structure
 
