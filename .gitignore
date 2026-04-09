@@ -90,6 +90,13 @@ Thumbs.db
 *.pdf
 !README_figures/*.png
 
+# Paper PDFs are tracked: the manuscript itself, the cited reference
+# PDFs, and the IOP LaTeX template support files. Anything else under
+# *.pdf elsewhere in the repo stays gitignored.
+!paper_materials/*.pdf
+!docs/references/*.pdf
+!ioplatextemplate/*.pdf
+
 # MATLAB
 *.asv
 
