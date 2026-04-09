@@ -22,6 +22,9 @@ results/
 # Annotation packages
 annotation_package_sahar/
 
+# Independent-expert task HTMLs (tens to hundreds of MB each, hosted on S3)
+paper_materials/independent_expert_tasks/*/*.html
+
 # Python
 __pycache__/
 *.py[cod]

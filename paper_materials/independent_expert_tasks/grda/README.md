@@ -44,20 +44,21 @@ browser's local storage as you go.
 
 For each case the viewer shows:
 
-- **Left**: the 19-channel EEG in standard longitudinal-bipolar
-  montage, 10 seconds wide.
-- **Right**: a frequency selector (buttons or arrow keys) and a
-  bandpass-filtered overlay that tracks the rhythmic delta waveform at
-  the selected frequency.
+- **Top**: a row of frequency buttons in 0.25 Hz steps — the
+  algorithm's prediction is highlighted, use ↑/↓ or click to change.
+- **Main canvas**: the 19-channel EEG in standard longitudinal-bipolar
+  montage, 10 seconds wide, with a bandpass-filtered overlay that
+  tracks the rhythmic delta waveform at the selected frequency.
 
 ### Keyboard shortcuts
 
 | Key | Action |
 |---|---|
-| `Enter` | Accept the algorithm's default frequency and advance |
+| `Enter` | Accept the currently-selected frequency and advance |
 | `↑` / `↓` | Increase / decrease the selected frequency button |
 | `←` / `→` | Previous / next case |
-| `X` | Reject this segment (e.g., not actually GRDA) |
+| `N` | Toggle the narrowband overlay on/off |
+| `X` | Reject this segment (e.g., not actually GRDA, or looks lateralized) |
 | `E` | Export all labels as JSON |
 
 If you want to use the mouse instead of the keyboard, every action

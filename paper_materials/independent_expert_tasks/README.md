@@ -29,23 +29,39 @@ independent_expert_tasks/
 
 ## What each task asks the rater to provide
 
-| Subtype | Lateralization | Frequency | Discharge timing | Notes |
-|---|:---:|:---:|:---:|---|
-| LPD  | ✅ left vs right         | ✅ | ✅ | full PD profile |
-| GPD  | (bilateral by definition) | ✅ | ✅ | freq + timing only |
-| LRDA | ✅ left vs right         | ✅ | — | wave triplets in viewer should be **skipped** |
-| GRDA | (generalized by definition) | ✅ | — | freq only |
+| Subtype | Lateralization | Frequency | Discharge timing |
+|---|:---:|:---:|:---:|
+| LPD  | ✅ left vs right          | ✅ | ✅ |
+| GPD  | (bilateral by definition) | ✅ | ✅ |
+| LRDA | ✅ left vs right          | ✅ | — |
+| GRDA | (generalized by definition) | ✅ | — |
 
 ## Recommended viewers
 
-These existing viewers in `code/generators/labeling/` are reused as-is:
+Two existing viewers in `code/generators/labeling/` cover all four tasks:
 
 | Task | Viewer entry-point | Captures |
 |---|---|---|
-| LPD  | [generate_pd_freq_timing_labeler.py](../../code/generators/labeling/generate_pd_freq_timing_labeler.py) `--subtype lpd` | laterality + freq + timing |
-| GPD  | [generate_pd_freq_timing_labeler.py](../../code/generators/labeling/generate_pd_freq_timing_labeler.py) `--subtype gpd` | freq + timing (laterality fixed = bilateral) |
-| LRDA | [generate_lrda_labeler.py](../../code/generators/labeling/generate_lrda_labeler.py) | laterality + freq (+ wave triplets — **skip**) |
-| GRDA | [generate_rda_freq_labeler.py](../../code/generators/labeling/generate_rda_freq_labeler.py) | freq (laterality is generalized by definition) |
+| LPD  | [generate_pd_freq_timing_labeler.py](../../code/generators/labeling/generate_pd_freq_timing_labeler.py) `--subtype lpd`  | laterality + freq + timing |
+| GPD  | [generate_pd_freq_timing_labeler.py](../../code/generators/labeling/generate_pd_freq_timing_labeler.py) `--subtype gpd`  | freq + timing (laterality fixed = bilateral) |
+| LRDA | [generate_rda_freq_labeler.py](../../code/generators/labeling/generate_rda_freq_labeler.py) `--subtype lrda` | laterality + freq |
+| GRDA | [generate_rda_freq_labeler.py](../../code/generators/labeling/generate_rda_freq_labeler.py) `--subtype grda` | freq (laterality is generalized by definition) |
+
+Both viewers were extended to accept a `--manifest` flag (consuming our
+pre-curated 200-segment list) and an `--output` flag (writing the HTML
+to a specific path). The RDA viewer was also extended with an
+optional laterality (left/right) input that activates only in
+`--subtype lrda` mode.
+
+> **Why not `generate_lrda_labeler.py`?** That viewer was originally
+> built for an LRDA wave-morphology labeling pass and references a
+> `segment_id` column that no longer exists in `data/labels/segments.csv`
+> after a schema cleanup, so it currently cannot run. Rather than
+> resurrecting it, we extended `generate_rda_freq_labeler.py` (which is
+> on the canonical schema) with the small left/right input we need for
+> LRDA. The wave-triplet UI from the old viewer is not part of this
+> task — it would have been extra work for the colleagues that we did
+> not need.
 
 The viewers each generate a **self-contained HTML file** with the EEG data,
 the algorithm's pre-filled defaults, and the labeling UI all inlined. The rater
@@ -88,35 +104,77 @@ in the dataset, so the upper bins cannot be filled.
 
 ## Generating the per-task HTML files
 
-Once the manifests look good, generate the HTML files. The existing viewers
-auto-select cases from `segment_labels.csv`, so they need a small `--manifest`
-flag (or a wrapper) to consume our pre-curated 200-segment list. **This step
-is not yet wired up** — see the open question in the per-task READMEs.
-
-The intended workflow once that is in place:
+Both viewers now accept `--manifest`, `--output`, and `--no-open`. From
+the repo root, with the `morgoth` conda env:
 
 ```bash
-# (after wiring --manifest into each viewer)
+# LPD
 conda run -n morgoth python code/generators/labeling/generate_pd_freq_timing_labeler.py \
     --subtype lpd \
     --manifest paper_materials/independent_expert_tasks/lpd/manifest.csv \
-    --output paper_materials/independent_expert_tasks/lpd/lpd_task.html
+    --output  paper_materials/independent_expert_tasks/lpd/lpd_task.html \
+    --no-open
+
+# GPD
+conda run -n morgoth python code/generators/labeling/generate_pd_freq_timing_labeler.py \
+    --subtype gpd \
+    --manifest paper_materials/independent_expert_tasks/gpd/manifest.csv \
+    --output  paper_materials/independent_expert_tasks/gpd/gpd_task.html \
+    --no-open
+
+# LRDA  (with left/right laterality buttons enabled)
+conda run -n morgoth python code/generators/labeling/generate_rda_freq_labeler.py \
+    --subtype lrda \
+    --manifest paper_materials/independent_expert_tasks/lrda/manifest.csv \
+    --output  paper_materials/independent_expert_tasks/lrda/lrda_task.html \
+    --no-open
+
+# GRDA  (laterality input hidden; freq only)
+conda run -n morgoth python code/generators/labeling/generate_rda_freq_labeler.py \
+    --subtype grda \
+    --manifest paper_materials/independent_expert_tasks/grda/manifest.csv \
+    --output  paper_materials/independent_expert_tasks/grda/grda_task.html \
+    --no-open
 ```
+
+Note the output HTMLs are gitignored (added to `.gitignore`) because
+they are tens to hundreds of MB each — see the next section.
 
 ## Distribution to collaborators
 
-The generated HTML files will likely be tens to hundreds of MB each (200
-segments worth of inlined EEG + per-frequency HPP precomputes). That is too
-large for direct commit to git. Recommended distribution path:
+The generated HTML files are tens to hundreds of MB each (200 segments
+worth of inlined EEG + per-frequency precomputes). Measured sizes for
+the 200-case generation:
 
-1. Generate the four HTML files locally.
-2. Create a GitHub release `independent-expert-tasks-v1` and upload the four
-   HTMLs as release assets (releases support files up to 2 GB).
-3. The per-task `README.md` (already in this folder) contains a placeholder
-   `<DOWNLOAD_URL>` that should be filled in with the release-asset URL
-   before sharing with the collaborator.
-4. Send the GitHub URL of the per-task README to each collaborator. They click
-   the download link, label the cases, and send back the exported JSON.
+| Task | size for 200 cases |
+|---|---|
+| LPD  | 142 MB |
+| GPD  | 142 MB |
+| LRDA |  82 MB |
+| GRDA |  82 MB |
+| **Total** | **448 MB** |
+
+Too large to commit to git directly. Distribution plan:
+
+1. Generate the four HTMLs locally with the commands above.
+2. Test them in a browser end-to-end yourself (open each, click through a
+   few cases, verify Export produces a sane JSON). **Do this before any
+   upload.**
+3. Upload the four HTMLs to a private S3 bucket.
+4. Generate pre-signed URLs (e.g., 30-day expiry) for each file:
+
+   ```bash
+   aws s3 presign s3://<your-bucket>/independent_expert_tasks/lpd_task.html  --expires-in 2592000
+   aws s3 presign s3://<your-bucket>/independent_expert_tasks/gpd_task.html  --expires-in 2592000
+   aws s3 presign s3://<your-bucket>/independent_expert_tasks/lrda_task.html --expires-in 2592000
+   aws s3 presign s3://<your-bucket>/independent_expert_tasks/grda_task.html --expires-in 2592000
+   ```
+
+5. Paste each pre-signed URL into the corresponding per-task `README.md`
+   in this folder, replacing the `<DOWNLOAD_URL>` placeholder.
+6. Send each rater the GitHub URL of their per-task README. They click
+   the download link in the README, label the cases, export JSON, and
+   email it back.
 
 ## What the collaborator returns
 

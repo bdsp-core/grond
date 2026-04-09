@@ -18,6 +18,7 @@ import sys
 import json
 import argparse
 import numpy as np
+import pandas as pd
 import scipy.io as sio
 from pathlib import Path
 from scipy.signal import butter, filtfilt
@@ -26,6 +27,11 @@ LABELING_DIR = Path(__file__).resolve().parent
 CODE_DIR = LABELING_DIR.parent.parent  # code/
 PROJECT_DIR = CODE_DIR.parent
 sys.path.insert(0, str(CODE_DIR))
+# optimization_harness_v2 was moved to code/archive/optimization_harnesses/ as
+# part of the repo cleanup; add the archive directory to sys.path so the PD
+# viewer (and label_pipeline.hpp_discharge_marking, which it imports) can
+# still resolve the module without being modified.
+sys.path.insert(0, str(CODE_DIR / 'archive' / 'optimization_harnesses'))
 
 from optimization_harness_v2 import LEFT_INDICES, RIGHT_INDICES, FS
 from label_pipeline.hpp_discharge_marking import (
@@ -321,6 +327,15 @@ def main():
     parser.add_argument('--batch', type=int, default=1, help='Batch number (1-indexed)')
     parser.add_argument('--batch-size', type=int, default=BATCH_SIZE, help='Cases per batch')
     parser.add_argument('--min-votes', type=int, default=0, help='Minimum IIIC crowd votes (0=all)')
+    parser.add_argument('--manifest', type=str, default=None,
+                        help='CSV with mat_file,patient_id columns; bypasses auto-discovery '
+                             '(used for the independent-expert annotation tasks).')
+    parser.add_argument('--output', type=str, default=None,
+                        help='Output HTML path; default: results/labeling_tools/pd_freq_timing/<subtype>_freq_timing_batch<N>.html')
+    parser.add_argument('--no-open', action='store_true',
+                        help='Do not open the generated HTML in a browser.')
+    parser.add_argument('--limit', type=int, default=0,
+                        help='Limit cases (for testing); 0=all.')
     args = parser.parse_args()
 
     subtype = args.subtype
@@ -329,9 +344,20 @@ def main():
     print(f"  {subtype.upper()} Frequency + Timing Labeler")
     print("=" * 70)
 
-    # Find unlabeled segments
-    print(f"\nFinding {subtype.upper()} segments missing freq+timing labels...")
-    unlabeled = find_unlabeled_pd(subtype, min_votes=args.min_votes)
+    # Choose case source: manifest CSV (independent-expert mode) or auto-discovery.
+    if args.manifest:
+        print(f"\nLoading cases from manifest: {args.manifest}")
+        unlabeled = pd.read_csv(args.manifest)
+        if 'mat_file' not in unlabeled.columns or 'patient_id' not in unlabeled.columns:
+            raise ValueError(f"Manifest must contain mat_file and patient_id columns; got {list(unlabeled.columns)}")
+        print(f"  {len(unlabeled)} segments in manifest")
+    else:
+        print(f"\nFinding {subtype.upper()} segments missing freq+timing labels...")
+        unlabeled = find_unlabeled_pd(subtype, min_votes=args.min_votes)
+
+    if args.limit > 0:
+        unlabeled = unlabeled.head(args.limit)
+        print(f"  Limited to first {args.limit} cases")
 
     # Sort by patient_id for deterministic batching
     unlabeled = unlabeled.sort_values('patient_id').reset_index(drop=True)
@@ -436,15 +462,20 @@ def main():
     print("\nBuilding HTML viewer...")
     html = build_html(cases_data, args.batch, n_batches, subtype)
 
-    out_path = OUT_BASE / f'{subtype}_freq_timing_batch{args.batch}.html'
+    if args.output:
+        out_path = Path(args.output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+    else:
+        out_path = OUT_BASE / f'{subtype}_freq_timing_batch{args.batch}.html'
     with open(str(out_path), 'w') as f:
         f.write(html)
     print(f"  Written to {out_path}")
     print(f"  {len(cases_data)} cases ready for review")
 
-    # Open in browser
-    import subprocess
-    subprocess.run(['open', str(out_path)])
+    # Open in browser unless --no-open
+    if not args.no_open:
+        import subprocess
+        subprocess.run(['open', str(out_path)])
     print("=" * 70)
 
 

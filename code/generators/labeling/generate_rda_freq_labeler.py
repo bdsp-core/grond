@@ -379,22 +379,35 @@ def prepare_cases(candidates):
 #  HTML BUILDER
 # ========================================================================
 
-def build_html(cases_data):
-    """Build RDA frequency labeling viewer."""
+def build_html(cases_data, laterality_mode=False, subtype_arg='rda'):
+    """Build RDA frequency labeling viewer.
+
+    Parameters
+    ----------
+    cases_data : list of dict
+        Per-segment payloads (eeg + W05/Tautan defaults + dom_side).
+    laterality_mode : bool
+        If True, render the L/R laterality buttons (LRDA task). The JS export
+        will include a `laterality` field on every saved decision.
+    subtype_arg : str
+        Used only for the page title.
+    """
     left_indices_json = json.dumps(LEFT_CHS.tolist())
     right_indices_json = json.dumps(RIGHT_CHS.tolist())
     freq_buttons_json = json.dumps(FREQ_BUTTONS)
+    laterality_mode_json = 'true' if laterality_mode else 'false'
 
     cases_json = json.dumps(cases_data,
                             default=lambda o: float(o) if isinstance(o, (np.floating,)) else o)
 
     n_cases = len(cases_data)
+    title_subtype = subtype_arg.upper()
 
     html = f"""<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>RDA Frequency Labeler ({n_cases} cases)</title>
+<title>{title_subtype} Frequency Labeler ({n_cases} cases)</title>
 <style>
   * {{ box-sizing: border-box; margin: 0; padding: 0; }}
   body {{ background: #f5f5f5; color: #222; font-family: 'Consolas','Monaco',monospace; overflow-x: hidden; }}
@@ -430,6 +443,21 @@ def build_html(cases_data):
   .decision-none {{ background: #eee; color: #888; }}
   .decision-accept {{ background: #d4edd4; color: #226622; }}
   .decision-reject {{ background: #fce8e8; color: #cc2222; }}
+
+  /* Laterality panel (LRDA mode only) */
+  #laterality-panel {{
+    background: #f5f5f5; padding: 8px 16px; display: flex; align-items: center;
+    gap: 16px; border-bottom: 1px solid #ccc;
+  }}
+  #laterality-panel label {{ color: #555; font-size: 13px; font-weight: bold; margin-right: 4px; }}
+  .lat-badge {{
+    font-size: 16px; font-weight: bold; padding: 6px 18px; border-radius: 6px;
+    letter-spacing: 1px; border: 2px solid transparent; cursor: pointer;
+  }}
+  .lat-left  {{ background: #fce8e8; color: #aa1133; border-color: #aa1133; }}
+  .lat-right {{ background: #e8eefc; color: #1144aa; border-color: #1144aa; }}
+  .lat-none  {{ background: #eee; color: #888; border-color: #ccc; }}
+  .lat-badge.selected {{ box-shadow: 0 0 0 3px #44cc88; }}
 
   #freq-buttons {{
     display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 16px;
@@ -486,12 +514,12 @@ def build_html(cases_data):
 
 <div id="header">
   <div id="header-left">
-    <span style="font-size:16px; font-weight:bold; color:#226622;">RDA Frequency Labeler</span>
+    <span style="font-size:16px; font-weight:bold; color:#226622;">{title_subtype} Frequency Labeler</span>
     <span id="counter" style="font-size:13px; color:#888;">1 / {n_cases}</span>
   </div>
   <div id="header-right">
-    <button class="action-btn btn-accept" onclick="acceptFreq()">Accept Freq <span class="key">Enter</span></button>
-    <button class="action-btn btn-reject" onclick="rejectCase()">Not RDA <span class="key">X</span></button>
+    <button class="action-btn btn-accept" onclick="acceptFreq()">Accept <span class="key">Enter</span></button>
+    <button class="action-btn btn-reject" onclick="rejectCase()">Not {title_subtype} <span class="key">X</span></button>
     <button class="export-btn" onclick="exportJSON()">Export <span class="key">E</span></button>
     <span id="save-status"></span>
     <span id="reviewed-count" style="font-size:12px; color:#888;"></span>
@@ -512,6 +540,13 @@ def build_html(cases_data):
 <div id="decision-panel">
   <span>Decision:</span>
   <span id="decision-status" class="decision-none">NOT REVIEWED</span>
+</div>
+
+<div id="laterality-panel" style="display: {('flex' if laterality_mode else 'none')};">
+  <label>Laterality:</label>
+  <span id="lat-badge-left"  class="lat-badge lat-left  lat-none" onclick="setLaterality('left')">Left  <span class="key">1</span></span>
+  <span id="lat-badge-right" class="lat-badge lat-right lat-none" onclick="setLaterality('right')">Right <span class="key">2</span></span>
+  <span style="color:#888; font-size:12px;">(W05 default highlighted; press 1/2 to override)</span>
 </div>
 
 <div id="freq-buttons">
@@ -542,6 +577,8 @@ const CASES = {cases_json};
 const LEFT_INDICES = {left_indices_json};
 const RIGHT_INDICES = {right_indices_json};
 const FREQ_BUTTONS = {freq_buttons_json};
+const LATERALITY_MODE = {laterality_mode_json};
+let selectedLaterality = null;
 
 const BIPOLAR_NAMES = ['Fp1-F7','F7-T3','T3-T5','T5-O1','Fp2-F8','F8-T4','T4-T6','T6-O2',
   'Fp1-F3','F3-C3','C3-P3','P3-O1','Fp2-F4','F4-C4','C4-P4','P4-O2','Fz-Cz','Cz-Pz'];
@@ -873,8 +910,44 @@ function show() {{
     if (selectedFreqIdx < 0) selectedFreqIdx = 3;  // fallback to 1.0 Hz
   }}
 
+  if (LATERALITY_MODE) {{
+    if (prev && prev.laterality) {{
+      selectedLaterality = prev.laterality;
+    }} else {{
+      // Default to W05 dom_side; valid values are 'left' or 'right'
+      selectedLaterality = (c.dom_side === 'left' || c.dom_side === 'right') ? c.dom_side : 'left';
+    }}
+    updateLateralityBadges();
+  }}
+
   buildFreqButtons();
   redraw();
+}}
+
+function setLaterality(side) {{
+  if (!LATERALITY_MODE) return;
+  if (side !== 'left' && side !== 'right') return;
+  selectedLaterality = side;
+  updateLateralityBadges();
+}}
+
+function updateLateralityBadges() {{
+  if (!LATERALITY_MODE) return;
+  const lEl = document.getElementById('lat-badge-left');
+  const rEl = document.getElementById('lat-badge-right');
+  if (!lEl || !rEl) return;
+  lEl.classList.remove('selected', 'lat-none');
+  rEl.classList.remove('selected', 'lat-none');
+  if (selectedLaterality === 'left') {{
+    lEl.classList.add('selected');
+    rEl.classList.add('lat-none');
+  }} else if (selectedLaterality === 'right') {{
+    rEl.classList.add('selected');
+    lEl.classList.add('lat-none');
+  }} else {{
+    lEl.classList.add('lat-none');
+    rEl.classList.add('lat-none');
+  }}
 }}
 
 function acceptFreq() {{
@@ -883,7 +956,9 @@ function acceptFreq() {{
   allDecisions[c.segment_id] = {{
     action: 'accept',
     freq: freq,
+    laterality: LATERALITY_MODE ? selectedLaterality : null,
     w05_freq: c.w05_freq,
+    w05_laterality: c.dom_side,
     tautan_freq: c.tautan_freq,
     subtype: c.subtype,
     mat_file: c.mat_file,
@@ -891,7 +966,8 @@ function acceptFreq() {{
   }};
   saveAll();
   const el = document.getElementById('save-status');
-  el.textContent = 'LABELED: ' + freq.toFixed(2) + ' Hz';
+  const latStr = LATERALITY_MODE && selectedLaterality ? ' [' + selectedLaterality + ']' : '';
+  el.textContent = 'LABELED: ' + freq.toFixed(2) + ' Hz' + latStr;
   el.style.color = '#228822';
   setTimeout(() => {{ el.textContent = ''; }}, 2000);
   idx = Math.min(CASES.length - 1, idx + 1);
@@ -903,7 +979,9 @@ function rejectCase() {{
   allDecisions[c.segment_id] = {{
     action: 'reject_not_rda',
     freq: null,
+    laterality: null,
     w05_freq: c.w05_freq,
+    w05_laterality: c.dom_side,
     tautan_freq: c.tautan_freq,
     subtype: c.subtype,
     mat_file: c.mat_file,
@@ -925,7 +1003,9 @@ function exportJSON() {{
     out[sid] = {{
       action: d.action,
       freq: d.freq,
+      laterality: d.laterality || null,
       w05_freq: d.w05_freq,
+      w05_laterality: d.w05_laterality || null,
       tautan_freq: d.tautan_freq,
       subtype: d.subtype,
       mat_file: d.mat_file,
@@ -977,6 +1057,12 @@ document.addEventListener('keydown', function(e) {{
     redraw();
   }} else if (e.key === 'e' || e.key === 'E') {{
     exportJSON();
+  }} else if (LATERALITY_MODE && e.key === '1') {{
+    e.preventDefault();
+    setLaterality('left');
+  }} else if (LATERALITY_MODE && e.key === '2') {{
+    e.preventDefault();
+    setLaterality('right');
   }}
 }});
 
@@ -992,20 +1078,90 @@ show();
 #  MAIN
 # ========================================================================
 
+def _candidates_from_manifest(manifest_path, subtype_filter=None):
+    """Build candidates list from a manifest CSV (independent-expert mode).
+
+    The manifest must have a `mat_file` column. Other fields (patient_id,
+    subtype, IIIC stats) are looked up from segment_labels.csv when present.
+    """
+    manifest_df = pd.read_csv(manifest_path)
+    if 'mat_file' not in manifest_df.columns:
+        raise ValueError(f"Manifest must contain mat_file column; got {list(manifest_df.columns)}")
+
+    sl = pd.read_csv(str(LABELS_DIR / 'segment_labels.csv'))
+    sl_indexed = sl.set_index('mat_file')
+    candidates = []
+    for _, mrow in manifest_df.iterrows():
+        mf = str(mrow['mat_file'])
+        if mf not in sl_indexed.index:
+            print(f"  WARNING: {mf} not in segment_labels.csv; skipping")
+            continue
+        srow = sl_indexed.loc[mf]
+        sub = str(srow.get('subtype', '')).lower()
+        if subtype_filter and sub != subtype_filter:
+            continue
+        try:
+            nv = float(srow.get('iiic_n_votes') or 0)
+        except (TypeError, ValueError):
+            nv = 0.0
+        try:
+            pf = float(srow.get('iiic_plurality_frac') or 0)
+        except (TypeError, ValueError):
+            pf = 0.0
+        candidates.append({
+            'mat_file': mf,
+            'segment_id': mf.replace('.mat', ''),
+            'patient_id': str(srow.get('patient_id', mrow.get('patient_id', ''))),
+            'subtype': sub,
+            'n_votes': int(nv) if np.isfinite(nv) else 0,
+            'plurality_frac': float(pf) if np.isfinite(pf) else 0.0,
+        })
+    return candidates
+
+
 def main():
     parser = argparse.ArgumentParser(description='RDA Frequency Labeler')
     parser.add_argument('--max-cases', type=int, default=0,
-                        help='Max cases to include (0=all)')
+                        help='Max cases to include (0=all). Used only when --manifest is not given.')
+    parser.add_argument('--subtype', type=str, choices=['lrda', 'grda', 'rda'], default='rda',
+                        help='Filter to one subtype. lrda enables the laterality (left/right) input UI; '
+                             'grda omits it; rda (default) keeps the legacy mixed-pool behavior.')
+    parser.add_argument('--manifest', type=str, default=None,
+                        help='CSV with mat_file column; bypasses auto-discovery '
+                             '(used for the independent-expert annotation tasks).')
+    parser.add_argument('--output', type=str, default=None,
+                        help='Output HTML path; default: results/labeling_tools/rda_freq_labeling/rda_freq_labeler.html')
+    parser.add_argument('--no-open', action='store_true',
+                        help='Do not open the generated HTML in a browser.')
+    parser.add_argument('--limit', type=int, default=0,
+                        help='Limit cases (for testing); 0=all.')
     args = parser.parse_args()
 
+    # In LRDA mode the UI shows left/right laterality buttons; in GRDA mode it
+    # does not (laterality is generalized by definition). The legacy 'rda' mode
+    # also omits the buttons.
+    laterality_mode = (args.subtype == 'lrda')
+    subtype_filter = args.subtype if args.subtype in ('lrda', 'grda') else None
+
     print("=" * 70)
-    print("  RDA Frequency Labeler")
-    print("  Labels freq for LRDA/GRDA with >=50%% IIIC agreement")
+    print(f"  RDA Frequency Labeler — subtype={args.subtype}, laterality_mode={laterality_mode}")
     print("  Default freq from W05_DomOnly_IterRefine (Hilbert + narrowband)")
     print("=" * 70)
 
-    print(f"\nFinding unlabeled LRDA/GRDA cases...")
-    candidates = find_unlabeled_cases(max_cases=args.max_cases)
+    if args.manifest:
+        print(f"\nLoading cases from manifest: {args.manifest}")
+        candidates = _candidates_from_manifest(args.manifest, subtype_filter=subtype_filter)
+        print(f"  {len(candidates)} segments in manifest after filtering to subtype={subtype_filter}")
+    else:
+        print(f"\nFinding unlabeled LRDA/GRDA cases...")
+        candidates = find_unlabeled_cases(max_cases=args.max_cases)
+        if subtype_filter:
+            candidates = [c for c in candidates if c['subtype'] == subtype_filter]
+            print(f"  Filtered to subtype={subtype_filter}: {len(candidates)}")
+
+    if args.limit > 0 and len(candidates) > args.limit:
+        candidates = candidates[:args.limit]
+        print(f"  Limited to first {args.limit} cases")
 
     if len(candidates) == 0:
         print("  No cases to label!")
@@ -1019,16 +1175,21 @@ def main():
         return
 
     print("\nBuilding HTML viewer...")
-    html = build_html(cases_data)
+    html = build_html(cases_data, laterality_mode=laterality_mode, subtype_arg=args.subtype)
 
-    out_path = OUT_BASE / 'rda_freq_labeler.html'
+    if args.output:
+        out_path = Path(args.output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+    else:
+        out_path = OUT_BASE / 'rda_freq_labeler.html'
     with open(str(out_path), 'w') as f:
         f.write(html)
     print(f"  Written to {out_path}")
     print(f"  {len(cases_data)} cases ready for labeling")
 
-    import subprocess
-    subprocess.run(['open', str(out_path)])
+    if not args.no_open:
+        import subprocess
+        subprocess.run(['open', str(out_path)])
     print("=" * 70)
 
 

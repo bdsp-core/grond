@@ -16,12 +16,6 @@ The viewer **pre-fills the algorithm's prediction** for both. If you
 agree, you can accept it with a single keystroke. If you disagree, you
 can override it.
 
-> **Important — wave triplets:** the LRDA viewer also has a "wave
-> triplet" mode (`W` key) for marking onset → peak → offset of every
-> rhythmic delta wave. **Please skip this step.** It is left over from
-> a different study and we do not need it here. Just label
-> lateralization and frequency, then export.
-
 Plan to spend roughly **5–15 seconds** per segment if the algorithm's
 default looks correct, and longer for difficult cases. Total expected
 time: about **1–1.5 hours**, broken into as many sessions as you like.
@@ -46,42 +40,40 @@ browser's local storage as you go.
 
 For each case the viewer shows:
 
-- **Left**: the 19-channel EEG in standard longitudinal-bipolar
-  montage, 10 seconds wide. The hemisphere the algorithm thinks is
-  involved is highlighted.
-- **Right**: a frequency selector (buttons or arrow keys) and a
-  per-channel narrowband-amplitude heatmap. A bandpass-filtered
-  overlay tracks the rhythmic delta waveform at the selected frequency.
+- **Top**: a row of laterality buttons (Left / Right) — the
+  algorithm's prediction is highlighted, click or press 1/2 to override.
+- **Middle**: a row of frequency buttons in 0.25 Hz steps — the
+  algorithm's prediction is highlighted, use ↑/↓ or click to change.
+- **Main canvas**: the 19-channel EEG in standard longitudinal-bipolar
+  montage, 10 seconds wide, with a bandpass-filtered overlay that
+  tracks the rhythmic delta waveform at the selected frequency.
 
 ### Keyboard shortcuts
 
 | Key | Action |
 |---|---|
-| `Enter` | Accept the algorithm's defaults and advance to the next case |
-| `1` | Set lateralization = **Left** |
-| `2` | Set lateralization = **Right** |
-| `3` | Set lateralization = **Bilateral** (use only if the segment looks generalized; we will reclassify it as GRDA in analysis) |
+| `Enter` | Accept the currently-selected laterality + frequency and advance |
+| `1` | Set laterality = **Left** |
+| `2` | Set laterality = **Right** |
 | `↑` / `↓` | Increase / decrease the selected frequency button |
 | `←` / `→` | Previous / next case |
-| `X` | Reject this segment (e.g., not actually LRDA) |
+| `N` | Toggle the narrowband overlay on/off |
+| `X` | Reject this segment (e.g., not actually LRDA, or looks generalized) |
 | `E` | Export all labels as JSON |
-| ~~`W`~~ | ~~Wave-mark mode~~ — **skip this; we do not need wave triplets** |
 
 If you want to use the mouse instead of the keyboard, every action
-(except wave triplets, which you should ignore) also has a button in
-the top toolbar.
+also has a button in the top toolbar.
 
 ### Decision rules to follow
 
-- **Lateralization**: pick the hemisphere where the rhythmic delta
-  is clearly dominant. If the activity looks symmetrically generalized,
-  set lateralization to **Bilateral** — we will treat that as a
-  reclassification to GRDA in the analysis.
+- **Laterality**: pick the hemisphere where the rhythmic delta is
+  clearly dominant. If the activity looks symmetrically generalized
+  (i.e., it would be better classified as GRDA), please **reject**
+  the segment — we will treat that as a reclassification.
 - **Frequency**: the rate at which the delta waves repeat. Round to
-  the nearest 0.25 Hz button (or type a custom value). The narrowband
-  overlay should "lock onto" the rhythm at the correct frequency.
-- **Wave triplets**: **do not mark them.** The wave-mark mode (`W`
-  key) exists for a different study; ignore it.
+  the nearest 0.25 Hz button. The narrowband overlay should "lock
+  onto" the rhythm at the correct frequency — that is your visual
+  confirmation.
 
 If you really cannot decide, click **Reject** rather than guessing.
 
@@ -95,18 +87,9 @@ fine):
    your initials, e.g. `lrda_results_AB.json`.
 3. Email or Slack the JSON file back to MW.
 
-You do not need to commit anything to GitHub or run any scripts. The
-JSON file will contain a `triplets` array per segment — that is from
-the wave-triplet UI that you skipped, and will be empty. That is
-expected and correct.
+You do not need to commit anything to GitHub or run any scripts.
 
 ## Common questions
-
-**Q: I accidentally pressed `W` and now I am in wave-mark mode. What do
-I do?**
-Press `W` again or `Esc` to exit wave-mark mode. Any triplets you
-accidentally placed can be left as-is — we will ignore them in
-analysis.
 
 **Q: The narrowband overlay does not seem to lock onto the rhythm at
 any frequency. What do I do?**
