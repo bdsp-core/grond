@@ -28,6 +28,7 @@ paper_materials/independent_expert_tasks/*/*.html
 # Pre-signed S3 URLs for the independent-expert tasks (anyone with these
 # URLs can download the task HTMLs until they expire — never commit)
 paper_materials/independent_expert_tasks/.presigned_urls.txt
+paper_materials/independent_expert_tasks/email_to_send.md
 
 # Python
 __pycache__/
