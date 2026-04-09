@@ -2,7 +2,7 @@
 
 ## Background
 
-This document summarizes findings from analyzing the predecessor [IIIC-Frequency-Analysis-2](https://github.com/bdsp-core/IIIC-Frequency-Analysis-2) repository and outlines a plan to extend it with continuous per-channel RDA scores and a laterality index. The plan was subsequently implemented in the present (`pd-rda-profiler`) repo.
+This document summarizes findings from analyzing the predecessor [IIIC-Frequency-Analysis-2](https://github.com/bdsp-core/IIIC-Frequency-Analysis-2) repository and outlines a plan to extend it with continuous per-channel RDA scores and a laterality index. The plan was subsequently implemented in the present (`grond`) repo.
 
 The repo accompanies: Tautan et al. 2025, "Automated estimation of frequency and spatial extent of periodic and rhythmic epileptiform activity from continuous electroencephalography data," J. Neural Eng. 22, 066027.
 

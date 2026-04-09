@@ -53,7 +53,7 @@ GROND is an automated system for joint characterization of periodic discharges (
 ## Project home page  *(field: `project_home_page`)*
 
 ```text
-https://github.com/bdsp-core/pd-rda-profiler
+https://github.com/bdsp-core/grond
 ```
 
 ## Programming languages  *(field: `programming_languages`, multi-select)*
@@ -181,12 +181,12 @@ Pick the standard BDSP credentialing trainings (CITI Human Subjects Research, et
 ```html
 <p>GROND is implemented in Python 3.11 and requires PyTorch (with optional CUDA or Metal acceleration), scipy, numpy, scikit-learn, MNE-Python, and a few smaller dependencies. The full conda environment is shipped with the repo as <code>code/morgoth.yml</code>. To recreate it:</p>
 
-<pre><code>git clone https://github.com/bdsp-core/pd-rda-profiler.git
-cd pd-rda-profiler
+<pre><code>git clone https://github.com/bdsp-core/grond.git
+cd grond
 conda env create -f code/morgoth.yml
 conda activate morgoth</code></pre>
 
-<p>Inference runs on CPU, CUDA, or Apple Silicon (Metal Performance Shaders). The trained model checkpoints are distributed via the BDSP S3 bucket at <code>s3://bdsp-opendata-credentialed/iiic-freq3/</code> and are not included in the GitHub repository directly because of size; the repo's <code>data/</code> tree expects to be populated from S3 (see <a href="https://github.com/bdsp-core/pd-rda-profiler/blob/main/README.md">the README</a> for the directory layout).</p>
+<p>Inference runs on CPU, CUDA, or Apple Silicon (Metal Performance Shaders). The trained model checkpoints are distributed via the BDSP S3 bucket at <code>s3://bdsp-opendata-credentialed/iiic-freq3/</code> and are not included in the GitHub repository directly because of size; the repo's <code>data/</code> tree expects to be populated from S3 (see <a href="https://github.com/bdsp-core/grond/blob/main/README.md">the README</a> for the directory layout).</p>
 
 <p>A second conda environment, <code>code/environment.yml</code>, provides the historical training-time dependencies (foe-builds-pinned for reproducibility); most users will not need it.</p>
 ```

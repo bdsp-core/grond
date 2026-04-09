@@ -69,7 +69,7 @@ start lpd_task.html     # Windows
 
 A more detailed instructions document with decision rules per task is here:
 
-> https://github.com/bdsp-core/pd-rda-profiler/blob/main/paper_materials/independent_expert_tasks/instructions.md
+> https://github.com/bdsp-core/grond/blob/main/paper_materials/independent_expert_tasks/instructions.md
 
 **Step 4 — Email me the results.** When you're done with each task (or any session), press `E` to export. Your browser will download a JSON file with a name like `lpd_freq_timing_batch1_results.json`. **Please rename it** to include your initials, e.g. `lpd_results_<your initials>.json`, and email the JSON file(s) to me at:
 

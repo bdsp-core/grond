@@ -1,8 +1,8 @@
-# Automated Characterization of Periodic Discharges and Rhythmic Delta Activity in Continuous EEG
+# Automated Characterization of Periodic and Rhythmic EEG Patterns with GROND: a Generalized Rhythmic and Oscillatory Neurophysiology Descriptor
 
-Algorithms for joint characterization (lateralization, spatial localization, discharge timing, and frequency estimation) of periodic discharges (PD) and rhythmic delta activity (RDA) in continuous EEG, developed for critical-care EEG monitoring at Massachusetts General Hospital and Beth Israel Deaconess Medical Center.
+**GROND** (Generalized Rhythmic and Oscillatory Neurophysiology Descriptor) is an automated system for joint characterization — lateralization, spatial localization, discharge timing, and frequency estimation — of periodic discharges (PD) and rhythmic delta activity (RDA) in continuous EEG. It is built around two complementary pipelines: the **PD-Profiler** (LPD, GPD, BIPD) and the **RDA-Profiler** (LRDA, GRDA), each with its own README sections below. GROND was developed for critical-care EEG monitoring at Massachusetts General Hospital and Beth Israel Deaconess Medical Center.
 
-**Manuscript**: Jing J, Sun C, Zhang T, Byrd M, T\u{a}u\c{t}an AM, Basovic L, Hadar PN, Fernandes MP, Goldenholz D, Kim J, Struck AF, Zafar SF, Westover MB. "Automated Characterization of Periodic Discharges and Rhythmic Delta Activity in Continuous EEG." *Journal of Neural Engineering* — manuscript in preparation. Source LaTeX in [paper_materials/manuscript.tex](paper_materials/manuscript.tex).
+**Manuscript**: Jing J, Sun C, Zhang T, Byrd M, T\u{a}u\c{t}an AM, Basovic L, Hadar PN, Fernandes MP, Goldenholz D, Kim J, Struck AF, Zafar SF, Westover MB. "Automated Characterization of Periodic and Rhythmic EEG Patterns with GROND: a Generalized Rhythmic and Oscillatory Neurophysiology Descriptor." *Journal of Neural Engineering* — manuscript in preparation. Source LaTeX in [paper_materials/manuscript.tex](paper_materials/manuscript.tex); built PDF at [paper_materials/manuscript.pdf](paper_materials/manuscript.pdf).
 
 **Predecessor**: T\u{a}u\c{t}an AM, Jing J, Basovic L, Hadar PN, Sartipi S, Fernandes MP, Kim J, Struck AF, Westover MB, Zafar SF. "Automated estimation of frequency and spatial extent of periodic and rhythmic epileptiform activity from continuous electroencephalography data." *Journal of Neural Engineering*, 22(6):066027, 2025. [doi:10.1088/1741-2552/ae2716](https://doi.org/10.1088/1741-2552/ae2716). The present system substantially improves on this prior work across all characterization tasks.
 
@@ -49,11 +49,11 @@ Supported pattern types: LPD, GPD, LRDA, GRDA.
 The repo uses **two conda environments** for different parts of the pipeline. Most work needs `morgoth`; only a few legacy signal-processing scripts need `foe`.
 
 ```bash
-git clone https://github.com/bdsp-core/pd-rda-profiler.git
-cd pd-rda-profiler
+git clone https://github.com/bdsp-core/grond.git
+cd grond
 
 # morgoth (Python 3.11): PyTorch model training/inference, figure
-# generation, the full PD-Profiler / RDA-Profiler pipelines.
+# generation, the full GROND (PD-Profiler + RDA-Profiler) pipelines.
 conda env create -f code/morgoth.yml
 conda activate morgoth
 
@@ -412,7 +412,7 @@ Data provided by BDSP under their Data Use Agreement.
 ## Contact
 
 - **Data access**: [bdsp.io](https://bdsp.io) or support@bdsp.io
-- **Code issues**: [GitHub Issues](https://github.com/bdsp-core/pd-rda-profiler/issues)
+- **Code issues**: [GitHub Issues](https://github.com/bdsp-core/grond/issues)
 - **Research collaboration**: Contact the corresponding authors via the publication
 
 ## Acknowledgments

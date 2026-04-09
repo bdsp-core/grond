@@ -99,7 +99,7 @@ unzip data.zip
 ### Step 4: Verify Data Structure
 After downloading, verify your directory structure matches:
 ```bash
-cd pd-rda-profiler
+cd grond
 ls -R data/
 ```
 
