@@ -777,14 +777,21 @@ function drawEEG() {{
 
   const chSpacing = PLOT_H / (N_DISPLAY + 1);
 
-  // Narrowband overlay at selected frequency (computed client-side via FFT)
+  // Narrowband overlay at selected frequency (computed client-side via FFT).
+  // In LRDA mode, restrict the overlay to the channels of the currently-selected
+  // laterality side so the user can clearly see which side is being labeled.
   if (showNarrowband && montage === 'bipolar') {{
     const nbData = getNarrowband(idx, getSelectedFreq());
     if (nbData) {{
       const nbSamples = nbData[0].length;
+      const restrictToSide = LATERALITY_MODE && (selectedLaterality === 'left' || selectedLaterality === 'right');
+      const allowedIdx = restrictToSide
+        ? new Set(selectedLaterality === 'left' ? LEFT_INDICES : RIGHT_INDICES)
+        : null;
       for (let di = 0; di < N_DISPLAY; di++) {{
         const ch = DISPLAY_CHANNELS[di];
         if (ch.idx < 0 || ch.idx >= nbData.length) continue;
+        if (allowedIdx && !allowedIdx.has(ch.idx)) continue;
         const yCenter = MARGIN_TOP + chSpacing * (di + 1);
 
         ctx.strokeStyle = 'rgba(0, 136, 0, 0.5)';
@@ -929,6 +936,8 @@ function setLaterality(side) {{
   if (side !== 'left' && side !== 'right') return;
   selectedLaterality = side;
   updateLateralityBadges();
+  // Redraw so the narrowband overlay follows the new side immediately.
+  drawEEG();
 }}
 
 function updateLateralityBadges() {{

@@ -65,6 +65,12 @@ FIGURES = [
         'script': 'generate_threshold_sweep.py',
         'output': 'figures/figS3_threshold_sweep.png',
     },
+    {
+        'num': 'S4',
+        'name': 'Fig S4: Independent-Expert Task Frequency Distribution',
+        'script': 'generate_fig_independent_expert_freq.py',
+        'output': 'figures/figS4_independent_expert_freq_distribution.png',
+    },
 ]
 
 
