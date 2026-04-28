@@ -13,16 +13,19 @@
 
 The hypothesis is **strongly supported on PD tasks** and **mixed on RDA tasks**, where for some metrics the algorithm sits at the bottom of the expert-expert range rather than at or above it. The absolute IRR is high everywhere (laterality kappa ≥ 0.83 on every pair; frequency ICC ≥ 0.71 on every pair).
 
-| Task | Metric | Expert--expert mean ± range | Expert--algorithm mean ± range | Hypothesis |
+| Task | Metric | Expert--expert mean (range) | Expert--algorithm mean (range) | Hypothesis |
 |---|---|---|---|---|
 | LPD  | frequency ICC | **0.866** (0.773–0.933) | **0.916** (0.868–0.976) | ✅ algorithm above EE |
 | LPD  | laterality κ  | 0.970 (0.941–1.000) | 0.949 (0.945–0.954) | ≈ tie (all >0.94) |
 | GPD  | frequency ICC | **0.966** (0.944–0.980) | **0.975** (0.963–0.987) | ✅ algorithm above EE |
-| LRDA | frequency ICC | 0.911 (single pair) | **0.800** (0.710–0.890) | ⚠ TZ-ALGO below SZ-TZ; SZ-ALGO ties (MW LRDA not yet labeled) |
-| LRDA | laterality κ  | **0.974** (0.943–1.000) | **0.899** (0.834–0.946) | ⚠ algorithm below EE |
+| LRDA | frequency ICC | **0.897** (0.835–0.945) | **0.751** (0.654–0.890) | ⚠ algorithm below EE — particularly MW-ALGO (0.654) |
+| LRDA | laterality κ  | **0.994** (0.982–1.000) | **0.905** (0.853–0.946) | ⚠ algorithm below EE — experts agree perfectly, algo at ~0.91 |
 | GRDA | frequency ICC | **0.937** (0.903–0.983) | **0.922** (0.885–0.988) | ≈ tie (algo within EE range; SZ-ALGO best, MW-ALGO worst) |
 
-(LRDA frequency still has only 1 EE pair because MW has not yet labeled LRDA frequency. GRDA frequency now has the full 4-way comparison.)
+The PD half of the story is unchanged from v1: on every PD task the algorithm sits at or above expert--expert agreement. The RDA half has now sharpened with full MW coverage:
+- **GRDA frequency**: tie (algo 0.922 vs experts 0.937).
+- **LRDA frequency**: algorithm clearly below experts. The MW-ALGO ICC of 0.654 is the worst pair in the entire analysis, well below any expert-expert pair (0.835-0.945). The algorithm is closest to SZ on LRDA frequency (0.890) and farthest from MW (0.654).
+- **LRDA laterality**: experts agree near-perfectly (kappas 0.98-1.00), algorithm is meaningfully worse (kappas 0.85-0.95). Same direction as LRDA frequency.
 
 ## Detailed per-task results
 
@@ -65,28 +68,33 @@ Everyone agrees with everyone almost perfectly. The algorithm is one or two poin
 
 Cleanest support for the hypothesis: every expert–algorithm pair is at or above the expert–expert mean. `SZ–ALGO` is again the highest (0.987).
 
-### LRDA frequency (no MW labels — 1 EE pair only)
+### LRDA frequency (now with MW)
 
 | Pair | Type | n | ICC | 95% CI | Spearman ρ | MAE (Hz) |
 |---|---|---:|---:|---|---:|---:|
+| MW–SZ   | EE | 111 | 0.835 | [0.745, 0.910] | 0.885 | 0.128 |
+| MW–TZ   | EE | 135 | **0.945** | [0.917, 0.968] | 0.935 | 0.080 |
 | SZ–TZ   | EE |  93 | 0.911 | [0.854, 0.961] | 0.927 | 0.073 |
+| MW–ALGO | EA | 174 | **0.654** | [0.528, 0.785] | 0.757 | 0.229 |
 | SZ–ALGO | EA | 112 | 0.890 | [0.760, 0.979] | 0.897 | 0.093 |
 | TZ–ALGO | EA | 144 | 0.710 | [0.574, 0.834] | 0.776 | 0.191 |
 
-`SZ–ALGO` matches the expert–expert ICC; `TZ–ALGO` is meaningfully lower. The pattern suggests Tianyu disagrees with the algorithm's LRDA-frequency estimates more often than Sahar does — but absent more raters this could equally well reflect 1–2 outlier segments that happened to be in TZ's accepted set but not SZ's.
+The first task in the entire analysis where the algorithm clearly underperforms the experts. The expert--expert range is 0.835--0.945 (the lowest pair, MW-SZ at 0.835, is still well above the highest expert--algorithm pair other than SZ-ALGO). The algorithm-vs-MW ICC of 0.654 is the worst pair in the analysis, with MAE 0.23 Hz (~3-4x typical PD MAE values). MW and TZ agree extremely well on LRDA frequency (ICC 0.945) — high enough to suggest a stable shared scoring tendency that the algorithm does not match. SZ is the rater the algorithm matches best (ICC 0.890).
 
-### LRDA laterality
+### LRDA laterality (now with full MW coverage)
 
 | Pair | Type | n | κ | 95% CI | % agreement |
 |---|---|---:|---:|---|---:|
-| MW–SZ   | EE |  74 | 0.943 | [0.851, 1.000] | 0.973 |
-| MW–TZ   | EE |  99 | 0.978 | [0.930, 1.000] | 0.990 |
+| MW–SZ   | EE | 112 | 0.982 | [0.945, 1.000] | 0.991 |
+| MW–TZ   | EE | 142 | **1.000** | [1.000, 1.000] | 1.000 |
 | SZ–TZ   | EE |  93 | **1.000** | [1.000, 1.000] | 1.000 |
-| MW–ALGO | EA | 126 | 0.834 | [0.726, 0.930] | 0.921 |
+| MW–ALGO | EA | 190 | 0.853 | [0.769, 0.916] | 0.926 |
 | SZ–ALGO | EA | 112 | 0.946 | [0.875, 1.000] | 0.973 |
 | TZ–ALGO | EA | 144 | 0.916 | [0.847, 0.972] | 0.958 |
 
-The single result that **does not support the hypothesis**: experts agree near-perfectly on LRDA laterality (mean κ 0.974, including a perfect SZ–TZ kappa) but the algorithm is meaningfully worse against MW (κ 0.834). The absolute number is still high (>92% agreement on all pairs) but the gap is real. Worth a focused error analysis: which LRDA segments did the algorithm get the side wrong on, and was MW or SZ/TZ the outlier?
+Same direction as LRDA frequency: all three expert--expert pairs are at or near perfect agreement (MW-TZ and SZ-TZ both kappa=1.000), while every expert--algorithm pair sits below 0.95. The algorithm is closest to SZ (kappa 0.946) and farthest from MW (kappa 0.853) — the same ordering as on LRDA frequency. About 8% of LRDA segments where MW labeled left/right have the algorithm picking the other side.
+
+This is the strongest signal in the whole analysis: experts agree with each other on LRDA laterality essentially perfectly, and the algorithm's NB-Hilbert dominant-side detector misses one in twelve cases against MW. Worth a focused error analysis (the LRDA segments the algorithm gets wrong are likely the bilateral-but-asymmetric and the low-amplitude cases).
 
 ### GRDA frequency (now with MW)
 
@@ -108,18 +116,21 @@ GRDA — worth noting if doing per-rater error analysis.
 
 ## Interpretation and patterns
 
-1. **The PD half of the story is clean**: on every PD task and every metric, the algorithm sits at or above expert–expert agreement. This is the cleanest possible support for the abstract claim that the system matches expert IRR on PDs. The closing argument for Reviewer Note #1 is well-supported here.
+1. **The PD half of the story is clean**: on every PD task and every metric, the algorithm sits at or above expert–expert agreement. The closing argument for Reviewer Note #1 is fully supported on PDs.
 
-2. **The RDA half is more nuanced**: on LRDA laterality the algorithm is measurably below expert agreement, and on LRDA/GRDA frequency the algorithm matches Sahar but not Tianyu. The right framing for the manuscript is probably "the algorithm matches expert agreement on every PD task, and on RDA frequency in pairwise comparison with one of the two RDA raters, but is slightly below the expert–expert ceiling on LRDA laterality."
+2. **GRDA frequency is also clean**: with MW now in the analysis, the GRDA-frequency expert--expert mean ICC (0.937) and expert--algorithm mean ICC (0.922) are within bootstrap noise of each other.
 
-3. **SZ is consistently closer to the algorithm than TZ**. Across every metric where both are scored, `SZ–ALGO ≥ TZ–ALGO`. Two non-exclusive explanations:
-    - Sahar accepted the algorithm's pre-fill more often than Tianyu did (see also that Sahar rejected more segments outright — 88 LRDA + 70 GRDA vs Tianyu's 56 + 40 — leaving a more conservative set of accepted labels behind).
-    - Tianyu has a systematically different scoring tendency, particularly on RDA frequency.
-    Worth following up by computing an "override rate" per rater: of the segments each accepted, what fraction did they override the default frequency?
+3. **LRDA is the algorithm's weak spot**, on both frequency and laterality:
+    - On LRDA frequency, the algorithm trails the experts by a meaningful margin: EA mean ICC 0.751 vs EE mean 0.897. The single weakest pair in the whole analysis is MW-ALGO LRDA frequency (ICC 0.654, MAE 0.229 Hz).
+    - On LRDA laterality, all three expert--expert pairs are at or near kappa = 1.0, but every expert--algorithm pair is below 0.95. The algorithm picks the wrong side ~8% of the time against MW.
+    The pattern is consistent: the algorithm matches Sahar best, then Tianyu, then MW (worst). MW and TZ agree perfectly on LRDA laterality (kappa 1.000) and very well on LRDA frequency (ICC 0.945) — there's a stable shared "MW-TZ scoring tendency" on LRDA that the algorithm does not capture.
 
-4. **MW gap on RDA frequency**. Without MW labels on the LRDA/GRDA frequency manifests, the RDA-frequency analysis has only 1 expert–expert pair (SZ–TZ) and 2 expert–algorithm pairs. Statistically thin. If MW labels those 400 segments later (estimated 1.5 hours total), the analysis upgrades to a full 4-way comparison.
+4. **SZ is consistently closer to the algorithm than the other two raters**. Across every (task, metric) pair, `SZ-ALGO ≥ TZ-ALGO`, and on LRDA `SZ-ALGO ≥ MW-ALGO` too. Two non-exclusive explanations:
+    - Sahar accepted the algorithm's pre-fill more often. Sahar also rejected more segments outright (88 LRDA + 70 GRDA vs Tianyu's 56 + 40 vs MW's 26 LRDA + 25 GRDA), leaving a more conservative set of accepted labels behind.
+    - Sahar's intrinsic scoring tendency happens to align with the algorithm. The other two raters' scoring tendencies are tighter with each other than with Sahar (note the LRDA-freq pattern: MW-TZ ICC 0.945 is the highest expert-expert pair on LRDA, while MW-SZ is 0.835 — Sahar disagrees more with MW than Tianyu does).
+    Worth following up by computing an "override rate" per rater: of the segments each accepted, what fraction did they override the default frequency or laterality?
 
-5. **MW–TZ is a recurring weak link**. Look at LPD frequency: `MW–TZ` ICC 0.773 is the worst single pair in the entire analysis. This deserves an error-analysis pass to figure out where they systematically disagree on LPDs.
+5. **MW–TZ is the worst pair on LPD frequency** (ICC 0.773) and the second-worst expert-expert pair on LRDA frequency (ICC 0.945, but with the highest in-pair MAE 0.080 Hz when restricted to overlapping segments). Worth a focused error-analysis pass to see whether MW and TZ systematically disagree on a particular LPD subset.
 
 ## What this means for the manuscript
 
