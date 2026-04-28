@@ -114,6 +114,50 @@ lowest is `MW–ALGO` (0.885). MW–TZ on GRDA frequency is unusually high
 (0.983), suggesting MW and TZ have very compatible scoring tendencies on
 GRDA — worth noting if doing per-rater error analysis.
 
+## Disagreement triage update (2026-04-28)
+
+After running the LRDA disagreement triage
+([code/evaluation/lrda_disagreement_triage.py](../../code/evaluation/lrda_disagreement_triage.py)),
+seven LRDA segments were identified where MW disagreed with both the
+algorithm AND at least one other expert. MW reviewed all seven cases in
+the focused viewer and corrected exactly one
+(`sub-S0001111599067_20151028100451`, frequency 2.0 → 1.25 Hz; the
+rhythm locked onto the narrowband overlay much more cleanly at 1.25 Hz
+on visual review).
+
+The other six high-frequency LRDA cases (where MW reads 2.5–3.25 Hz and
+the algorithm reads ~half that) were left as-is on review. **This means
+the LRDA-MW-ALGO disagreement is not driven by MW labeling errors** —
+it is the algorithm's NB-Hilbert dominant-side detector locking onto
+sub-harmonics on these segments. Notably, on most of these cases TZ
+reads the same value as MW (e.g., MW=3.0, TZ=3.0 vs algo=2.07), so the
+disagreement pattern is "MW + TZ vs algo + SZ" rather than "MW alone vs
+the world".
+
+After applying the single correction and re-running the analysis, the
+LRDA-MW-ALGO frequency ICC moved from 0.654 → 0.659 — essentially
+unchanged. The LRDA gap is real and is a genuine algorithm weakness,
+not a labeling artifact.
+
+**Implication for the manuscript**: the abstract claim of "matched or
+exceeded expert inter-rater agreement on every characterization task"
+is not fully supported on LRDA. The honest qualified version is:
+"matched or exceeded expert inter-rater agreement on every PD task and
+on GRDA frequency; on LRDA tasks the algorithm achieved high but
+sub-expert agreement (LRDA frequency ICC 0.751 vs expert--expert 0.897;
+LRDA laterality kappa 0.905 vs expert--expert 0.994), driven by the
+NB-Hilbert sub-harmonic locking pattern documented in
+[disagreement_summary.md](disagreement_summary.md)."
+
+A separate, broader triage option (drop the "another expert also
+disagrees" filter) would surface roughly 24 frequency and 14 laterality
+LRDA cases at the 0.5 Hz threshold — these are cases where the
+algorithm differs from MW *regardless of whether SZ/TZ also differ from
+MW*, which is the right filter for finding algorithm bugs as opposed
+to labeling errors. That sweep is the natural follow-up if the
+manuscript wants to either fix the algorithm before publication or
+characterize the failure modes more thoroughly.
+
 ## Interpretation and patterns
 
 1. **The PD half of the story is clean**: on every PD task and every metric, the algorithm sits at or above expert–expert agreement. The closing argument for Reviewer Note #1 is fully supported on PDs.
