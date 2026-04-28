@@ -56,6 +56,14 @@ RATER_FILES = {
         # export and is superseded.
         ('rda_freq_labeling_results-2.json',     'rda',  'rda_combined'),
     ],
+    'MW': [
+        # MW only labels LRDA + GRDA frequency in v1; LPD/GPD frequency,
+        # laterality, and discharge timing already exist in labels.csv from
+        # earlier rounds. Add an LPD or GPD entry here if MW does a catch-up
+        # pass on those subsets later.
+        ('lrda_freq_labeling_results_MW.json',   'lrda', 'rda'),
+        ('grda_freq_labeling_results_MW.json',   'grda', 'rda'),
+    ],
 }
 
 
