@@ -18,11 +18,11 @@ The hypothesis is **strongly supported on PD tasks** and **mixed on RDA tasks**,
 | LPD  | frequency ICC | **0.866** (0.773–0.933) | **0.916** (0.868–0.976) | ✅ algorithm above EE |
 | LPD  | laterality κ  | 0.970 (0.941–1.000) | 0.949 (0.945–0.954) | ≈ tie (all >0.94) |
 | GPD  | frequency ICC | **0.966** (0.944–0.980) | **0.975** (0.963–0.987) | ✅ algorithm above EE |
-| LRDA | frequency ICC | 0.911 (single pair) | **0.800** (0.710–0.890) | ⚠ TZ-ALGO below SZ-TZ; SZ-ALGO ties |
+| LRDA | frequency ICC | 0.911 (single pair) | **0.800** (0.710–0.890) | ⚠ TZ-ALGO below SZ-TZ; SZ-ALGO ties (MW LRDA not yet labeled) |
 | LRDA | laterality κ  | **0.974** (0.943–1.000) | **0.899** (0.834–0.946) | ⚠ algorithm below EE |
-| GRDA | frequency ICC | 0.924 (single pair) | **0.940** (0.893–0.988) | ✅ on average; TZ-ALGO below |
+| GRDA | frequency ICC | **0.937** (0.903–0.983) | **0.922** (0.885–0.988) | ≈ tie (algo within EE range; SZ-ALGO best, MW-ALGO worst) |
 
-(Single-pair entries are because MW did not label the LRDA/GRDA frequency subsets.)
+(LRDA frequency still has only 1 EE pair because MW has not yet labeled LRDA frequency. GRDA frequency now has the full 4-way comparison.)
 
 ## Detailed per-task results
 
@@ -88,15 +88,23 @@ Cleanest support for the hypothesis: every expert–algorithm pair is at or abov
 
 The single result that **does not support the hypothesis**: experts agree near-perfectly on LRDA laterality (mean κ 0.974, including a perfect SZ–TZ kappa) but the algorithm is meaningfully worse against MW (κ 0.834). The absolute number is still high (>92% agreement on all pairs) but the gap is real. Worth a focused error analysis: which LRDA segments did the algorithm get the side wrong on, and was MW or SZ/TZ the outlier?
 
-### GRDA frequency (no MW labels — 1 EE pair only)
+### GRDA frequency (now with MW)
 
 | Pair | Type | n | ICC | 95% CI | Spearman ρ | MAE (Hz) |
 |---|---|---:|---:|---|---:|---:|
+| MW–SZ   | EE | 128 | 0.903 | [0.828, 0.966] | 0.927 | 0.084 |
+| MW–TZ   | EE | 154 | **0.983** | [0.971, 0.992] | 0.976 | 0.032 |
 | SZ–TZ   | EE | 123 | 0.924 | [0.833, 0.981] | 0.938 | 0.059 |
+| MW–ALGO | EA | 175 | 0.885 | [0.822, 0.935] | 0.915 | 0.150 |
 | SZ–ALGO | EA | 130 | **0.988** | [0.983, 0.991] | 0.976 | 0.062 |
 | TZ–ALGO | EA | 160 | 0.893 | [0.820, 0.946] | 0.915 | 0.133 |
 
-Mixed: `SZ–ALGO` is exceptionally high (0.988), `TZ–ALGO` is below `SZ–TZ`.
+Algorithm and experts agree at essentially the same level on GRDA frequency
+(EE mean ICC 0.937, EA mean 0.922; the EA range fully encloses the EE range).
+The single highest pair on GRDA frequency is `SZ–ALGO` (0.988); the single
+lowest is `MW–ALGO` (0.885). MW–TZ on GRDA frequency is unusually high
+(0.983), suggesting MW and TZ have very compatible scoring tendencies on
+GRDA — worth noting if doing per-rater error analysis.
 
 ## Interpretation and patterns
 
