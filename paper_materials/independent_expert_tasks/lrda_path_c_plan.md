@@ -219,3 +219,9 @@ conda run -n morgoth python code/evaluation/analyze_independent_expert_v1.py --a
   - End-to-end IRR: LRDA freq MW-ALGO ICC 0.659 -> **0.727** (+0.068), TZ-ALGO 0.710 -> **0.774** (+0.064), SZ-ALGO 0.890 -> 0.823 (-0.067, slight regression).
   - Net EA-mean ICC for LRDA frequency: 0.751 -> 0.775 (+0.024). Laterality unchanged.
   - Saved as `paper_materials/figures/figS5b_independent_expert_v1_irr_v9.png` alongside the V1 baseline `figS5_*.png`.
+- 2026-04-29 09:55 — Plan B scaffolding committed:
+  - `code/cet_model/lrda_crnn.py`: CRNN model (4 ConvBlocks → 1-layer BiGRU → temporal attention → tanh-bounded log-freq head). 141,682 params.
+  - `code/cet_model/lrda_crnn_dataset.py`: dataset loader with augmentations (amplitude, noise, channel dropout, time shift, hemisphere swap), patient-stratified 5-fold split. 739 LRDA segments with rater frequency labels (183 manifest + 556 legacy).
+  - `code/cet_model/train_lrda_crnn.py`: training driver with NaN-safe batching, cosine LR schedule, Adam, early stopping. CLI for fold selection.
+  - Smoke-test (fold 0, 30 epochs): val_MAE converged to 0.251 Hz (best epoch 28). Training-loss readouts are unstable on MPS (numerical artifact in batch loss aggregation) but val_MAE and saved checkpoints are valid.
+  - Full 5-fold training kicked off as background task; outputs at `data/labels/independent_expert_v1/lrda_crnn_predictions.json` when complete.
