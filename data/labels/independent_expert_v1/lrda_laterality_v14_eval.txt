@@ -1,0 +1,12 @@
+LRDA laterality V14 (V12 + V13-override hybrid) -- evaluation
+================================================================================
+Eval set: 155 segments (3-rater majority-accept consensus).
+
+rule                                                        acc    k_MW    k_SZ    k_TZ   k_mean
+V12 baseline (amplitude)                                  0.961   0.922   0.946   0.912    0.927
+V14_unanimous (flip when 4-of-4 V13 disagree)             0.974   0.948   0.982   0.941    0.957
+V14_strict-3 (flip when 3-of-4 V13 disagree)              0.858   0.716   0.820   0.723    0.753
+V14_strict-3 + each |log_ratio|>0.3                       0.961   0.922   0.946   0.912    0.927
+V14_strict-3 + avg |log_ratio|>0.5                        0.974   0.948   0.964   0.941    0.951
+V14_strict-3 + avg |log_ratio|>0.3                        0.981   0.961   1.000   0.956    0.972
+V14_4 + avg |log_ratio|>0.5                               0.961   0.922   0.946   0.912    0.927
