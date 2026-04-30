@@ -176,6 +176,15 @@ characterize the failure modes more thoroughly.
 
 5. **MW–TZ is the worst pair on LPD frequency** (ICC 0.773) and the second-worst expert-expert pair on LRDA frequency (ICC 0.945, but with the highest in-pair MAE 0.080 Hz when restricted to overlapping segments). Worth a focused error-analysis pass to see whether MW and TZ systematically disagree on a particular LPD subset.
 
+## Path C update (2026-04-29) — algorithm fix attempt
+
+After the disagreement triage (see [`disagreement_summary.md`](disagreement_summary.md) and the top-20 list in [`top20_disagreement_summary.md`](top20_disagreement_summary.md)), MW reviewed and characterized the LRDA failure modes (5 partial-LRDA, 6 laterality cascade, 3 partial hemisphere, 1 misclassified). Two algorithmic-fix tracks were attempted in parallel ([`lrda_path_c_plan.md`](lrda_path_c_plan.md)):
+
+- **Plan A — hard-case classifier (V9)**: train a binary classifier to decide per-segment whether to trust the V1 (W05/NB-Hilbert) frequency estimate or swap in V8 (active-window spectral-peak detection on the V1-chosen hemisphere). Result: **LRDA-freq MW-ALGO ICC 0.659 → 0.727** (+0.068, 47% of EE-EA gap closed), TZ-ALGO 0.710 → 0.774, SZ-ALGO 0.890 → 0.823 (slight regression). Net EA-mean LRDA-freq ICC: 0.751 → 0.775. Shipped.
+- **Plan B — end-to-end neural pitch detector (CRNN)**: 142K-parameter CRNN trained on 739 LRDA segments with 5-fold patient-stratified CV. CPU-trained version converged stably (per-fold val_MAE 0.22-0.31 Hz), but **on the IRR comparison, CRNN underperformed V1 on every expert pair** (MW-ALGO 0.638, SZ-ALGO 0.791, TZ-ALGO 0.660). The training set is genuinely too small for a neural pitch detector to beat the carefully-tuned classical baseline. Documented as future-work — likely needs the BIPD-consortium dataset to actually outperform NB-Hilbert.
+
+Headline `figS5_independent_expert_v1_irr.png` regenerated with V9; comparison snapshots for V9 (`figS5b`), CRNN-MPS (`figS5c`), and CRNN-CPU (`figS5d`) are kept for the audit trail.
+
 ## What this means for the manuscript
 
 I would suggest the following revision pattern for **Reviewer Note #1** in the manuscript (currently a red TODO at the end of the Annotation Framework subsection), to convert it from a "planned analysis" promise into a "completed analysis" report:

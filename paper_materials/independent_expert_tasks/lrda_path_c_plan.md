@@ -231,3 +231,21 @@ conda run -n morgoth python code/evaluation/analyze_independent_expert_v1.py --a
   - Root cause: MPS numerical instability triggered early-stopping after 2-15 epochs in 4/5 folds, far below adequate convergence. Per-epoch train_loss readouts oscillated between sane values (~0.08) and astronomical (~1e30) on MPS, suggesting gradient accumulation precision issues.
   - Archived to `data/lrda_crnn_cache_mps_unstable/` and `data/labels/independent_expert_v1/lrda_crnn_predictions_mps_unstable.json` for audit.
 - 2026-04-29 10:15 — Plan B retraining on CPU (forced via `--force-cpu` flag added to train script). CPU is slower (~10s/epoch vs 4s on MPS) but numerically stable. Training kicked off in background; ETA 30-60 min for 5 folds.
+- 2026-04-29 10:35 — Plan B v2 (CPU) complete:
+  - All 5 folds trained stably. Per-fold best val_MAE: 0.235, 0.284, 0.217, 0.308 Hz (mean ~0.26 Hz).
+  - LRDA freq IRR vs experts:
+    - MW-ALGO: V1 0.659 / V9 0.727 / CRNN 0.638
+    - SZ-ALGO: V1 0.890 / V9 0.823 / CRNN 0.791
+    - TZ-ALGO: V1 0.710 / V9 0.774 / CRNN 0.660
+  - **CRNN underperforms V1 on every pair.** The dataset (~700 segments per fold) is genuinely too small for an end-to-end neural pitch detector on this task. The CRNN learns useful patterns but does not exceed the carefully-tuned classical NB-Hilbert estimator.
+  - CRNN forest plot saved to `paper_materials/figures/figS5d_independent_expert_v1_irr_crnn_cpu.png` for the audit trail.
+  - **Final verdict: V9 (Plan A gated hybrid) is the Path C deliverable.** Headline `figS5_independent_expert_v1_irr.png` regenerated with `--algo v9`.
+
+## Final summary
+
+The Path C effort closed the LRDA-frequency expert-vs-algorithm gap by ~16% (EA mean ICC 0.751 → 0.775, with the worst pair MW-ALGO improving 0.659 → 0.727 -- a 47% reduction in EE-EA gap). Plan A (hard-case classifier + V8 active-window swap-in) is the deliverable. Plan B (end-to-end CRNN) was scaffolded and trained but the dataset proved too small for the neural net to beat the well-tuned classical baseline.
+
+Future work pointers:
+- The CRNN's failure mode -- learning median-of-experts but not exceeding V1 -- suggests transfer learning from the larger PD frequency dataset (~5,000 labels) might help.
+- The Hard-case classifier's 22.7% precision on the hard class is the obvious bottleneck for V9's gain. More training data (more independent expert raters) is the natural way forward.
+- Both efforts could be revisited after the BIPD-consortium dataset comes online.
