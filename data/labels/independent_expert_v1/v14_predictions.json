@@ -1,0 +1,3202 @@
+{
+  "sub-S0002112840421_20201008211411": {
+    "mat_file": "sub-S0002112840421_20201008211411.mat",
+    "patient_id": "sub-S0002112840421_20201008211411",
+    "subtype": "lrda",
+    "v14_freq": 1.3438416207308976,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002116248487_20200212102023": {
+    "mat_file": "sub-S0002116248487_20200212102023.mat",
+    "patient_id": "sub-S0002116248487_20200212102023",
+    "subtype": "lrda",
+    "v14_freq": 1.1532101402564796,
+    "v14_laterality": "left",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": true,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150009477_20231225030625": {
+    "mat_file": "sub-I0002150009477_20231225030625.mat",
+    "patient_id": "sub-I0002150009477_20231225030625",
+    "subtype": "lrda",
+    "v14_freq": 0.7919595551618487,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150018138_20200207200147": {
+    "mat_file": "sub-I0002150018138_20200207200147.mat",
+    "patient_id": "sub-I0002150018138_20200207200147",
+    "subtype": "lrda",
+    "v14_freq": 1.1380367544379975,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111360637_20200914164720": {
+    "mat_file": "sub-S0001111360637_20200914164720.mat",
+    "patient_id": "sub-S0001111360637_20200914164720",
+    "subtype": "lrda",
+    "v14_freq": 1.5233464298140085,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111970923_20181229105949": {
+    "mat_file": "sub-S0001111970923_20181229105949.mat",
+    "patient_id": "sub-S0001111970923_20181229105949",
+    "subtype": "lrda",
+    "v14_freq": 1.4358116356827761,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112139456_20210313124029": {
+    "mat_file": "sub-S0001112139456_20210313124029.mat",
+    "patient_id": "sub-S0001112139456_20210313124029",
+    "subtype": "lrda",
+    "v14_freq": 0.9460466115152832,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112551765_20221219095928": {
+    "mat_file": "sub-S0001112551765_20221219095928.mat",
+    "patient_id": "sub-S0001112551765_20221219095928",
+    "subtype": "lrda",
+    "v14_freq": 0.9862530194984145,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112604014_20180913144003": {
+    "mat_file": "sub-S0001112604014_20180913144003.mat",
+    "patient_id": "sub-S0001112604014_20180913144003",
+    "subtype": "lrda",
+    "v14_freq": 0.9118188535352562,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001114414346_20181207033123": {
+    "mat_file": "sub-S0001114414346_20181207033123.mat",
+    "patient_id": "sub-S0001114414346_20181207033123",
+    "subtype": "lrda",
+    "v14_freq": 2.5802264661534404,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001114798377_20191113010317": {
+    "mat_file": "sub-S0001114798377_20191113010317.mat",
+    "patient_id": "sub-S0001114798377_20191113010317",
+    "subtype": "lrda",
+    "v14_freq": 1.1765467901431281,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001115897317_20220605055704": {
+    "mat_file": "sub-S0001115897317_20220605055704.mat",
+    "patient_id": "sub-S0001115897317_20220605055704",
+    "subtype": "lrda",
+    "v14_freq": 0.7608221127572816,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001116965261_20210628154123": {
+    "mat_file": "sub-S0001116965261_20210628154123.mat",
+    "patient_id": "sub-S0001116965261_20210628154123",
+    "subtype": "lrda",
+    "v14_freq": 0.7276289147791857,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001117564805_20230730042509": {
+    "mat_file": "sub-S0001117564805_20230730042509.mat",
+    "patient_id": "sub-S0001117564805_20230730042509",
+    "subtype": "lrda",
+    "v14_freq": 0.7690988733820162,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001118530202_20181108173933": {
+    "mat_file": "sub-S0001118530202_20181108173933.mat",
+    "patient_id": "sub-S0001118530202_20181108173933",
+    "subtype": "lrda",
+    "v14_freq": 0.6584388263358121,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001120072966_20210317195637": {
+    "mat_file": "sub-S0001120072966_20210317195637.mat",
+    "patient_id": "sub-S0001120072966_20210317195637",
+    "subtype": "lrda",
+    "v14_freq": 0.6302922685654211,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002111381979_20130405192014": {
+    "mat_file": "sub-S0002111381979_20130405192014.mat",
+    "patient_id": "sub-S0002111381979_20130405192014",
+    "subtype": "lrda",
+    "v14_freq": 1.2936213739057847,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002111416588_20181113020323": {
+    "mat_file": "sub-S0002111416588_20181113020323.mat",
+    "patient_id": "sub-S0002111416588_20181113020323",
+    "subtype": "lrda",
+    "v14_freq": 0.3686678118336183,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002111434248_20170505124308": {
+    "mat_file": "sub-S0002111434248_20170505124308.mat",
+    "patient_id": "sub-S0002111434248_20170505124308",
+    "subtype": "lrda",
+    "v14_freq": 1.648993653086075,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002111465143_20180610105716": {
+    "mat_file": "sub-S0002111465143_20180610105716.mat",
+    "patient_id": "sub-S0002111465143_20180610105716",
+    "subtype": "lrda",
+    "v14_freq": 0.8493801273375754,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002111976518_20200717125616": {
+    "mat_file": "sub-S0002111976518_20200717125616.mat",
+    "patient_id": "sub-S0002111976518_20200717125616",
+    "subtype": "lrda",
+    "v14_freq": 0.8085484096468638,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002112392617_20200907002838": {
+    "mat_file": "sub-S0002112392617_20200907002838.mat",
+    "patient_id": "sub-S0002112392617_20200907002838",
+    "subtype": "lrda",
+    "v14_freq": 0.9691762129201954,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150003281_20190117191900": {
+    "mat_file": "sub-I0002150003281_20190117191900.mat",
+    "patient_id": "sub-I0002150003281_20190117191900",
+    "subtype": "lrda",
+    "v14_freq": 1.4827042238459152,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150004818_20200926050527": {
+    "mat_file": "sub-I0002150004818_20200926050527.mat",
+    "patient_id": "sub-I0002150004818_20200926050527",
+    "subtype": "lrda",
+    "v14_freq": 0.9583747250780474,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150006476_20191025074005": {
+    "mat_file": "sub-I0002150006476_20191025074005.mat",
+    "patient_id": "sub-I0002150006476_20191025074005",
+    "subtype": "lrda",
+    "v14_freq": 1.3695717794287456,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150006577_20171221112000": {
+    "mat_file": "sub-I0002150006577_20171221112000.mat",
+    "patient_id": "sub-I0002150006577_20171221112000",
+    "subtype": "lrda",
+    "v14_freq": 1.0624700528820146,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150007441_20190226161931": {
+    "mat_file": "sub-I0002150007441_20190226161931.mat",
+    "patient_id": "sub-I0002150007441_20190226161931",
+    "subtype": "lrda",
+    "v14_freq": 1.438961009719182,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150007479_20190301144638": {
+    "mat_file": "sub-I0002150007479_20190301144638.mat",
+    "patient_id": "sub-I0002150007479_20190301144638",
+    "subtype": "lrda",
+    "v14_freq": 1.1251491070794308,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150008030_20111214213954": {
+    "mat_file": "sub-I0002150008030_20111214213954.mat",
+    "patient_id": "sub-I0002150008030_20111214213954",
+    "subtype": "lrda",
+    "v14_freq": 1.5799436191540466,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150009145_20181119011946": {
+    "mat_file": "sub-I0002150009145_20181119011946.mat",
+    "patient_id": "sub-I0002150009145_20181119011946",
+    "subtype": "lrda",
+    "v14_freq": 1.0358602279749531,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150009265_20190731194032": {
+    "mat_file": "sub-I0002150009265_20190731194032.mat",
+    "patient_id": "sub-I0002150009265_20190731194032",
+    "subtype": "lrda",
+    "v14_freq": 1.6650781855170882,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150010279_20151210033852": {
+    "mat_file": "sub-I0002150010279_20151210033852.mat",
+    "patient_id": "sub-I0002150010279_20151210033852",
+    "subtype": "lrda",
+    "v14_freq": 1.3736514831874331,
+    "v14_laterality": "right",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": true,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150014053_20220701091252": {
+    "mat_file": "sub-I0002150014053_20220701091252.mat",
+    "patient_id": "sub-I0002150014053_20220701091252",
+    "subtype": "lrda",
+    "v14_freq": 1.3932770278540658,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150014498_20171026201915": {
+    "mat_file": "sub-I0002150014498_20171026201915.mat",
+    "patient_id": "sub-I0002150014498_20171026201915",
+    "subtype": "lrda",
+    "v14_freq": 1.3454378996630783,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150017678_20180924083332": {
+    "mat_file": "sub-I0002150017678_20180924083332.mat",
+    "patient_id": "sub-I0002150017678_20180924083332",
+    "subtype": "lrda",
+    "v14_freq": 1.1581672142120933,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111327770_20210528085330": {
+    "mat_file": "sub-S0001111327770_20210528085330.mat",
+    "patient_id": "sub-S0001111327770_20210528085330",
+    "subtype": "lrda",
+    "v14_freq": 0.9854130572951622,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111534557_20190416141508": {
+    "mat_file": "sub-S0001111534557_20190416141508.mat",
+    "patient_id": "sub-S0001111534557_20190416141508",
+    "subtype": "lrda",
+    "v14_freq": 0.8947344250169404,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111548402_20210605162315": {
+    "mat_file": "sub-S0001111548402_20210605162315.mat",
+    "patient_id": "sub-S0001111548402_20210605162315",
+    "subtype": "lrda",
+    "v14_freq": 1.2641797781891184,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111605121_20221021161250": {
+    "mat_file": "sub-S0001111605121_20221021161250.mat",
+    "patient_id": "sub-S0001111605121_20221021161250",
+    "subtype": "lrda",
+    "v14_freq": 1.0670171920231009,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111877445_20210920114321": {
+    "mat_file": "sub-S0001111877445_20210920114321.mat",
+    "patient_id": "sub-S0001111877445_20210920114321",
+    "subtype": "lrda",
+    "v14_freq": 1.319839331377799,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111886312_20210315092103": {
+    "mat_file": "sub-S0001111886312_20210315092103.mat",
+    "patient_id": "sub-S0001111886312_20210315092103",
+    "subtype": "lrda",
+    "v14_freq": 0.9783897783227592,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112000161_20160423131005": {
+    "mat_file": "sub-S0001112000161_20160423131005.mat",
+    "patient_id": "sub-S0001112000161_20160423131005",
+    "subtype": "lrda",
+    "v14_freq": 0.9193833667754079,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150002063_20200714102114": {
+    "mat_file": "sub-I0002150002063_20200714102114.mat",
+    "patient_id": "sub-I0002150002063_20200714102114",
+    "subtype": "lrda",
+    "v14_freq": 1.5169795451212957,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150002914_20210505024543": {
+    "mat_file": "sub-I0002150002914_20210505024543.mat",
+    "patient_id": "sub-I0002150002914_20210505024543",
+    "subtype": "lrda",
+    "v14_freq": 1.0454540482634695,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150003324_20190717104213": {
+    "mat_file": "sub-I0002150003324_20190717104213.mat",
+    "patient_id": "sub-I0002150003324_20190717104213",
+    "subtype": "lrda",
+    "v14_freq": 1.3790083166758587,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150003484_20180306115042": {
+    "mat_file": "sub-I0002150003484_20180306115042.mat",
+    "patient_id": "sub-I0002150003484_20180306115042",
+    "subtype": "lrda",
+    "v14_freq": 1.474808850533252,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150005118_20180710072937": {
+    "mat_file": "sub-I0002150005118_20180710072937.mat",
+    "patient_id": "sub-I0002150005118_20180710072937",
+    "subtype": "lrda",
+    "v14_freq": 1.3999014927890971,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150006620_20140623095912": {
+    "mat_file": "sub-I0002150006620_20140623095912.mat",
+    "patient_id": "sub-I0002150006620_20140623095912",
+    "subtype": "lrda",
+    "v14_freq": 1.2944275402506413,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150007653_20171028044909": {
+    "mat_file": "sub-I0002150007653_20171028044909.mat",
+    "patient_id": "sub-I0002150007653_20171028044909",
+    "subtype": "lrda",
+    "v14_freq": 1.4239749981091818,
+    "v14_laterality": "left",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": true,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150008296_20200528033816": {
+    "mat_file": "sub-I0002150008296_20200528033816.mat",
+    "patient_id": "sub-I0002150008296_20200528033816",
+    "subtype": "lrda",
+    "v14_freq": 1.946627297323416,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150008433_20210901154435": {
+    "mat_file": "sub-I0002150008433_20210901154435.mat",
+    "patient_id": "sub-I0002150008433_20210901154435",
+    "subtype": "lrda",
+    "v14_freq": 1.7952921074337314,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150009694_20201119020452": {
+    "mat_file": "sub-I0002150009694_20201119020452.mat",
+    "patient_id": "sub-I0002150009694_20201119020452",
+    "subtype": "lrda",
+    "v14_freq": 1.4159768656891092,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150011821_20190711221705": {
+    "mat_file": "sub-I0002150011821_20190711221705.mat",
+    "patient_id": "sub-I0002150011821_20190711221705",
+    "subtype": "lrda",
+    "v14_freq": 1.1014950937033157,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150013054_20200926051833": {
+    "mat_file": "sub-I0002150013054_20200926051833.mat",
+    "patient_id": "sub-I0002150013054_20200926051833",
+    "subtype": "lrda",
+    "v14_freq": 1.2167561569934349,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150014148_20191128142304": {
+    "mat_file": "sub-I0002150014148_20191128142304.mat",
+    "patient_id": "sub-I0002150014148_20191128142304",
+    "subtype": "lrda",
+    "v14_freq": 1.1154784221181877,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150016042_20190306142658": {
+    "mat_file": "sub-I0002150016042_20190306142658.mat",
+    "patient_id": "sub-I0002150016042_20190306142658",
+    "subtype": "lrda",
+    "v14_freq": 1.6697744123514597,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150016990_20181007122732": {
+    "mat_file": "sub-I0002150016990_20181007122732.mat",
+    "patient_id": "sub-I0002150016990_20181007122732",
+    "subtype": "lrda",
+    "v14_freq": 1.122543233779977,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150018106_20200414183758": {
+    "mat_file": "sub-I0002150018106_20200414183758.mat",
+    "patient_id": "sub-I0002150018106_20200414183758",
+    "subtype": "lrda",
+    "v14_freq": 1.9102062085548173,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150018159_20190912123845": {
+    "mat_file": "sub-I0002150018159_20190912123845.mat",
+    "patient_id": "sub-I0002150018159_20190912123845",
+    "subtype": "lrda",
+    "v14_freq": 1.4381357237596981,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150018361_20181126105352": {
+    "mat_file": "sub-I0002150018361_20181126105352.mat",
+    "patient_id": "sub-I0002150018361_20181126105352",
+    "subtype": "lrda",
+    "v14_freq": 1.3147488270707768,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150018640_20200626003224": {
+    "mat_file": "sub-I0002150018640_20200626003224.mat",
+    "patient_id": "sub-I0002150018640_20200626003224",
+    "subtype": "lrda",
+    "v14_freq": 0.9787809054660909,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150018705_20200629212516": {
+    "mat_file": "sub-I0002150018705_20200629212516.mat",
+    "patient_id": "sub-I0002150018705_20200629212516",
+    "subtype": "lrda",
+    "v14_freq": 2.10884729872551,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150000204_20230325080806": {
+    "mat_file": "sub-I0002150000204_20230325080806.mat",
+    "patient_id": "sub-I0002150000204_20230325080806",
+    "subtype": "lrda",
+    "v14_freq": 1.747148775819644,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150001494_20190507025411": {
+    "mat_file": "sub-I0002150001494_20190507025411.mat",
+    "patient_id": "sub-I0002150001494_20190507025411",
+    "subtype": "lrda",
+    "v14_freq": 1.7714592276144947,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150002171_20200301181120": {
+    "mat_file": "sub-I0002150002171_20200301181120.mat",
+    "patient_id": "sub-I0002150002171_20200301181120",
+    "subtype": "lrda",
+    "v14_freq": 1.9236017077722458,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150002480_20190531020201": {
+    "mat_file": "sub-I0002150002480_20190531020201.mat",
+    "patient_id": "sub-I0002150002480_20190531020201",
+    "subtype": "lrda",
+    "v14_freq": 1.3934292880752435,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150002865_20181125150611": {
+    "mat_file": "sub-I0002150002865_20181125150611.mat",
+    "patient_id": "sub-I0002150002865_20181125150611",
+    "subtype": "lrda",
+    "v14_freq": 1.2606613154582802,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150003531_20130520113220": {
+    "mat_file": "sub-I0002150003531_20130520113220.mat",
+    "patient_id": "sub-I0002150003531_20130520113220",
+    "subtype": "lrda",
+    "v14_freq": 1.0382460192225629,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150003687_20190514120020": {
+    "mat_file": "sub-I0002150003687_20190514120020.mat",
+    "patient_id": "sub-I0002150003687_20190514120020",
+    "subtype": "lrda",
+    "v14_freq": 1.67105489811687,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150005742_20210316065303": {
+    "mat_file": "sub-I0002150005742_20210316065303.mat",
+    "patient_id": "sub-I0002150005742_20210316065303",
+    "subtype": "lrda",
+    "v14_freq": 1.2645602575909631,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150010405_20220530041623": {
+    "mat_file": "sub-I0002150010405_20220530041623.mat",
+    "patient_id": "sub-I0002150010405_20220530041623",
+    "subtype": "lrda",
+    "v14_freq": 1.8006718814728335,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150010491_20130813135403": {
+    "mat_file": "sub-I0002150010491_20130813135403.mat",
+    "patient_id": "sub-I0002150010491_20130813135403",
+    "subtype": "lrda",
+    "v14_freq": 1.4130696671274403,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150012128_20180911165902": {
+    "mat_file": "sub-I0002150012128_20180911165902.mat",
+    "patient_id": "sub-I0002150012128_20180911165902",
+    "subtype": "lrda",
+    "v14_freq": 1.6825379448009747,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150012354_20180822105721": {
+    "mat_file": "sub-I0002150012354_20180822105721.mat",
+    "patient_id": "sub-I0002150012354_20180822105721",
+    "subtype": "lrda",
+    "v14_freq": 1.6603786296943188,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150013431_20181216221139": {
+    "mat_file": "sub-I0002150013431_20181216221139.mat",
+    "patient_id": "sub-I0002150013431_20181216221139",
+    "subtype": "lrda",
+    "v14_freq": 1.3072333202421358,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150014437_20170801114038": {
+    "mat_file": "sub-I0002150014437_20170801114038.mat",
+    "patient_id": "sub-I0002150014437_20170801114038",
+    "subtype": "lrda",
+    "v14_freq": 1.4225189685065653,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150014612_20190929075149": {
+    "mat_file": "sub-I0002150014612_20190929075149.mat",
+    "patient_id": "sub-I0002150014612_20190929075149",
+    "subtype": "lrda",
+    "v14_freq": 1.4775971836142463,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150016184_20190511032409": {
+    "mat_file": "sub-I0002150016184_20190511032409.mat",
+    "patient_id": "sub-I0002150016184_20190511032409",
+    "subtype": "lrda",
+    "v14_freq": 1.132142386858106,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150017005_20200320192238": {
+    "mat_file": "sub-I0002150017005_20200320192238.mat",
+    "patient_id": "sub-I0002150017005_20200320192238",
+    "subtype": "lrda",
+    "v14_freq": 1.8313387409502373,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150017228_20190226183340": {
+    "mat_file": "sub-I0002150017228_20190226183340.mat",
+    "patient_id": "sub-I0002150017228_20190226183340",
+    "subtype": "lrda",
+    "v14_freq": 1.604482412614872,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150017576_20220909083836": {
+    "mat_file": "sub-I0002150017576_20220909083836.mat",
+    "patient_id": "sub-I0002150017576_20220909083836",
+    "subtype": "lrda",
+    "v14_freq": 1.8054511976222103,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150017596_20221223115936": {
+    "mat_file": "sub-I0002150017596_20221223115936.mat",
+    "patient_id": "sub-I0002150017596_20221223115936",
+    "subtype": "lrda",
+    "v14_freq": 1.4173357595759373,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150000326_20200425024154": {
+    "mat_file": "sub-I0002150000326_20200425024154.mat",
+    "patient_id": "sub-I0002150000326_20200425024154",
+    "subtype": "lrda",
+    "v14_freq": 1.647143287639671,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150006991_20150513045612": {
+    "mat_file": "sub-I0002150006991_20150513045612.mat",
+    "patient_id": "sub-I0002150006991_20150513045612",
+    "subtype": "lrda",
+    "v14_freq": 1.6298323362238119,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150009026_20211022224258": {
+    "mat_file": "sub-I0002150009026_20211022224258.mat",
+    "patient_id": "sub-I0002150009026_20211022224258",
+    "subtype": "lrda",
+    "v14_freq": 2.0533370764316947,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150015089_20161111193217": {
+    "mat_file": "sub-I0002150015089_20161111193217.mat",
+    "patient_id": "sub-I0002150015089_20161111193217",
+    "subtype": "lrda",
+    "v14_freq": 1.650871150224391,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150016426_20220314204051": {
+    "mat_file": "sub-I0002150016426_20220314204051.mat",
+    "patient_id": "sub-I0002150016426_20220314204051",
+    "subtype": "lrda",
+    "v14_freq": 1.7290221670987496,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150019009_20190904055314": {
+    "mat_file": "sub-I0002150019009_20190904055314.mat",
+    "patient_id": "sub-I0002150019009_20190904055314",
+    "subtype": "lrda",
+    "v14_freq": 1.2062383388033031,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112180889_20170523115206": {
+    "mat_file": "sub-S0001112180889_20170523115206.mat",
+    "patient_id": "sub-S0001112180889_20170523115206",
+    "subtype": "lrda",
+    "v14_freq": 2.128004111483682,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112285981_20220924152500": {
+    "mat_file": "sub-S0001112285981_20220924152500.mat",
+    "patient_id": "sub-S0001112285981_20220924152500",
+    "subtype": "lrda",
+    "v14_freq": 1.5749368969367952,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001115209569_20210910065957": {
+    "mat_file": "sub-S0001115209569_20210910065957.mat",
+    "patient_id": "sub-S0001115209569_20210910065957",
+    "subtype": "lrda",
+    "v14_freq": 2.0016114976144324,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001115523294_20221125171930": {
+    "mat_file": "sub-S0001115523294_20221125171930.mat",
+    "patient_id": "sub-S0001115523294_20221125171930",
+    "subtype": "lrda",
+    "v14_freq": 1.7289051524755186,
+    "v14_laterality": "left",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": true,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001116479691_20210415172357": {
+    "mat_file": "sub-S0001116479691_20210415172357.mat",
+    "patient_id": "sub-S0001116479691_20210415172357",
+    "subtype": "lrda",
+    "v14_freq": 1.6910376271949628,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001117505425_20190730021118": {
+    "mat_file": "sub-S0001117505425_20190730021118.mat",
+    "patient_id": "sub-S0001117505425_20190730021118",
+    "subtype": "lrda",
+    "v14_freq": 1.707309838589928,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001117792110_20221222091421": {
+    "mat_file": "sub-S0001117792110_20221222091421.mat",
+    "patient_id": "sub-S0001117792110_20221222091421",
+    "subtype": "lrda",
+    "v14_freq": 2.191351712580366,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001117818952_20220829134523": {
+    "mat_file": "sub-S0001117818952_20220829134523.mat",
+    "patient_id": "sub-S0001117818952_20220829134523",
+    "subtype": "lrda",
+    "v14_freq": 1.6937706874159393,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001117877606_20130319132311": {
+    "mat_file": "sub-S0001117877606_20130319132311.mat",
+    "patient_id": "sub-S0001117877606_20130319132311",
+    "subtype": "lrda",
+    "v14_freq": 1.8662956923000122,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001118116649_20230217104611": {
+    "mat_file": "sub-S0001118116649_20230217104611.mat",
+    "patient_id": "sub-S0001118116649_20230217104611",
+    "subtype": "lrda",
+    "v14_freq": 1.733087024052215,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001118794756_20190913151358": {
+    "mat_file": "sub-S0001118794756_20190913151358.mat",
+    "patient_id": "sub-S0001118794756_20190913151358",
+    "subtype": "lrda",
+    "v14_freq": 1.7400158737496887,
+    "v14_laterality": "right",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": true,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001119995172_20220422145810": {
+    "mat_file": "sub-S0001119995172_20220422145810.mat",
+    "patient_id": "sub-S0001119995172_20220422145810",
+    "subtype": "lrda",
+    "v14_freq": 2.335359917849363,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001120064911_20150105150840": {
+    "mat_file": "sub-S0001120064911_20150105150840.mat",
+    "patient_id": "sub-S0001120064911_20150105150840",
+    "subtype": "lrda",
+    "v14_freq": 1.6497804994141623,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001120263900_20210527085527": {
+    "mat_file": "sub-S0001120263900_20210527085527.mat",
+    "patient_id": "sub-S0001120263900_20210527085527",
+    "subtype": "lrda",
+    "v14_freq": 1.8988901763746653,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150016440_20200614003334": {
+    "mat_file": "sub-I0002150016440_20200614003334.mat",
+    "patient_id": "sub-I0002150016440_20200614003334",
+    "subtype": "lrda",
+    "v14_freq": 1.8172821497455824,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150017339_20190319110202": {
+    "mat_file": "sub-I0002150017339_20190319110202.mat",
+    "patient_id": "sub-I0002150017339_20190319110202",
+    "subtype": "lrda",
+    "v14_freq": 2.555456154762852,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002117342820_20210712124702": {
+    "mat_file": "sub-S0002117342820_20210712124702.mat",
+    "patient_id": "sub-S0002117342820_20210712124702",
+    "subtype": "lrda",
+    "v14_freq": 2.2728518848076398,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002121743214_20161001083843": {
+    "mat_file": "sub-S0002121743214_20161001083843.mat",
+    "patient_id": "sub-S0002121743214_20161001083843",
+    "subtype": "lrda",
+    "v14_freq": 1.4251641648840456,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002122110474_20210117210107": {
+    "mat_file": "sub-S0002122110474_20210117210107.mat",
+    "patient_id": "sub-S0002122110474_20210117210107",
+    "subtype": "lrda",
+    "v14_freq": 2.0575827498096624,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002114668875_20221030155450": {
+    "mat_file": "sub-S0002114668875_20221030155450.mat",
+    "patient_id": "sub-S0002114668875_20221030155450",
+    "subtype": "lrda",
+    "v14_freq": 2.2968999483931785,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150019245_20200420212428": {
+    "mat_file": "sub-I0002150019245_20200420212428.mat",
+    "patient_id": "sub-I0002150019245_20200420212428",
+    "subtype": "lrda",
+    "v14_freq": 1.4156195679585268,
+    "v14_laterality": "right",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": true,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112115296_20200719123938": {
+    "mat_file": "sub-S0001112115296_20200719123938.mat",
+    "patient_id": "sub-S0001112115296_20200719123938",
+    "subtype": "lrda",
+    "v14_freq": 1.443215853068173,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150017735_20200916083521": {
+    "mat_file": "sub-I0002150017735_20200916083521.mat",
+    "patient_id": "sub-I0002150017735_20200916083521",
+    "subtype": "lrda",
+    "v14_freq": 1.481858873117876,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002112836001_20190811052615": {
+    "mat_file": "sub-S0002112836001_20190811052615.mat",
+    "patient_id": "sub-S0002112836001_20190811052615",
+    "subtype": "lrda",
+    "v14_freq": 1.2242520963462782,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001120688918_20200128162649": {
+    "mat_file": "sub-S0001120688918_20200128162649.mat",
+    "patient_id": "sub-S0001120688918_20200128162649",
+    "subtype": "lrda",
+    "v14_freq": 1.9311352722485484,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150019695_20221003000451": {
+    "mat_file": "sub-I0002150019695_20221003000451.mat",
+    "patient_id": "sub-I0002150019695_20221003000451",
+    "subtype": "lrda",
+    "v14_freq": 1.4007187074027765,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112125670_20160510082456": {
+    "mat_file": "sub-S0001112125670_20160510082456.mat",
+    "patient_id": "sub-S0001112125670_20160510082456",
+    "subtype": "lrda",
+    "v14_freq": 1.2455337687839951,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150018266_20191025022947": {
+    "mat_file": "sub-I0002150018266_20191025022947.mat",
+    "patient_id": "sub-I0002150018266_20191025022947",
+    "subtype": "lrda",
+    "v14_freq": 1.5515837693991985,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002113081719_20181230152654": {
+    "mat_file": "sub-S0002113081719_20181230152654.mat",
+    "patient_id": "sub-S0002113081719_20181230152654",
+    "subtype": "lrda",
+    "v14_freq": 0.675808041082414,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001120809060_20210919132341": {
+    "mat_file": "sub-S0001120809060_20210919132341.mat",
+    "patient_id": "sub-S0001120809060_20210919132341",
+    "subtype": "lrda",
+    "v14_freq": 1.4836656766305703,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150019948_20220607102434": {
+    "mat_file": "sub-I0002150019948_20220607102434.mat",
+    "patient_id": "sub-I0002150019948_20220607102434",
+    "subtype": "lrda",
+    "v14_freq": 1.4932255219413684,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112354039_20120810131703": {
+    "mat_file": "sub-S0001112354039_20120810131703.mat",
+    "patient_id": "sub-S0001112354039_20120810131703",
+    "subtype": "lrda",
+    "v14_freq": 1.4074578275840752,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150018564_20190228084242": {
+    "mat_file": "sub-I0002150018564_20190228084242.mat",
+    "patient_id": "sub-I0002150018564_20190228084242",
+    "subtype": "lrda",
+    "v14_freq": 1.4810820965757496,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002113158253_20150504140808": {
+    "mat_file": "sub-S0002113158253_20150504140808.mat",
+    "patient_id": "sub-S0002113158253_20150504140808",
+    "subtype": "lrda",
+    "v14_freq": 1.697612206991219,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001121058250_20130617123309": {
+    "mat_file": "sub-S0001121058250_20130617123309.mat",
+    "patient_id": "sub-S0001121058250_20130617123309",
+    "subtype": "lrda",
+    "v14_freq": 0.7995149725576345,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111355735_20220823092229": {
+    "mat_file": "sub-S0001111355735_20220823092229.mat",
+    "patient_id": "sub-S0001111355735_20220823092229",
+    "subtype": "lrda",
+    "v14_freq": 0.4739647369465623,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112354582_20221011074546": {
+    "mat_file": "sub-S0001112354582_20221011074546.mat",
+    "patient_id": "sub-S0001112354582_20221011074546",
+    "subtype": "lrda",
+    "v14_freq": 0.9964126707572468,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150018626_20191223215055": {
+    "mat_file": "sub-I0002150018626_20191223215055.mat",
+    "patient_id": "sub-I0002150018626_20191223215055",
+    "subtype": "lrda",
+    "v14_freq": 1.5051685222144613,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002113199454_20190208101145": {
+    "mat_file": "sub-S0002113199454_20190208101145.mat",
+    "patient_id": "sub-S0002113199454_20190208101145",
+    "subtype": "lrda",
+    "v14_freq": 1.8782604496694588,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001121878670_20190522133939": {
+    "mat_file": "sub-S0001121878670_20190522133939.mat",
+    "patient_id": "sub-S0001121878670_20190522133939",
+    "subtype": "lrda",
+    "v14_freq": 1.126455298205019,
+    "v14_laterality": "left",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": true,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111459000_20150804162125": {
+    "mat_file": "sub-S0001111459000_20150804162125.mat",
+    "patient_id": "sub-S0001111459000_20150804162125",
+    "subtype": "lrda",
+    "v14_freq": 1.1706261549135883,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112704342_20220226030448": {
+    "mat_file": "sub-S0001112704342_20220226030448.mat",
+    "patient_id": "sub-S0001112704342_20220226030448",
+    "subtype": "lrda",
+    "v14_freq": 1.615274811316189,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150018799_20190523035553": {
+    "mat_file": "sub-I0002150018799_20190523035553.mat",
+    "patient_id": "sub-I0002150018799_20190523035553",
+    "subtype": "lrda",
+    "v14_freq": 1.2632920915205441,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002113464996_20150514131058": {
+    "mat_file": "sub-S0002113464996_20150514131058.mat",
+    "patient_id": "sub-S0002113464996_20150514131058",
+    "subtype": "lrda",
+    "v14_freq": 1.1493591805018135,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001122179644_20171105125411": {
+    "mat_file": "sub-S0001122179644_20171105125411.mat",
+    "patient_id": "sub-S0001122179644_20171105125411",
+    "subtype": "lrda",
+    "v14_freq": 1.6236330837116348,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111501994_20200608110823": {
+    "mat_file": "sub-S0001111501994_20200608110823.mat",
+    "patient_id": "sub-S0001111501994_20200608110823",
+    "subtype": "lrda",
+    "v14_freq": 1.4672403308869837,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112827875_20151204174709": {
+    "mat_file": "sub-S0001112827875_20151204174709.mat",
+    "patient_id": "sub-S0001112827875_20151204174709",
+    "subtype": "lrda",
+    "v14_freq": 0.7186757259445387,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150020211_20210329072639": {
+    "mat_file": "sub-I0002150020211_20210329072639.mat",
+    "patient_id": "sub-I0002150020211_20210329072639",
+    "subtype": "lrda",
+    "v14_freq": 1.2478234401454298,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002113517707_20220331190741": {
+    "mat_file": "sub-S0002113517707_20220331190741.mat",
+    "patient_id": "sub-S0002113517707_20220331190741",
+    "subtype": "lrda",
+    "v14_freq": 0.9678081171921681,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002111454037_20210508164819": {
+    "mat_file": "sub-S0002111454037_20210508164819.mat",
+    "patient_id": "sub-S0002111454037_20210508164819",
+    "subtype": "lrda",
+    "v14_freq": 2.1479306357169223,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111599067_20151028100451": {
+    "mat_file": "sub-S0001111599067_20151028100451.mat",
+    "patient_id": "sub-S0001111599067_20151028100451",
+    "subtype": "lrda",
+    "v14_freq": 1.2858075479629756,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001113003131_20200704170018": {
+    "mat_file": "sub-S0001113003131_20200704170018.mat",
+    "patient_id": "sub-S0001113003131_20200704170018",
+    "subtype": "lrda",
+    "v14_freq": 1.201477124869047,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002150020294_20221010061108": {
+    "mat_file": "sub-I0002150020294_20221010061108.mat",
+    "patient_id": "sub-I0002150020294_20221010061108",
+    "subtype": "lrda",
+    "v14_freq": 2.1036116811559733,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002113577548_20230422042736": {
+    "mat_file": "sub-S0002113577548_20230422042736.mat",
+    "patient_id": "sub-S0002113577548_20230422042736",
+    "subtype": "lrda",
+    "v14_freq": 1.0940472226333064,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002111518486_20181130075206": {
+    "mat_file": "sub-S0002111518486_20181130075206.mat",
+    "patient_id": "sub-S0002111518486_20181130075206",
+    "subtype": "lrda",
+    "v14_freq": 1.890024688863051,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111702856_20160107165916": {
+    "mat_file": "sub-S0001111702856_20160107165916.mat",
+    "patient_id": "sub-S0001111702856_20160107165916",
+    "subtype": "lrda",
+    "v14_freq": 1.2081171929348864,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001113580151_20161005164620": {
+    "mat_file": "sub-S0001113580151_20161005164620.mat",
+    "patient_id": "sub-S0001113580151_20161005164620",
+    "subtype": "lrda",
+    "v14_freq": 0.965862383550794,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002151112312_20230131043212": {
+    "mat_file": "sub-I0002151112312_20230131043212.mat",
+    "patient_id": "sub-I0002151112312_20230131043212",
+    "subtype": "lrda",
+    "v14_freq": 0.9169033850131085,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002113630115_20220406152513": {
+    "mat_file": "sub-S0002113630115_20220406152513.mat",
+    "patient_id": "sub-S0002113630115_20220406152513",
+    "subtype": "lrda",
+    "v14_freq": 0.8766133120969737,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002111836983_20220217121048": {
+    "mat_file": "sub-S0002111836983_20220217121048.mat",
+    "patient_id": "sub-S0002111836983_20220217121048",
+    "subtype": "lrda",
+    "v14_freq": 1.9394956927602058,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111927622_20210605103017": {
+    "mat_file": "sub-S0001111927622_20210605103017.mat",
+    "patient_id": "sub-S0001111927622_20210605103017",
+    "subtype": "lrda",
+    "v14_freq": 1.3712457745575926,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001114059073_20210211090509": {
+    "mat_file": "sub-S0001114059073_20210211090509.mat",
+    "patient_id": "sub-S0001114059073_20210211090509",
+    "subtype": "lrda",
+    "v14_freq": 0.8477373836280263,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002151728335_20230928091139": {
+    "mat_file": "sub-I0002151728335_20230928091139.mat",
+    "patient_id": "sub-I0002151728335_20230928091139",
+    "subtype": "lrda",
+    "v14_freq": 1.7488727597614198,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002114028141_20210330150234": {
+    "mat_file": "sub-S0002114028141_20210330150234.mat",
+    "patient_id": "sub-S0002114028141_20210330150234",
+    "subtype": "lrda",
+    "v14_freq": 1.1731478861928184,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002111849106_20200918135149": {
+    "mat_file": "sub-S0002111849106_20200918135149.mat",
+    "patient_id": "sub-S0002111849106_20200918135149",
+    "subtype": "lrda",
+    "v14_freq": 1.8634430336957388,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112147406_20120809040552": {
+    "mat_file": "sub-S0001112147406_20120809040552.mat",
+    "patient_id": "sub-S0001112147406_20120809040552",
+    "subtype": "lrda",
+    "v14_freq": 1.2906035537341234,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001114216511_20220109110123": {
+    "mat_file": "sub-S0001114216511_20220109110123.mat",
+    "patient_id": "sub-S0001114216511_20220109110123",
+    "subtype": "lrda",
+    "v14_freq": 0.9804214665171063,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-I0002151737286_20230704063742": {
+    "mat_file": "sub-I0002151737286_20230704063742.mat",
+    "patient_id": "sub-I0002151737286_20230704063742",
+    "subtype": "lrda",
+    "v14_freq": 1.1376636178658708,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002114410018_20200430105901": {
+    "mat_file": "sub-S0002114410018_20200430105901.mat",
+    "patient_id": "sub-S0002114410018_20200430105901",
+    "subtype": "lrda",
+    "v14_freq": 0.5496684203091464,
+    "v14_laterality": "right",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": true,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002112007954_20191108092650": {
+    "mat_file": "sub-S0002112007954_20191108092650.mat",
+    "patient_id": "sub-S0002112007954_20191108092650",
+    "subtype": "lrda",
+    "v14_freq": 1.8171268941993457,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112179543_20220628103735": {
+    "mat_file": "sub-S0001112179543_20220628103735.mat",
+    "patient_id": "sub-S0001112179543_20220628103735",
+    "subtype": "lrda",
+    "v14_freq": 1.2693385658756413,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001114238602_20220323041028": {
+    "mat_file": "sub-S0001114238602_20220323041028.mat",
+    "patient_id": "sub-S0001114238602_20220323041028",
+    "subtype": "lrda",
+    "v14_freq": 1.2939452610734365,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111653095_20220826105220": {
+    "mat_file": "sub-S0001111653095_20220826105220.mat",
+    "patient_id": "sub-S0001111653095_20220826105220",
+    "subtype": "lrda",
+    "v14_freq": 1.86380378313898,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002114502013_20200726211432": {
+    "mat_file": "sub-S0002114502013_20200726211432.mat",
+    "patient_id": "sub-S0002114502013_20200726211432",
+    "subtype": "lrda",
+    "v14_freq": 1.4501288170434052,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002113056900_20220706172120": {
+    "mat_file": "sub-S0002113056900_20220706172120.mat",
+    "patient_id": "sub-S0002113056900_20220706172120",
+    "subtype": "lrda",
+    "v14_freq": 1.8346628488202699,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112313460_20190924163215": {
+    "mat_file": "sub-S0001112313460_20190924163215.mat",
+    "patient_id": "sub-S0001112313460_20190924163215",
+    "subtype": "lrda",
+    "v14_freq": 1.331726380179557,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001114315135_20200316103600": {
+    "mat_file": "sub-S0001114315135_20200316103600.mat",
+    "patient_id": "sub-S0001114315135_20200316103600",
+    "subtype": "lrda",
+    "v14_freq": 1.0923242365355175,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111732274_20190109085057": {
+    "mat_file": "sub-S0001111732274_20190109085057.mat",
+    "patient_id": "sub-S0001111732274_20190109085057",
+    "subtype": "lrda",
+    "v14_freq": 1.9135115409846888,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002114848389_20180605000928": {
+    "mat_file": "sub-S0002114848389_20180605000928.mat",
+    "patient_id": "sub-S0002114848389_20180605000928",
+    "subtype": "lrda",
+    "v14_freq": 0.398712465360743,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002113237031_20170923153401": {
+    "mat_file": "sub-S0002113237031_20170923153401.mat",
+    "patient_id": "sub-S0002113237031_20170923153401",
+    "subtype": "lrda",
+    "v14_freq": 1.8122523971343703,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112466850_20191128074849": {
+    "mat_file": "sub-S0001112466850_20191128074849.mat",
+    "patient_id": "sub-S0001112466850_20191128074849",
+    "subtype": "lrda",
+    "v14_freq": 1.2927328592247227,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001114370867_20220331175258": {
+    "mat_file": "sub-S0001114370867_20220331175258.mat",
+    "patient_id": "sub-S0001114370867_20220331175258",
+    "subtype": "lrda",
+    "v14_freq": 1.312086652704443,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001111806286_20210612023756": {
+    "mat_file": "sub-S0001111806286_20210612023756.mat",
+    "patient_id": "sub-S0001111806286_20210612023756",
+    "subtype": "lrda",
+    "v14_freq": 1.3005490321971034,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002115166554_20200429162609": {
+    "mat_file": "sub-S0002115166554_20200429162609.mat",
+    "patient_id": "sub-S0002115166554_20200429162609",
+    "subtype": "lrda",
+    "v14_freq": 0.7443127297462693,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002113398349_20200410035049": {
+    "mat_file": "sub-S0002113398349_20200410035049.mat",
+    "patient_id": "sub-S0002113398349_20200410035049",
+    "subtype": "lrda",
+    "v14_freq": 1.8201033333794343,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112475025_20210521030754": {
+    "mat_file": "sub-S0001112475025_20210521030754.mat",
+    "patient_id": "sub-S0001112475025_20210521030754",
+    "subtype": "lrda",
+    "v14_freq": 1.4447385469805045,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001114650759_20210911131147": {
+    "mat_file": "sub-S0001114650759_20210911131147.mat",
+    "patient_id": "sub-S0001114650759_20210911131147",
+    "subtype": "lrda",
+    "v14_freq": 1.1987696547574993,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112539311_20220321020707": {
+    "mat_file": "sub-S0001112539311_20220321020707.mat",
+    "patient_id": "sub-S0001112539311_20220321020707",
+    "subtype": "lrda",
+    "v14_freq": 1.5276956010587517,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002115263166_20180405105626": {
+    "mat_file": "sub-S0002115263166_20180405105626.mat",
+    "patient_id": "sub-S0002115263166_20180405105626",
+    "subtype": "lrda",
+    "v14_freq": 1.0168404262994977,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002115111161_20201101205535": {
+    "mat_file": "sub-S0002115111161_20201101205535.mat",
+    "patient_id": "sub-S0002115111161_20201101205535",
+    "subtype": "lrda",
+    "v14_freq": 2.462185406073807,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112552308_20210904105543": {
+    "mat_file": "sub-S0001112552308_20210904105543.mat",
+    "patient_id": "sub-S0001112552308_20210904105543",
+    "subtype": "lrda",
+    "v14_freq": 1.5650944644933513,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001114833819_20230103064635": {
+    "mat_file": "sub-S0001114833819_20230103064635.mat",
+    "patient_id": "sub-S0001114833819_20230103064635",
+    "subtype": "lrda",
+    "v14_freq": 1.1042203640824702,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112765121_20210623120904": {
+    "mat_file": "sub-S0001112765121_20210623120904.mat",
+    "patient_id": "sub-S0001112765121_20210623120904",
+    "subtype": "lrda",
+    "v14_freq": 1.807336648576891,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002115331468_20200412114607": {
+    "mat_file": "sub-S0002115331468_20200412114607.mat",
+    "patient_id": "sub-S0002115331468_20200412114607",
+    "subtype": "lrda",
+    "v14_freq": 1.3349116721409895,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002116193695_20210412105106": {
+    "mat_file": "sub-S0002116193695_20210412105106.mat",
+    "patient_id": "sub-S0002116193695_20210412105106",
+    "subtype": "lrda",
+    "v14_freq": 1.8095868421313042,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112757360_20190727111159": {
+    "mat_file": "sub-S0001112757360_20190727111159.mat",
+    "patient_id": "sub-S0001112757360_20190727111159",
+    "subtype": "lrda",
+    "v14_freq": 1.4501208807325874,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001114845992_20210127040243": {
+    "mat_file": "sub-S0001114845992_20210127040243.mat",
+    "patient_id": "sub-S0001114845992_20210127040243",
+    "subtype": "lrda",
+    "v14_freq": 1.0310193782019044,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112977352_20191117064637": {
+    "mat_file": "sub-S0001112977352_20191117064637.mat",
+    "patient_id": "sub-S0001112977352_20191117064637",
+    "subtype": "lrda",
+    "v14_freq": 1.709171187028574,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002115781129_20200820103442": {
+    "mat_file": "sub-S0002115781129_20200820103442.mat",
+    "patient_id": "sub-S0002115781129_20200820103442",
+    "subtype": "lrda",
+    "v14_freq": 0.43766808353165915,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002116587983_20181124225408": {
+    "mat_file": "sub-S0002116587983_20181124225408.mat",
+    "patient_id": "sub-S0002116587983_20181124225408",
+    "subtype": "lrda",
+    "v14_freq": 1.6754472239618827,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112773235_20160301092526": {
+    "mat_file": "sub-S0001112773235_20160301092526.mat",
+    "patient_id": "sub-S0001112773235_20160301092526",
+    "subtype": "lrda",
+    "v14_freq": 1.621274311648254,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001114878441_20180617171219": {
+    "mat_file": "sub-S0001114878441_20180617171219.mat",
+    "patient_id": "sub-S0001114878441_20180617171219",
+    "subtype": "lrda",
+    "v14_freq": 1.345152020148141,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001113313969_20211207203950": {
+    "mat_file": "sub-S0001113313969_20211207203950.mat",
+    "patient_id": "sub-S0001113313969_20211207203950",
+    "subtype": "lrda",
+    "v14_freq": 1.4752620041800009,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002116502824_20160626105252": {
+    "mat_file": "sub-S0002116502824_20160626105252.mat",
+    "patient_id": "sub-S0002116502824_20160626105252",
+    "subtype": "lrda",
+    "v14_freq": 0.834073914209249,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002116675647_20211005043121": {
+    "mat_file": "sub-S0002116675647_20211005043121.mat",
+    "patient_id": "sub-S0002116675647_20211005043121",
+    "subtype": "lrda",
+    "v14_freq": 2.2454542949299703,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001112984212_20130609142222": {
+    "mat_file": "sub-S0001112984212_20130609142222.mat",
+    "patient_id": "sub-S0001112984212_20130609142222",
+    "subtype": "lrda",
+    "v14_freq": 1.3733354724643614,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001114915995_20200709123604": {
+    "mat_file": "sub-S0001114915995_20200709123604.mat",
+    "patient_id": "sub-S0001114915995_20200709123604",
+    "subtype": "lrda",
+    "v14_freq": 1.198283099887356,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001113601600_20150813165933": {
+    "mat_file": "sub-S0001113601600_20150813165933.mat",
+    "patient_id": "sub-S0001113601600_20150813165933",
+    "subtype": "lrda",
+    "v14_freq": 0.635590913874628,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002117215683_20200707093133": {
+    "mat_file": "sub-S0002117215683_20200707093133.mat",
+    "patient_id": "sub-S0002117215683_20200707093133",
+    "subtype": "lrda",
+    "v14_freq": 0.925802476641482,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0002116948821_20200813112137": {
+    "mat_file": "sub-S0002116948821_20200813112137.mat",
+    "patient_id": "sub-S0002116948821_20200813112137",
+    "subtype": "lrda",
+    "v14_freq": 1.937927889624155,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001113074748_20211206211703": {
+    "mat_file": "sub-S0001113074748_20211206211703.mat",
+    "patient_id": "sub-S0001113074748_20211206211703",
+    "subtype": "lrda",
+    "v14_freq": 1.4030429124011292,
+    "v14_laterality": "right",
+    "v12_laterality": "right",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  },
+  "sub-S0001115050172_20230713074007": {
+    "mat_file": "sub-S0001115050172_20230713074007.mat",
+    "patient_id": "sub-S0001115050172_20230713074007",
+    "subtype": "lrda",
+    "v14_freq": 1.1917698104546977,
+    "v14_laterality": "left",
+    "v12_laterality": "left",
+    "v14_unanimous_flip": false,
+    "v12_hyperparams": {
+      "p1_hi": 4.5,
+      "p2_bw": 0.5,
+      "top_k": 3,
+      "freq_cap": 4.5
+    },
+    "v14_rule": "flip V12 laterality only when all 4 V13 rhythmicity features unanimously disagree"
+  }
+}

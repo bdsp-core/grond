@@ -855,13 +855,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--n-boot', type=int, default=1000)
     parser.add_argument('--seed', type=int, default=42)
-    parser.add_argument('--algo', choices=['v1', 'v9', 'crnn', 'v12'], default='v1',
+    parser.add_argument('--algo', choices=['v1', 'v9', 'crnn', 'v12', 'v14'], default='v1',
                         help='Which algorithm version to use as the ALGO column. '
                              'v1 = W05 NB-Hilbert (default, baseline). '
                              'v9 = gated hybrid (Plan A). '
                              'crnn = end-to-end neural pitch detector (Plan B). '
                              'v12 = retuned-hyperparameter W05 (4.5/0.5/3/4.5). '
-                             'For v9/crnn/v12, only LRDA frequency is overridden; other tasks fall back to v1.')
+                             'v14 = V12 frequency + V12-amplitude/V13-rhythmicity unanimous-override laterality. '
+                             'For v9/crnn/v12/v14, only LRDA frequency/laterality are overridden; other tasks fall back to v1.')
     parser.add_argument('--consensus', choices=['any', 'majority', 'unanimous'], default='majority',
                         help='Inclusion policy: which segments enter the IRR analysis. '
                              'any: at least one rater accepted (legacy, includes data noise). '
@@ -922,6 +923,29 @@ def main():
                   f"({n_overrides_f} freq segs, {n_overrides_l} lat segs).")
         else:
             print(f"WARNING: --algo v12 requested but {v12_path} not found; falling back to v1.")
+    elif args.algo == 'v14':
+        v14_path = PROJECT_DIR / 'data/labels/independent_expert_v1/v14_predictions.json'
+        if v14_path.exists():
+            with open(v14_path) as f:
+                v14 = json.load(f)
+            n_overrides_f = 0
+            n_overrides_l = 0
+            n_unanimous_flips = 0
+            for sid, e in v14.items():
+                mf = e.get('mat_file')
+                if mf in tables['lrda']['freq']['ALGO']:
+                    tables['lrda']['freq']['ALGO'][mf] = float(e['v14_freq'])
+                    n_overrides_f += 1
+                if mf in tables['lrda']['lat']['ALGO']:
+                    tables['lrda']['lat']['ALGO'][mf] = e['v14_laterality']
+                    n_overrides_l += 1
+                    if e.get('v14_unanimous_flip'):
+                        n_unanimous_flips += 1
+            print(f"Override: replaced LRDA ALGO with V14 (V12 freq + V12/V13 hybrid laterality). "
+                  f"{n_overrides_f} freq segs, {n_overrides_l} lat segs, "
+                  f"{n_unanimous_flips} laterality flips via unanimous V13 override.")
+        else:
+            print(f"WARNING: --algo v14 requested but {v14_path} not found; falling back to v1.")
 
     print("\nComputing pairwise IRR (bootstrap n_boot=%d)..." % args.n_boot)
     results = run_analysis(tables)
