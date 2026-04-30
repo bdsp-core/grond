@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate Fig 6: Frequency scatter plots with quality-filtered labels.
 
-Reads model predictions directly from segment_labels.csv (pdchar_freq_hz, tautan_freq_hz)
+Reads model predictions directly from segment_labels.csv (algo_freq_hz) and segments.csv (tautan_freq_hz).
 — no model inference needed. Regeneration takes ~2 seconds.
 
 Quality filter includes segments where ANY of:
@@ -24,77 +24,95 @@ PROJECT_DIR = Path(__file__).resolve().parent.parent
 
 
 def load_data_and_filter():
-    """Load expert freq + model predictions from segment_labels.csv, apply quality filter."""
-    ann = pd.read_csv(PROJECT_DIR / 'data' / 'labels' / 'annotations.csv')
+    """Load expert freq + model predictions for the figure.
+
+    Sources:
+      - labels.csv  : canonical per-rater label store (key = mat_file).
+                      We aggregate frequency_hz across all raters per
+                      mat_file. This supersedes the legacy annotations.csv
+                      lookup, which used a different segment_id format
+                      (`{patient}` vs `{patient}_seg000`) and silently
+                      dropped most matches.
+      - segment_labels.csv : carries `algo_freq_hz` (the model prediction)
+                      and IIIC-vote metadata.
+      - segments.csv : carries `tautan_freq_hz` (Tautan baseline).
+    """
+    labels = pd.read_csv(PROJECT_DIR / 'data' / 'labels' / 'labels.csv')
     sl = pd.read_csv(PROJECT_DIR / 'data' / 'labels' / 'segment_labels.csv')
+    seg = pd.read_csv(PROJECT_DIR / 'data' / 'labels' / 'segments.csv',
+                      usecols=['mat_file', 'tautan_freq_hz', 'pdchar_freq_hz'])
+    sl = sl.merge(seg, on='mat_file', how='left')
 
-    # Expert frequency: mean across all raters in annotations.csv
-    has_freq = ann[ann.frequency_hz.notna()].copy()
-    has_freq['frequency_hz'] = pd.to_numeric(has_freq['frequency_hz'], errors='coerce')
-    freq_agg = has_freq.groupby('segment_id').agg(
-        mean_freq=('frequency_hz', 'mean'),
+    # Expert frequency from labels.csv: mean across raters per mat_file.
+    freq_rows = labels[labels.label_type == 'frequency_hz'].copy()
+    freq_rows['value'] = pd.to_numeric(freq_rows['value'], errors='coerce')
+    freq_rows = freq_rows[freq_rows['value'].notna() & (freq_rows['value'] > 0)]
+    agg = freq_rows.groupby('mat_file').agg(
+        mean_freq=('value', 'mean'),
         n_raters=('rater', 'nunique'),
-    ).reset_index()
-    expert_freq = dict(zip(freq_agg.segment_id, zip(freq_agg.mean_freq, freq_agg.n_raters)))
-
-    # Also MW-only from segment_labels
-    for _, row in sl[sl.expert_freq_rater == 'MW'].iterrows():
-        sid = row['mat_file'].replace('.mat', '')
-        if sid not in expert_freq and pd.notna(row.get('expert_freq_hz')):
-            expert_freq[sid] = (float(row['expert_freq_hz']), 1)
-
-    # Per-segment rater sets (for quality filter)
-    freq_raters = has_freq.groupby('segment_id').agg(
         raters=('rater', lambda x: set(x)),
     ).reset_index()
-    rater_info = dict(zip(freq_raters.segment_id, freq_raters.raters))
+    expert_freq = {row.mat_file: (row.mean_freq, row.n_raters) for row in agg.itertuples()}
+    rater_info = dict(zip(agg.mat_file, agg.raters))
 
-    # IIIC vote info
+    # IIIC vote info (keyed by mat_file)
     vote_info = {}
     for _, row in sl.iterrows():
-        sid = row['mat_file'].replace('.mat', '')
+        mf = row['mat_file']
         nv = pd.to_numeric(row.get('iiic_n_votes'), errors='coerce')
         pf = pd.to_numeric(row.get('iiic_plurality_frac'), errors='coerce')
         if np.isfinite(nv):
-            vote_info[sid] = (int(nv), float(pf) if np.isfinite(pf) else 0)
+            vote_info[mf] = (int(nv), float(pf) if np.isfinite(pf) else 0)
 
-    def passes_quality(sid):
-        raters = rater_info.get(sid, set())
+    def passes_quality(mf):
+        raters = rater_info.get(mf, set())
         if 'MW' in raters:
             return True
         if {'LB', 'PH', 'SZ'}.issubset(raters):
             return True
-        nv, pf = vote_info.get(sid, (0, 0))
+        nv, pf = vote_info.get(mf, (0, 0))
         if nv >= 10 and pf >= 0.80:
             return True
         return False
 
-    # Build results from segment_labels columns (no inference needed!)
+    # Build results: a row enters the figure if EITHER the present-system
+    # algorithm prediction OR the Tautan baseline prediction is finite (and
+    # an expert label exists). PDProfiler / Tautan were computed on
+    # overlapping but not identical segment subsets; gating on both being
+    # present (the prior code) silently dropped large parts of either
+    # method's coverage. We carry both predictions per row and let the
+    # plotter decide what to show per row of the figure.
     results = {sub: [] for sub in ['lpd', 'gpd', 'lrda', 'grda']}
     for _, row in sl.iterrows():
-        sid = row['mat_file'].replace('.mat', '')
+        mf = row['mat_file']
         subtype = row.get('subtype')
         if subtype not in results:
             continue
         if row.get('excluded') == True:
             continue
-        pdchar = pd.to_numeric(row.get('pdchar_freq_hz'), errors='coerce')
+        # PD subtypes use pdchar_freq_hz (PD-Profiler timing-derived frequency
+        # from segments.csv); RDA subtypes use algo_freq_hz (RDA-Profiler
+        # NB-Hilbert frequency from segment_labels.csv).
+        if subtype in ('lpd', 'gpd'):
+            pdchar = pd.to_numeric(row.get('pdchar_freq_hz'), errors='coerce')
+        else:
+            pdchar = pd.to_numeric(row.get('algo_freq_hz'), errors='coerce')
         tautan = pd.to_numeric(row.get('tautan_freq_hz'), errors='coerce')
-        if not np.isfinite(pdchar):
+        if not (np.isfinite(pdchar) or np.isfinite(tautan)):
             continue
-        if sid not in expert_freq:
+        if mf not in expert_freq:
             continue
-        gt, n_raters = expert_freq[sid]
+        gt, n_raters = expert_freq[mf]
         if not np.isfinite(gt) or gt <= 0:
             continue
 
         results[subtype].append({
-            'segment_id': sid,
+            'segment_id': mf.replace('.mat', ''),
             'gt': float(gt),
-            'pred_cnn': float(pdchar),
+            'pred_cnn': float(pdchar) if np.isfinite(pdchar) else np.nan,
             'pred_alex': float(tautan) if np.isfinite(tautan) else np.nan,
             'n_raters': int(n_raters),
-            'passes_quality': passes_quality(sid),
+            'passes_quality': passes_quality(mf),
         })
 
     return results

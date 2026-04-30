@@ -77,7 +77,7 @@ def draw_panel_b_rda(outpath='paper_materials/figures/_panel_b_rda.png',
 
     # ── Top: W05 Iterative Narrowband Refinement ──
     _rounded_box(ax, 220, 60, 280, 50, COLORS["top_box"], radius=15)
-    _text(ax, 360, 85, "W05: Iterative\nNarrowband Refinement",
+    _text(ax, 360, 85, "NB-Hilbert: Iterative\nNarrowband Refinement",
           size=13, weight="bold")
 
     _poly_arrow(ax, [(310, 110), (310, 155)], lw=1.9, ms=13)
@@ -88,7 +88,7 @@ def draw_panel_b_rda(outpath='paper_materials/figures/_panel_b_rda.png',
     _text(ax, 310, 172, "Pass 1: Coarse Analysis",
           size=13, weight="bold")
     _text(ax, 310, 200,
-          "Bandpass 0.5\u20133.5 Hz\n"
+          "Bandpass 0.5\u20134.5 Hz\n"
           "Lateralization: mean variance per hemisphere\n"
           "Frequency: Hilbert from top-3 dominant channels",
           size=10.5, linespacing=1.05)
@@ -101,7 +101,7 @@ def draw_panel_b_rda(outpath='paper_materials/figures/_panel_b_rda.png',
     _text(ax, 310, 282, "Pass 2: Narrowband Refinement",
           size=13, weight="bold")
     _text(ax, 310, 310,
-          "Bandpass at est_freq \u00b1 0.4 Hz\n"
+          "Bandpass at est_freq \u00b1 0.5 Hz\n"
           "Refined lateralization: envelope amplitude\n"
           "Refined frequency: Hilbert on dominant hemisphere",
           size=10.5, linespacing=1.05)
@@ -134,15 +134,19 @@ def draw_panel_b_rda(outpath='paper_materials/figures/_panel_b_rda.png',
     _text(ax, RX, 430, "Topographic\nLocalization",
           size=13.7, weight="bold")
 
-    # ── Left: Laterality Detection ──
-    _rounded_box(ax, 42, 460, 130, 75, COLORS["left_inner"], radius=12)
-    _text(ax, LX, 497, "L vs R\nnarrowband\namplitude", size=12)
+    # ── Left: Laterality Detection (V14 amplitude/rhythmicity hybrid) ──
+    _rounded_box(ax, 42, 460, 130, 65, COLORS["left_inner"], radius=12)
+    _text(ax, LX, 492, "Default:\nL vs R narrowband\namplitude", size=10.5)
 
-    _poly_arrow(ax, [(LX, 535), (LX, 580)], lw=1.9, ms=13)
-    _text(ax, LX, 605, "Output:\nLeft / Right", size=11.5)
+    _poly_arrow(ax, [(LX, 525), (LX, 555)], lw=1.9, ms=13)
+
+    _rounded_box(ax, 42, 555, 130, 75, COLORS["left_inner"], radius=12)
+    _text(ax, LX, 592,
+          "Override if 4/4\nrhythmicity measures\n(Q, PLV, peak-CV,\npeak prom) disagree",
+          size=9.5, linespacing=1.05)
 
     _poly_arrow(ax, [(LX, 630), (LX, 765)], lw=1.9, ms=13)
-    _text(ax, LX, 780, "Laterality\n(Side)", size=12.7)
+    _text(ax, LX, 780, "Laterality\n(Left / Right)", size=12.3)
 
     # ── Center: Spatial Extent ──
     _rounded_box(ax, 210, 460, 198, 70, COLORS["center_inner"], radius=12)
