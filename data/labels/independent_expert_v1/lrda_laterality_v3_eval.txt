@@ -1,0 +1,18 @@
+LRDA laterality v3 evaluation -- train on MW-only pool, validate on consensus
+================================================================================
+Training pool: 919 segments / 812 patients (MW-only labels, no manifest leakage)
+Sanity check OOF acc on training pool: 0.954
+Held-out evaluation: 155 segments (3-rater majority-accept consensus)
+
+rule                                                        acc    k_MW    k_SZ    k_TZ   k_mean
+V12 baseline (pass2_env_log_ratio > 0)                    0.961   0.922   0.946   0.912    0.927
+V3a (HGB, 16 V1 feats, trained on wider pool)             0.935   0.870   0.892   0.897    0.886
+V3b (HGB, 20 feats, trained on wider pool)                0.942   0.883   0.928   0.883    0.898
+V3-gated (V12 unless V3b confidence > 0.75)               0.968   0.935   0.964   0.927    0.942
+V3-gated (V12 unless V3b confidence > 0.80)               0.968   0.935   0.946   0.927    0.936
+V3-gated (V12 unless V3b confidence > 0.85)               0.968   0.935   0.946   0.927    0.936
+V3-gated (V12 unless V3b confidence > 0.90)               0.968   0.935   0.946   0.927    0.936
+V3-gated (V12 unless V3b confidence > 0.95)               0.961   0.922   0.946   0.912    0.927
+
+V12 errors: 6.  V3 errors on V12-error subset: 3.
+V3 new errors (V12 was right, V3 wrong): 6
