@@ -614,11 +614,47 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--n-boot', type=int, default=1000)
     parser.add_argument('--seed', type=int, default=42)
+    parser.add_argument('--algo', choices=['v1', 'v9', 'crnn'], default='v1',
+                        help='Which algorithm version to use as the ALGO column. '
+                             'v1 = W05 NB-Hilbert (default, baseline). '
+                             'v9 = gated hybrid (Plan A). '
+                             'crnn = end-to-end neural pitch detector (Plan B). '
+                             'For v9/crnn, only LRDA frequency is overridden; other tasks fall back to v1.')
     args = parser.parse_args()
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
     tables = build_label_tables()
+
+    # Override LRDA freq column with v9 or crnn predictions if requested.
+    if args.algo == 'v9':
+        v9_path = PROJECT_DIR / 'data/labels/independent_expert_v1/v9_predictions.json'
+        if v9_path.exists():
+            with open(v9_path) as f:
+                v9 = json.load(f)
+            n_overrides = 0
+            for sid, e in v9.items():
+                mf = e.get('mat_file')
+                if mf in tables['lrda']['freq']['ALGO']:
+                    tables['lrda']['freq']['ALGO'][mf] = float(e['v9_freq'])
+                    n_overrides += 1
+            print(f"Override: replaced LRDA ALGO frequency with V9 predictions ({n_overrides} segs).")
+        else:
+            print(f"WARNING: --algo v9 requested but {v9_path} not found; falling back to v1.")
+    elif args.algo == 'crnn':
+        crnn_path = PROJECT_DIR / 'data/labels/independent_expert_v1/lrda_crnn_predictions.json'
+        if crnn_path.exists():
+            with open(crnn_path) as f:
+                cr = json.load(f)
+            n_overrides = 0
+            for sid, e in cr.items():
+                mf = e.get('mat_file')
+                if mf in tables['lrda']['freq']['ALGO']:
+                    tables['lrda']['freq']['ALGO'][mf] = float(e['crnn_freq'])
+                    n_overrides += 1
+            print(f"Override: replaced LRDA ALGO frequency with CRNN predictions ({n_overrides} segs).")
+        else:
+            print(f"WARNING: --algo crnn requested but {crnn_path} not found; falling back to v1.")
 
     print("\nComputing pairwise IRR (bootstrap n_boot=%d)..." % args.n_boot)
     results = run_analysis(tables)

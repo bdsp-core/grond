@@ -1,0 +1,9 @@
+LRDA hard-case classifier — CV report
+======================================
+
+Total segments: 183
+Hard (|V1 - mean_exp| > 0.5 Hz): 21 (11.5%)
+
+OOF ROC AUC: 0.754
+OOF precision (hard class): 0.227
+OOF recall (hard class):    0.238
