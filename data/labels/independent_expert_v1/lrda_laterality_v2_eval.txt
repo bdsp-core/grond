@@ -1,0 +1,26 @@
+LRDA laterality v2 evaluation
+================================================================================
+Eval set: 155 segments with majority-accept consensus laterality.
+
+rule                                                        acc   kappa_MW   kappa_SZ   kappa_TZ  kappa_mean
+--------------------------------------------------------------------------------------------------------------
+V12 baseline (pass2_env)                                  0.961      0.922      0.946      0.912       0.927
+Fix1a: spec_conc_log_ratio                                0.768      0.535      0.622      0.534       0.563
+Fix1b: acf_peak_log_ratio                                 0.697      0.410      0.602      0.420       0.477
+Fix1c: if_cv_inv_log_ratio                                0.581      0.164      0.189      0.170       0.174
+Fix1_sum                                                  0.729      0.459      0.621      0.463       0.515
+Fix2: peak_topo_log_ratio                                 0.929      0.858      0.874      0.854       0.862
+Hybrid_v2 vote(pass2,spec_conc,peak_topo)                 0.948      0.897      0.910      0.883       0.897
+Hybrid_5-vote(pass2,spec_conc,peak_topo,acf,max_ch)       0.942      0.884      0.910      0.869       0.887
+Trained_v2 (HGB OOF, 16+4 feats)                          0.955      0.909      0.928      0.912       0.917
+
+Per-rule call on the 6 V12 baseline disagreement cases:
+  #  freq   cons  V12 baseline (pass  Fix1a: spec_conc_l  Fix1b: acf_peak_lo  Fix1c: if_cv_inv_l            Fix1_sum  Fix2: peak_topo_lo  Hybrid_v2 vote(pas  Hybrid_5-vote(pass  Trained_v2 (HGB OO
+  2  1.16   left               right               left*             right              right               left*             right              right              right              right 
+ 15  0.63  right                left               left              right*             right*             right*             right*              left               left               left 
+ 16  1.67   left               right              right              right               left*             right              right              right              right              right 
+ 78  1.56  right                left              right*             right*              left              right*              left               left               left               left 
+ 99  1.18   left               right              right              right              right              right              right              right              right              right 
+131  0.50   left               right              right              right              right              right              right              right              right               left*
+
+Star (*) = rule got this case correct (matches consensus).
