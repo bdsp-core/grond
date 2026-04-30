@@ -249,3 +249,34 @@ Future work pointers:
 - The CRNN's failure mode -- learning median-of-experts but not exceeding V1 -- suggests transfer learning from the larger PD frequency dataset (~5,000 labels) might help.
 - The Hard-case classifier's 22.7% precision on the hard class is the obvious bottleneck for V9's gain. More training data (more independent expert raters) is the natural way forward.
 - Both efforts could be revisited after the BIPD-consortium dataset comes online.
+
+## 2026-04-29 — Plan A.2 + Plan B.2: laterality classifier + frequency hyperparameter retune
+
+Triggered by majority-accept consensus dataset growing (after MW corrections) plus the realization that the original W05 hyperparameters were chosen against the small early three-rater cohort.
+
+**Plan A.2 — learned LRDA laterality classifier (negative result).**
+- `code/evaluation/lrda_laterality_features.py`: 16 per-segment features.
+- `code/evaluation/train_lrda_laterality_classifier.py`: HistGradientBoosting on 155 consensus-laterality segments, 5-fold patient-grouped CV.
+- Result: rule-based W05 acc=0.961 / kappa=0.922; learned classifier acc=0.955 / kappa=0.909. Permutation importance dominated by `pass2_env_log_ratio` (0.487; everything else <0.013).
+- **Verdict: nothing to ship.** Rule is at ceiling for this dataset size + this feature set.
+
+**Plan B.2 — LRDA frequency hyperparameter retune (V12 — shipping).**
+- `code/evaluation/lrda_freq_hyperparam_sweep.py`: 192-point grid over the 156-segment majority-accept consensus dataset.
+- Best combo by mean EA ICC: **(p1_hi=4.5, p2_bw=0.5, top_k=3, freq_cap=4.5)**, designated V12.
+- Per-rater EA ICC: V1 → V12: MW 0.745→0.777, SZ 0.890→0.865 (V1 was over-aligned; V12 returns to SZ EE ceiling 0.866), TZ 0.771→0.812. Mean EA ICC 0.802→0.818.
+- `code/evaluation/generate_v12_predictions.py` emits predictions for all 200 LRDA segs. `analyze_independent_expert_v1.py --algo v12` overrides ALGO column.
+- `analyze_independent_expert_v1.py` extended with paired segment-level bootstrap (2000 resamples) of `delta = mean(EA) - mean(EE)` (sign-corrected so + favors algo) + two-sided p-value per (task, metric).
+- **End-to-end IRR with V12 + significance tests:**
+  - LRDA freq ICC: V1 delta = −0.090 (p=0.013, sig. below EE) → **V12 delta = −0.074 (p=0.060, no longer sig.)**
+  - LPD freq ICC: +0.051 (p<0.001, algo above EE)
+  - GPD freq ICC: +0.009 (p<0.001, algo above EE)
+  - GRDA freq ICC: −0.002 (p=0.55, tie)
+  - LRDA laterality kappa: −0.071 (p=0.003, still sig. below EE) — V12 doesn't move this; same laterality rule.
+- Forest plot regenerated; copied to `paper_materials/figures/figS5_independent_expert_v1_irr.png` (canonical) + `figS5e_independent_expert_v1_irr_v12.png` (audit).
+- Manuscript abstract + "Re-evaluation against independent raters" paragraph + Discussion summary updated with V12 numbers and bootstrap p-values; figS5 inserted into Supplementary section.
+
+## Final-final verdict (after Plan B.2)
+
+V12 is the shipping LRDA frequency estimator. V9 was the right answer when only the original three-rater cohort existed; V12 supersedes it now that the majority-accept dataset is large enough to retune the underlying NB-Hilbert hyperparameters. (V9 lives on as a kept-for-the-record alternative.)
+
+LRDA laterality remains the one unresolved gap.

@@ -1,0 +1,35 @@
+LRDA laterality classifier — CV report
+======================================
+
+Total segments with consensus laterality: 155
+  left=82, right=73
+
+Rule-based W05 (current production):
+  Accuracy:    0.961
+  Cohen kappa: 0.922
+
+Learned classifier (5-fold patient-grouped OOF):
+  Accuracy:    0.955
+  Cohen kappa: 0.909
+
+Confusion matrix (rows=actual, cols=predicted):
+                  pred L  pred R
+    actual L         79       3
+    actual R          4      69
+
+Top features by permutation importance:
+  pass2_env_log_ratio                  +0.4868
+  right_artifact_score                 +0.0129
+  lr_max_ch_log_ratio                  +0.0123
+  left_max_ch_var                      +0.0097
+  left_artifact_score                  +0.0094
+  right_max_ch_var                     +0.0000
+  est_freq_if_cv                       +0.0000
+  est_freq                             +0.0000
+  right_ch_dispersion                  +0.0000
+  left_ch_dispersion                   +0.0000
+  top3_uniform_agreement               +0.0000
+  pass1_pass2_agreement                +0.0000
+  spectral_peak_prom_log_ratio         +0.0000
+  top3_var_log_ratio                   +0.0000
+  narrowband_var_log_ratio             +0.0000

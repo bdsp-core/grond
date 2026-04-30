@@ -544,6 +544,127 @@ def pairwise_lat(label_a, label_b, n_boot=1000, seed=42):
     return point
 
 
+# ---- EE vs EA significance test (paired segment-level bootstrap) ----
+
+def _metric_for_pair(label_a, label_b, metric):
+    """Return point estimate for one (rater_a, rater_b, metric) on intersection.
+
+    metric in {'icc','spearman','mae','kappa','percent'}.
+    Returns np.nan if intersection too small.
+    """
+    common = sorted(set(label_a) & set(label_b))
+    if len(common) < 5:
+        return np.nan
+    if metric in ('icc', 'spearman', 'mae'):
+        a = np.array([label_a[mf] for mf in common], dtype=float)
+        b = np.array([label_b[mf] for mf in common], dtype=float)
+        if metric == 'icc':
+            return icc31(a, b)
+        if metric == 'spearman':
+            return spearman(a, b)
+        return mae(a, b)
+    a = [label_a[mf] for mf in common]
+    b = [label_b[mf] for mf in common]
+    if metric == 'kappa':
+        return cohen_kappa(a, b)
+    return percent_agree(a, b)
+
+
+def ee_vs_ea_significance(tables, n_boot=2000, seed=42):
+    """Paired segment-level bootstrap of mean(EA) - mean(EE) per (task, metric).
+
+    For each task and metric: take the union of segments where any rater
+    has a label; resample segments with replacement; recompute the mean
+    of the 3 EE pair-wise metrics and the mean of the 3 EA pair-wise
+    metrics on the resampled set; collect the difference. Report 95% CI
+    of the difference and a two-sided bootstrap p-value testing
+    H0: mean(EA) == mean(EE).
+
+    For MAE, "EA better than EE" means MAE_EA < MAE_EE, so we negate the
+    sign so that positive delta always means "algorithm is closer to
+    experts than experts are to each other" (i.e., favorable to GROND).
+    """
+    rng = np.random.default_rng(seed)
+    out = {'tasks': {}}
+
+    METRICS = {
+        'freq': [('icc', False), ('spearman', False), ('mae', True)],
+        'lat':  [('kappa', False), ('percent', False)],
+    }
+
+    for sub in SUBTYPES:
+        T = tables[sub]
+        out['tasks'][sub] = {}
+        for mtype in ('freq', 'lat'):
+            if mtype == 'lat' and sub not in LAT_TASKS:
+                continue
+            out['tasks'][sub][mtype] = {}
+            for metric, lower_is_better in METRICS[mtype]:
+                # Union of all segments touched by any rater for this metric
+                tab = T[mtype]
+                all_segs = sorted(set().union(*[set(tab[r]) for r in ['MW', 'SZ', 'TZ', 'ALGO']]))
+                if not all_segs:
+                    out['tasks'][sub][mtype][metric] = None
+                    continue
+                # Point estimates
+                ee_pts = [_metric_for_pair(tab[a], tab[b], metric) for a, b in EE_PAIRS]
+                ea_pts = [_metric_for_pair(tab[a], tab[b], metric) for a, b in EA_PAIRS]
+                ee_pts = [v for v in ee_pts if not (isinstance(v, float) and np.isnan(v))]
+                ea_pts = [v for v in ea_pts if not (isinstance(v, float) and np.isnan(v))]
+                if not ee_pts or not ea_pts:
+                    out['tasks'][sub][mtype][metric] = None
+                    continue
+                ee_mean = float(np.mean(ee_pts))
+                ea_mean = float(np.mean(ea_pts))
+                # Sign convention: positive delta = algorithm favorable
+                sign = -1.0 if lower_is_better else 1.0
+                delta_point = sign * (ea_mean - ee_mean)
+
+                # Paired segment-level bootstrap
+                segs_arr = np.array(all_segs)
+                n = len(segs_arr)
+                deltas = np.empty(n_boot)
+                for b in range(n_boot):
+                    idx = rng.integers(0, n, size=n)
+                    samp_segs = segs_arr[idx]
+                    # Build resampled label dicts (preserving multiplicity by suffixing keys)
+                    samp_dicts = {r: {} for r in ['MW', 'SZ', 'TZ', 'ALGO']}
+                    for j, mf in enumerate(samp_segs):
+                        for r in ['MW', 'SZ', 'TZ', 'ALGO']:
+                            if mf in tab[r]:
+                                samp_dicts[r][f'{mf}__{j}'] = tab[r][mf]
+                    ee_b = [_metric_for_pair(samp_dicts[a], samp_dicts[b2], metric) for a, b2 in EE_PAIRS]
+                    ea_b = [_metric_for_pair(samp_dicts[a], samp_dicts[b2], metric) for a, b2 in EA_PAIRS]
+                    ee_b = [v for v in ee_b if not (isinstance(v, float) and np.isnan(v))]
+                    ea_b = [v for v in ea_b if not (isinstance(v, float) and np.isnan(v))]
+                    if not ee_b or not ea_b:
+                        deltas[b] = np.nan
+                    else:
+                        deltas[b] = sign * (float(np.mean(ea_b)) - float(np.mean(ee_b)))
+                deltas = deltas[~np.isnan(deltas)]
+                if len(deltas) < 50:
+                    out['tasks'][sub][mtype][metric] = None
+                    continue
+                lo = float(np.percentile(deltas, 2.5))
+                hi = float(np.percentile(deltas, 97.5))
+                # Two-sided bootstrap p-value via the achieved-significance level:
+                # 2 * min(P(delta<=0), P(delta>=0))
+                p_below = float(np.mean(deltas <= 0))
+                p_above = float(np.mean(deltas >= 0))
+                p_two = float(min(1.0, 2 * min(p_below, p_above)))
+                out['tasks'][sub][mtype][metric] = {
+                    'ee_mean': ee_mean,
+                    'ea_mean': ea_mean,
+                    'delta_point': delta_point,
+                    'delta_ci': (lo, hi),
+                    'p_two_sided': p_two,
+                    'sign_convention': '+ favors algorithm',
+                    'n_segments_union': int(n),
+                    'n_boot_used': int(len(deltas)),
+                }
+    return out
+
+
 def run_analysis(tables):
     """Compute pairwise IRR for every (task, metric) and pair."""
     results = {'tasks': {}}
@@ -734,12 +855,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--n-boot', type=int, default=1000)
     parser.add_argument('--seed', type=int, default=42)
-    parser.add_argument('--algo', choices=['v1', 'v9', 'crnn'], default='v1',
+    parser.add_argument('--algo', choices=['v1', 'v9', 'crnn', 'v12'], default='v1',
                         help='Which algorithm version to use as the ALGO column. '
                              'v1 = W05 NB-Hilbert (default, baseline). '
                              'v9 = gated hybrid (Plan A). '
                              'crnn = end-to-end neural pitch detector (Plan B). '
-                             'For v9/crnn, only LRDA frequency is overridden; other tasks fall back to v1.')
+                             'v12 = retuned-hyperparameter W05 (4.5/0.5/3/4.5). '
+                             'For v9/crnn/v12, only LRDA frequency is overridden; other tasks fall back to v1.')
     parser.add_argument('--consensus', choices=['any', 'majority', 'unanimous'], default='majority',
                         help='Inclusion policy: which segments enter the IRR analysis. '
                              'any: at least one rater accepted (legacy, includes data noise). '
@@ -780,9 +902,33 @@ def main():
             print(f"Override: replaced LRDA ALGO frequency with CRNN predictions ({n_overrides} segs).")
         else:
             print(f"WARNING: --algo crnn requested but {crnn_path} not found; falling back to v1.")
+    elif args.algo == 'v12':
+        v12_path = PROJECT_DIR / 'data/labels/independent_expert_v1/v12_predictions.json'
+        if v12_path.exists():
+            with open(v12_path) as f:
+                v12 = json.load(f)
+            n_overrides_f = 0
+            n_overrides_l = 0
+            for sid, e in v12.items():
+                mf = e.get('mat_file')
+                if mf in tables['lrda']['freq']['ALGO']:
+                    tables['lrda']['freq']['ALGO'][mf] = float(e['v12_freq'])
+                    n_overrides_f += 1
+                # V12 also produces a laterality choice (same rule as V1's pass-2 envelope)
+                if mf in tables['lrda']['lat']['ALGO']:
+                    tables['lrda']['lat']['ALGO'][mf] = e['v12_laterality']
+                    n_overrides_l += 1
+            print(f"Override: replaced LRDA ALGO with V12 retuned W05 "
+                  f"({n_overrides_f} freq segs, {n_overrides_l} lat segs).")
+        else:
+            print(f"WARNING: --algo v12 requested but {v12_path} not found; falling back to v1.")
 
     print("\nComputing pairwise IRR (bootstrap n_boot=%d)..." % args.n_boot)
     results = run_analysis(tables)
+
+    print("Computing EE-vs-EA significance tests (paired segment bootstrap, n_boot=%d)..." % args.n_boot)
+    sig = ee_vs_ea_significance(tables, n_boot=args.n_boot, seed=args.seed)
+    results['ee_vs_ea_significance'] = sig['tasks']
 
     # Print a nice text summary
     print("\n" + "=" * 80)
@@ -811,6 +957,30 @@ def main():
                     ci = d.get('kappa_ci')
                     ci_str = f"  95% CI: [{ci[0]:.3f}, {ci[1]:.3f}]" if ci else ""
                     print(f"    {pair[0]:5}-{pair[1]:5} {tag}  n={d['n']:3d}  kappa={d['kappa']:.3f}{ci_str}  pct={d['percent']:.3f}")
+
+    # Significance test summary
+    print("\n" + "=" * 80)
+    print("EE-vs-EA significance tests  (delta = mean(EA) - mean(EE), sign-corrected so + favors algo)")
+    print("Two-sided bootstrap p-value; significant at p<0.05 means EA differs from EE at the 5% level.")
+    print("=" * 80)
+    print(f"  {'task':<6s} {'metric':<10s} {'EE_mean':>8s} {'EA_mean':>8s} {'delta':>8s} {'95% CI':>22s} {'p':>8s} {'verdict':<22s}")
+    for sub in SUBTYPES:
+        for mtype in ('freq', 'lat'):
+            if mtype == 'lat' and sub not in LAT_TASKS:
+                continue
+            for metric in (['icc', 'spearman', 'mae'] if mtype == 'freq' else ['kappa', 'percent']):
+                d = sig['tasks'].get(sub, {}).get(mtype, {}).get(metric)
+                if d is None:
+                    continue
+                ci = d['delta_ci']
+                if d['p_two_sided'] >= 0.05:
+                    verdict = 'EA == EE  (n.s.)'
+                elif d['delta_point'] > 0:
+                    verdict = 'EA > EE  (algo wins)'
+                else:
+                    verdict = 'EA < EE  (algo behind)'
+                print(f"  {PRETTY[sub]:<6s} {metric:<10s} {d['ee_mean']:>8.3f} {d['ea_mean']:>8.3f} "
+                      f"{d['delta_point']:>+8.3f}  [{ci[0]:>+6.3f}, {ci[1]:>+6.3f}] {d['p_two_sided']:>8.3f}  {verdict}")
 
     # Save JSON
     summary_path = RESULTS_DIR / 'summary.json'
