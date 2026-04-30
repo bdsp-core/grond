@@ -259,9 +259,17 @@ def compute_mae(values_a, values_b):
 # ═══════════════════════════════════════════════════════════════════
 
 def load_data():
-    """Load annotations and segment labels."""
+    """Load annotations and segment labels.
+
+    Joins `tautan_freq_hz` from segments.csv into `sl` (segment_labels.csv)
+    because the consolidated table only carries `algo_freq_hz`. Both
+    columns are needed for figS1.
+    """
     ann = pd.read_csv(LABELS_DIR / 'annotations.csv')
     sl = pd.read_csv(LABELS_DIR / 'segment_labels.csv')
+    seg = pd.read_csv(LABELS_DIR / 'segments.csv',
+                      usecols=['mat_file', 'tautan_freq_hz'])
+    sl = sl.merge(seg, on='mat_file', how='left')
 
     # Merge subtype into annotations
     ann = ann.merge(sl[['mat_file', 'subtype', 'excluded']], on='mat_file', how='left')
@@ -462,7 +470,7 @@ def run_rda_plv_spatial(mat_files, sl, mode='threshold'):
     Parameters
     ----------
     mat_files : list of str
-    sl : DataFrame with 'mat_file' and 'pdchar_freq_hz' columns
+    sl : DataFrame with 'mat_file' and 'algo_freq_hz' columns
     mode : 'threshold' or 'continuous'
         'threshold' uses spatial_extent (PLV×Amp at threshold=0.15)
         'continuous' uses spatial_extent_continuous (mean PLV)
@@ -473,7 +481,7 @@ def run_rda_plv_spatial(mat_files, sl, mode='threshold'):
     """
     from rda_spatial_extent import rda_spatial_extent
 
-    freq_map = sl.set_index('mat_file')['pdchar_freq_hz'].to_dict()
+    freq_map = sl.set_index('mat_file')['algo_freq_hz'].to_dict()
 
     results = np.full(len(mat_files), np.nan)
     n_ok = 0
@@ -769,7 +777,7 @@ def main():
     print(f"  PD freq segments with >=2 experts: {len(pd_freq_mats)}")
 
     # Get cached algo frequencies for PD
-    pd_pdchar_freq = get_cached_algo_freq(sl, pd_freq_mats, 'pdchar_freq_hz')
+    pd_pdchar_freq = get_cached_algo_freq(sl, pd_freq_mats, 'algo_freq_hz')
     pd_tautan_freq = get_cached_algo_freq(sl, pd_freq_mats, 'tautan_freq_hz')
 
     print("\n── Frequency: RDA (LRDA + GRDA) ──")
@@ -778,7 +786,7 @@ def main():
     print(f"  RDA freq segments with >=2 experts: {len(rda_freq_mats)}")
 
     # Get cached algo frequencies for RDA
-    rda_pdchar_freq = get_cached_algo_freq(sl, rda_freq_mats, 'pdchar_freq_hz')  # W05
+    rda_pdchar_freq = get_cached_algo_freq(sl, rda_freq_mats, 'algo_freq_hz')  # W05
     rda_tautan_freq = get_cached_algo_freq(sl, rda_freq_mats, 'tautan_freq_hz')
 
     # ──────────────────────────────────────────────────────────────

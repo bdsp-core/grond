@@ -133,14 +133,20 @@ def compute_segment_data(mat_file, subtype):
     avg = np.mean(mono_raw, axis=0)
     mono_car = mono_raw - avg[np.newaxis, :]
 
-    # Get frequency from segment_labels.csv
+    # Get frequency from segment_labels.csv (algo_freq_hz can be blank for
+    # legacy segments; fall back to 1.1 Hz default).
     print("Loading frequency from segment_labels.csv...")
     freq_hz = None
     with open(LABELS_DIR / 'segment_labels.csv') as f:
         reader = csv.DictReader(f)
         for row in reader:
             if row['mat_file'] == mat_file:
-                freq_hz = float(row['pdchar_freq_hz'])
+                v = row.get('algo_freq_hz', '').strip()
+                if v:
+                    try:
+                        freq_hz = float(v)
+                    except ValueError:
+                        freq_hz = None
                 break
     if freq_hz is None or not np.isfinite(freq_hz):
         freq_hz = 1.1

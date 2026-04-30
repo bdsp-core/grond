@@ -98,7 +98,7 @@ def main():
 
     # Map subtypes
     sub_lookup = dict(zip(sl.mat_file, sl.subtype))
-    freq_lookup = dict(zip(sl.mat_file, sl.pdchar_freq_hz))
+    freq_lookup = dict(zip(sl.mat_file, sl.algo_freq_hz))
 
     # Collect qualifying segments
     segments = []

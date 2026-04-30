@@ -24,8 +24,14 @@ Headline numbers from the manuscript (see [paper_materials/manuscript.tex](paper
 | **RDA-Profiler** | | | | |
 | LRDA vs. GRDA | AUC | 4,253 | **0.837** | NB-Hilbert (iterative narrowband Hilbert refinement) |
 | RDA frequency (LRDA / GRDA) | Spearman ρ | 640 / 1,310 | **0.674 / 0.712** | NB-Hilbert |
-| RDA frequency (3-rater IRR) | ICC(3,1) | 68 | **0.860** (expert–expert 0.852) | NB-Hilbert |
 | RDA spatial extent | ICC(3,1) | 211 | **0.371** (expert–expert 0.373) | RDA-PLV @ threshold 0.15 |
+| **Independent-expert IRR (3-rater majority-accept consensus, V14)** | | | | |
+| LPD frequency (mean EA ICC vs mean EE ICC) | ICC(3,1) | 187 | **0.916 vs 0.866** (Δ=+0.051, *p*<0.001, **EA above EE**) | V12 (NB-Hilbert) |
+| GPD frequency | ICC(3,1) | 197 | **0.975 vs 0.966** (Δ=+0.009, *p*<0.001, **EA above EE**) | V12 |
+| GRDA frequency | ICC(3,1) | 123 | **0.942 vs 0.944** (Δ=−0.002, *p*=0.55, tie at EE ceiling) | V12 |
+| LRDA frequency | ICC(3,1) | 156 | **0.818 vs 0.892** (Δ=−0.074, *p*=0.060, n.s.) | V12 retuned |
+| LRDA laterality | Cohen κ | 156 | **0.953 vs 0.994** (Δ=−0.041, *p*=0.036) | V14 amplitude/rhythmicity hybrid |
+| LPD laterality | Cohen κ | 156 | **0.948 vs 0.970** (Δ=−0.022, *p*=0.29, tie) | V12 |
 
 **All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [docs/history/APPROACH_REVIEW_v17.md](docs/history/APPROACH_REVIEW_v17.md) for the development log and [paper_materials/manuscript.tex](paper_materials/manuscript.tex) for the formal Methods.
 
@@ -357,9 +363,11 @@ Laterality detection feeds forward into both spatial localizer (ipsilateral seed
 
 The RDA characterization pipeline classifies LRDA vs GRDA, determines laterality, and estimates frequency from a single 10-second bipolar EEG segment.
 
-Best unified method: **NB-Hilbert** (originally `W05_DomOnly_IterRefine` in the contest log) — two-pass iterative narrowband Hilbert refinement with frequency estimated strictly from the predicted-dominant hemisphere. Achieves AUC 0.837 (LRDA vs GRDA classification) and algorithm–expert frequency ICC 0.860 (slightly exceeding the expert–expert ICC of 0.852, n = 68).
+**Frequency** (V12): two-pass iterative narrowband Hilbert refinement (NB-Hilbert; originally `W05_DomOnly_IterRefine` in the contest log) with hyperparameters retuned (pass-1 bandpass 0.5–4.5 Hz, pass-2 narrowband half-width 0.5 Hz, top-3 dominant-hemisphere channels averaged, frequency search cap 4.5 Hz) against the 156-segment majority-accept independent-expert consensus dataset. On the original 4,253-segment LRDA vs. GRDA cohort the same algorithm reaches AUC 0.837 and Spearman ρ of 0.674 (LRDA) / 0.712 (GRDA).
 
-76 methods benchmarked across 5 contest rounds. See [docs/history/APPROACH_REVIEW_v17.md](docs/history/APPROACH_REVIEW_v17.md) appendix A for the full leaderboard, and `paper_materials/manuscript.tex` appendix A for the contest naming scheme.
+**Laterality** (V14, amplitude / rhythmicity hybrid): the V12 laterality call is amplitude-based (which hemisphere has more narrowband envelope amplitude at the estimated rhythm frequency) and is fallible whenever artifact, slow drift, or asymmetric volume conduction inflates one hemisphere's amplitude even when the rhythm itself is on the other side. V14 defaults to the V12 amplitude call but **overrides only when four amplitude-normalized rhythmicity measures unanimously disagree**: per-channel Q-factor (f<sub>peak</sub>/FWHM near est_freq), within-hemisphere phase-locking value at est_freq, narrowband peak-amplitude consistency, and per-hemisphere spectral peak prominence. The override is parameter-free. On the 156-segment consensus set it flips 4 of 156 V12 calls and lifts mean expert–algorithm κ from 0.927 to 0.953 (per-rater: MW 0.910→0.935; SZ 0.946→0.982; TZ 0.912→0.941).
+
+76 methods benchmarked across 5 contest rounds. See [docs/history/APPROACH_REVIEW_v17.md](docs/history/APPROACH_REVIEW_v17.md) appendix A for the full leaderboard, and `paper_materials/manuscript.tex` appendix A for the contest naming scheme. The V12/V14 work is documented in [paper_materials/independent_expert_tasks/lrda_path_c_plan.md](paper_materials/independent_expert_tasks/lrda_path_c_plan.md).
 
 ### Verbal Descriptions
 
