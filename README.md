@@ -18,12 +18,12 @@ Headline numbers from the manuscript (see [paper_materials/manuscript.tex](paper
 | 3-way LPD/GPD/BIPD (macro) | AUC | 5,064 | **0.862** | RF on probs + timing features |
 | BIPD vs. GPD | AUC | 2,308 | **0.937** | GBT on timing features |
 | PD discharge timing | F1 | 582 | **0.889** (timing MAE 1.0 ms) | HemiCET-UNet + DP |
-| PD frequency (LPD / GPD) | Spearman ρ | 1,226 / 1,089 | **0.786 / 0.846** | IPI from HemiCET-UNet + DP |
+| PD frequency (LPD / GPD) | Spearman ρ | 1,103 / 1,099 | **0.772 / 0.819** | IPI from HemiCET-UNet + DP |
 | PD spatial extent | Jaccard | 211 | **0.731** (expert–expert 0.751, 97.3%) | Hybrid-PLV @ threshold 0.38 |
 | PD spatial localization | — | — | Discharge-locked topoplot | Laplacian–GFP alignment + morgoth-viewer regions |
 | **RDA-Profiler** | | | | |
 | LRDA vs. GRDA | AUC | 4,253 | **0.837** | NB-Hilbert (iterative narrowband Hilbert refinement) |
-| RDA frequency (LRDA / GRDA) | Spearman ρ | 640 / 1,310 | **0.674 / 0.712** | NB-Hilbert |
+| RDA frequency (LRDA / GRDA) | Spearman ρ | 730 / 1,453 | **0.597 / 0.795** | NB-Hilbert (V12) |
 | RDA spatial extent | ICC(3,1) | 211 | **0.371** (expert–expert 0.373) | RDA-PLV @ threshold 0.15 |
 | **Independent-expert IRR (3-rater majority-accept consensus, V14)** | | | | |
 | LPD frequency (mean EA ICC vs mean EE ICC) | ICC(3,1) | 187 | **0.916 vs 0.866** (Δ=+0.051, *p*<0.001, **EA above EE**) | V12 (NB-Hilbert) |
@@ -363,7 +363,7 @@ Laterality detection feeds forward into both spatial localizer (ipsilateral seed
 
 The RDA characterization pipeline classifies LRDA vs GRDA, determines laterality, and estimates frequency from a single 10-second bipolar EEG segment.
 
-**Frequency** (V12): two-pass iterative narrowband Hilbert refinement (NB-Hilbert; originally `W05_DomOnly_IterRefine` in the contest log) with hyperparameters retuned (pass-1 bandpass 0.5–4.5 Hz, pass-2 narrowband half-width 0.5 Hz, top-3 dominant-hemisphere channels averaged, frequency search cap 4.5 Hz) against the 156-segment majority-accept independent-expert consensus dataset. On the original 4,253-segment LRDA vs. GRDA cohort the same algorithm reaches AUC 0.837 and Spearman ρ of 0.674 (LRDA) / 0.712 (GRDA).
+**Frequency** (V12): two-pass iterative narrowband Hilbert refinement (NB-Hilbert; originally `W05_DomOnly_IterRefine` in the contest log) with hyperparameters retuned (pass-1 bandpass 0.5–4.5 Hz, pass-2 narrowband half-width 0.5 Hz, top-3 dominant-hemisphere channels averaged, frequency search cap 4.5 Hz) against the 156-segment majority-accept independent-expert consensus dataset. On the labels.csv-canonical labeled cohort, V12 NB-Hilbert reaches Spearman ρ of 0.597 (LRDA, n=730, MAE 0.275 Hz) and 0.795 (GRDA, n=1,453, MAE 0.188 Hz). On the original 4,253-segment LRDA vs. GRDA cohort the LRDA-vs-GRDA discriminator reaches AUC 0.837.
 
 **Laterality** (V14, amplitude / rhythmicity hybrid): the V12 laterality call is amplitude-based (which hemisphere has more narrowband envelope amplitude at the estimated rhythm frequency) and is fallible whenever artifact, slow drift, or asymmetric volume conduction inflates one hemisphere's amplitude even when the rhythm itself is on the other side. V14 defaults to the V12 amplitude call but **overrides only when four amplitude-normalized rhythmicity measures unanimously disagree**: per-channel Q-factor (f<sub>peak</sub>/FWHM near est_freq), within-hemisphere phase-locking value at est_freq, narrowband peak-amplitude consistency, and per-hemisphere spectral peak prominence. The override is parameter-free. On the 156-segment consensus set it flips 4 of 156 V12 calls and lifts mean expert–algorithm κ from 0.927 to 0.953 (per-rater: MW 0.910→0.935; SZ 0.946→0.982; TZ 0.912→0.941).
 
