@@ -1,0 +1,16 @@
+LRDA laterality V13 (rhythmicity-by-construction) -- evaluation
+================================================================================
+Eval set: 155-segment 3-rater majority-accept consensus.
+
+rule                                                 acc    k_MW    k_SZ    k_TZ   k_mean
+V12 baseline (pass2_env, amplitude)                0.961   0.922   0.946   0.912    0.927
+V13a: Q-factor only                                0.503   0.016  -0.010   0.047    0.018
+V13b: PLV only                                     0.697   0.391   0.496   0.399    0.429
+V13c: peak-CV-inv only                             0.619   0.237   0.279   0.238    0.251
+V13d: spectral peak prom only                      0.794   0.589   0.675   0.578    0.614
+V13_vote (4-way majority)                          0.748   0.500   0.549   0.522    0.524
+V13_sum (sum of normalized scores)                 0.761   0.526   0.603   0.565    0.565
+V13_max (most decisive feature)                    0.768   0.537   0.549   0.578    0.555
+
+Best V13 variant: V13d: spectral peak prom only
+Bootstrap delta (best V13 - V12) mean kappa: -0.313, 95% CI [-0.458,-0.176], p=0.000
