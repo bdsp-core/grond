@@ -225,3 +225,9 @@ conda run -n morgoth python code/evaluation/analyze_independent_expert_v1.py --a
   - `code/cet_model/train_lrda_crnn.py`: training driver with NaN-safe batching, cosine LR schedule, Adam, early stopping. CLI for fold selection.
   - Smoke-test (fold 0, 30 epochs): val_MAE converged to 0.251 Hz (best epoch 28). Training-loss readouts are unstable on MPS (numerical artifact in batch loss aggregation) but val_MAE and saved checkpoints are valid.
   - Full 5-fold training kicked off as background task; outputs at `data/labels/independent_expert_v1/lrda_crnn_predictions.json` when complete.
+- 2026-04-29 10:10 — Plan B first attempt FAILED (numerical instability):
+  - Full 5-fold MPS training completed but produced poor IRR.
+  - LRDA freq vs experts: MW-ALGO ICC 0.437, SZ-ALGO 0.622, TZ-ALGO 0.448 -- all materially WORSE than V1.
+  - Root cause: MPS numerical instability triggered early-stopping after 2-15 epochs in 4/5 folds, far below adequate convergence. Per-epoch train_loss readouts oscillated between sane values (~0.08) and astronomical (~1e30) on MPS, suggesting gradient accumulation precision issues.
+  - Archived to `data/lrda_crnn_cache_mps_unstable/` and `data/labels/independent_expert_v1/lrda_crnn_predictions_mps_unstable.json` for audit.
+- 2026-04-29 10:15 — Plan B retraining on CPU (forced via `--force-cpu` flag added to train script). CPU is slower (~10s/epoch vs 4s on MPS) but numerically stable. Training kicked off in background; ETA 30-60 min for 5 folds.

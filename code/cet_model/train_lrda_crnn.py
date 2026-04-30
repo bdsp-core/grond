@@ -34,7 +34,9 @@ CACHE_DIR = PROJECT_DIR / 'data' / 'lrda_crnn_cache'
 PRED_OUT = PROJECT_DIR / 'data' / 'labels' / 'independent_expert_v1' / 'lrda_crnn_predictions.json'
 
 
-def get_device():
+def get_device(force_cpu: bool = False):
+    if force_cpu:
+        return torch.device('cpu')
     if torch.cuda.is_available():
         return torch.device('cuda')
     if torch.backends.mps.is_available() and torch.backends.mps.is_built():
@@ -153,12 +155,14 @@ def main():
     ap.add_argument('--patience', type=int, default=15)
     ap.add_argument('--fold', type=int, default=-1, help='Only train this fold (default -1 = all 5)')
     ap.add_argument('--seed', type=int, default=42)
+    ap.add_argument('--force-cpu', action='store_true',
+                    help='Force CPU training (avoids MPS numerical instability).')
     args = ap.parse_args()
 
     torch.manual_seed(args.seed)
     np.random.seed(args.seed)
 
-    device = get_device()
+    device = get_device(force_cpu=args.force_cpu)
     print(f'Device: {device}')
     print(f'Building label map...')
     label_map = _build_label_map()
