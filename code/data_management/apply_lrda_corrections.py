@@ -182,21 +182,31 @@ def apply_diffs(diffs, dry_run=False):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dry-run', action='store_true')
+    parser.add_argument('--manifest', type=str, default=str(DISAGREEMENT_MANIFEST),
+                        help='Path to manifest CSV listing the segments where corrections '
+                             'are allowed. Defaults to the original 7-case disagreement_manifest.csv. '
+                             'Use top20_disagreement_manifest.csv for the broader 20-case review.')
+    parser.add_argument('--original', type=str, default=str(ORIGINAL_JSON),
+                        help='Path to the prior MW export JSON (the "before" state).')
+    parser.add_argument('--corrections', type=str, default=str(CORRECTIONS_JSON),
+                        help='Path to the new MW export JSON (the "after" state).')
     args = parser.parse_args()
 
-    disagreement_set = load_disagreement_set()
-    print(f"Disagreement manifest: {len(disagreement_set)} segments")
+    manifest_path = Path(args.manifest)
+    with open(manifest_path) as f:
+        eligible_set = {r['mat_file'] for r in csv.DictReader(f)}
+    print(f"Eligible-for-correction set ({manifest_path.name}): {len(eligible_set)} segments")
 
-    with open(ORIGINAL_JSON) as f:
+    with open(args.original) as f:
         old = json.load(f)
-    with open(CORRECTIONS_JSON) as f:
+    with open(args.corrections) as f:
         new = json.load(f)
-    print(f"Original JSON entries: {len(old)}")
-    print(f"Corrections JSON entries: {len(new)}")
+    print(f"Original JSON ({Path(args.original).name}): {len(old)} entries")
+    print(f"Corrections JSON ({Path(args.corrections).name}): {len(new)} entries")
 
-    diffs = compute_diffs(old, new, disagreement_set)
+    diffs = compute_diffs(old, new, eligible_set)
     if not diffs:
-        print("\nNo diffs detected on the disagreement-manifest segments. labels.csv unchanged.")
+        print("\nNo diffs detected on the eligible segments. labels.csv unchanged.")
         return
     apply_diffs(diffs, dry_run=args.dry_run)
 

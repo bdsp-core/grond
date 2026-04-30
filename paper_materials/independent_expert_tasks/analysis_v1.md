@@ -176,6 +176,45 @@ characterize the failure modes more thoroughly.
 
 5. **MW–TZ is the worst pair on LPD frequency** (ICC 0.773) and the second-worst expert-expert pair on LRDA frequency (ICC 0.945, but with the highest in-pair MAE 0.080 Hz when restricted to overlapping segments). Worth a focused error-analysis pass to see whether MW and TZ systematically disagree on a particular LPD subset.
 
+## Methodology update (2026-04-29) — switched to majority-accept consensus
+
+The original analysis used a permissive "any rater accepted" inclusion rule, which means every pair-wise IRR was computed on the intersection of segments labeled by both raters in the pair, regardless of how the third rater had judged the segment. That turned out to be too permissive: of the 200 LRDA manifest segments, 17 were rejected by ALL THREE experts (genuinely not LRDA, mislabeled in the source data) and a further 28 were rejected by 2 of 3. Including those segments in pair-wise IRR computations let dataset-labeling noise drag down the algorithm-vs-expert IRR, particularly for MW-ALGO and TZ-ALGO LRDA frequency.
+
+The canonical analysis is now **majority-accept consensus**: a segment is eligible for IRR computation iff at least 2 of the 3 independent experts (MW, SZ, TZ) agreed it was a valid instance of the labeled subtype. Within an eligible segment, an individual rater's label is used only if THAT rater also accepted the segment, so every pair-wise IRR is computed on segments where both contributing raters agreed the pattern is valid.
+
+**Effect on the LRDA-frequency gap:**
+
+| | Any accept (legacy) | Majority accept (canonical) |
+|---|---:|---:|
+| MW-ALGO ICC | 0.604 | **0.745** |
+| SZ-ALGO ICC | 0.890 | 0.890 |
+| TZ-ALGO ICC | 0.686 | **0.787** |
+| EA mean | 0.727 | **0.807** |
+
+Switching policies closes ~36% of the LRDA-frequency gap (gap 0.146 → 0.093) without changing the algorithm. SZ-ALGO is unchanged because pair-wise computation already excluded SZ-rejected segments from her own IRR.
+
+**Per-task eligibility under majority-accept:**
+
+| Task | Eligible segments | Per-rater rejection rates |
+|---|---:|---|
+| LPD  | 195/200 | MW 13%, SZ 16%, TZ 7% |
+| GPD  | 198/200 | MW 0%, SZ 5%, TZ 7% |
+| LRDA | 155/200 | MW 13%, SZ **44%**, TZ 28% |
+| GRDA | 132/200 | MW 0%, SZ **35%**, TZ 22% |
+
+SZ rejected substantially more LRDA and GRDA segments than MW or TZ, suggesting either a more conservative LRDA/GRDA threshold or systematic differences in subtype recognition. This is itself a worthwhile observation — IIIC label inclusion criteria for LRDA and GRDA may be more permissive than experts' bedside criteria.
+
+**Path C verdict revisited.** Under the cleaner majority-accept analysis, V1 (the original NB-Hilbert) already reaches MW-ALGO 0.745, only 0.064 below the worst expert-expert pair (MW-SZ 0.843) and well within the LPD-frequency precedent. **V9's marginal additional improvement (Plan A) becomes small or negative** because the segments V9 was specifically optimized to handle were largely the ones that get filtered out by the consensus rule. Going forward, V1 (with the canonical majority-accept inclusion) is the manuscript algorithm; the V9 hard-case classifier and the Plan B CRNN remain in the repo as future-work scaffolding for when more rater-consensus data is available.
+
+## Ongoing: a fourth independent expert is being recruited
+
+A fourth independent rater is in the pipeline. When their data arrives, the analysis will be re-run with the same majority-accept consensus rule (now requiring ≥3 of 4 raters). Expected effects:
+- Tighter consensus on which segments are LRDA / GRDA, further reducing dataset-noise contamination.
+- Tighter EE bands (4 raters instead of 3 → 6 EE pairs instead of 3).
+- More robust per-segment frequency targets (median of 3-4 raters rather than 2-3).
+
+The numbers in this analysis are therefore **preliminary** — the headline figure and all per-pair tables will be regenerated once the fourth rater finishes.
+
 ## Path C update (2026-04-29) — algorithm fix attempt
 
 After the disagreement triage (see [`disagreement_summary.md`](disagreement_summary.md) and the top-20 list in [`top20_disagreement_summary.md`](top20_disagreement_summary.md)), MW reviewed and characterized the LRDA failure modes (5 partial-LRDA, 6 laterality cascade, 3 partial hemisphere, 1 misclassified). Two algorithmic-fix tracks were attempted in parallel ([`lrda_path_c_plan.md`](lrda_path_c_plan.md)):

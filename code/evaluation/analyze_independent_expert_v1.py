@@ -195,14 +195,102 @@ def load_rater_jsons():
     return algo
 
 
-def build_label_tables():
+def load_rater_accept_status():
+    """Per-rater accept/reject status from raw export JSONs.
+
+    The ingester drops rejected entries when writing labels.csv, so we
+    read the raw JSONs to recover the reject signal. Returns:
+
+        status[subtype][rater][mat_file] = 'accept' | 'reject_not_rda' | absent
+
+    A segment that does not appear means the rater was not asked about it
+    (which on the 200-seg manifests is rare since we built per-rater HTMLs
+    that included all 200 segments per subtype).
+    """
+    status = {sub: {r: {} for r in ('MW', 'SZ', 'TZ')} for sub in SUBTYPES}
+    files = [
+        ('TZ/lpd_freq_timing_results_TZ.json',     'lpd',  'TZ', 'pd'),
+        ('TZ/gpd_freq_timing_results_TZ.json',     'gpd',  'TZ', 'pd'),
+        ('TZ/lrda_freq_labeling_results_TZ.json',  'lrda', 'TZ', 'rda'),
+        ('TZ/grda_freq_labeling_results_TZ.json',  'grda', 'TZ', 'rda'),
+        ('SZ/lpd_freq_timing_batch1_results.json', 'lpd',  'SZ', 'pd'),
+        ('SZ/gpd_freq_timing_batch1_results.json', 'gpd',  'SZ', 'pd'),
+        ('SZ/rda_freq_labeling_results-2.json',    None,   'SZ', 'rda_combined'),
+        ('MW/rda_freq_labeling_results-mbw-update20.json', None, 'MW', 'rda_combined'),
+    ]
+    for rel, subtype_tag, rater, kind in files:
+        path = RAW_DIR / rel
+        if not path.exists():
+            continue
+        with open(path) as f:
+            d = json.load(f)
+        for entry in d.values():
+            mf = entry.get('mat_file')
+            sid = entry.get('segment_id')
+            if not mf and sid:
+                mf = sid + '.mat'
+            if not mf:
+                continue
+            if kind == 'rda_combined':
+                this_sub = (entry.get('subtype') or '').lower()
+                if this_sub not in ('lrda', 'grda'):
+                    continue
+            else:
+                this_sub = subtype_tag
+            if kind == 'pd':
+                # PD viewer: 'rejected' bool + 'review_status'
+                if entry.get('rejected') or entry.get('review_status') == 'rejected':
+                    s = 'reject_not_rda'
+                else:
+                    s = 'accept'
+            else:
+                s = entry.get('action') or 'unknown'
+            status[this_sub][rater][mf] = s
+    # MW for LPD / GPD: no separate JSON (MW labels live in labels.csv only).
+    # We treat all 200 manifest segments as MW-accepted for LPD/GPD since the
+    # MW LPD/GPD labels in labels.csv came from regular reviews where MW
+    # didn't have a 'reject' option in those viewers.
+    for sub in ('lpd', 'gpd'):
+        for mf in load_manifest(sub):
+            status[sub]['MW'].setdefault(mf, 'accept')
+    return status
+
+
+def consensus_eligible(mf, status_per_rater, policy):
+    """Return True if `mf` passes the consensus inclusion filter.
+
+    Policies:
+        'any'        -> at least one rater accepted (default; old behavior)
+        'majority'   -> >=2 of the rated raters accepted
+        'unanimous'  -> all rated raters accepted
+    """
+    accepts = sum(1 for r, s in status_per_rater.items() if s == 'accept')
+    rejects = sum(1 for r, s in status_per_rater.items() if s == 'reject_not_rda')
+    rated = accepts + rejects
+    if rated == 0:
+        return False
+    if policy == 'any':
+        return accepts >= 1
+    if policy == 'majority':
+        return accepts > rejects
+    if policy == 'unanimous':
+        return rejects == 0 and accepts >= 1
+    raise ValueError(f'unknown consensus policy: {policy}')
+
+
+def build_label_tables(consensus='any'):
     """Produce per-task per-rater label tables.
 
     Returns: tables[subtype]['freq'][rater][mat_file] = value (float Hz)
              tables[subtype]['lat'][rater][mat_file]  = 'left' or 'right'
     where rater in {'MW', 'SZ', 'TZ', 'ALGO'}.
+
+    consensus: which segments are eligible for the IRR analysis.
+        'any'       = at least one rater accepted (legacy)
+        'majority'  = >=2 of the 3 raters accepted (canonical)
+        'unanimous' = all rated raters accepted
     """
-    print("Loading labels...")
+    print(f"Loading labels (consensus policy: {consensus})...")
 
     # SZ + TZ from labels.csv (round=independent_expert_v1)
     sz_tz_freq = load_labels_csv('frequency_hz', round_filter=ROUND, raters={'SZ', 'TZ'})
@@ -230,14 +318,24 @@ def build_label_tables():
     # Algorithm predictions per segment
     algo_pred = load_rater_jsons()
 
+    # Per-rater accept/reject status from raw JSONs (used for consensus filter)
+    rater_status = load_rater_accept_status()
+
     # Build per-task tables filtered to manifest segments
     tables = {}
+    consensus_excluded = {}
     for sub in SUBTYPES:
         manifest_set = set(load_manifest(sub))
         freq_table = {r: {} for r in ['MW', 'SZ', 'TZ', 'ALGO']}
         lat_table  = {r: {} for r in ['MW', 'SZ', 'TZ', 'ALGO']}
+        n_excluded = 0
 
         for mf in manifest_set:
+            # Apply consensus filter (skip segments where insufficient experts accepted)
+            status_per_rater = {r: rater_status[sub][r].get(mf) for r in ('MW', 'SZ', 'TZ')}
+            if not consensus_eligible(mf, status_per_rater, consensus):
+                n_excluded += 1
+                continue
             # MW
             if ('MW', mf) in mw_freq:
                 freq_table['MW'][mf] = mw_freq[('MW', mf)]
@@ -258,6 +356,28 @@ def build_label_tables():
                     lat_table['ALGO'][mf] = ap['algo_lat']
 
         tables[sub] = {'freq': freq_table, 'lat': lat_table, 'manifest': manifest_set}
+        consensus_excluded[sub] = n_excluded
+
+    # Per-task: also filter individual rater labels to segments where THAT rater accepted.
+    # If an individual rater rejected a segment that nonetheless passed the global
+    # consensus filter (e.g., majority accept = MW + TZ; SZ rejected), drop SZ's
+    # frequency label on that segment so SZ-ALGO IRR is computed only on segments
+    # where SZ herself agreed it was a valid pattern.
+    for sub in SUBTYPES:
+        for r in ('MW', 'SZ', 'TZ'):
+            for mf in list(tables[sub]['freq'][r]):
+                if rater_status[sub][r].get(mf) == 'reject_not_rda':
+                    tables[sub]['freq'][r].pop(mf, None)
+            for mf in list(tables[sub]['lat'][r]):
+                if rater_status[sub][r].get(mf) == 'reject_not_rda':
+                    tables[sub]['lat'][r].pop(mf, None)
+
+    # Report consensus filter exclusions
+    if any(n > 0 for n in consensus_excluded.values()):
+        print(f"\nConsensus filter ({consensus}) excluded segments per task:")
+        for sub in SUBTYPES:
+            print(f"  {sub.upper()}: {consensus_excluded[sub]} of 200 segments excluded")
+            print(f"            -> {200 - consensus_excluded[sub]} eligible for IRR")
 
     # Print coverage
     print("\nCoverage of the 200-seg subsets per (subtype, rater, label_type):")
@@ -620,11 +740,16 @@ def main():
                              'v9 = gated hybrid (Plan A). '
                              'crnn = end-to-end neural pitch detector (Plan B). '
                              'For v9/crnn, only LRDA frequency is overridden; other tasks fall back to v1.')
+    parser.add_argument('--consensus', choices=['any', 'majority', 'unanimous'], default='majority',
+                        help='Inclusion policy: which segments enter the IRR analysis. '
+                             'any: at least one rater accepted (legacy, includes data noise). '
+                             'majority (default): >=2 of 3 raters accepted (canonical). '
+                             'unanimous: all 3 raters agreed it is the labeled pattern.')
     args = parser.parse_args()
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
-    tables = build_label_tables()
+    tables = build_label_tables(consensus=args.consensus)
 
     # Override LRDA freq column with v9 or crnn predictions if requested.
     if args.algo == 'v9':
