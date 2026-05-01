@@ -363,6 +363,7 @@ def prepare_cases(candidates):
             'tautan_freq': round(tautan_freq, 3) if np.isfinite(tautan_freq) else None,
             'default_freq': default_freq,
             'dom_side': dom_side,
+            'rater_freqs': cand.get('rater_freqs', {}),
             'eeg_data': downsample(seg_display, 800),
             'raw_bipolar': downsample(seg, 400),
         }
@@ -534,6 +535,7 @@ def build_html(cases_data, laterality_mode=False, subtype_arg='rda'):
   <span class="info-item">IIIC agreement: <strong id="info-agree">--</strong></span>
   <span class="info-item">W05 estimate: <strong id="info-w05" style="color:#0066cc;">--</strong></span>
   <span class="info-item">Tautan estimate: <strong id="info-tautan" style="color:#996600;">--</strong></span>
+  <span class="info-item">Prior raters: <strong id="info-priors" style="color:#aa00aa;">--</strong></span>
   <span class="info-item">Selected: <strong id="info-selected" style="color:#228822;">--</strong></span>
 </div>
 
@@ -870,6 +872,13 @@ function updateInfo() {{
   document.getElementById('info-w05').textContent = c.w05_freq.toFixed(2) + ' Hz';
   document.getElementById('info-tautan').textContent =
     c.tautan_freq ? c.tautan_freq.toFixed(2) + ' Hz' : '--';
+  // Per-rater prior frequencies, e.g. "MW=1.50  SZ=2.00  TZ=1.75"
+  if (c.rater_freqs && Object.keys(c.rater_freqs).length > 0) {{
+    document.getElementById('info-priors').textContent = Object.entries(c.rater_freqs)
+      .map(function(kv){{ return kv[0] + '=' + (+kv[1]).toFixed(2); }}).join('  ');
+  }} else {{
+    document.getElementById('info-priors').textContent = '--';
+  }}
   document.getElementById('info-selected').textContent = getSelectedFreq().toFixed(2) + ' Hz';
 
   document.getElementById('counter').textContent = (idx + 1) + ' / ' + CASES.length;
@@ -1092,6 +1101,9 @@ def _candidates_from_manifest(manifest_path, subtype_filter=None):
 
     The manifest must have a `mat_file` column. Other fields (patient_id,
     subtype, IIIC stats) are looked up from segment_labels.csv when present.
+    Per-rater prior frequencies are looked up from labels.csv and attached
+    to each candidate as a `rater_freqs` dict so the viewer can display
+    them alongside the W05/Tautan defaults.
     """
     manifest_df = pd.read_csv(manifest_path)
     if 'mat_file' not in manifest_df.columns:
@@ -1099,6 +1111,17 @@ def _candidates_from_manifest(manifest_path, subtype_filter=None):
 
     sl = pd.read_csv(str(LABELS_DIR / 'segment_labels.csv'))
     sl_indexed = sl.set_index('mat_file')
+
+    # Per-rater frequencies from labels.csv (key: mat_file -> {rater: freq})
+    labels_csv = pd.read_csv(str(LABELS_DIR / 'labels.csv'))
+    fr = labels_csv[labels_csv.label_type == 'frequency_hz'].copy()
+    fr['value'] = pd.to_numeric(fr['value'], errors='coerce')
+    fr = fr[fr.value.notna() & (fr.value > 0)]
+    rater_freqs_map = {}
+    for _, lr in fr.iterrows():
+        mf = lr['mat_file']; r = lr['rater']; v = float(lr['value'])
+        rater_freqs_map.setdefault(mf, {})[r] = round(v, 2)
+
     candidates = []
     for _, mrow in manifest_df.iterrows():
         mf = str(mrow['mat_file'])
@@ -1124,6 +1147,7 @@ def _candidates_from_manifest(manifest_path, subtype_filter=None):
             'subtype': sub,
             'n_votes': int(nv) if np.isfinite(nv) else 0,
             'plurality_frac': float(pf) if np.isfinite(pf) else 0.0,
+            'rater_freqs': rater_freqs_map.get(mf, {}),
         })
     return candidates
 
