@@ -380,7 +380,8 @@ def prepare_cases(candidates):
 #  HTML BUILDER
 # ========================================================================
 
-def build_html(cases_data, laterality_mode=False, subtype_arg='rda'):
+def build_html(cases_data, laterality_mode=False, subtype_arg='rda',
+                storage_key='rda_freq_labeling_v1'):
     """Build RDA frequency labeling viewer.
 
     Parameters
@@ -693,7 +694,7 @@ let showNarrowband = true;
 let selectedFreqIdx = 0;  // index into FREQ_BUTTONS
 
 // Persistence
-const STORAGE_KEY = 'rda_freq_labeling_v1';
+const STORAGE_KEY = '{storage_key}';
 let allDecisions = {{}};
 try {{ allDecisions = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{{}}'); }} catch(e) {{ allDecisions = {{}}; }}
 function saveAll() {{ localStorage.setItem(STORAGE_KEY, JSON.stringify(allDecisions)); }}
@@ -1168,6 +1169,11 @@ def main():
                         help='Do not open the generated HTML in a browser.')
     parser.add_argument('--limit', type=int, default=0,
                         help='Limit cases (for testing); 0=all.')
+    parser.add_argument('--storage-key', type=str, default='rda_freq_labeling_v1',
+                        help='localStorage key name. Use a unique value (e.g. '
+                             '`rda_freq_review_2026-05-01`) to give a re-review '
+                             'session its own persistence so previous-session '
+                             'choices do not preempt the algo default.')
     args = parser.parse_args()
 
     # In LRDA mode the UI shows left/right laterality buttons; in GRDA mode it
@@ -1208,7 +1214,8 @@ def main():
         return
 
     print("\nBuilding HTML viewer...")
-    html = build_html(cases_data, laterality_mode=laterality_mode, subtype_arg=args.subtype)
+    html = build_html(cases_data, laterality_mode=laterality_mode,
+                       subtype_arg=args.subtype, storage_key=args.storage_key)
 
     if args.output:
         out_path = Path(args.output)
