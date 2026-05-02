@@ -214,10 +214,10 @@ def main():
         # Significance brackets
         for i, r in enumerate(rows):
             top = max(r['ee_ci'][1], r['ea_ci'][1])
-            bracket_y = top + 0.04
-            text_y = bracket_y + 0.012
+            bracket_y = top + 0.012
+            text_y = bracket_y + 0.005
             ax.plot([i - BAR_W/2, i - BAR_W/2, i + BAR_W/2, i + BAR_W/2],
-                     [bracket_y - 0.008, bracket_y, bracket_y, bracket_y - 0.008],
+                     [bracket_y - 0.004, bracket_y, bracket_y, bracket_y - 0.004],
                      '-', color='#444444', lw=0.9)
             star = stars_for_p(r['p'])
             sign = '+' if (r['delta'] is not None and r['delta'] > 0) else '−'
@@ -232,8 +232,12 @@ def main():
         # Cosmetics
         ax.set_xticks(x)
         ax.set_xticklabels([r['label'] for r in rows], fontsize=10)
-        ax.set_ylim(0.0, 1.08)
-        ax.set_yticks(np.arange(0.0, 1.05, 0.2))
+        # Truncate y-axis to the informative range; all per-pair IRR values cluster
+        # 0.75-1.00 and the EE-vs-EA differences are otherwise invisible in the
+        # top sliver of a 0-1 panel.  Use 0.65 as the lower bound so the lowest
+        # observed pair (LPD MW-TZ EE ICC = 0.773) is comfortably inside the panel.
+        ax.set_ylim(0.65, 1.05)
+        ax.set_yticks(np.arange(0.7, 1.05, 0.1))
         ax.set_axisbelow(True)
         ax.yaxis.grid(True, color=GRID_GRAY, linewidth=0.6)
         ax.spines['top'].set_visible(False)
@@ -250,8 +254,9 @@ def main():
              'Stars: paired segment-level bootstrap (2000 resamples) of mean(EA) − mean(EE).  '
              '+ favors algorithm; − favors experts.  '
              '*** p<0.001  ** p<0.01  * p<0.05.  Bars: 95% CI on the mean from the same bootstrap.  '
-             'Open circles: per-pair point estimates (3 EE pairs, 3 EA pairs).',
-             ha='center', va='bottom', fontsize=8, color='#444444')
+             'Open circles: per-pair point estimates (3 EE pairs, 3 EA pairs).  '
+             'y-axis truncated to 0.65–1.05 to make EE-vs-EA differences visible.',
+             ha='center', va='bottom', fontsize=9, color='#444444')
 
     fig.savefig(OUT_PNG, dpi=240, bbox_inches='tight', facecolor='white')
     fig.savefig(OUT_PDF, bbox_inches='tight', facecolor='white')
