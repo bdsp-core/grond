@@ -69,9 +69,10 @@ FREQ_TASKS = SUBTYPES
 LAT_TASKS = ['lpd', 'lrda']  # GPD is bilateral, GRDA is generalized
 
 # Pair definitions.
-EXPERT_RATERS = ['MW', 'SZ', 'TZ']
-EE_PAIRS = [('MW','SZ'), ('MW','TZ'), ('SZ','TZ')]
-EA_PAIRS = [('MW','ALGO'), ('SZ','ALGO'), ('TZ','ALGO')]
+EXPERT_RATERS = ['MW', 'SZ', 'TZ', 'AS']
+EE_PAIRS = [('MW','SZ'), ('MW','TZ'), ('MW','AS'),
+            ('SZ','TZ'), ('SZ','AS'), ('TZ','AS')]
+EA_PAIRS = [('MW','ALGO'), ('SZ','ALGO'), ('TZ','ALGO'), ('AS','ALGO')]
 
 
 def load_manifest(subtype):
@@ -207,7 +208,7 @@ def load_rater_accept_status():
     (which on the 200-seg manifests is rare since we built per-rater HTMLs
     that included all 200 segments per subtype).
     """
-    status = {sub: {r: {} for r in ('MW', 'SZ', 'TZ')} for sub in SUBTYPES}
+    status = {sub: {r: {} for r in ('MW', 'SZ', 'TZ', 'AS')} for sub in SUBTYPES}
     files = [
         ('TZ/lpd_freq_timing_results_TZ.json',     'lpd',  'TZ', 'pd'),
         ('TZ/gpd_freq_timing_results_TZ.json',     'gpd',  'TZ', 'pd'),
@@ -217,6 +218,9 @@ def load_rater_accept_status():
         ('SZ/gpd_freq_timing_batch1_results.json', 'gpd',  'SZ', 'pd'),
         ('SZ/rda_freq_labeling_results-2.json',    None,   'SZ', 'rda_combined'),
         ('MW/rda_freq_labeling_results-mbw-update20.json', None, 'MW', 'rda_combined'),
+        ('AS/lpd_freq_timing_batch1_results_afs.json',     'lpd',  'AS', 'pd'),
+        ('AS/gpd_freq_timing_batch1_results_afs.json',     'gpd',  'AS', 'pd'),
+        ('AS/rda_freq_labeling_results_grda_afs.json',     None,   'AS', 'rda_combined'),
     ]
     for rel, subtype_tag, rater, kind in files:
         path = RAW_DIR / rel
@@ -283,7 +287,7 @@ def build_label_tables(consensus='any'):
 
     Returns: tables[subtype]['freq'][rater][mat_file] = value (float Hz)
              tables[subtype]['lat'][rater][mat_file]  = 'left' or 'right'
-    where rater in {'MW', 'SZ', 'TZ', 'ALGO'}.
+    where rater in {'MW', 'SZ', 'TZ', 'AS', 'ALGO'}.
 
     consensus: which segments are eligible for the IRR analysis.
         'any'       = at least one rater accepted (legacy)
@@ -293,8 +297,8 @@ def build_label_tables(consensus='any'):
     print(f"Loading labels (consensus policy: {consensus})...")
 
     # SZ + TZ from labels.csv (round=independent_expert_v1)
-    sz_tz_freq = load_labels_csv('frequency_hz', round_filter=ROUND, raters={'SZ', 'TZ'})
-    sz_tz_lat  = load_labels_csv('laterality',   round_filter=ROUND, raters={'SZ', 'TZ'})
+    sz_tz_freq = load_labels_csv('frequency_hz', round_filter=ROUND, raters={'SZ', 'TZ', 'AS'})
+    sz_tz_lat  = load_labels_csv('laterality',   round_filter=ROUND, raters={'SZ', 'TZ', 'AS'})
 
     # MW from segment_labels.csv (consolidated; uses MW from any source) +
     # from labels.csv with rater='MW' (any round) as a fallback.
@@ -326,13 +330,13 @@ def build_label_tables(consensus='any'):
     consensus_excluded = {}
     for sub in SUBTYPES:
         manifest_set = set(load_manifest(sub))
-        freq_table = {r: {} for r in ['MW', 'SZ', 'TZ', 'ALGO']}
-        lat_table  = {r: {} for r in ['MW', 'SZ', 'TZ', 'ALGO']}
+        freq_table = {r: {} for r in ['MW', 'SZ', 'TZ', 'AS', 'ALGO']}
+        lat_table  = {r: {} for r in ['MW', 'SZ', 'TZ', 'AS', 'ALGO']}
         n_excluded = 0
 
         for mf in manifest_set:
             # Apply consensus filter (skip segments where insufficient experts accepted)
-            status_per_rater = {r: rater_status[sub][r].get(mf) for r in ('MW', 'SZ', 'TZ')}
+            status_per_rater = {r: rater_status[sub][r].get(mf) for r in ('MW', 'SZ', 'TZ', 'AS')}
             if not consensus_eligible(mf, status_per_rater, consensus):
                 n_excluded += 1
                 continue
@@ -341,8 +345,8 @@ def build_label_tables(consensus='any'):
                 freq_table['MW'][mf] = mw_freq[('MW', mf)]
             if ('MW', mf) in mw_lat:
                 lat_table['MW'][mf] = mw_lat[('MW', mf)]
-            # SZ, TZ
-            for r in ('SZ', 'TZ'):
+            # SZ, TZ, AS
+            for r in ('SZ', 'TZ', 'AS'):
                 if (r, mf) in sz_tz_freq:
                     freq_table[r][mf] = sz_tz_freq[(r, mf)]
                 if (r, mf) in sz_tz_lat:
@@ -364,7 +368,7 @@ def build_label_tables(consensus='any'):
     # frequency label on that segment so SZ-ALGO IRR is computed only on segments
     # where SZ herself agreed it was a valid pattern.
     for sub in SUBTYPES:
-        for r in ('MW', 'SZ', 'TZ'):
+        for r in ('MW', 'SZ', 'TZ', 'AS'):
             for mf in list(tables[sub]['freq'][r]):
                 if rater_status[sub][r].get(mf) == 'reject_not_rda':
                     tables[sub]['freq'][r].pop(mf, None)
@@ -384,7 +388,7 @@ def build_label_tables(consensus='any'):
     print(f"{'subtype':7s} | {'rater':5s} | {'freq':>6s} | {'lat':>6s}")
     print('-' * 40)
     for sub in SUBTYPES:
-        for r in ['MW', 'SZ', 'TZ', 'ALGO']:
+        for r in ['MW', 'SZ', 'TZ', 'AS', 'ALGO']:
             nf = len(tables[sub]['freq'][r])
             nl = len(tables[sub]['lat'][r])
             print(f"{sub.upper():7s} | {r:5s} | {nf:>6d} | {nl:>6d}")
@@ -602,7 +606,7 @@ def ee_vs_ea_significance(tables, n_boot=2000, seed=42):
             for metric, lower_is_better in METRICS[mtype]:
                 # Union of all segments touched by any rater for this metric
                 tab = T[mtype]
-                all_segs = sorted(set().union(*[set(tab[r]) for r in ['MW', 'SZ', 'TZ', 'ALGO']]))
+                all_segs = sorted(set().union(*[set(tab[r]) for r in ['MW', 'SZ', 'TZ', 'AS', 'ALGO']]))
                 if not all_segs:
                     out['tasks'][sub][mtype][metric] = None
                     continue
@@ -628,9 +632,9 @@ def ee_vs_ea_significance(tables, n_boot=2000, seed=42):
                     idx = rng.integers(0, n, size=n)
                     samp_segs = segs_arr[idx]
                     # Build resampled label dicts (preserving multiplicity by suffixing keys)
-                    samp_dicts = {r: {} for r in ['MW', 'SZ', 'TZ', 'ALGO']}
+                    samp_dicts = {r: {} for r in ['MW', 'SZ', 'TZ', 'AS', 'ALGO']}
                     for j, mf in enumerate(samp_segs):
-                        for r in ['MW', 'SZ', 'TZ', 'ALGO']:
+                        for r in ['MW', 'SZ', 'TZ', 'AS', 'ALGO']:
                             if mf in tab[r]:
                                 samp_dicts[r][f'{mf}__{j}'] = tab[r][mf]
                     ee_b = [_metric_for_pair(samp_dicts[a], samp_dicts[b2], metric) for a, b2 in EE_PAIRS]
@@ -827,7 +831,7 @@ def plot_coverage(tables, out_path):
     import matplotlib.pyplot as plt
 
     fig, axes = plt.subplots(1, 2, figsize=(11, 5))
-    raters = ['MW', 'SZ', 'TZ', 'ALGO']
+    raters = ['MW', 'SZ', 'TZ', 'AS', 'ALGO']
     bar_colors = ['#666666', '#cc3344', '#3366cc', '#229966']
     width = 0.2
     for ax, mtype, title in [(axes[0], 'freq', 'Frequency labels'),

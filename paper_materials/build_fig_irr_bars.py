@@ -63,7 +63,7 @@ def bootstrap_means(tables, sub, mtype, metric, n_boot=2000, seed=42):
     """Returns (ee_mean_point, ee_mean_ci, ea_mean_point, ea_mean_ci, ee_pairs, ea_pairs)
     where each *_pairs is the list of 3 pair-wise point estimates."""
     tab = tables[sub][mtype]
-    all_segs = sorted(set().union(*[set(tab[r]) for r in ('MW', 'SZ', 'TZ', 'ALGO')]))
+    all_segs = sorted(set().union(*[set(tab[r]) for r in ('MW', 'SZ', 'TZ', 'AS', 'ALGO')]))
     if not all_segs:
         return None
     # Point estimates per pair
@@ -83,9 +83,9 @@ def bootstrap_means(tables, sub, mtype, metric, n_boot=2000, seed=42):
     for _ in range(n_boot):
         idx = rng.integers(0, n, size=n)
         samp_segs = segs_arr[idx]
-        samp = {r: {} for r in ('MW', 'SZ', 'TZ', 'ALGO')}
+        samp = {r: {} for r in ('MW', 'SZ', 'TZ', 'AS', 'ALGO')}
         for j, mf in enumerate(samp_segs):
-            for r in ('MW', 'SZ', 'TZ', 'ALGO'):
+            for r in ('MW', 'SZ', 'TZ', 'AS', 'ALGO'):
                 if mf in tab[r]:
                     samp[r][f'{mf}__{j}'] = tab[r][mf]
         eb = [_metric_for_pair(samp[a], samp[b], metric) for a, b in EE_PAIRS]
@@ -254,7 +254,7 @@ def main():
              'Stars: paired segment-level bootstrap (2000 resamples) of mean(EA) − mean(EE).  '
              '+ favors algorithm; − favors experts.  '
              '*** p<0.001  ** p<0.01  * p<0.05.  Bars: 95% CI on the mean from the same bootstrap.  '
-             'Open circles: per-pair point estimates (3 EE pairs, 3 EA pairs).  '
+             'Open circles: per-pair point estimates (6 EE pairs, 4 EA pairs across MW/SZ/TZ/AS).  '
              'y-axis truncated to 0.65–1.05 to make EE-vs-EA differences visible.',
              ha='center', va='bottom', fontsize=9, color='#444444')
 

@@ -56,6 +56,15 @@ RATER_FILES = {
         # export and is superseded.
         ('rda_freq_labeling_results-2.json',     'rda',  'rda_combined'),
     ],
+    'AS': [
+        # Aaron Struck: 4th independent expert. Same four-task design as TZ
+        # (separate per-subtype files), plus a 400-entry combined LRDA+GRDA
+        # file because the RDA viewer's localStorage is shared across the
+        # two task launches (same pattern as SZ and MW).
+        ('lpd_freq_timing_batch1_results_afs.json', 'lpd',  'pd'),
+        ('gpd_freq_timing_batch1_results_afs.json', 'gpd',  'pd'),
+        ('rda_freq_labeling_results_grda_afs.json',  None,   'rda_combined'),
+    ],
     'MW': [
         # MW only labels LRDA + GRDA frequency in v1; LPD/GPD frequency,
         # laterality, and discharge timing already exist in labels.csv from

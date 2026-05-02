@@ -34,7 +34,7 @@ from scipy.stats import spearmanr
 PROJECT_DIR = Path(__file__).resolve().parent.parent.parent
 LABELS_DIR = PROJECT_DIR / 'data' / 'labels'
 
-RATERS = ('PH', 'LB', 'SZ')
+RATERS = ('PH', 'LB', 'SZ', 'MW')
 
 
 def icc_3_1(x, y):
@@ -87,7 +87,8 @@ def main():
         ea_means = {'rho': [], 'icc': [], 'mae': []}
         et_means = {'rho': [], 'icc': [], 'mae': []}  # expert vs Tautan baseline
 
-        for a, b in (('PH', 'LB'), ('PH', 'SZ'), ('LB', 'SZ')):
+        from itertools import combinations as _combos
+        for a, b in _combos(RATERS, 2):
             common = sorted(set(rater_d[a]) & set(rater_d[b]))
             if len(common) < 5:
                 continue
