@@ -69,10 +69,14 @@ INFO_HEIGHT_RATIO = 2
 FIGURE_TITLE_Y_POS = 0.96
 
 # --- Difficulty Badge Styling ---
+# Single neutral-color scheme so the badge color does not collide with the
+# IIIC subtype palette used in figures 4 and 5 (orange = LPD there). The
+# Easy/Medium/Hard label is self-explanatory text-only; we no longer use
+# green/orange/red to encode difficulty.
 DIFF_BADGE_COLORS = {
-    'Easy': {'text': '#2a7d2a', 'bg': '#e6ffe6', 'border': '#2a7d2a'},
-    'Medium': {'text': '#b87700', 'bg': '#fff8e6', 'border': '#b87700'},
-    'Hard': {'text': '#c03030', 'bg': '#ffe6e6', 'border': '#c03030'}
+    'Easy':   {'text': '#222222', 'bg': '#f2f2f2', 'border': '#888888'},
+    'Medium': {'text': '#222222', 'bg': '#f2f2f2', 'border': '#888888'},
+    'Hard':   {'text': '#222222', 'bg': '#f2f2f2', 'border': '#888888'},
 }
 
 # --- Topoplot Electrode Label Styling ---
@@ -334,10 +338,11 @@ def draw_eeg_panel(ax, case, is_pd):
     dc_config = DIFF_BADGE_COLORS.get(difficulty, {'text': '#333', 'bg': '#f0f0f0', 'border': '#999'})
 
     diff_text = f'{difficulty.upper()} (Agreement={agreement:.0f}%)'
-    ax.text(0.99, 0.99, diff_text, transform=ax.transAxes,
+    ax.text(0.99, 1.02, diff_text, transform=ax.transAxes,
             fontsize=DIFFICULTY_BADGE_FONTSIZE, fontweight='bold',
-            color=dc_config['text'], va='top', ha='right',
-            bbox=dict(boxstyle="round,pad=0.2", fc=dc_config['bg'], ec=dc_config['border'], lw=0.5, alpha=0.7))
+            color=dc_config['text'], va='bottom', ha='right',
+            clip_on=False,
+            bbox=dict(boxstyle="round,pad=0.2", fc=dc_config['bg'], ec=dc_config['border'], lw=0.5, alpha=0.95))
 
     # Time axis labels
     ax.set_xlabel('Time (s)', fontsize=TIME_AXIS_LABEL_FONTSIZE)
@@ -432,9 +437,22 @@ def draw_topoplot(ax, ax_cbar, case, is_pd):
                     bbox=TOPOPLOT_ELECTRODE_LABEL_BBOX,
                     clip_on=True, zorder=3)
 
-    # Hide colorbar axis — colorbar is not needed (pre-rendered topoplots
-    # are self-explanatory, and the colorbar adds clutter)
-    ax_cbar.axis('off')
+    # Add a small inset colorbar so the topoplot is self-contained: readers
+    # know what value range the inferno colormap encodes (channel involvement
+    # score, 0--1, with vmin/vmax set per modality from COLOR_SCALE).
+    from mpl_toolkits.axes_grid1.inset_locator import inset_axes
+    cbar_ax = inset_axes(ax, width="5%", height="65%", loc='center right',
+                          bbox_to_anchor=(0.05, 0.0, 1.0, 1.0),
+                          bbox_transform=ax.transAxes,
+                          borderpad=0.0)
+    sm = ScalarMappable(norm=Normalize(vmin=vmin, vmax=vmax), cmap=TOPO_CMAP)
+    sm.set_array([])
+    cbar = plt.colorbar(sm, cax=cbar_ax)
+    cbar.ax.tick_params(labelsize=COLORBAR_TICK_LABEL_FONTSIZE)
+    cbar.set_label('Involvement score', fontsize=COLORBAR_LABEL_FONTSIZE)
+    cbar.ax.set_ylim(vmin, vmax)
+    if ax_cbar is not ax:
+        ax_cbar.axis('off')
 
 
 # ── Right-side info panel ───────────────────────────────────────────────────
