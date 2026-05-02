@@ -212,7 +212,9 @@ def get_rda_channel_scores(mat_files, sl):
     """Run rda_spatial_extent, return (n, 18) channel score matrix."""
     from rda_spatial_extent import rda_spatial_extent
 
-    freq_map = sl.set_index('mat_file')['pdchar_freq_hz'].to_dict()
+    # RDA freq driver: V12 NB-Hilbert lives in segment_labels.csv as `algo_freq_hz`
+    # (the legacy `pdchar_freq_hz` column moved to segments.csv and is PD-only).
+    freq_map = sl.set_index('mat_file')['algo_freq_hz'].to_dict()
 
     scores = np.full((len(mat_files), 18), np.nan)
     n_ok = 0
