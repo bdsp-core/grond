@@ -43,9 +43,15 @@ FIGURES = [
     },
     {
         'num': 5,
-        'name': 'Figs 5-8: Characterization Examples (LPD, GPD, LRDA, GRDA)',
+        'name': 'Fig 5: Independent-expert IRR comparison (paired bars)',
+        'script': 'build_fig_irr_bars.py',
+        'output': 'figures/fig5_irr_comparison.png',
+    },
+    {
+        'num': '6-9',
+        'name': 'Figs 6-9: Characterization Examples (LPD, GPD, LRDA, GRDA)',
         'script': 'render_figures.py',
-        'output': 'figures/fig5_lpd_characterization.png',
+        'output': 'figures/fig6_lpd_characterization.png',
     },
     {
         'num': 'S1',
