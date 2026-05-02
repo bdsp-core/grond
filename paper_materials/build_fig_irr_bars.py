@@ -1,10 +1,22 @@
 #!/usr/bin/env python3
 """Independent-expert IRR bar-plot figure (Fig 5): paired EE vs EA with CIs + significance.
 
-Reads results/independent_expert_v1/summary.json (the V14 canonical run) and
-re-bootstraps segment-level resamples so each bar gets a proper 95% CI on
-its mean. Significance comparisons (EA vs EE) reuse the paired-segment
-bootstrap p-values already in summary.json.
+Two-row layout:
+  Row 1: Canonical 4-rater independent-expert cohort (MW, SZ, TZ, AS) under
+         the canonical majority-accept consensus rule (V14 algorithm).
+         Panel A: Frequency Spearman rho (LPD, GPD, GRDA, LRDA).
+         Panel B: Laterality Cohen kappa (LPD, LRDA).
+  Row 2: Prior 4-rater Tautan et al. (2025) cohort (PH, LB, SZ, MW), where
+         PH/LB/SZ labels were produced without the present interactive
+         narrowband-overlay tools (PH/LB never labeled laterality).
+         Panel C: Frequency Spearman rho (LPD, GPD, GRDA, LRDA).
+
+Each bar is a paired segment-level bootstrap (n=2000) of the mean across
+the within-role pairs. Error bars are 95% CI on the mean from that
+bootstrap. Open circles are individual pair-wise point estimates
+(canonical: 6 EE pairs + 4 EA pairs; prior: 6 EE pairs + 4 EA pairs).
+Significance brackets test mean(EA) - mean(EE), sign-corrected so + favors
+algorithm; *** p<0.001, ** p<0.01, * p<0.05; n.s. otherwise.
 
 Output:
     paper_materials/figures/fig5_irr_comparison.png
@@ -16,8 +28,10 @@ from __future__ import annotations
 import json
 import sys
 from collections import Counter
+from itertools import combinations
 from pathlib import Path
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
@@ -28,6 +42,7 @@ from analyze_independent_expert_v1 import (  # type: ignore
     build_label_tables, EE_PAIRS, EA_PAIRS, SUBTYPES, LAT_TASKS, PRETTY,
 )
 
+LABELS_DIR = PROJECT_DIR / 'data' / 'labels'
 OUT_PNG = PROJECT_DIR / 'paper_materials' / 'figures' / 'fig5_irr_comparison.png'
 OUT_PDF = PROJECT_DIR / 'paper_materials' / 'figures' / 'fig5_irr_comparison.pdf'
 SUMMARY_JSON = PROJECT_DIR / 'results' / 'independent_expert_v1' / 'summary.json'
@@ -39,6 +54,8 @@ GRID_GRAY = '#d8d8d8'
 mpl.rcParams['font.family'] = ['Helvetica', 'Arial', 'DejaVu Sans']
 mpl.rcParams['font.size'] = 10
 
+
+# ---------------- Per-pair metric helper (works for any rater set) ----------------
 
 def _metric_for_pair(label_a, label_b, metric):
     common = sorted(set(label_a) & set(label_b))
@@ -59,16 +76,25 @@ def _metric_for_pair(label_a, label_b, metric):
     return percent_agree(a, b)
 
 
-def bootstrap_means(tables, sub, mtype, metric, n_boot=2000, seed=42):
-    """Returns (ee_mean_point, ee_mean_ci, ea_mean_point, ea_mean_ci, ee_pairs, ea_pairs)
-    where each *_pairs is the list of 3 pair-wise point estimates."""
-    tab = tables[sub][mtype]
-    all_segs = sorted(set().union(*[set(tab[r]) for r in ('MW', 'SZ', 'TZ', 'AS', 'ALGO')]))
+def bootstrap_means(tab, ee_pairs, ea_pairs, raters_all, metric, n_boot=2000, seed=42):
+    """Paired segment-level bootstrap of mean(EE pairs) and mean(EA pairs).
+
+    Args:
+        tab: dict[rater] -> dict[mat_file] -> value (one role's table for one task).
+             Must include every rater referenced in ee_pairs / ea_pairs.
+        ee_pairs: list of (rater_a, rater_b) within experts.
+        ea_pairs: list of (rater, 'ALGO').
+        raters_all: list of rater names whose tables are bootstrapped.
+        metric: 'icc' | 'spearman' | 'mae' | 'kappa' | 'percent'.
+
+    Returns:
+        (ee_mean, ee_ci, ea_mean, ea_ci, ee_pair_pts, ea_pair_pts, delta, p_two)
+    """
+    all_segs = sorted(set().union(*[set(tab.get(r, {})) for r in raters_all]))
     if not all_segs:
         return None
-    # Point estimates per pair
-    ee_vals = [_metric_for_pair(tab[a], tab[b], metric) for a, b in EE_PAIRS]
-    ea_vals = [_metric_for_pair(tab[a], tab[b], metric) for a, b in EA_PAIRS]
+    ee_vals = [_metric_for_pair(tab.get(a, {}), tab.get(b, {}), metric) for a, b in ee_pairs]
+    ea_vals = [_metric_for_pair(tab.get(a, {}), tab.get(b, {}), metric) for a, b in ea_pairs]
     ee_clean = [v for v in ee_vals if not (isinstance(v, float) and np.isnan(v))]
     ea_clean = [v for v in ea_vals if not (isinstance(v, float) and np.isnan(v))]
     if not ee_clean or not ea_clean:
@@ -79,27 +105,34 @@ def bootstrap_means(tables, sub, mtype, metric, n_boot=2000, seed=42):
     rng = np.random.default_rng(seed)
     segs_arr = np.array(all_segs)
     n = len(segs_arr)
-    ee_dist, ea_dist = [], []
+    ee_dist, ea_dist, delta_dist = [], [], []
+    sign = -1.0 if metric == 'mae' else 1.0
     for _ in range(n_boot):
         idx = rng.integers(0, n, size=n)
         samp_segs = segs_arr[idx]
-        samp = {r: {} for r in ('MW', 'SZ', 'TZ', 'AS', 'ALGO')}
+        samp = {r: {} for r in raters_all}
         for j, mf in enumerate(samp_segs):
-            for r in ('MW', 'SZ', 'TZ', 'AS', 'ALGO'):
-                if mf in tab[r]:
+            for r in raters_all:
+                if mf in tab.get(r, {}):
                     samp[r][f'{mf}__{j}'] = tab[r][mf]
-        eb = [_metric_for_pair(samp[a], samp[b], metric) for a, b in EE_PAIRS]
-        ab = [_metric_for_pair(samp[a], samp[b], metric) for a, b in EA_PAIRS]
+        eb = [_metric_for_pair(samp[a], samp[b], metric) for a, b in ee_pairs]
+        ab = [_metric_for_pair(samp[a], samp[b], metric) for a, b in ea_pairs]
         eb = [v for v in eb if not (isinstance(v, float) and np.isnan(v))]
         ab = [v for v in ab if not (isinstance(v, float) and np.isnan(v))]
-        if eb:
-            ee_dist.append(float(np.mean(eb)))
-        if ab:
-            ea_dist.append(float(np.mean(ab)))
-    ee_dist = np.array(ee_dist); ea_dist = np.array(ea_dist)
+        if eb and ab:
+            mee = float(np.mean(eb))
+            mea = float(np.mean(ab))
+            ee_dist.append(mee)
+            ea_dist.append(mea)
+            delta_dist.append(sign * (mea - mee))
+    if not ee_dist:
+        return None
     ee_ci = (float(np.percentile(ee_dist, 2.5)), float(np.percentile(ee_dist, 97.5)))
     ea_ci = (float(np.percentile(ea_dist, 2.5)), float(np.percentile(ea_dist, 97.5)))
-    return ee_mean, ee_ci, ea_mean, ea_ci, ee_clean, ea_clean
+    delta_arr = np.array(delta_dist)
+    p_two = float(min(1.0, 2 * min(np.mean(delta_arr <= 0), np.mean(delta_arr >= 0))))
+    delta_pt = sign * (ea_mean - ee_mean)
+    return ee_mean, ee_ci, ea_mean, ea_ci, ee_clean, ea_clean, delta_pt, p_two
 
 
 def stars_for_p(p):
@@ -114,148 +147,230 @@ def stars_for_p(p):
     return 'n.s.'
 
 
+# ---------------- Build prior cohort tables (PH/LB/SZ/MW) ----------------
+
+PRIOR_RATERS = ('PH', 'LB', 'SZ', 'MW', 'ALGO')
+
+
+def build_prior_cohort_tables():
+    """Return tables[sub]['freq'][rater][mat_file] = value for the prior
+    PH/LB/SZ/MW Tautan cohort. Algorithm freq is `pdchar_freq_hz` for PD
+    subtypes and `algo_freq_hz` for RDA subtypes (both refreshed from the
+    production pipeline)."""
+    labels = pd.read_csv(LABELS_DIR / 'labels.csv')
+    sl = pd.read_csv(LABELS_DIR / 'segment_labels.csv')
+    seg = pd.read_csv(LABELS_DIR / 'segments.csv',
+                      usecols=['mat_file', 'pdchar_freq_hz'])
+    sl = sl.merge(seg, on='mat_file', how='left')
+    sl_idx = sl.set_index('mat_file')
+
+    fr = labels[labels.label_type == 'frequency_hz'].copy()
+    fr['value'] = pd.to_numeric(fr['value'], errors='coerce')
+    fr = fr[fr.value.notna() & (fr.value > 0)]
+
+    tables = {sub: {'freq': {r: {} for r in PRIOR_RATERS}} for sub in SUBTYPES}
+    for sub in SUBTYPES:
+        sub_mfs = set(sl[sl.subtype == sub].mat_file)
+        for r in ('PH', 'LB', 'SZ', 'MW'):
+            sub_fr = fr[(fr.rater == r) & fr.mat_file.isin(sub_mfs)]
+            for _, row in sub_fr.iterrows():
+                tables[sub]['freq'][r][row['mat_file']] = float(row.value)
+        # Algorithm freq
+        algo_col = 'pdchar_freq_hz' if sub in ('lpd', 'gpd') else 'algo_freq_hz'
+        for mf in sub_mfs:
+            if mf in sl_idx.index:
+                v = pd.to_numeric(sl_idx.loc[mf, algo_col], errors='coerce')
+                if pd.notna(v) and v > 0:
+                    tables[sub]['freq']['ALGO'][mf] = float(v)
+    return tables
+
+
+# ---------------- Plot helper ----------------
+
+def draw_panel(ax, rows, *, panel_title, show_legend=False, y_label=False,
+                bar_w=0.36, ylim=(0.45, 1.05), yticks=None):
+    if not rows:
+        ax.axis('off')
+        return
+    n_tasks = len(rows)
+    x = np.arange(n_tasks)
+    ee_means = [r['ee_mean'] for r in rows]
+    ea_means = [r['ea_mean'] for r in rows]
+    ee_err = np.array([[r['ee_mean'] - r['ee_ci'][0], r['ee_ci'][1] - r['ee_mean']] for r in rows]).T
+    ea_err = np.array([[r['ea_mean'] - r['ea_ci'][0], r['ea_ci'][1] - r['ea_mean']] for r in rows]).T
+
+    ax.bar(x - bar_w/2, ee_means, bar_w, color=EE_COLOR,
+            edgecolor='#1d2d44', linewidth=0.6, yerr=ee_err, capsize=3,
+            ecolor='#1d2d44', error_kw={'elinewidth': 0.9},
+            label='Expert–Expert')
+    ax.bar(x + bar_w/2, ea_means, bar_w, color=EA_COLOR,
+            edgecolor='#7a3a10', linewidth=0.6, yerr=ea_err, capsize=3,
+            ecolor='#7a3a10', error_kw={'elinewidth': 0.9},
+            label='Expert–Algorithm')
+
+    for i, r in enumerate(rows):
+        for v in r['ee_pairs']:
+            ax.plot(i - bar_w/2, v, 'o', mfc='white', mec='#1d2d44',
+                     mew=0.9, ms=4.5, zorder=5)
+        for v in r['ea_pairs']:
+            ax.plot(i + bar_w/2, v, 'o', mfc='white', mec='#7a3a10',
+                     mew=0.9, ms=4.5, zorder=5)
+
+    for i, r in enumerate(rows):
+        top = max(r['ee_ci'][1], r['ea_ci'][1])
+        bracket_y = top + 0.012
+        text_y = bracket_y + 0.005
+        ax.plot([i - bar_w/2, i - bar_w/2, i + bar_w/2, i + bar_w/2],
+                 [bracket_y - 0.004, bracket_y, bracket_y, bracket_y - 0.004],
+                 '-', color='#444444', lw=0.9)
+        star = stars_for_p(r['p'])
+        delta = r.get('delta')
+        sign = '+' if (delta is not None and delta > 0) else '−'
+        label = f'{sign}{star}' if star not in ('', 'n.s.') else 'n.s.'
+        color = '#207a3a' if (delta is not None and delta > 0
+                              and r['p'] is not None and r['p'] < 0.05) else (
+                '#aa2a2a' if (delta is not None and delta < 0
+                              and r['p'] is not None and r['p'] < 0.05) else '#666666')
+        ax.text(i, text_y, label, ha='center', va='bottom',
+                 fontsize=10, color=color, fontweight='bold')
+
+    ax.set_xticks(x)
+    ax.set_xticklabels([r['label'] for r in rows], fontsize=10)
+    ax.set_ylim(*ylim)
+    if yticks is not None:
+        ax.set_yticks(yticks)
+    ax.set_axisbelow(True)
+    ax.yaxis.grid(True, color=GRID_GRAY, linewidth=0.6)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.set_title(panel_title, fontsize=11, loc='left', pad=8)
+    if y_label:
+        ax.set_ylabel('Inter-rater reliability', fontsize=10)
+    if show_legend:
+        ax.legend(loc='lower right', fontsize=8.5, frameon=True, framealpha=0.92,
+                  edgecolor='#cccccc')
+
+
+def collect_panel_rows(tables, ee_pairs, ea_pairs, raters_all, panel_specs,
+                        sig_lookup=None):
+    """For each spec (sub, metric, mtype, label) compute bootstrap means + CIs."""
+    out = []
+    for sub, metric, mtype, label in panel_specs:
+        res = bootstrap_means(tables[sub][mtype], ee_pairs, ea_pairs, raters_all, metric)
+        if res is None:
+            continue
+        ee_mean, ee_ci, ea_mean, ea_ci, ee_pairs_pt, ea_pairs_pt, delta, p_two = res
+        # If sig_lookup is provided (canonical summary.json), prefer those numbers
+        # for consistency with the manuscript text.
+        if sig_lookup is not None:
+            entry = sig_lookup.get(sub, {}).get(mtype, {}).get(metric)
+            if entry is not None:
+                p_two = entry.get('p_two_sided', p_two)
+                delta = entry.get('delta_point', delta)
+        out.append({
+            'label': label, 'sub': sub, 'metric': metric, 'mtype': mtype,
+            'ee_mean': ee_mean, 'ee_ci': ee_ci, 'ee_pairs': ee_pairs_pt,
+            'ea_mean': ea_mean, 'ea_ci': ea_ci, 'ea_pairs': ea_pairs_pt,
+            'delta': delta, 'p': p_two,
+        })
+    return out
+
+
 def main():
-    print('Loading consensus tables (V14 canonical, majority-accept)...')
-    tables = build_label_tables(consensus='majority')
-    # Override LRDA ALGO with V14 (V12 freq + V14 hybrid laterality)
-    v14_path = PROJECT_DIR / 'data' / 'labels' / 'independent_expert_v1' / 'v14_predictions.json'
+    print('Loading canonical 4-rater consensus tables (V14)...')
+    canonical_tables = build_label_tables(consensus='majority')
+    v14_path = LABELS_DIR / 'independent_expert_v1' / 'v14_predictions.json'
     with open(v14_path) as f:
         v14 = json.load(f)
     for sid, e in v14.items():
         mf = e.get('mat_file')
-        if mf in tables['lrda']['freq']['ALGO']:
-            tables['lrda']['freq']['ALGO'][mf] = float(e['v14_freq'])
-        if mf in tables['lrda']['lat']['ALGO']:
-            tables['lrda']['lat']['ALGO'][mf] = e['v14_laterality']
+        if mf in canonical_tables['lrda']['freq']['ALGO']:
+            canonical_tables['lrda']['freq']['ALGO'][mf] = float(e['v14_freq'])
+        if mf in canonical_tables['lrda']['lat']['ALGO']:
+            canonical_tables['lrda']['lat']['ALGO'][mf] = e['v14_laterality']
 
-    # Read significance from canonical summary.json (already V14)
     with open(SUMMARY_JSON) as f:
         summary = json.load(f)
-    sig = summary['ee_vs_ea_significance']
+    sig_lookup = summary['ee_vs_ea_significance']
 
-    # Build the rows we want to show
-    # (task, metric, mtype, label) — display in this order
-    panels = {
-        'A. Frequency  (ICC)': [
-            ('lpd',  'icc',  'freq', 'LPD'),
-            ('gpd',  'icc',  'freq', 'GPD'),
-            ('grda', 'icc',  'freq', 'GRDA'),
-            ('lrda', 'icc',  'freq', 'LRDA'),
-        ],
-        'B. Frequency  (Spearman ρ)': [
-            ('lpd',  'spearman', 'freq', 'LPD'),
-            ('gpd',  'spearman', 'freq', 'GPD'),
-            ('grda', 'spearman', 'freq', 'GRDA'),
-            ('lrda', 'spearman', 'freq', 'LRDA'),
-        ],
-        'C. Laterality (Cohen κ)': [
-            ('lpd',  'kappa', 'lat', 'LPD'),
-            ('lrda', 'kappa', 'lat', 'LRDA'),
-        ],
-    }
+    print('Loading prior 4-rater Tautan-cohort tables (PH/LB/SZ/MW)...')
+    prior_tables = build_prior_cohort_tables()
+    PRIOR_EE_PAIRS = list(combinations(('PH', 'LB', 'SZ', 'MW'), 2))
+    PRIOR_EA_PAIRS = [(r, 'ALGO') for r in ('PH', 'LB', 'SZ', 'MW')]
 
-    # Compute bar data for each panel
-    print('Bootstrapping mean EE / mean EA per (task, metric)...')
-    bar_data = {}
-    for panel_title, rows in panels.items():
-        bar_data[panel_title] = []
-        for sub, metric, mtype, label in rows:
-            res = bootstrap_means(tables, sub, mtype, metric, n_boot=2000)
-            if res is None:
-                continue
-            ee_pt, ee_ci, ea_pt, ea_ci, ee_pairs, ea_pairs = res
-            sig_entry = sig.get(sub, {}).get(mtype, {}).get(metric, {})
-            p = sig_entry.get('p_two_sided') if sig_entry else None
-            delta = sig_entry.get('delta_point') if sig_entry else None
-            bar_data[panel_title].append({
-                'label': label, 'sub': sub, 'metric': metric,
-                'ee_mean': ee_pt, 'ee_ci': ee_ci, 'ee_pairs': ee_pairs,
-                'ea_mean': ea_pt, 'ea_ci': ea_ci, 'ea_pairs': ea_pairs,
-                'p': p, 'delta': delta,
-            })
+    canonical_raters = ('MW', 'SZ', 'TZ', 'AS', 'ALGO')
+
+    print('Bootstrapping means...')
+    # Panel A: canonical freq Spearman
+    panel_A = collect_panel_rows(
+        canonical_tables, EE_PAIRS, EA_PAIRS, canonical_raters,
+        [('lpd', 'spearman', 'freq', 'LPD'),
+         ('gpd', 'spearman', 'freq', 'GPD'),
+         ('grda', 'spearman', 'freq', 'GRDA'),
+         ('lrda', 'spearman', 'freq', 'LRDA')],
+        sig_lookup=sig_lookup,
+    )
+    # Panel B: canonical laterality kappa
+    panel_B = collect_panel_rows(
+        canonical_tables, EE_PAIRS, EA_PAIRS, canonical_raters,
+        [('lpd', 'kappa', 'lat', 'LPD'),
+         ('lrda', 'kappa', 'lat', 'LRDA')],
+        sig_lookup=sig_lookup,
+    )
+    # Panel C: prior freq Spearman (PH/LB/SZ/MW)
+    panel_C = collect_panel_rows(
+        prior_tables, PRIOR_EE_PAIRS, PRIOR_EA_PAIRS, PRIOR_RATERS,
+        [('lpd', 'spearman', 'freq', 'LPD'),
+         ('gpd', 'spearman', 'freq', 'GPD'),
+         ('grda', 'spearman', 'freq', 'GRDA'),
+         ('lrda', 'spearman', 'freq', 'LRDA')],
+        sig_lookup=None,  # prior cohort isn't in canonical summary.json
+    )
 
     # ---------------- Plot ----------------
-    n_panels = len(bar_data)
-    # Width per task: ~1.5 inch each
-    panel_widths = [max(3.2, 1.6 * len(rows)) for rows in bar_data.values()]
-    total_w = sum(panel_widths) + 0.5 * (n_panels - 1) + 1.0
-    fig = plt.figure(figsize=(total_w, 4.6))
-    gs = fig.add_gridspec(1, n_panels, width_ratios=panel_widths, wspace=0.25,
-                           left=0.06, right=0.985, top=0.86, bottom=0.14)
+    fig = plt.figure(figsize=(11, 8.0))
+    gs = fig.add_gridspec(2, 2, width_ratios=[4, 2], height_ratios=[1, 1],
+                           wspace=0.20, hspace=0.40,
+                           left=0.07, right=0.985, top=0.92, bottom=0.10)
 
-    BAR_W = 0.36
-    for pi, (panel_title, rows) in enumerate(bar_data.items()):
-        ax = fig.add_subplot(gs[0, pi])
-        n_tasks = len(rows)
-        x = np.arange(n_tasks)
-        ee_means = [r['ee_mean'] for r in rows]
-        ea_means = [r['ea_mean'] for r in rows]
-        ee_err = np.array([[r['ee_mean'] - r['ee_ci'][0], r['ee_ci'][1] - r['ee_mean']] for r in rows]).T
-        ea_err = np.array([[r['ea_mean'] - r['ea_ci'][0], r['ea_ci'][1] - r['ea_mean']] for r in rows]).T
+    ax_A = fig.add_subplot(gs[0, 0])
+    ax_B = fig.add_subplot(gs[0, 1])
+    ax_C = fig.add_subplot(gs[1, 0])
+    ax_D = fig.add_subplot(gs[1, 1])
 
-        bars_ee = ax.bar(x - BAR_W/2, ee_means, BAR_W, color=EE_COLOR,
-                          edgecolor='#1d2d44', linewidth=0.6,
-                          yerr=ee_err, capsize=3, ecolor='#1d2d44',
-                          error_kw={'elinewidth': 0.9}, label='Expert–Expert')
-        bars_ea = ax.bar(x + BAR_W/2, ea_means, BAR_W, color=EA_COLOR,
-                          edgecolor='#7a3a10', linewidth=0.6,
-                          yerr=ea_err, capsize=3, ecolor='#7a3a10',
-                          error_kw={'elinewidth': 0.9}, label='Expert–Algorithm')
+    yticks_freq = np.arange(0.5, 1.05, 0.1)
+    draw_panel(ax_A, panel_A,
+               panel_title='A. Canonical 4-rater cohort (MW, SZ, TZ, AS): Frequency (Spearman ρ)',
+               y_label=True,
+               ylim=(0.45, 1.05), yticks=yticks_freq)
+    draw_panel(ax_B, panel_B,
+               panel_title='B. Canonical cohort: Laterality (Cohen κ)',
+               show_legend=True,
+               ylim=(0.45, 1.05), yticks=yticks_freq)
+    draw_panel(ax_C, panel_C,
+               panel_title='C. Prior 4-rater cohort (PH, LB, SZ, MW): Frequency (Spearman ρ)',
+               y_label=True,
+               ylim=(-0.05, 1.05), yticks=np.arange(0.0, 1.05, 0.2))
 
-        # Overlay individual pair points (open circles)
-        for i, r in enumerate(rows):
-            for v in r['ee_pairs']:
-                ax.plot(i - BAR_W/2, v, 'o', mfc='white', mec='#1d2d44',
-                         mew=0.9, ms=4.5, zorder=5)
-            for v in r['ea_pairs']:
-                ax.plot(i + BAR_W/2, v, 'o', mfc='white', mec='#7a3a10',
-                         mew=0.9, ms=4.5, zorder=5)
+    # Panel D: text-only annotation. The prior cohort doesn't have laterality
+    # labels (PH/LB never annotated laterality), so leave the slot empty with a
+    # short explanation.
+    ax_D.axis('off')
+    ax_D.text(0.5, 0.5,
+              'Laterality not annotated\non the prior cohort\n(PH, LB).',
+              ha='center', va='center', fontsize=10, color='#666666',
+              transform=ax_D.transAxes,
+              bbox=dict(boxstyle='round,pad=0.6',
+                        facecolor='#f4f4f4', edgecolor='#cccccc', linewidth=0.6))
 
-        # Significance brackets
-        for i, r in enumerate(rows):
-            top = max(r['ee_ci'][1], r['ea_ci'][1])
-            bracket_y = top + 0.012
-            text_y = bracket_y + 0.005
-            ax.plot([i - BAR_W/2, i - BAR_W/2, i + BAR_W/2, i + BAR_W/2],
-                     [bracket_y - 0.004, bracket_y, bracket_y, bracket_y - 0.004],
-                     '-', color='#444444', lw=0.9)
-            star = stars_for_p(r['p'])
-            sign = '+' if (r['delta'] is not None and r['delta'] > 0) else '−'
-            label = f'{sign}{star}' if star not in ('', 'n.s.') else 'n.s.'
-            color = '#207a3a' if (r['delta'] is not None and r['delta'] > 0
-                                   and r['p'] is not None and r['p'] < 0.05) else (
-                    '#aa2a2a' if (r['delta'] is not None and r['delta'] < 0
-                                   and r['p'] is not None and r['p'] < 0.05) else '#666666')
-            ax.text(i, text_y, label, ha='center', va='bottom',
-                     fontsize=10, color=color, fontweight='bold')
-
-        # Cosmetics
-        ax.set_xticks(x)
-        ax.set_xticklabels([r['label'] for r in rows], fontsize=10)
-        # Truncate y-axis to the informative range; all per-pair IRR values cluster
-        # 0.75-1.00 and the EE-vs-EA differences are otherwise invisible in the
-        # top sliver of a 0-1 panel.  Use 0.65 as the lower bound so the lowest
-        # observed pair (LPD MW-TZ EE ICC = 0.773) is comfortably inside the panel.
-        ax.set_ylim(0.65, 1.05)
-        ax.set_yticks(np.arange(0.7, 1.05, 0.1))
-        ax.set_axisbelow(True)
-        ax.yaxis.grid(True, color=GRID_GRAY, linewidth=0.6)
-        ax.spines['top'].set_visible(False)
-        ax.spines['right'].set_visible(False)
-        ax.set_title(panel_title, fontsize=11, loc='left', pad=8)
-        if pi == 0:
-            ax.set_ylabel('Inter-rater reliability', fontsize=10)
-        if pi == n_panels - 1:
-            ax.legend(loc='lower right', fontsize=8.5, frameon=True, framealpha=0.92,
-                      edgecolor='#cccccc')
-
-    # Subtitle / footer note
-    fig.text(0.5, 0.02,
+    # Footer
+    fig.text(0.5, 0.015,
              'Stars: paired segment-level bootstrap (2000 resamples) of mean(EA) − mean(EE).  '
              '+ favors algorithm; − favors experts.  '
-             '*** p<0.001  ** p<0.01  * p<0.05.  Bars: 95% CI on the mean from the same bootstrap.  '
-             'Open circles: per-pair point estimates (6 EE pairs, 4 EA pairs across MW/SZ/TZ/AS).  '
-             'y-axis truncated to 0.65–1.05 to make EE-vs-EA differences visible.',
+             '*** p<0.001  ** p<0.01  * p<0.05.  '
+             'Bars: 95% CI on the mean from the same bootstrap.  '
+             'Open circles: per-pair point estimates (canonical: 6 EE pairs + 4 EA pairs; prior: 6 EE + 4 EA).  '
+             'y-axis truncated.',
              ha='center', va='bottom', fontsize=9, color='#444444')
 
     fig.savefig(OUT_PNG, dpi=240, bbox_inches='tight', facecolor='white')
