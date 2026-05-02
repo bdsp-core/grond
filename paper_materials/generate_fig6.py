@@ -19,6 +19,7 @@ from scipy.stats import spearmanr
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+matplotlib.rcParams['font.family'] = ['Helvetica', 'Arial', 'DejaVu Sans']
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
 
@@ -182,9 +183,9 @@ def main():
             if row_idx == 1: ax.set_xlabel('Expert Frequency (Hz)', fontsize=9)
             if col_idx == 0: ax.set_ylabel('Predicted Frequency (Hz)', fontsize=9)
             if row_idx == 0:
-                ax.set_title(f'{label} (n={len(d)})\n\u03c1={rho:.3f}, MAE={mae:.3f}', fontsize=11, fontweight='bold')
+                ax.set_title(f'{label} (n={len(d)})\n\u03c1={rho:.3f}, MAE={mae:.3f}', fontsize=13, fontweight='bold')
             else:
-                ax.set_title(f'\u03c1={rho:.3f}, MAE={mae:.3f}', fontsize=10)
+                ax.set_title(f'\u03c1={rho:.3f}, MAE={mae:.3f}', fontsize=12, fontweight='bold')
             ax.legend(fontsize=6, loc='upper left')
 
     fig.text(0.01, 0.73, 'PDProfiler\n(CNN+PLV+DP)', fontsize=12, fontweight='bold',

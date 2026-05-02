@@ -23,6 +23,7 @@ import scipy.io as sio
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+matplotlib.rcParams['font.family'] = ['Helvetica', 'Arial', 'DejaVu Sans']
 from pathlib import Path
 from scipy.stats import pearsonr
 import warnings
@@ -382,9 +383,9 @@ def plot_figure(pd_results, rda_results, thresholds):
             ax.grid(True, alpha=0.3)
 
             if col_i == 0:
-                ax.set_title(f'{row_label}  |  {metric_label}', fontsize=11, fontweight='bold')
+                ax.set_title(f'{row_label}  |  {metric_label}', fontsize=13, fontweight='bold')
             else:
-                ax.set_title(metric_label, fontsize=11, fontweight='bold')
+                ax.set_title(metric_label, fontsize=13, fontweight='bold')
 
         # Add row label on left
         axes[row_i, 0].set_ylabel(f'{row_label}\n{metrics[0][1]}', fontsize=10)

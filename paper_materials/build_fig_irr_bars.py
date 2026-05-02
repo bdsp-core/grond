@@ -47,7 +47,8 @@ OUT_PNG = PROJECT_DIR / 'paper_materials' / 'figures' / 'fig5_irr_comparison.png
 OUT_PDF = PROJECT_DIR / 'paper_materials' / 'figures' / 'fig5_irr_comparison.pdf'
 SUMMARY_JSON = PROJECT_DIR / 'results' / 'independent_expert_v1' / 'summary.json'
 
-GRID_GRAY = '#d8d8d8'
+GRID_GRAY = '#ececec'
+ANNOT_COLOR = '#333333'
 
 # Canonical IIIC subtype palette (matches Fig 4).
 SUBTYPE_COLORS = {
@@ -62,8 +63,8 @@ SUBTYPE_EDGE = {
     'lrda': '#3d5e22',
     'grda': '#236f8c',
 }
-EE_ALPHA = 0.45    # Expert--Expert bars are translucent
-EA_ALPHA = 1.00    # Expert--Algorithm bars are opaque
+EE_ALPHA = 0.30    # Both EE and EA bars are translucent so the per-pair
+EA_ALPHA = 0.65    #   open circles read clearly on top.
 
 mpl.rcParams['font.family'] = ['Helvetica', 'Arial', 'DejaVu Sans']
 mpl.rcParams['font.size'] = 10
@@ -201,102 +202,107 @@ def build_prior_cohort_tables():
 
 # ---------------- Plot helper ----------------
 
-def draw_panel(ax, rows, *, panel_title, show_legend=False, y_label=False,
-                bar_w=0.36, ylim=(0.0, 1.08), yticks=None,
-                ee_ea_label_y=0.2):
+def draw_panel(ax, rows, *, panel_title, y_label=False,
+                bar_w=0.36, group_step=1.0, ylim=(0.0, 1.08), yticks=None,
+                xlim=None):
     """Render a panel of paired EE/EA bars colored by IIIC pattern subtype.
 
-    Each task uses its canonical Fig-4 color (LPD orange, GPD yellow,
-    LRDA olive, GRDA sky-blue). EE bars are translucent (alpha=0.45);
-    EA bars are opaque. Each bar is annotated with "EE" or "EA" near
-    the bottom (default y=0.2) so role is unambiguous without relying
-    on a separate legend entry.
+    Layout uses a two-level x-axis: per-bar EE/EA tick labels, with
+    subtype names placed below as group labels. Bar width is held
+    constant across panels via `bar_w`; `group_step` controls the
+    horizontal distance between adjacent subtype groups so 2-task and
+    4-task panels render with comparable visual density.
+
+    Significance annotations show a single asterisk symbol (*, **, ***)
+    only for p < 0.05; non-significant comparisons are omitted from the
+    plot and reported in the caption / text instead.
     """
     if not rows:
         ax.axis('off')
         return
     n_tasks = len(rows)
-    x = np.arange(n_tasks)
-    ee_means = [r['ee_mean'] for r in rows]
-    ea_means = [r['ea_mean'] for r in rows]
-    ee_err = np.array([[r['ee_mean'] - r['ee_ci'][0], r['ee_ci'][1] - r['ee_mean']] for r in rows]).T
-    ea_err = np.array([[r['ea_mean'] - r['ea_ci'][0], r['ea_ci'][1] - r['ea_mean']] for r in rows]).T
+    centers = np.arange(n_tasks) * group_step
 
     for i, r in enumerate(rows):
         sub = r['sub']
         face = SUBTYPE_COLORS[sub]
         edge = SUBTYPE_EDGE[sub]
-        ax.bar(i - bar_w/2, ee_means[i], bar_w, color=face, alpha=EE_ALPHA,
+        ee_err = np.array([[r['ee_mean'] - r['ee_ci'][0]],
+                           [r['ee_ci'][1] - r['ee_mean']]])
+        ea_err = np.array([[r['ea_mean'] - r['ea_ci'][0]],
+                           [r['ea_ci'][1] - r['ea_mean']]])
+        ax.bar(centers[i] - bar_w/2, r['ee_mean'], bar_w,
+                color=face, alpha=EE_ALPHA,
                 edgecolor=edge, linewidth=0.7,
-                yerr=ee_err[:, i:i+1], capsize=3, ecolor=edge,
+                yerr=ee_err, capsize=3, ecolor=edge,
                 error_kw={'elinewidth': 0.9})
-        ax.bar(i + bar_w/2, ea_means[i], bar_w, color=face, alpha=EA_ALPHA,
+        ax.bar(centers[i] + bar_w/2, r['ea_mean'], bar_w,
+                color=face, alpha=EA_ALPHA,
                 edgecolor=edge, linewidth=0.7,
-                yerr=ea_err[:, i:i+1], capsize=3, ecolor=edge,
+                yerr=ea_err, capsize=3, ecolor=edge,
                 error_kw={'elinewidth': 0.9})
 
-    # Per-pair point estimates as open circles
+    # Per-pair point estimates as open circles, with horizontal jitter
+    rng = np.random.default_rng(0)
     for i, r in enumerate(rows):
         edge = SUBTYPE_EDGE[r['sub']]
-        for v in r['ee_pairs']:
-            ax.plot(i - bar_w/2, v, 'o', mfc='white', mec=edge,
-                     mew=0.9, ms=4.5, zorder=5)
-        for v in r['ea_pairs']:
-            ax.plot(i + bar_w/2, v, 'o', mfc='white', mec=edge,
-                     mew=0.9, ms=4.5, zorder=5)
+        n_ee = len(r['ee_pairs'])
+        n_ea = len(r['ea_pairs'])
+        ee_jit = (rng.random(n_ee) - 0.5) * (bar_w * 0.55)
+        ea_jit = (rng.random(n_ea) - 0.5) * (bar_w * 0.55)
+        for j, v in enumerate(r['ee_pairs']):
+            ax.plot(centers[i] - bar_w/2 + ee_jit[j], v, 'o',
+                     mfc='white', mec=edge, mew=1.1, ms=6.0, zorder=5)
+        for j, v in enumerate(r['ea_pairs']):
+            ax.plot(centers[i] + bar_w/2 + ea_jit[j], v, 'o',
+                     mfc='white', mec=edge, mew=1.1, ms=6.0, zorder=5)
 
-    # EE / EA labels near the bottom of each bar
-    for i in range(n_tasks):
-        ax.text(i - bar_w/2, ee_ea_label_y, 'EE',
-                 ha='center', va='center', fontsize=8, fontweight='bold',
-                 color='#1c1c1c',
-                 bbox=dict(boxstyle='round,pad=0.10', facecolor='white',
-                            edgecolor='none', alpha=0.78))
-        ax.text(i + bar_w/2, ee_ea_label_y, 'EA',
-                 ha='center', va='center', fontsize=8, fontweight='bold',
-                 color='#1c1c1c',
-                 bbox=dict(boxstyle='round,pad=0.10', facecolor='white',
-                            edgecolor='none', alpha=0.78))
-
-    # Significance brackets above each pair
+    # Significance annotations: only significant comparisons, neutral color,
+    # placed at a consistent y across all groups in this panel.
+    bracket_y = ylim[1] - 0.06
+    text_y = bracket_y + 0.006
     for i, r in enumerate(rows):
-        top = max(r['ee_ci'][1], r['ea_ci'][1])
-        bracket_y = top + 0.014
-        text_y = bracket_y + 0.006
-        ax.plot([i - bar_w/2, i - bar_w/2, i + bar_w/2, i + bar_w/2],
-                 [bracket_y - 0.005, bracket_y, bracket_y, bracket_y - 0.005],
-                 '-', color='#444444', lw=0.9)
+        if r['p'] is None or r['p'] >= 0.05:
+            continue
         star = stars_for_p(r['p'])
-        delta = r.get('delta')
-        sign = '+' if (delta is not None and delta > 0) else '−'
-        label = f'{sign}{star}' if star not in ('', 'n.s.') else 'n.s.'
-        color = '#207a3a' if (delta is not None and delta > 0
-                              and r['p'] is not None and r['p'] < 0.05) else (
-                '#aa2a2a' if (delta is not None and delta < 0
-                              and r['p'] is not None and r['p'] < 0.05) else '#666666')
-        ax.text(i, text_y, label, ha='center', va='bottom',
-                 fontsize=10, color=color, fontweight='bold')
+        ax.plot([centers[i] - bar_w/2, centers[i] - bar_w/2,
+                  centers[i] + bar_w/2, centers[i] + bar_w/2],
+                 [bracket_y - 0.012, bracket_y, bracket_y, bracket_y - 0.012],
+                 '-', color=ANNOT_COLOR, lw=0.9)
+        ax.text(centers[i], text_y, star, ha='center', va='bottom',
+                 fontsize=12, color=ANNOT_COLOR, fontweight='bold')
 
-    ax.set_xticks(x)
-    ax.set_xticklabels([r['label'] for r in rows], fontsize=10)
+    # Two-level x-axis: EE/EA per bar, subtype group label below.
+    bar_xs = []
+    bar_lbls = []
+    for i in range(n_tasks):
+        bar_xs.extend([centers[i] - bar_w/2, centers[i] + bar_w/2])
+        bar_lbls.extend(['EE', 'EA'])
+    ax.set_xticks(bar_xs)
+    ax.set_xticklabels(bar_lbls, fontsize=9.5, color='#333333')
+    ax.tick_params(axis='x', length=0, pad=2)
+    for i, r in enumerate(rows):
+        ax.text(centers[i], -0.105, r['label'],
+                 ha='center', va='top', fontsize=12, fontweight='bold',
+                 color='#1c1c1c', transform=ax.get_xaxis_transform(),
+                 clip_on=False)
+
+    if xlim is None:
+        xlim = (centers[0] - group_step / 2, centers[-1] + group_step / 2)
+    ax.set_xlim(*xlim)
     ax.set_ylim(*ylim)
     if yticks is not None:
         ax.set_yticks(yticks)
     ax.set_axisbelow(True)
-    ax.yaxis.grid(True, color=GRID_GRAY, linewidth=0.6)
+    ax.yaxis.grid(True, color=GRID_GRAY, linewidth=0.5)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
-    ax.set_title(panel_title, fontsize=11, loc='left', pad=8)
+    ax.spines['bottom'].set_color('#cfcfcf')
+    ax.spines['left'].set_color('#cfcfcf')
+    ax.set_title(panel_title, fontsize=13, fontweight='bold', loc='left', pad=10)
     if y_label:
-        ax.set_ylabel('Inter-rater reliability', fontsize=10)
-    if show_legend:
-        from matplotlib.patches import Patch
-        legend_elems = [
-            Patch(facecolor='lightgray', edgecolor='#444', alpha=EE_ALPHA, label='Expert–Expert (EE)'),
-            Patch(facecolor='lightgray', edgecolor='#444', alpha=EA_ALPHA, label='Expert–Algorithm (EA)'),
-        ]
-        ax.legend(handles=legend_elems, loc='lower right', fontsize=8.5,
-                  frameon=True, framealpha=0.92, edgecolor='#cccccc')
+        ax.set_ylabel('Inter-rater reliability', fontsize=11)
+    ax.tick_params(axis='y', labelsize=10)
 
 
 def collect_panel_rows(tables, ee_pairs, ea_pairs, raters_all, panel_specs,
@@ -376,13 +382,14 @@ def main():
     )
 
     # ---------------- Plot ----------------
-    # Stack the three panels vertically with consistent widths so bars line up
-    # across A and B (4 tasks each); panel C (2 tasks) renders narrower bars
-    # at twice the spacing on the same width axis to fill the panel cleanly.
-    fig = plt.figure(figsize=(10.5, 11.5))
+    # Stack the three panels vertically. Bar width is identical across all
+    # panels; panel C (2 groups) uses a larger group_step so its bars span
+    # the same physical width as the 4-group panels above. Shared x-limits
+    # also ensure the bars line up vertically.
+    fig = plt.figure(figsize=(10.0, 11.0))
     gs = fig.add_gridspec(3, 1, height_ratios=[1, 1, 1],
-                           hspace=0.55,
-                           left=0.085, right=0.985, top=0.96, bottom=0.06)
+                           hspace=0.42,
+                           left=0.085, right=0.985, top=0.965, bottom=0.045)
 
     ax_A = fig.add_subplot(gs[0, 0])
     ax_B = fig.add_subplot(gs[1, 0])
@@ -390,28 +397,30 @@ def main():
 
     yticks_full = np.arange(0.0, 1.05, 0.2)
 
-    draw_panel(ax_A, panel_C,  # prior cohort freq
-               panel_title='A. Prior 4-rater cohort (PH, LB, SZ, MW): Frequency (Spearman ρ)',
-               y_label=True,
-               ylim=(0.0, 1.08), yticks=yticks_full)
-    draw_panel(ax_B, panel_A,  # canonical cohort freq
-               panel_title='B. Canonical 4-rater cohort (MW, SZ, TZ, AS): Frequency (Spearman ρ)',
-               y_label=True,
-               ylim=(0.0, 1.08), yticks=yticks_full)
-    draw_panel(ax_C, panel_B,  # canonical cohort laterality
-               panel_title='C. Canonical 4-rater cohort: Laterality (Cohen κ)',
-               y_label=True, show_legend=True,
-               ylim=(0.0, 1.08), yticks=yticks_full)
+    # Panel A and B use group_step=1.0 with 4 groups -> centers at 0..3.
+    # Panel C uses group_step=3.0 with 2 groups -> centers at 0,3, so the
+    # full extent (-1.5 .. 4.5) matches A/B (-0.5 .. 3.5 -> width 4) closely.
+    n4_xlim = (-0.5, 3.5)
+    n2_step = 3.0
+    n2_xlim = (-1.5 + 0.5, 1 * n2_step + 1.5 - 0.5)  # (-1.0, 3.5)
 
-    # Footer
-    fig.text(0.5, 0.012,
-             'Stars: paired segment-level bootstrap (2000 resamples) of mean(EA) − mean(EE).  '
-             '+ favors algorithm; − favors experts.  '
-             '*** p<0.001  ** p<0.01  * p<0.05.  '
-             'Bars: 95% CI on the mean from the same bootstrap.  '
-             'Open circles: per-pair point estimates (canonical: 6 EE pairs + 4 EA pairs; prior: 6 EE + 4 EA).  '
-             'Bar color encodes the IIIC subtype (matches Fig 4).',
-             ha='center', va='bottom', fontsize=9, color='#444444')
+    draw_panel(ax_A, panel_C,  # prior cohort freq
+               panel_title='A. Prior cohort: frequency (Spearman ρ)',
+               y_label=True,
+               ylim=(0.0, 1.08), yticks=yticks_full,
+               xlim=n4_xlim)
+    draw_panel(ax_B, panel_A,  # canonical cohort freq
+               panel_title='B. Canonical cohort: frequency (Spearman ρ)',
+               y_label=True,
+               ylim=(0.0, 1.08), yticks=yticks_full,
+               xlim=n4_xlim)
+    draw_panel(ax_C, panel_B,  # canonical cohort laterality
+               panel_title='C. Canonical cohort: laterality (Cohen κ)',
+               y_label=True,
+               group_step=n2_step,
+               ylim=(0.0, 1.08), yticks=yticks_full,
+               xlim=n2_xlim)
+    # No on-figure legend or footer text -- those belong in the figure caption.
 
     fig.savefig(OUT_PNG, dpi=240, bbox_inches='tight', facecolor='white')
     fig.savefig(OUT_PDF, bbox_inches='tight', facecolor='white')

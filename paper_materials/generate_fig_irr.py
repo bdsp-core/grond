@@ -24,6 +24,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+matplotlib.rcParams['font.family'] = ['Helvetica', 'Arial', 'DejaVu Sans']
 from pathlib import Path
 from itertools import combinations
 import warnings
@@ -663,7 +664,7 @@ def plot_icc_bars(ax, values, labels, ci_list=None, title='', ylabel='ICC(3,1)',
     ax.set_xticks(x)
     ax.set_xticklabels(labels, fontsize=8, rotation=15, ha='right')
     ax.set_ylabel(ylabel, fontsize=9)
-    ax.set_title(title, fontsize=10, fontweight='bold')
+    ax.set_title(title, fontsize=13, fontweight='bold')
     ax.set_ylim(0, 1.05)
     ax.axhline(0.75, color='gray', linestyle='--', alpha=0.4, linewidth=0.8)
     ax.axhline(0.5, color='gray', linestyle=':', alpha=0.3, linewidth=0.8)
@@ -705,7 +706,7 @@ def plot_icc_bars_by_subtype(ax, icc_data, subtypes_order, group_labels, title='
     ax.set_xticks(group_centers)
     ax.set_xticklabels(group_labels, fontsize=7.5, rotation=15, ha='right')
     ax.set_ylabel(ylabel, fontsize=9)
-    ax.set_title(title, fontsize=10, fontweight='bold')
+    ax.set_title(title, fontsize=13, fontweight='bold')
     ax.set_ylim(0, 1.05)
     ax.axhline(0.75, color='gray', linestyle='--', alpha=0.4, linewidth=0.8)
     ax.axhline(0.5, color='gray', linestyle=':', alpha=0.3, linewidth=0.8)
@@ -750,7 +751,7 @@ def plot_pa_bars_by_subtype(ax, pa_data, subtypes_order, group_labels, title='',
     ax.set_xticks(group_centers)
     ax.set_xticklabels(group_labels, fontsize=7.5, rotation=15, ha='right')
     ax.set_ylabel(ylabel, fontsize=9)
-    ax.set_title(title, fontsize=10, fontweight='bold')
+    ax.set_title(title, fontsize=13, fontweight='bold')
     ax.set_ylim(0, 105)
     ax.grid(axis='y', alpha=0.2)
     ax.spines['top'].set_visible(False)

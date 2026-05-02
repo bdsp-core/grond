@@ -26,6 +26,7 @@ from pathlib import Path
 import matplotlib
 
 matplotlib.use('Agg')
+matplotlib.rcParams['font.family'] = ['Helvetica', 'Arial', 'DejaVu Sans']
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 
@@ -74,7 +75,7 @@ def main():
         centers = (edges[:-1] + edges[1:]) / 2
         ax.bar(centers, counts, width=BIN_W * 0.9, color=COLORS[sub],
                edgecolor='black', linewidth=0.6, alpha=0.85)
-        ax.set_title(f'{PRETTY[sub]}  (n={len(freqs)}, source: {source})', fontsize=11)
+        ax.set_title(f'{PRETTY[sub]}  (n={len(freqs)}, source: {source})', fontsize=13, fontweight='bold')
         ax.set_xlabel('Frequency (Hz)')
         ax.set_ylabel('Number of segments')
         ax.set_xticks(edges)
