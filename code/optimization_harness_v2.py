@@ -283,7 +283,10 @@ def load_dataset(verbose=True):
     t0 = time.time()
 
     # ── Load patients and segments CSVs ───────────────────────────────
-    df_patients = pd.read_csv(str(LABELS_DIR / 'patients.csv'))
+    # patients.csv lives in data/labels/archive_labels/ after the May-2026
+    # cleanup (it's the legacy per-patient aggregate, kept as upstream input
+    # to the harness's gold_standard_freq / subtype lookup).
+    df_patients = pd.read_csv(str(LABELS_DIR / 'archive_labels' / 'patients.csv'))
     df_patients['patient_id'] = df_patients['patient_id'].astype(str)
     df_patients = df_patients[df_patients['excluded'] != True].copy()
     # Only keep patients with a valid gold standard frequency

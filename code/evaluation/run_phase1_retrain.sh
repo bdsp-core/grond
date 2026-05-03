@@ -69,8 +69,12 @@ run_step 00_verify_data \
     "conda run -n morgoth python code/evaluation/verify_local_data.py"
 
 # ---- Step 1: ChannelPD-Net (5-fold CNN) ----
+# NB: code/hemi_detector/train.py is an early HemiNet design experiment, NOT
+# the production ChannelPD-Net trainer (its outputs go to data/hemi_cache/exp1_1/
+# and it does not write cnn_attn_fold*.pt). The real production trainer for
+# ChannelPDNetAttention is below; verified by the cnn_attn_fold*.pt save site.
 run_step 01_channelpdnet \
-    "conda run -n morgoth python code/hemi_detector/train.py"
+    "conda run -n morgoth python code/pd_channel_detector/train_cnn_attention.py"
 
 # ---- Step 2: HemiCET-UNet (5-fold UNet) ----
 run_step 02_hemicet \

@@ -24,7 +24,7 @@ reproducing the published numbers.
 
 | Model | Training script | Final checkpoint | CV | Seed |
 |---|---|---|---|---|
-| ChannelPD-Net | [`code/hemi_detector/train.py`](../code/hemi_detector/train.py) | `data/pd_channel_cache/cnn_attn_fold{0..4}.pt` | 5-fold patient-stratified `StratifiedKFold` | `cfg['seed']=42` (`torch.manual_seed`, `np.random.seed`) |
+| ChannelPD-Net | [`code/pd_channel_detector/train_cnn_attention.py`](../code/pd_channel_detector/train_cnn_attention.py) | `data/pd_channel_cache/cnn_attn_fold{0..4}.pt` | 5-fold patient-stratified `StratifiedKFold` | `cfg['seed']=42` (`torch.manual_seed`, `np.random.seed`) |
 | HemiCET-UNet | [`code/hemi_detector/train_hemi_cet.py`](../code/hemi_detector/train_hemi_cet.py) | `data/hemi_cache/hemi_cet_v2/hemi_cet_fold{0..4}.pt` | 5-fold patient-stratified | `SEED=42` (numpy + torch + CUDA) |
 | LPD-vs-GPD RF (300 trees) | [`code/evaluation/eval_subtype_classification.py`](../code/evaluation/eval_subtype_classification.py) | `data/models/lpd_vs_gpd_rf.pkl` | 5-fold `StratifiedGroupKFold` | `random_state=42` |
 | 3-way LPD/GPD/BIPD RF | [`code/evaluation/eval_3way_classification.py`](../code/evaluation/eval_3way_classification.py) | `data/models/three_way_rf.pkl` | 5-fold `StratifiedGroupKFold` (class-balanced) | `random_state=42` |
