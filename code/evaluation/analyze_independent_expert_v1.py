@@ -832,7 +832,8 @@ def plot_coverage(tables, out_path):
 
     fig, axes = plt.subplots(1, 2, figsize=(11, 5))
     raters = ['MW', 'SZ', 'TZ', 'AS', 'ALGO']
-    bar_colors = ['#666666', '#cc3344', '#3366cc', '#229966']
+    # 5 raters (MW, SZ, TZ, AS, ALGO) -> need 5 colors. AS added later.
+    bar_colors = ['#666666', '#cc3344', '#3366cc', '#229966', '#cc8800']
     width = 0.2
     for ax, mtype, title in [(axes[0], 'freq', 'Frequency labels'),
                               (axes[1], 'lat',  'Laterality labels')]:

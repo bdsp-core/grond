@@ -7,9 +7,9 @@
 
 | | LPD | GPD | LRDA | GRDA | Total |
 |---|---:|---:|---:|---:|---:|
-| Segments (non-excluded) | 4,170 | 3,337 | 1,408 | 3,323 | 12,238 |
-| Excluded | 146 | 113 | 564 | 167 | 990 |
-| Unique patients | 3,953 | 3,086 | 1,381 | 3,159 | 11,578 |
+| Segments (non-excluded) | 4,201 | 3,348 | 1,489 | 3,387 | 12,425 |
+| Excluded | 115 | 102 | 483 | 103 | 803 |
+| Unique patients | 3,955 | 3,093 | 1,462 | 3,220 | 11,729 |
 
 All segments: 19-channel monopolar EEG, 10 seconds at 200 Hz (2,000 samples). Common average reference montage.
 
@@ -17,14 +17,14 @@ All segments: 19-channel monopolar EEG, 10 seconds at 200 Hz (2,000 samples). Co
 
 | Label type | LPD | GPD | LRDA | GRDA | Total |
 |---|---:|---:|---:|---:|---:|
-| Expert-reviewed frequency | 1,499 | 1,539 | 654 | 1,381 | 5,073 |
-| Algorithm frequency | — | — | 754 | 1,942 | 2,696 |
-| Any frequency | 1,505 | 1,545 | 1,408 | 3,323 | 7,781 |
-| Discharge timing | 917 | 1,036 | 29 | 177 | 2,159 |
+| Expert-reviewed frequency | 1,530 | 1,110 | 654 | 1,386 | 4,680 |
+| Algorithm frequency | — | — | 1,310 | 3,222 | 4,532 |
+| Any frequency | 1,530 | 1,110 | 1,408 | 3,328 | 7,376 |
+| Discharge timing | 1,372 | 1,504 | 29 | 182 | 3,087 |
 | Wave timing | — | — | 189 | 313 | 502 |
-| Channel involvement / spatial | 352 | 260 | 29 | 177 | 818 |
-| Laterality | 1,336 | 249 | 1,039 | 789 | 3,413 |
-| IIIC crowd votes (≥10 raters) | 1,846 | 1,024 | 239 | 420 | 3,529 |
+| Channel involvement / spatial | 381 | 264 | 29 | 182 | 856 |
+| Laterality | 1,364 | 253 | 1,089 | 789 | 3,495 |
+| IIIC crowd votes (≥10 raters) | 1,848 | 1,025 | 319 | 477 | 3,669 |
 
 ## Rater Contributions (annotations.csv)
 
@@ -40,7 +40,7 @@ All segments: 19-channel monopolar EEG, 10 seconds at 200 Hz (2,000 samples). Co
 
 | Model | Segments | Selection criteria |
 |---|---:|---|
-| ChannelPD-Net | 3,038 | LPD/GPD with expert frequency |
+| ChannelPD-Net | 2,640 | LPD/GPD with expert frequency |
 | HemiCET-UNet | 675 | Ground-truth discharge timing |
 | CET-UNet | 675 | Ground-truth discharge timing |
 
