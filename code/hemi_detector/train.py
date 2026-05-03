@@ -45,7 +45,10 @@ from hemi_detector.dataset import HemiDataset, get_patient_ids, get_patient_subt
 CONFIG = {
     # Data
     'hpp_path': str(PROJECT_DIR / 'data' / 'labels' / 'discharge_times.json'),
-    'patients_csv': str(PROJECT_DIR / 'data' / 'labels' / 'patients.csv'),
+    # patients.csv was moved to data/labels/archive_labels/ during the
+    # May-2026 cleanup (it's the legacy per-patient aggregate, superseded
+    # by segment_labels.csv but still consumed here by ChannelPD-Net training).
+    'patients_csv': str(PROJECT_DIR / 'data' / 'labels' / 'archive_labels' / 'patients.csv'),
     'eeg_dir': str(PROJECT_DIR / 'data' / 'eeg'),
     'cache_dir': str(PROJECT_DIR / 'data' / 'hemi_cache' / 'exp1_1'),
 
