@@ -936,6 +936,29 @@ def main():
         json.dump(results, f, indent=2)
     print(f"\n  Results saved to {results_path}")
 
+    # Persist the trained classifier so it can be reused without re-running
+    # the full synthetic-data + training pipeline. LightGBM and sklearn paths
+    # both pickle cleanly; we tag the wrapper with which engine produced it.
+    import joblib
+    model_out = PROJECT_DIR / 'data' / 'models' / 'bipd_gbt.pkl'
+    model_out.parent.mkdir(parents=True, exist_ok=True)
+    joblib.dump({
+        'model': model,
+        'model_type': model_type,
+        'feature_names': FEATURE_NAMES,
+        'synthetic_seed': 42,
+        'synth_cv_auc': float(synth_cv_auc),
+        'synth_cv_auc_std': float(synth_cv_std),
+        'n_synth_examples': int(len(y_synth)),
+        'training_doc': (
+            'Trained on synthetic BIPD/GPD examples generated deterministically '
+            'with np.random.RandomState(42); BIPD positives = cross-patient '
+            'paired LPD discharge sequences; GPD negatives = single-LPD '
+            'phase-shifted with +/-25 ms jitter. Real evaluation set is held out.'
+        ),
+    }, model_out)
+    print(f"  Saved trained model: {model_out}")
+
     elapsed = time.time() - t0
     print(f"\n  Total time: {elapsed:.0f}s")
     print("=" * 70)

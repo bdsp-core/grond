@@ -234,6 +234,7 @@ def main():
     sgkf = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=42)
 
     all_preds = np.zeros((len(y), 3))  # probabilities for each class
+    fold_models = []
     for fold, (train_idx, test_idx) in enumerate(sgkf.split(X, y, patient_ids)):
         rf = RandomForestClassifier(
             n_estimators=300, max_depth=10, min_samples_leaf=2,
@@ -249,6 +250,17 @@ def main():
         fold_preds = rf.predict(X[test_idx])
         fold_acc = np.mean(fold_preds == y[test_idx])
         print(f"    Fold {fold}: acc={fold_acc:.3f}")
+        fold_models.append(rf)
+
+    # Train one final model on ALL data so the classifier can be deployed at
+    # inference time without depending on a particular fold split. Persisted
+    # alongside the per-fold checkpoints below.
+    print("  Training final model on full cohort...")
+    final_rf = RandomForestClassifier(
+        n_estimators=300, max_depth=10, min_samples_leaf=2,
+        random_state=42, n_jobs=-1, class_weight='balanced',
+    )
+    final_rf.fit(X, y)
 
     # Compute metrics
     y_pred = np.argmax(all_preds, axis=1)
@@ -317,6 +329,23 @@ def main():
     with open(OUTPUT_PATH, 'w') as f:
         json.dump(results, f, indent=2)
     print(f"\n  Saved: {OUTPUT_PATH}")
+
+    # Persist the final classifier + the 5 per-fold classifiers so the trained
+    # 3-way RF can be reused without re-running the full evaluation pipeline.
+    import joblib
+    model_out = PROJECT_DIR / 'data' / 'models' / 'three_way_rf.pkl'
+    model_out.parent.mkdir(parents=True, exist_ok=True)
+    joblib.dump({
+        'final': final_rf,
+        'folds': fold_models,
+        'classes': ['LPD', 'GPD', 'BIPD'],
+        'n_features': int(X.shape[1]),
+        'feature_description': '18 per-channel PD probabilities (ChannelPD-Net) + 11 timing features (extract_timing_features)',
+        'cv': 'StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=42)',
+        'hyperparams': dict(n_estimators=300, max_depth=10, min_samples_leaf=2,
+                             class_weight='balanced', random_state=42),
+    }, model_out)
+    print(f"  Saved trained models: {model_out}")
 
 
 if __name__ == '__main__':

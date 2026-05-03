@@ -341,6 +341,7 @@ def main():
     groups = np.array(patient_ids)
 
     all_probs = []
+    fold_models = []
     for fold, (train_idx, test_idx) in enumerate(sgkf.split(X_all, y_all, groups)):
         X_tr, y_tr = X_all[train_idx].copy(), y_all[train_idx]
         X_te = X_all[test_idx].copy()
@@ -362,6 +363,20 @@ def main():
             all_probs.append((patient_ids[idx], int(y_all[idx]), float(prob)))
 
         print(f"    Fold {fold}: train={len(train_idx)}, test={len(test_idx)}")
+        fold_models.append(rf)
+
+    # Train one final model on ALL data so the classifier can be deployed at
+    # inference time without depending on a particular fold split.
+    print("  Training final model on full cohort...")
+    X_full = X_all.copy()
+    for col in range(X_full.shape[1]):
+        med = np.nanmedian(X_full[:, col])
+        X_full[np.isnan(X_full[:, col]), col] = med
+    final_rf = RandomForestClassifier(
+        n_estimators=300, max_depth=8, min_samples_leaf=3,
+        random_state=42, n_jobs=-1,
+    )
+    final_rf.fit(X_full, y_all)
 
     # Compute AUC
     labels = np.array([p[1] for p in all_probs])
@@ -399,6 +414,21 @@ def main():
     with open(OUTPUT_PATH, 'w') as f:
         json.dump(results, f, indent=2)
     print(f"\n  Saved: {OUTPUT_PATH}")
+
+    # Persist the trained classifier so it can be reused without re-running
+    # the full feature-extraction + CV loop.
+    import joblib
+    model_out = PROJECT_DIR / 'data' / 'models' / 'lpd_vs_gpd_rf.pkl'
+    model_out.parent.mkdir(parents=True, exist_ok=True)
+    joblib.dump({
+        'final': final_rf,
+        'folds': fold_models,
+        'feature_names': results['feature_names'],
+        'cv': 'StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=42)',
+        'hyperparams': dict(n_estimators=300, max_depth=8, min_samples_leaf=3,
+                             random_state=42),
+    }, model_out)
+    print(f"  Saved trained models: {model_out}")
 
 
 if __name__ == '__main__':

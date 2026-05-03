@@ -367,10 +367,19 @@ def main():
     print(f"\nHemiCET parameters: {count_parameters(model_check):,}")
     del model_check
 
-    # Create patient-stratified 5-fold splits
+    # Create patient-stratified 5-fold splits.
+    # Seed every randomness source (numpy, torch CPU/CUDA/MPS) so that the
+    # same labeled cohort + same hyperparameters reproduce the same checkpoints
+    # bit-for-bit (modulo nondeterministic MPS ops; see notes in
+    # docs/REPRODUCIBILITY.md).
     print("\nCreating 5-fold patient-stratified splits...")
+    SEED = 42
+    np.random.seed(SEED)
+    torch.manual_seed(SEED)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(SEED)
     unique_pids = np.unique(patient_ids)
-    rng = np.random.RandomState(42)
+    rng = np.random.RandomState(SEED)
 
     # Group unique patients by subtype for stratified splitting
     pid_to_subtype = {}
