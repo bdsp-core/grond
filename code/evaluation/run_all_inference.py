@@ -126,7 +126,12 @@ def run_pd_inference(segments, predictions):
             left_mean = float(np.mean(probs[LEFT_CH]))
             right_mean = float(np.mean(probs[RIGHT_CH]))
             seg['pdchar_laterality'] = 'left' if left_mean > right_mean else 'right'
-            seg['pdchar_spatial_extent'] = float(np.mean(probs > 0.5))
+            # Threshold 0.62 (not 0.5): the per-channel CNN saturates above 0.5
+            # even on uninvolved channels, so a 0.5 threshold gives a degenerate
+            # binary {0, 1} spatial-extent distribution. 0.62 yields a non-degenerate
+            # fraction-involved distribution and matches the downstream figure scripts
+            # (generate_fig_spatial_scatter.py, generate_fig_irr.py).
+            seg['pdchar_spatial_extent'] = float(np.mean(probs > 0.62))
 
             # Per-channel predictions → predictions.json
             predictions[mat_file] = predictions.get(mat_file, {})

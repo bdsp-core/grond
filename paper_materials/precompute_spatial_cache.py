@@ -129,7 +129,12 @@ def main():
                 entry['pdchar_channel_probs'] = result.get('channel_probs', [0]*18)
                 if isinstance(entry['pdchar_channel_probs'], np.ndarray):
                     entry['pdchar_channel_probs'] = entry['pdchar_channel_probs'].tolist()
-                entry['pdchar_spatial_extent'] = float(np.mean(np.array(entry['pdchar_channel_probs']) > 0.5))
+                # Threshold 0.62 (not 0.5): the per-channel CNN was trained on segment-level
+                # positive labels and saturates above 0.5 even on uninvolved channels;
+                # 0.62 is the threshold that yields a non-degenerate fraction-involved
+                # distribution and matches what generate_fig_spatial_scatter.py and
+                # generate_fig_irr.py use downstream.
+                entry['pdchar_spatial_extent'] = float(np.mean(np.array(entry['pdchar_channel_probs']) > 0.62))
 
             # RDA-PLV (RDA subtypes)
             if info['subtype'] in ('lrda', 'grda'):
