@@ -241,8 +241,13 @@ def main():
     print("Building comprehensive channel-level pseudolabel JSON...")
     print(f"Project dir: {PROJECT_DIR}")
 
-    # Load data sources
-    df_patients = pd.read_csv(str(LABELS_DIR / 'patients.csv'))
+    # Load data sources. patients.csv and channel_involvement_predictions.json
+    # are upstream inputs to this build; both were moved into archive_labels/
+    # during the May-2026 repo cleanup since they are not first-class label
+    # stores (patients.csv was the legacy per-patient aggregate, superseded by
+    # segment_labels.csv; channel_involvement_predictions.json is an algorithm
+    # output retained as an input to the pseudolabel build).
+    df_patients = pd.read_csv(str(LABELS_DIR / 'archive_labels' / 'patients.csv'))
     df_patients['patient_id'] = df_patients['patient_id'].astype(str)
 
     df_annotations = pd.read_csv(str(LABELS_DIR / 'annotations.csv'))
@@ -251,7 +256,7 @@ def main():
     with open(str(LABELS_DIR / 'channel_involvement.json')) as f:
         channel_involvement = json.load(f)
 
-    with open(str(LABELS_DIR / 'channel_involvement_predictions.json')) as f:
+    with open(str(LABELS_DIR / 'archive_labels' / 'channel_involvement_predictions.json')) as f:
         channel_predictions = json.load(f)
 
     print(f"\nData sources loaded:")
