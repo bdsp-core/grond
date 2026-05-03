@@ -1,0 +1,3 @@
+[submodule "paper_materials/manuscript"]
+	path = paper_materials/manuscript
+	url = https://github.com/bdsp-core/grond-manuscript

@@ -42,7 +42,7 @@ DATA_DIR = PROJECT_DIR / 'data'
 LABELS_DIR = DATA_DIR / 'labels'
 EEG_DIR = DATA_DIR / 'eeg'
 
-OUTPUT_PATH = SCRIPT_DIR / 'figures' / 'fig3_rda_pipeline.png'
+OUTPUT_PATH = SCRIPT_DIR / 'manuscript' / 'figures' / 'fig3_rda_pipeline.png'
 OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 sys.path.insert(0, str(CODE_DIR))

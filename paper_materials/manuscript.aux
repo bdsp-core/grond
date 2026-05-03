@@ -1,0 +1,357 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{claassen2004}
+\citation{zafar2020}
+\citation{chong2005}
+\citation{rodriguez2017}
+\citation{vespa2016}
+\citation{struck2016}
+\citation{tao2020}
+\citation{parikh2023}
+\citation{hirsch2021}
+\citation{gaspard2014}
+\citation{leitinger2015}
+\citation{jing2023irr}
+\citation{gaspard2013}
+\citation{vespa2016}
+\citation{struck2016}
+\citation{zafar2021}
+\citation{parikh2023}
+\citation{vespa2016}
+\citation{struck2016}
+\citation{claassen2004}
+\citation{gaspard2013}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{2}{section.1}\protected@file@percent }
+\newlabel{sec:introduction}{{1}{2}{Introduction}{section.1}{}}
+\citation{furbass2015}
+\citation{herta2015}
+\citation{mcgraw2024}
+\citation{jing2023}
+\citation{jing2020}
+\citation{ge2023}
+\citation{zheng2022}
+\citation{tautan2025}
+\citation{jing2023}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Methods}{3}{section.2}\protected@file@percent }
+\newlabel{sec:methods}{{2}{3}{Methods}{section.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Dataset and Annotations}{3}{subsection.2.1}\protected@file@percent }
+\newlabel{sec:dataset}{{2.1}{3}{Dataset and Annotations}{subsection.2.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.1}Ethics statement.}{3}{subsubsection.2.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.2}EEG Data.}{3}{subsubsection.2.1.2}\protected@file@percent }
+\citation{tautan2025}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Dataset statistics. The ``Unique patients'' total (11,578) is the deduplicated count across all four subtypes; only one patient contributed segments to more than one subtype, so the total is essentially the column sum. Verified by computing the union of patient identifiers across the LPD, GPD, LRDA, and GRDA cohorts in \texttt  {segment\_labels.csv}: a single patient (anonymous identifier \texttt  {abn1762}) appeared in two cohorts (LPD and GRDA), and no patient appeared in three or more.}}{4}{table.1}\protected@file@percent }
+\newlabel{tab:dataset}{{1}{4}{Dataset statistics. The ``Unique patients'' total (11,578) is the deduplicated count across all four subtypes; only one patient contributed segments to more than one subtype, so the total is essentially the column sum. Verified by computing the union of patient identifiers across the LPD, GPD, LRDA, and GRDA cohorts in \texttt {segment\_labels.csv}: a single patient (anonymous identifier \texttt {abn1762}) appeared in two cohorts (LPD and GRDA), and no patient appeared in three or more}{table.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.3}Annotation Framework.}{4}{subsubsection.2.1.3}\protected@file@percent }
+\citation{shrout1979}
+\citation{tautan2025}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.4}Evaluation Framework.}{5}{subsubsection.2.1.4}\protected@file@percent }
+\newlabel{sec:contest_strategy}{{2.1.5}{5}{Contest-of-methods development strategy}{subsubsection.2.1.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.5}Contest-of-methods development strategy.}{5}{subsubsection.2.1.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}PD Characterization Pipeline (PD-Profiler)}{5}{subsection.2.2}\protected@file@percent }
+\newlabel{sec:pd_pipeline}{{2.2}{5}{PD Characterization Pipeline (PD-Profiler)}{subsection.2.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Representative EEG examples of periodic and rhythmic patterns. Six 10-second EEG segments displayed in average-reference montage (19 channels, 200~Hz, bandpass 0.5--20~Hz). Channels are grouped by hemisphere: left parasagittal (Fp1, F3, C3, P3), left temporal (F7, T3, T5, O1), midline (Fz, Cz, Pz), right parasagittal (Fp2, F4, C4, P4), and right temporal (F8, T4, T6, O2). \textbf  {(A)}~Clear lateralized periodic discharges (LPD). \textbf  {(B)}~Clear generalized periodic discharges (GPD). \textbf  {(C)}~Clear lateralized rhythmic delta activity (LRDA). \textbf  {(D)}~Clear generalized rhythmic delta activity (GRDA). \textbf  {(E)}~Ambiguous LPD case with lower inter-rater agreement. \textbf  {(F)}~Ambiguous GRDA case with lower inter-rater agreement. Clear cases (A--D) were selected from segments with at least 80\% agreement among at least 10 IIIC expert raters; ambiguous cases (E--F) have lower agreement, illustrating the challenge of pattern classification. Scale bar: 100~$\mu $V.}}{6}{figure.1}\protected@file@percent }
+\newlabel{fig:eeg_examples}{{1}{6}{Representative EEG examples of periodic and rhythmic patterns. Six 10-second EEG segments displayed in average-reference montage (19 channels, 200~Hz, bandpass 0.5--20~Hz). Channels are grouped by hemisphere: left parasagittal (Fp1, F3, C3, P3), left temporal (F7, T3, T5, O1), midline (Fz, Cz, Pz), right parasagittal (Fp2, F4, C4, P4), and right temporal (F8, T4, T6, O2). \textbf {(A)}~Clear lateralized periodic discharges (LPD). \textbf {(B)}~Clear generalized periodic discharges (GPD). \textbf {(C)}~Clear lateralized rhythmic delta activity (LRDA). \textbf {(D)}~Clear generalized rhythmic delta activity (GRDA). \textbf {(E)}~Ambiguous LPD case with lower inter-rater agreement. \textbf {(F)}~Ambiguous GRDA case with lower inter-rater agreement. Clear cases (A--D) were selected from segments with at least 80\% agreement among at least 10 IIIC expert raters; ambiguous cases (E--F) have lower agreement, illustrating the challenge of pattern classification. Scale bar: 100~$\mu $V}{figure.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces PD-Profiler components.}}{7}{table.2}\protected@file@percent }
+\newlabel{tab:pd_components}{{2}{7}{PD-Profiler components}{table.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces The PD-Profiler combines neural evidence with structured dynamic-programming inference to characterize PDs. Three-panel overview of the periodic discharge (PD) characterization pipeline applied to an example LPD segment. \textbf  {(A)}~Input: raw 19-channel average-reference EEG (10 seconds, 200~Hz). \textbf  {(B)}~Pipeline architecture: 18 independent bipolar channels are processed by ChannelPD-Net (CNN+Attention), which produces per-channel PD probabilities and frequency estimates. Three downstream modules operate in parallel: (1)~Laterality Detection compares left versus right hemisphere mean probabilities; (2)~Discharge Detection uses 8-channel HemiCET-UNet evidence and CNN+ACF frequency prior fed into dynamic programming with expectation-maximization (EM) template refinement, yielding individual discharge times and inter-peak-interval (IPI) derived frequency; (3)~Topographic Localization extracts monopolar voltage at discharge peaks, applies Laplacian--global field power (GFP) alignment with two-pass template refinement and GFP-squared-weighted averaging to produce a spatial localization map. \textbf  {(C)}~Output: the same EEG with red dashed lines marking detected discharge times, light blue shading on the involved hemisphere, a Laplacian topoplot showing the discharge topography, and a verbal description following ACNS 2021 standardized nomenclature. Scale bar: 100~$\mu $V.}}{7}{figure.2}\protected@file@percent }
+\newlabel{fig:pd_pipeline}{{2}{7}{The PD-Profiler combines neural evidence with structured dynamic-programming inference to characterize PDs. Three-panel overview of the periodic discharge (PD) characterization pipeline applied to an example LPD segment. \textbf {(A)}~Input: raw 19-channel average-reference EEG (10 seconds, 200~Hz). \textbf {(B)}~Pipeline architecture: 18 independent bipolar channels are processed by ChannelPD-Net (CNN+Attention), which produces per-channel PD probabilities and frequency estimates. Three downstream modules operate in parallel: (1)~Laterality Detection compares left versus right hemisphere mean probabilities; (2)~Discharge Detection uses 8-channel HemiCET-UNet evidence and CNN+ACF frequency prior fed into dynamic programming with expectation-maximization (EM) template refinement, yielding individual discharge times and inter-peak-interval (IPI) derived frequency; (3)~Topographic Localization extracts monopolar voltage at discharge peaks, applies Laplacian--global field power (GFP) alignment with two-pass template refinement and GFP-squared-weighted averaging to produce a spatial localization map. \textbf {(C)}~Output: the same EEG with red dashed lines marking detected discharge times, light blue shading on the involved hemisphere, a Laplacian topoplot showing the discharge topography, and a verbal description following ACNS 2021 standardized nomenclature. Scale bar: 100~$\mu $V}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.1}ChannelPD-Net.}{7}{subsubsection.2.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.2}Discharge Timing: HemiCET-UNet and Dynamic Programming.}{8}{subsubsection.2.2.2}\protected@file@percent }
+\citation{gramfort2013}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.3}Spatial Localization.}{9}{subsubsection.2.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}RDA Characterization Pipeline (RDA-Profiler)}{9}{subsection.2.3}\protected@file@percent }
+\newlabel{sec:rda_pipeline}{{2.3}{9}{RDA Characterization Pipeline (RDA-Profiler)}{subsection.2.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.1}NB-Hilbert: Iterative Narrowband Hilbert Refinement.}{9}{subsubsection.2.3.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces The RDA-Profiler uses two-pass iterative narrowband refinement to characterize continuous rhythmic activity. Three-panel overview of the rhythmic delta activity (RDA) characterization pipeline applied to an example LRDA segment, following the same layout as figure~\ref {fig:pd_pipeline}. \textbf  {(A)}~Input: raw 19-channel average-reference EEG. \textbf  {(B)}~Pipeline architecture: the NB-Hilbert iterative narrowband refinement algorithm performs two passes. Pass~1: coarse analysis with broadband (0.5--3.5~Hz) filtering, estimating lateralization via per-hemisphere mean variance and frequency via Hilbert instantaneous frequency from the top-3 dominant channels. Pass~2: narrowband filtering at the estimated frequency $\pm 0.4$~Hz, with envelope amplitude for refined lateralization and Hilbert frequency on the dominant hemisphere only. Three output branches produce laterality, spatial extent (via per-channel PLV with the dominant hemisphere), and frequency. \textbf  {(C)}~Output: the same EEG with hemisphere shading, a Laplacian amplitude topoplot, and a verbal description. No discharge markers are shown, as RDA is a continuous rhythmic pattern. Scale bar: 100~$\mu $V.}}{10}{figure.3}\protected@file@percent }
+\newlabel{fig:rda_pipeline}{{3}{10}{The RDA-Profiler uses two-pass iterative narrowband refinement to characterize continuous rhythmic activity. Three-panel overview of the rhythmic delta activity (RDA) characterization pipeline applied to an example LRDA segment, following the same layout as figure~\ref {fig:pd_pipeline}. \textbf {(A)}~Input: raw 19-channel average-reference EEG. \textbf {(B)}~Pipeline architecture: the NB-Hilbert iterative narrowband refinement algorithm performs two passes. Pass~1: coarse analysis with broadband (0.5--3.5~Hz) filtering, estimating lateralization via per-hemisphere mean variance and frequency via Hilbert instantaneous frequency from the top-3 dominant channels. Pass~2: narrowband filtering at the estimated frequency $\pm 0.4$~Hz, with envelope amplitude for refined lateralization and Hilbert frequency on the dominant hemisphere only. Three output branches produce laterality, spatial extent (via per-channel PLV with the dominant hemisphere), and frequency. \textbf {(C)}~Output: the same EEG with hemisphere shading, a Laplacian amplitude topoplot, and a verbal description. No discharge markers are shown, as RDA is a continuous rhythmic pattern. Scale bar: 100~$\mu $V}{figure.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.2}RDA-PLV: Spatial Extent.}{10}{subsubsection.2.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}BIPD Detection}{10}{subsection.2.4}\protected@file@percent }
+\newlabel{sec:bipd}{{2.4}{10}{BIPD Detection}{subsection.2.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Statistical Analysis}{11}{subsection.2.5}\protected@file@percent }
+\newlabel{sec:statistics}{{2.5}{11}{Statistical Analysis}{subsection.2.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Results}{11}{section.3}\protected@file@percent }
+\newlabel{sec:results}{{3}{11}{Results}{section.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Lateralization and Subtype Classification}{11}{subsection.3.1}\protected@file@percent }
+\newlabel{sec:lateralization}{{3.1}{11}{Lateralization and Subtype Classification}{subsection.3.1}{}}
+\citation{tautan2025}
+\citation{tautan2025}
+\citation{tautan2025}
+\citation{tautan2025}
+\citation{tautan2025}
+\citation{tautan2025}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Lateralization and classification performance. AUC is reported with the Hanley--McNeil 95\% confidence interval. The 3-way and BIPD-vs-GPD rows include only $n=10$ confirmed BIPD segments and are reported as preliminary; their wide CIs reflect the small BIPD sample size, not the accuracy on the other classes.}}{12}{table.3}\protected@file@percent }
+\newlabel{tab:lateralization}{{3}{12}{Lateralization and classification performance. AUC is reported with the Hanley--McNeil 95\% confidence interval. The 3-way and BIPD-vs-GPD rows include only $n=10$ confirmed BIPD segments and are reported as preliminary; their wide CIs reflect the small BIPD sample size, not the accuracy on the other classes}{table.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Frequency Estimation}{12}{subsection.3.2}\protected@file@percent }
+\newlabel{sec:frequency}{{3.2}{12}{Frequency Estimation}{subsection.3.2}{}}
+\newlabel{sec:reeval}{{3.2}{12}{Frequency Estimation}{table.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Algorithm frequency estimates correlate substantially more strongly with expert labels than the prior signal-processing state of the art. Scatter plots comparing algorithm-predicted frequency ($y$-axis) against expert-reviewed frequency ($x$-axis) for each subtype. Top row: present system (PD: CNN+ACF frequency prior refined by IPI from detected discharges; RDA: NB-Hilbert iterative narrowband Hilbert refinement, V12 hyperparameters). Bottom row: T\u {a}u\c {t}an et al.\ signal-processing baseline. Columns from left to right: LPD ($n = 1{,}155$; $\rho = 0.778$), GPD ($n = 1{,}137$; $\rho = 0.802$), LRDA ($n = 730$; $\rho = 0.740$), GRDA ($n = 1{,}453$; $\rho = 0.804$). Spearman correlation ($\rho $) and mean absolute error (MAE, in Hz) are shown for each panel; bootstrap 95\% CIs and paired Tautan-vs-algorithm $p$-values are reported in table~\ref {tab:frequency}. Expert frequency is the mean across available raters in labels.csv. The Tautan baseline was rerun on the same labeled cohort (per-row $n$ in the figure title differs slightly between methods because a small minority of segments produced an estimate from one method but not the other). Dashed diagonal line indicates perfect agreement.}}{13}{figure.4}\protected@file@percent }
+\newlabel{fig:freq_scatter}{{4}{13}{Algorithm frequency estimates correlate substantially more strongly with expert labels than the prior signal-processing state of the art. Scatter plots comparing algorithm-predicted frequency ($y$-axis) against expert-reviewed frequency ($x$-axis) for each subtype. Top row: present system (PD: CNN+ACF frequency prior refined by IPI from detected discharges; RDA: NB-Hilbert iterative narrowband Hilbert refinement, V12 hyperparameters). Bottom row: T\u {a}u\c {t}an et al.\ signal-processing baseline. Columns from left to right: LPD ($n = 1{,}155$; $\rho = 0.778$), GPD ($n = 1{,}137$; $\rho = 0.802$), LRDA ($n = 730$; $\rho = 0.740$), GRDA ($n = 1{,}453$; $\rho = 0.804$). Spearman correlation ($\rho $) and mean absolute error (MAE, in Hz) are shown for each panel; bootstrap 95\% CIs and paired Tautan-vs-algorithm $p$-values are reported in table~\ref {tab:frequency}. Expert frequency is the mean across available raters in labels.csv. The Tautan baseline was rerun on the same labeled cohort (per-row $n$ in the figure title differs slightly between methods because a small minority of segments produced an estimate from one method but not the other). Dashed diagonal line indicates perfect agreement}{figure.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Algorithm validation on the prior 4-rater cohort (raters PH, LB, SZ, MW) labeled on the Tautan et al.~\cite  {tautan2025} dataset. Mean across the within-role pairs ($\binom  {4}{2}=6$ expert--expert pairs, 4 expert--algorithm pairs, 4 expert--Tautan pairs). The PH/LB/SZ labels were produced without the interactive narrowband-overlay tools introduced here and are noisier than the canonical cohort by construction.}}{13}{table.4}\protected@file@percent }
+\newlabel{tab:phlbsz_cohort}{{4}{13}{Algorithm validation on the prior 4-rater cohort (raters PH, LB, SZ, MW) labeled on the Tautan et al.~\cite {tautan2025} dataset. Mean across the within-role pairs ($\binom {4}{2}=6$ expert--expert pairs, 4 expert--algorithm pairs, 4 expert--Tautan pairs). The PH/LB/SZ labels were produced without the interactive narrowband-overlay tools introduced here and are noisier than the canonical cohort by construction}{table.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Algorithm--expert agreement matches or exceeds the expert--expert ceiling on two independent 4-rater cohorts. Within each task the left bar shows mean expert--expert (EE) agreement across all $\binom  {4}{2}=6$ within-cohort expert pairs, and the right bar shows mean expert--algorithm (EA) agreement across all 4 expert/algorithm pairs. Bar height is the mean across pairs computed by paired segment-level bootstrap (2{,}000 resamples); error bars are 95\% bootstrap CIs on that mean. Open circles overlaid on each bar are the per-pair point estimates (6 EE points, 4 EA points), with horizontal jitter for legibility. Bar color encodes IIIC pattern subtype using the same palette as figure~\ref {fig:freq_scatter} (LPD orange, GPD yellow, LRDA olive-green, GRDA sky-blue); the lighter shade is EE and the darker shade is EA. Significance brackets ($*$ $p<0.05$, $**$ $p<0.01$, $***$ $p<0.001$) are drawn only over comparisons where mean(EA)$-$mean(EE) reached significance under the paired bootstrap; non-significant comparisons (panel C, and several in panels A--B) are not annotated and are reported in the text. In every annotated comparison the algorithm direction was positive (EA $>$ EE). \textbf  {(A) Prior 4-rater Tautan et al.~\cite  {tautan2025} cohort (PH, LB, SZ, MW)}: frequency Spearman~$\rho $. PH, LB, and SZ produced their labels without the present interactive narrowband-overlay tools, so the EE ceiling on this cohort is correspondingly modest; laterality is not shown because PH and LB did not annotate laterality. \textbf  {(B) Canonical 4-rater independent-expert cohort (MW, SZ, TZ, AS)} on 200 stratified segments per pattern subtype, restricted to segments where per-segment accepts exceeded rejects: frequency Spearman~$\rho $. \textbf  {(C) Canonical cohort laterality (Cohen $\kappa $)} for LPD and LRDA only (GPD and GRDA are bilateral by definition). The algorithm uses V12 frequency estimation (NB-Hilbert with retuned hyperparameters: pass-1 0.5--4.5 Hz, pass-2 narrowband half-width 0.5 Hz, top-3 dominant-hemisphere channels averaged, frequency cap 4.5 Hz) and the V14 amplitude/rhythmicity hybrid laterality rule (default to the V12 amplitude call; override only when four amplitude-normalized rhythmicity measures -- per-channel Q-factor, within-hemisphere phase-locking value, narrowband peak-amplitude consistency, and spectral peak prominence -- \emph  {unanimously} disagree with the amplitude call). Per-pair ICCs and MAEs are reported in the main text and in table~\ref {tab:phlbsz_cohort}.}}{14}{figure.5}\protected@file@percent }
+\newlabel{fig:irr_main}{{5}{14}{Algorithm--expert agreement matches or exceeds the expert--expert ceiling on two independent 4-rater cohorts. Within each task the left bar shows mean expert--expert (EE) agreement across all $\binom {4}{2}=6$ within-cohort expert pairs, and the right bar shows mean expert--algorithm (EA) agreement across all 4 expert/algorithm pairs. Bar height is the mean across pairs computed by paired segment-level bootstrap (2{,}000 resamples); error bars are 95\% bootstrap CIs on that mean. Open circles overlaid on each bar are the per-pair point estimates (6 EE points, 4 EA points), with horizontal jitter for legibility. Bar color encodes IIIC pattern subtype using the same palette as figure~\ref {fig:freq_scatter} (LPD orange, GPD yellow, LRDA olive-green, GRDA sky-blue); the lighter shade is EE and the darker shade is EA. Significance brackets ($*$ $p<0.05$, $**$ $p<0.01$, $***$ $p<0.001$) are drawn only over comparisons where mean(EA)$-$mean(EE) reached significance under the paired bootstrap; non-significant comparisons (panel C, and several in panels A--B) are not annotated and are reported in the text. In every annotated comparison the algorithm direction was positive (EA $>$ EE). \textbf {(A) Prior 4-rater Tautan et al.~\cite {tautan2025} cohort (PH, LB, SZ, MW)}: frequency Spearman~$\rho $. PH, LB, and SZ produced their labels without the present interactive narrowband-overlay tools, so the EE ceiling on this cohort is correspondingly modest; laterality is not shown because PH and LB did not annotate laterality. \textbf {(B) Canonical 4-rater independent-expert cohort (MW, SZ, TZ, AS)} on 200 stratified segments per pattern subtype, restricted to segments where per-segment accepts exceeded rejects: frequency Spearman~$\rho $. \textbf {(C) Canonical cohort laterality (Cohen $\kappa $)} for LPD and LRDA only (GPD and GRDA are bilateral by definition). The algorithm uses V12 frequency estimation (NB-Hilbert with retuned hyperparameters: pass-1 0.5--4.5 Hz, pass-2 narrowband half-width 0.5 Hz, top-3 dominant-hemisphere channels averaged, frequency cap 4.5 Hz) and the V14 amplitude/rhythmicity hybrid laterality rule (default to the V12 amplitude call; override only when four amplitude-normalized rhythmicity measures -- per-channel Q-factor, within-hemisphere phase-locking value, narrowband peak-amplitude consistency, and spectral peak prominence -- \emph {unanimously} disagree with the amplitude call). Per-pair ICCs and MAEs are reported in the main text and in table~\ref {tab:phlbsz_cohort}}{figure.5}{}}
+\citation{tautan2025}
+\citation{tautan2025}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Frequency estimation performance on the labels.csv-canonical quality-filtered cohort. Algorithm $\rho $ 95\% CIs are computed via the Fisher $z$-transform and algorithm MAE 95\% CIs via patient-stratified bootstrap (1{,}000 resamples). The right-most column reports the two-sided patient-stratified paired-bootstrap test of $\Delta \rho = \rho _\mathrm  {alg}-\rho _\mathrm  {Tautan}$ on segments where both methods produced an estimate; $p<0.001$ on every subtype, with bootstrap 95\% CIs on $\Delta \rho $ never crossing zero (\S  \ref {sec:frequency}).}}{15}{table.5}\protected@file@percent }
+\newlabel{tab:frequency}{{5}{15}{Frequency estimation performance on the labels.csv-canonical quality-filtered cohort. Algorithm $\rho $ 95\% CIs are computed via the Fisher $z$-transform and algorithm MAE 95\% CIs via patient-stratified bootstrap (1{,}000 resamples). The right-most column reports the two-sided patient-stratified paired-bootstrap test of $\Delta \rho = \rho _\mathrm {alg}-\rho _\mathrm {Tautan}$ on segments where both methods produced an estimate; $p<0.001$ on every subtype, with bootstrap 95\% CIs on $\Delta \rho $ never crossing zero (\S \ref {sec:frequency})}{table.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Inter-rater reliability comparison: expert--expert versus algorithm--expert. Bar charts comparing ICC(3,1) and percentage agreement for frequency and spatial extent estimation. Top row: RDA (LRDA + GRDA combined). Bottom row: PD (LPD + GPD combined). Three conditions compared: expert--expert agreement (blue), present system (orange), and T\u {a}u\c {t}an et al.\ (green). NB-Hilbert (RDA-Profiler) for RDA frequency achieves ICC $= 0.860$, slightly exceeding expert--expert ICC $= 0.852$. PD-Profiler for PD spatial extent achieves ICC $= 0.852$ after threshold optimization, exceeding expert--expert ICC $= 0.845$. T\u {a}u\c {t}an et al.~\cite  {tautan2025} included for direct comparison.}}{15}{figure.6}\protected@file@percent }
+\newlabel{fig:irr}{{6}{15}{Inter-rater reliability comparison: expert--expert versus algorithm--expert. Bar charts comparing ICC(3,1) and percentage agreement for frequency and spatial extent estimation. Top row: RDA (LRDA + GRDA combined). Bottom row: PD (LPD + GPD combined). Three conditions compared: expert--expert agreement (blue), present system (orange), and T\u {a}u\c {t}an et al.\ (green). NB-Hilbert (RDA-Profiler) for RDA frequency achieves ICC $= 0.860$, slightly exceeding expert--expert ICC $= 0.852$. PD-Profiler for PD spatial extent achieves ICC $= 0.852$ after threshold optimization, exceeding expert--expert ICC $= 0.845$. T\u {a}u\c {t}an et al.~\cite {tautan2025} included for direct comparison}{figure.6}{}}
+\citation{tautan2025}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Discharge timing performance.}}{16}{table.6}\protected@file@percent }
+\newlabel{tab:timing}{{6}{16}{Discharge timing performance}{table.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces PD spatial inter-rater agreement (Jaccard, threshold $= 0.38$).}}{16}{table.7}\protected@file@percent }
+\newlabel{tab:spatial_jaccard}{{7}{16}{PD spatial inter-rater agreement (Jaccard, threshold $= 0.38$)}{table.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Discharge Timing}{16}{subsection.3.3}\protected@file@percent }
+\newlabel{sec:timing}{{3.3}{16}{Discharge Timing}{subsection.3.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Spatial Localization}{16}{subsection.3.4}\protected@file@percent }
+\newlabel{sec:spatial}{{3.4}{16}{Spatial Localization}{subsection.3.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.1}PD Spatial Localization.}{16}{subsubsection.3.4.1}\protected@file@percent }
+\citation{tautan2025}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces End-to-end versus structured inference.}}{17}{table.8}\protected@file@percent }
+\newlabel{tab:architecture}{{8}{17}{End-to-end versus structured inference}{table.8}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.2}RDA Spatial Extent.}{17}{subsubsection.3.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}End-to-End Characterization Examples}{17}{subsection.3.5}\protected@file@percent }
+\newlabel{sec:examples}{{3.5}{17}{End-to-End Characterization Examples}{subsection.3.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Model Architecture Comparison}{17}{subsection.3.6}\protected@file@percent }
+\newlabel{sec:architecture}{{3.6}{17}{Model Architecture Comparison}{subsection.3.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces LPD characterization examples at three difficulty levels. Three representative lateralized periodic discharge (LPD) cases selected to span the range of inter-rater agreement. Each row shows one case with: (left) 19-channel average-reference EEG (10 seconds, bandpass 0.3--50~Hz, amplitude clipped at $\pm 250$~$\mu $V) with detected discharge times marked as red dashed vertical lines on the involved hemisphere and light blue shading indicating the lateralized side; (right) Laplacian topoplot (inferno colormap) with electrode labels, and ACNS 2021 verbal description. Top: easy case (agreement $\geq 95\%$). Middle: medium case (agreement 70--80\%). Bottom: hard case (agreement 45--60\%). Scale bar: 100~$\mu $V.}}{18}{figure.7}\protected@file@percent }
+\newlabel{fig:lpd_char}{{7}{18}{LPD characterization examples at three difficulty levels. Three representative lateralized periodic discharge (LPD) cases selected to span the range of inter-rater agreement. Each row shows one case with: (left) 19-channel average-reference EEG (10 seconds, bandpass 0.3--50~Hz, amplitude clipped at $\pm 250$~$\mu $V) with detected discharge times marked as red dashed vertical lines on the involved hemisphere and light blue shading indicating the lateralized side; (right) Laplacian topoplot (inferno colormap) with electrode labels, and ACNS 2021 verbal description. Top: easy case (agreement $\geq 95\%$). Middle: medium case (agreement 70--80\%). Bottom: hard case (agreement 45--60\%). Scale bar: 100~$\mu $V}{figure.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces GPD characterization examples at three difficulty levels. Three representative generalized periodic discharge (GPD) cases, following the same format as figure~\ref {fig:lpd_char}. Discharge markers span both hemispheres, reflecting the generalized distribution. Scale bar: 100~$\mu $V.}}{19}{figure.8}\protected@file@percent }
+\newlabel{fig:gpd_char}{{8}{19}{GPD characterization examples at three difficulty levels. Three representative generalized periodic discharge (GPD) cases, following the same format as figure~\ref {fig:lpd_char}. Discharge markers span both hemispheres, reflecting the generalized distribution. Scale bar: 100~$\mu $V}{figure.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces LRDA characterization examples at three difficulty levels. Three representative lateralized rhythmic delta activity (LRDA) cases, following the same format as figure~\ref {fig:lpd_char}. No discharge markers are shown. Light blue shading indicates the dominant hemisphere. Scale bar: 100~$\mu $V.}}{20}{figure.9}\protected@file@percent }
+\newlabel{fig:lrda_char}{{9}{20}{LRDA characterization examples at three difficulty levels. Three representative lateralized rhythmic delta activity (LRDA) cases, following the same format as figure~\ref {fig:lpd_char}. No discharge markers are shown. Light blue shading indicates the dominant hemisphere. Scale bar: 100~$\mu $V}{figure.9}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces GRDA characterization examples at three difficulty levels. Three representative generalized rhythmic delta activity (GRDA) cases, following the same format as figure~\ref {fig:lpd_char}. No discharge markers are shown. Light blue shading covers all channels, reflecting the generalized distribution. Scale bar: 100~$\mu $V.}}{21}{figure.10}\protected@file@percent }
+\newlabel{fig:grda_char}{{10}{21}{GRDA characterization examples at three difficulty levels. Three representative generalized rhythmic delta activity (GRDA) cases, following the same format as figure~\ref {fig:lpd_char}. No discharge markers are shown. Light blue shading covers all channels, reflecting the generalized distribution. Scale bar: 100~$\mu $V}{figure.10}{}}
+\citation{tautan2025}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Discussion}{22}{section.4}\protected@file@percent }
+\newlabel{sec:discussion}{{4}{22}{Discussion}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Summary of contributions and significance}{22}{subsection.4.1}\protected@file@percent }
+\newlabel{sec:summary}{{4.1}{22}{Summary of contributions and significance}{subsection.4.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Comparison with Prior Work}{22}{subsection.4.2}\protected@file@percent }
+\newlabel{sec:comparison}{{4.2}{22}{Comparison with Prior Work}{subsection.4.2}{}}
+\citation{mcgraw2024}
+\citation{lake2017}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Learned Evidence versus Handcrafted Features}{23}{subsection.4.3}\protected@file@percent }
+\newlabel{sec:learned_vs_handcrafted}{{4.3}{23}{Learned Evidence versus Handcrafted Features}{subsection.4.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Label Quality Discovery}{23}{subsection.4.4}\protected@file@percent }
+\newlabel{sec:label_quality}{{4.4}{23}{Label Quality Discovery}{subsection.4.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Clinical Implications}{24}{subsection.4.5}\protected@file@percent }
+\newlabel{sec:clinical}{{4.5}{24}{Clinical Implications}{subsection.4.5}{}}
+\citation{jing2023}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Limitations and Future Work}{25}{subsection.4.6}\protected@file@percent }
+\newlabel{sec:limitations}{{4.6}{25}{Limitations and Future Work}{subsection.4.6}{}}
+\citation{jing2023}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusion}{26}{section.5}\protected@file@percent }
+\newlabel{sec:conclusion}{{5}{26}{Conclusion}{section.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Contest of methods: naming scheme and entry codes}{26}{appendix.A}\protected@file@percent }
+\newlabel{app:contest}{{A}{26}{Contest of methods: naming scheme and entry codes}{appendix.A}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Naming scheme}{27}{subsection.A.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Entries referenced in this paper}{27}{subsection.A.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Contest entries referenced in the main text. The V5 RDA lateralization contest comprised 76 algorithm variants evaluated on 4{,}253 RDA segments (1{,}295 LRDA, 2{,}958 GRDA); only the variants discussed in this paper are listed here.}}{27}{table.9}\protected@file@percent }
+\newlabel{tab:contest_entries}{{9}{27}{Contest entries referenced in the main text. The V5 RDA lateralization contest comprised 76 algorithm variants evaluated on 4{,}253 RDA segments (1{,}295 LRDA, 2{,}958 GRDA); only the variants discussed in this paper are listed here}{table.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Mathematical methods}{27}{appendix.B}\protected@file@percent }
+\newlabel{app:math_methods}{{B}{27}{Mathematical methods}{appendix.B}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.1}ChannelPD-Net: per-channel CNN with temporal attention}{27}{subsection.B.1}\protected@file@percent }
+\newlabel{app:channelpdnet}{{B.1}{27}{ChannelPD-Net: per-channel CNN with temporal attention}{subsection.B.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.1.1}Overview}{27}{subsubsection.B.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.1.2}Input representation}{27}{subsubsection.B.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.1.3}Architecture}{28}{subsubsection.B.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Convolutional backbone.}{28}{section*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Temporal attention pooling.}{28}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Dual-head prediction.}{28}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.1.4}Training}{28}{subsubsection.B.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Loss function.}{28}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Cross-validation and ensembling.}{28}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Data augmentation.}{29}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.1.5}Downstream usage}{29}{subsubsection.B.1.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Laterality detection.}{29}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{CNN frequency estimate.}{29}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.1.6}Performance}{29}{subsubsection.B.1.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.2}HemiCET-UNet: hemisphere-restricted convolutional evidence-trace U-Net}{29}{subsection.B.2}\protected@file@percent }
+\newlabel{app:hemicet}{{B.2}{29}{HemiCET-UNet: hemisphere-restricted convolutional evidence-trace U-Net}{subsection.B.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.2.1}Overview}{29}{subsubsection.B.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.2.2}Input representation}{29}{subsubsection.B.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.2.3}Architecture}{29}{subsubsection.B.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Encoder.}{29}{section*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Decoder with skip connections.}{29}{section*.24}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces HemiCET-UNet encoder stages.}}{30}{table.10}\protected@file@percent }
+\newlabel{tab:hemicet_encoder}{{10}{30}{HemiCET-UNet encoder stages}{table.10}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces HemiCET-UNet decoder stages with skip connections. ConvT $=$ ConvTranspose1d. All ConvT layers use kernel $k{=}4$, stride $s{=}2$, padding $p{=}1$. All fusion convolutions are followed by batch normalization and GELU activation; the final $1 \times 1$ convolution is followed by a sigmoid.}}{30}{table.11}\protected@file@percent }
+\newlabel{tab:hemicet_decoder}{{11}{30}{HemiCET-UNet decoder stages with skip connections. ConvT $=$ ConvTranspose1d. All ConvT layers use kernel $k{=}4$, stride $s{=}2$, padding $p{=}1$. All fusion convolutions are followed by batch normalization and GELU activation; the final $1 \times 1$ convolution is followed by a sigmoid}{table.11}{}}
+\@writefile{toc}{\contentsline {paragraph}{Output.}{30}{section*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.2.4}Training}{30}{subsubsection.B.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Target construction.}{30}{section*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Loss function.}{30}{section*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Data augmentation.}{30}{section*.34}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Cross-validation and ensembling.}{31}{section*.35}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.2.5}Inference pipeline}{31}{subsubsection.B.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.2.6}Performance}{31}{subsubsection.B.2.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.3}Handcrafted Peak Prior (HPP) and product-boosted evidence combination}{31}{subsection.B.3}\protected@file@percent }
+\newlabel{app:evidence_combination}{{B.3}{31}{Handcrafted Peak Prior (HPP) and product-boosted evidence combination}{subsection.B.3}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.3.1}Overview}{31}{subsubsection.B.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.3.2}Input}{31}{subsubsection.B.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.3.3}Mathematical formulation}{31}{subsubsection.B.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{HPP evidence: pointiness trace.}{31}{section*.37}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Teager-Kaiser energy operator (TKEO).}{31}{section*.39}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{HPP combination.}{31}{section*.41}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{CET evidence.}{32}{section*.44}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Preprocessing.}{32}{section*.45}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Product-boosted max combination.}{32}{section*.50}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.3.4}Algorithm}{32}{subsubsection.B.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.3.5}Output}{33}{subsubsection.B.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.3.6}Performance}{33}{subsubsection.B.3.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.4}Dynamic programming with an approximately-periodic prior}{33}{subsection.B.4}\protected@file@percent }
+\newlabel{app:dp}{{B.4}{33}{Dynamic programming with an approximately-periodic prior}{subsection.B.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.4.1}Overview}{33}{subsubsection.B.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.4.2}Handcrafted evidence: HPP}{33}{subsubsection.B.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Pointiness trace.}{33}{section*.52}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Teager-Kaiser energy operator (TKEO).}{33}{section*.56}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Evidence combination.}{33}{section*.58}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.4.3}Neural evidence: CET-UNet}{33}{subsubsection.B.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.4.4}Evidence aggregation and combination}{33}{subsubsection.B.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Channel aggregation.}{34}{section*.60}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Product-boosted combination.}{34}{section*.61}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.4.5}Active interval detection}{34}{subsubsection.B.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.4.6}Candidate extraction}{34}{subsubsection.B.4.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.4.7}Dynamic programming formulation}{34}{subsubsection.B.4.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{State space and scoring.}{34}{section*.63}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Recurrence.}{34}{section*.66}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Parameter values for the dynamic programming algorithm.}}{35}{table.12}\protected@file@percent }
+\newlabel{tab:dp_params}{{12}{35}{Parameter values for the dynamic programming algorithm}{table.12}{}}
+\@writefile{toc}{\contentsline {paragraph}{Backtracking.}{35}{section*.68}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Parameters.}{35}{section*.69}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.4.8}Algorithm pseudocode}{35}{subsubsection.B.4.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.4.9}Post-processing}{35}{subsubsection.B.4.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{EM template refinement.}{35}{section*.70}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Post-hoc confidence filter.}{35}{section*.72}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.4.10}Final frequency estimate}{36}{subsubsection.B.4.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Per-channel timing.}{36}{section*.75}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.4.11}Performance}{36}{subsubsection.B.4.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.5}CNN+ACF frequency ensemble}{36}{subsection.B.5}\protected@file@percent }
+\newlabel{app:cnn_acf}{{B.5}{36}{CNN+ACF frequency ensemble}{subsection.B.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.5.1}Overview}{36}{subsubsection.B.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.5.2}CNN frequency estimate}{36}{subsubsection.B.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Per-channel prediction.}{36}{section*.76}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{PD-weighted aggregation.}{36}{section*.77}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.5.3}ACF frequency estimate}{36}{subsubsection.B.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Per-channel autocorrelation.}{36}{section*.79}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Peak detection.}{37}{section*.82}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Multi-channel aggregation.}{37}{section*.85}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.5.4}Ensemble combination}{37}{subsubsection.B.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.5.5}Algorithm pseudocode}{37}{subsubsection.B.5.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.5.6}Design rationale}{38}{subsubsection.B.5.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces Spearman correlation of CNN, ACF, and ensemble frequency estimates with expert ratings.}}{38}{table.13}\protected@file@percent }
+\newlabel{tab:cnn_acf_perf}{{13}{38}{Spearman correlation of CNN, ACF, and ensemble frequency estimates with expert ratings}{table.13}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.5.7}Performance}{38}{table.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.6}Discharge-locked topographic localization}{38}{subsection.B.6}\protected@file@percent }
+\newlabel{app:discharge_topo}{{B.6}{38}{Discharge-locked topographic localization}{subsection.B.6}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.6.1}Overview}{38}{subsubsection.B.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.6.2}Input}{38}{subsubsection.B.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.6.3}Mathematical formulation}{38}{subsubsection.B.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 1: Surface Laplacian.}{38}{section*.89}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 2: Global field power.}{38}{section*.91}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 3: Pass 1 --- coarse alignment and template extraction.}{39}{section*.93}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 4: Pass 2 --- cross-correlation refinement.}{39}{section*.97}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 5: GFP-squared weighted averaging.}{39}{section*.100}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.6.4}Algorithm}{39}{subsubsection.B.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.6.5}Rendering and description}{39}{subsubsection.B.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.6.6}Performance}{40}{subsubsection.B.6.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.7}Hybrid-PLV PD spatial extent}{40}{subsection.B.7}\protected@file@percent }
+\newlabel{app:hybrid_plv}{{B.7}{40}{Hybrid-PLV PD spatial extent}{subsection.B.7}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.7.1}Overview}{40}{subsubsection.B.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.7.2}Reference channel selection}{40}{subsubsection.B.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.7.3}Bandpass filtering}{40}{subsubsection.B.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.7.4}Phase extraction via Hilbert transform}{40}{subsubsection.B.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.7.5}Reference phase construction}{40}{subsubsection.B.7.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.7.6}Per-channel phase-locking value}{40}{subsubsection.B.7.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.7.7}Combined channel score}{41}{subsubsection.B.7.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.7.8}Region mapping}{41}{subsubsection.B.7.8}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {14}{\ignorespaces Mapping of bipolar channels to anatomical regions for the Hybrid-PLV spatial extent computation.}}{41}{table.14}\protected@file@percent }
+\newlabel{tab:hybrid_plv_regions}{{14}{41}{Mapping of bipolar channels to anatomical regions for the Hybrid-PLV spatial extent computation}{table.14}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.7.9}Binary involvement and spatial extent}{41}{subsubsection.B.7.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.7.10}Algorithm pseudocode}{41}{subsubsection.B.7.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.7.11}Design rationale}{42}{subsubsection.B.7.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.7.12}Performance}{42}{subsubsection.B.7.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.8}NB-Hilbert: iterative narrowband Hilbert refinement for RDA}{42}{subsection.B.8}\protected@file@percent }
+\newlabel{app:nb_hilbert}{{B.8}{42}{NB-Hilbert: iterative narrowband Hilbert refinement for RDA}{subsection.B.8}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.8.1}Overview}{42}{subsubsection.B.8.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.8.2}Input}{42}{subsubsection.B.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.8.3}Mathematical formulation}{42}{subsubsection.B.8.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Pass 1: coarse estimation --- broadband delta filtering.}{42}{section*.113}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Coarse lateralization.}{42}{section*.115}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Hilbert-based instantaneous frequency.}{43}{section*.118}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Pass 2: narrowband refinement --- narrowband filtering.}{43}{section*.123}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Refined lateralization.}{43}{section*.125}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Refined frequency.}{43}{section*.128}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{LRDA vs.\ GRDA classification.}{43}{section*.130}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.8.4}Algorithm}{43}{subsubsection.B.8.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.8.5}Output}{44}{subsubsection.B.8.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.8.6}Performance}{44}{subsubsection.B.8.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.9}RDA-PLV spatial extent}{44}{subsection.B.9}\protected@file@percent }
+\newlabel{app:rda_plv}{{B.9}{44}{RDA-PLV spatial extent}{subsection.B.9}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.9.1}Overview}{44}{subsubsection.B.9.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.9.2}Input}{44}{subsubsection.B.9.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.9.3}Mathematical formulation}{44}{subsubsection.B.9.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 1: narrowband filtering.}{44}{section*.133}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 2: reference signal construction.}{44}{section*.135}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 3: phase extraction.}{45}{section*.137}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 4: phase-locking value.}{45}{section*.140}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 5: amplitude ratio.}{45}{section*.142}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 6: combined score.}{45}{section*.145}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 7: variance explained.}{45}{section*.147}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Step 8: thresholding and spatial extent.}{45}{section*.150}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.9.4}Algorithm}{45}{subsubsection.B.9.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.9.5}Output}{46}{subsubsection.B.9.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.9.6}Performance}{46}{subsubsection.B.9.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {B.10}BIPD detection: bilateral independent periodic discharges}{46}{subsection.B.10}\protected@file@percent }
+\newlabel{app:bipd}{{B.10}{46}{BIPD detection: bilateral independent periodic discharges}{subsection.B.10}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.10.1}Overview}{46}{subsubsection.B.10.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.10.2}Input}{46}{subsubsection.B.10.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.10.3}Mathematical formulation}{46}{subsubsection.B.10.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Stage 1: per-hemisphere discharge detection.}{46}{section*.153}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Stage 2: feature extraction.}{46}{section*.158}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Feature 1: frequency ratio.}{46}{section*.159}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Feature 2: regularity (coefficient of variation).}{47}{section*.162}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Feature 3: matched fraction.}{47}{section*.164}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Feature 4: phase consistency.}{47}{section*.166}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Features 5--7: asymmetry measures.}{47}{section*.169}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Stage 3: GBT classification.}{47}{section*.173}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Training data generation.}{47}{section*.175}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.10.4}Algorithm}{48}{subsubsection.B.10.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.10.5}Output}{48}{subsubsection.B.10.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {B.10.6}Performance}{48}{subsubsection.B.10.6}\protected@file@percent }
+\newlabel{sec:supplementary}{{B.10.6}{48}{Supplementary Material}{section*.176}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {S1}{\ignorespaces Spatial extent scatter plots by subtype. Scatter plots comparing algorithm-predicted spatial extent ($y$-axis, fraction of 18 channels involved) against expert spatial extent ($x$-axis, mean across raters) for each subtype. Per-rater data points shown with distinct markers for each expert rater (LB, PH, SZ, MW). Spearman $\rho $ and MAE are reported per panel.}}{48}{figure.S1}\protected@file@percent }
+\newlabel{fig:spatial_scatter}{{S1}{48}{Spatial extent scatter plots by subtype. Scatter plots comparing algorithm-predicted spatial extent ($y$-axis, fraction of 18 channels involved) against expert spatial extent ($x$-axis, mean across raters) for each subtype. Per-rater data points shown with distinct markers for each expert rater (LB, PH, SZ, MW). Spearman $\rho $ and MAE are reported per panel}{figure.S1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {S2}{\ignorespaces Spatial extent threshold optimization. Effect of binarization threshold on spatial extent prediction accuracy, evaluated on segments with at least 2 expert raters. Top row: PD (LPD + GPD). Bottom row: RDA (LRDA + GRDA). Three metrics shown across threshold values (0.01--0.99): MAE, Pearson correlation, and ICC(3,1). Optimal thresholds are marked: PD approximately 0.38--0.62 (broad plateau), RDA approximately 0.15.}}{49}{figure.S2}\protected@file@percent }
+\newlabel{fig:threshold_sweep}{{S2}{49}{Spatial extent threshold optimization. Effect of binarization threshold on spatial extent prediction accuracy, evaluated on segments with at least 2 expert raters. Top row: PD (LPD + GPD). Bottom row: RDA (LRDA + GRDA). Three metrics shown across threshold values (0.01--0.99): MAE, Pearson correlation, and ICC(3,1). Optimal thresholds are marked: PD approximately 0.38--0.62 (broad plateau), RDA approximately 0.15}{figure.S2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {S3}{\ignorespaces Stratification frequency distributions for the four independent-expert annotation tasks. Each task contains $n=200$ ten-second EEG segments, one per unique patient, sampled to give approximately uniform coverage of the 0.5--3.0~Hz repetition-frequency range. Bins are 0.25~Hz wide. The gray dashed line at 20 segments/bin indicates the perfectly-uniform-200 target. PD bins (LPD, GPD) are computed from MW's \texttt  {expert\_freq\_hz} column, the only PD-frequency column populated in \texttt  {segment\_labels.csv}; RDA bins (LRDA, GRDA) are computed from \texttt  {algo\_freq\_hz} produced by the RDA-Profiler, independent of any MW labels. The bin assignment is used only to balance coverage; the per-segment default that the new raters see at run time is computed by the PDProfiler / RDA-Profiler at run time, so the new raters never see MW's labels. PDs achieve close-to-uniform distribution across the 0.5--2.25~Hz range; LRDA segments are biology-limited (essentially absent above 2.0~Hz in the dataset) and the stratifier therefore concentrates its 200-segment budget in the populated 0.75--2.0~Hz region. This figure documents the case selection used for the four-rater independent-expert evaluation reported in \S  \ref {sec:reeval} and figure~\ref {fig:irr_main}.}}{49}{figure.S3}\protected@file@percent }
+\newlabel{fig:indep_expert_freq}{{S3}{49}{Stratification frequency distributions for the four independent-expert annotation tasks. Each task contains $n=200$ ten-second EEG segments, one per unique patient, sampled to give approximately uniform coverage of the 0.5--3.0~Hz repetition-frequency range. Bins are 0.25~Hz wide. The gray dashed line at 20 segments/bin indicates the perfectly-uniform-200 target. PD bins (LPD, GPD) are computed from MW's \texttt {expert\_freq\_hz} column, the only PD-frequency column populated in \texttt {segment\_labels.csv}; RDA bins (LRDA, GRDA) are computed from \texttt {algo\_freq\_hz} produced by the RDA-Profiler, independent of any MW labels. The bin assignment is used only to balance coverage; the per-segment default that the new raters see at run time is computed by the PDProfiler / RDA-Profiler at run time, so the new raters never see MW's labels. PDs achieve close-to-uniform distribution across the 0.5--2.25~Hz range; LRDA segments are biology-limited (essentially absent above 2.0~Hz in the dataset) and the stratifier therefore concentrates its 200-segment budget in the populated 0.75--2.0~Hz region. This figure documents the case selection used for the four-rater independent-expert evaluation reported in \S \ref {sec:reeval} and figure~\ref {fig:irr_main}}{figure.S3}{}}
+\bibcite{claassen2004}{1}
+\bibcite{chong2005}{2}
+\bibcite{rodriguez2017}{3}
+\bibcite{hirsch2021}{4}
+\bibcite{gaspard2014}{5}
+\bibcite{leitinger2015}{6}
+\bibcite{zafar2020}{7}
+\bibcite{vespa2016}{8}
+\bibcite{struck2016}{9}
+\bibcite{tao2020}{10}
+\bibcite{parikh2023}{11}
+\bibcite{zafar2021}{12}
+\bibcite{gaspard2013}{13}
+\bibcite{furbass2015}{14}
+\bibcite{herta2015}{15}
+\bibcite{mcgraw2024}{16}
+\bibcite{jing2020}{17}
+\bibcite{jing2023irr}{18}
+\bibcite{gramfort2013}{19}
+\bibcite{shrout1979}{20}
+\bibcite{jing2023}{21}
+\bibcite{ge2023}{22}
+\bibcite{zheng2022}{23}
+\bibcite{tautan2025}{24}
+\bibcite{lake2017}{25}
+\gdef \@abspage@last{52}

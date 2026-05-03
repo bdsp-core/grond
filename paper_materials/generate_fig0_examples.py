@@ -28,7 +28,7 @@ PROJECT_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = PROJECT_DIR / 'data'
 EEG_DIR = DATA_DIR / 'eeg'
 LABELS_CSV = DATA_DIR / 'labels' / 'segment_labels.csv'
-OUT_PATH = PROJECT_DIR / 'paper_materials' / 'figures' / 'fig1_eeg_examples.png'
+OUT_PATH = PROJECT_DIR / 'paper_materials' / 'manuscript' / 'figures' / 'fig1_eeg_examples.png'
 OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 # ── Channel definitions ──

@@ -19,8 +19,8 @@ Significance brackets test mean(EA) - mean(EE), sign-corrected so + favors
 algorithm; *** p<0.001, ** p<0.01, * p<0.05; n.s. otherwise.
 
 Output:
-    paper_materials/figures/fig5_irr_comparison.png
-    paper_materials/figures/fig5_irr_comparison.pdf
+    paper_materials/manuscript/figures/fig5_irr_comparison.png
+    paper_materials/manuscript/figures/fig5_irr_comparison.pdf
 
     conda run -n morgoth python paper_materials/build_fig_irr_bars.py
 """
@@ -43,8 +43,8 @@ from analyze_independent_expert_v1 import (  # type: ignore
 )
 
 LABELS_DIR = PROJECT_DIR / 'data' / 'labels'
-OUT_PNG = PROJECT_DIR / 'paper_materials' / 'figures' / 'fig5_irr_comparison.png'
-OUT_PDF = PROJECT_DIR / 'paper_materials' / 'figures' / 'fig5_irr_comparison.pdf'
+OUT_PNG = PROJECT_DIR / 'paper_materials' / 'manuscript' / 'figures' / 'fig5_irr_comparison.png'
+OUT_PDF = PROJECT_DIR / 'paper_materials' / 'manuscript' / 'figures' / 'fig5_irr_comparison.pdf'
 SUMMARY_JSON = PROJECT_DIR / 'results' / 'independent_expert_v1' / 'summary.json'
 
 GRID_GRAY = '#ececec'

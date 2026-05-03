@@ -4,7 +4,7 @@ independent-expert annotation tasks (LPD, GPD, LRDA, GRDA).
 
 Reads the four task manifests under
 `paper_materials/independent_expert_tasks/<subtype>/manifest.csv` and writes
-a 2x2 PNG to `paper_materials/figures/figS4_independent_expert_freq_distribution.png`.
+a 2x2 PNG to `paper_materials/manuscript/figures/figS4_independent_expert_freq_distribution.png`.
 
 The histograms document the case selection used for the planned independent
 expert validation study (Reviewer Notes #1 and #2): 200 segments per subtype,
@@ -32,7 +32,7 @@ import numpy as np  # noqa: E402
 
 PROJECT_DIR = Path(__file__).resolve().parent.parent
 TASKS_DIR = PROJECT_DIR / 'paper_materials' / 'independent_expert_tasks'
-OUT_PATH = PROJECT_DIR / 'paper_materials' / 'figures' / 'figS4_independent_expert_freq_distribution.png'
+OUT_PATH = PROJECT_DIR / 'paper_materials' / 'manuscript' / 'figures' / 'figS4_independent_expert_freq_distribution.png'
 
 SUBS = ['lpd', 'gpd', 'lrda', 'grda']
 PRETTY = {'lpd': 'LPD', 'gpd': 'GPD', 'lrda': 'LRDA', 'grda': 'GRDA'}
