@@ -104,3 +104,9 @@ Thumbs.db
 # Logs
 *.log
 *.zip
+
+# Reproducibility data bank — rebuild via code/data_management/build_grond_h5_bank.py or download from S3 release
+data/grond_data.h5
+
+# Recovery audit logs (regenerable + can be large)
+results/c1_repro/*.log
