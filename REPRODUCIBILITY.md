@@ -98,6 +98,25 @@ Not every EEG segment is provenance-equivalent. The `segments.csv:eeg_source` co
 
 If you happen to find any `{pid}_seg000.mat` file for these patients, drop it into `data/eeg/` and append a corresponding row to `segments.csv`; the verifier will automatically pick it up. The exact filenames to search for are listed in `paper_materials/reproducibility/missing_pd_segments_to_find.txt`.
 
+**Known unchecked source: `s3://bdsp-opendata-credentialed/eeg-test/eeg_bank_spec.h5`** (106 GB). This file contains 132,291 30-second EEG entries keyed by 5-digit `seg_id` with per-entry `patient_id` attrs. The 200-row companion `manifest.csv` only covers 11 of our originally-missing PIDs, but the larger 132K-entry pool likely covers a substantial fraction (proportionally about 7,000). Confirming this requires walking all 132K entries' attrs, which is impractical from a non-S3-local connection. The most efficient way to check is to launch a t3.small EC2 instance in `us-east-1` and run a one-off scan:
+
+```python
+import s3fs, h5py
+fs = s3fs.S3FileSystem(anon=False)
+f = fs.open('bdsp-opendata-credentialed/eeg-test/eeg_bank_spec.h5', 'rb',
+            cache_type='readahead', block_size=64*1024*1024)
+h5 = h5py.File(f, 'r')
+seg = h5['segments']
+pid_to_seg = {}
+for k in seg:                        # ~30 min on an EC2 instance in us-east-1
+    p = str(seg[k].attrs.get('patient_id', '')).rstrip('.0')
+    if p:
+        pid_to_seg[p] = k
+# Then intersect pid_to_seg with the 8-PID list from missing_pd_segments_to_find.txt.
+```
+
+If any of the 8 PIDs are present, the entry's 30-second monopolar EEG can be sliced (via energy-aligned window-finder, same approach as `code/data_management/recover_pathC_window_finder.py`) to extract the labeled 10-second window.
+
 ## Regenerating individual figures
 
 | Figure | Script | Inputs |
