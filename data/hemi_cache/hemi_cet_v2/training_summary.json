@@ -1,0 +1,36 @@
+{
+  "model": "HemiCET",
+  "n_folds": 5,
+  "n_epochs": 80,
+  "batch_size": 32,
+  "lr": 0.0003,
+  "weight_decay": 0.0001,
+  "pos_weight": 20.0,
+  "sharpness_penalty": 0.1,
+  "hpp_floor_lambda": 0.05,
+  "gaussian_sigma": 2,
+  "fold_results": [
+    {
+      "fold": 0,
+      "best_val_loss": 1.1306155920028687
+    },
+    {
+      "fold": 1,
+      "best_val_loss": 1.1125396688779194
+    },
+    {
+      "fold": 2,
+      "best_val_loss": 1.0534277260303497
+    },
+    {
+      "fold": 3,
+      "best_val_loss": 1.0653935174147289
+    },
+    {
+      "fold": 4,
+      "best_val_loss": 1.205339789390564
+    }
+  ],
+  "mean_best_val_loss": 1.1134632587432862,
+  "total_training_time_s": 470.5
+}
