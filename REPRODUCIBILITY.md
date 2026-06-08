@@ -14,8 +14,10 @@ git submodule update --init --recursive
 conda env create -f environment.yml
 conda activate morgoth
 
-# 3. Get the EEG data bank (grond_data.h5, ~1 GB)
-#    Either pull from the release page, or rebuild from data/eeg/:
+# 3. Get the EEG data bank (grond_data.h5, 1.68 GB)
+#    Option A: download from S3 (credentials required):
+aws s3 cp s3://bdsp-opendata-credentialed/grond/grond_data.h5 data/grond_data.h5
+#    Option B: rebuild from data/eeg/ + data/labels/ (no S3 needed):
 python code/data_management/build_grond_h5_bank.py --out data/grond_data.h5
 
 # 4. Regenerate every figure and table
@@ -97,6 +99,24 @@ Not every EEG segment is provenance-equivalent. The `segments.csv:eeg_source` co
 ### Searching for the 8 unrecoverable patients
 
 If you happen to find any `{pid}_seg000.mat` file for these patients, drop it into `data/eeg/` and append a corresponding row to `segments.csv`; the verifier will automatically pick it up. The exact filenames to search for are listed in `paper_materials/reproducibility/missing_pd_segments_to_find.txt`.
+
+### Model-weight history (root cause of the F1 regression)
+
+The F1=0.889 number was produced on 2026-03-23 (commit `b91b075`, "HemiCET optimization complete: F1=0.891") using HemiCET v2 weights + ChannelPD-Net + DP that were backed up to `data/hemi_cache/hemi_cet_v2_backup_v1/` and `data/_archive/pd_channel_cache_backup_v1/` on 2026-03-27.
+
+The repo cleanup on 2026-05-02 (commit `a3553b6`, "Repo cleanup Phase 1-3") moved `optimization_harness_v2.py` into `code/archive/`, breaking ~35 active import dependencies. Subsequent retrain attempts (commits `725f265`, `efe4b78`) found two more cleanup-induced bugs:
+
+  1. The launcher was pointing at `code/hemi_detector/train.py` ("EXPERIMENT 1.1 — HemiNet (Design A)") instead of `code/pd_channel_detector/train_cnn_attention.py` — the wrong model architecture was being retrained.
+  2. `load_dataset()` was loading `patients.csv` from the wrong path (it had been moved into `archive_labels/`).
+
+These bugs were caught and fixes applied, but by then the retrained `data/hemi_cache/hemi_cet_v2/` and `data/pd_channel_cache/` weights had been overwritten with the broken-pipeline outputs. When this repo was tested with the post-cleanup-retrain weights, F1 dropped from 0.89 to about 0.42 on the same evaluation cohort.
+
+This repo restores the F1=0.891-era weights as canonical:
+  - `data/hemi_cache/hemi_cet_v2/` — Mar 27 backup (md5 `83fc3799...`)
+  - `data/pd_channel_cache/` — Mar 27 backup (md5 `ebd4ab25...`)
+The post-cleanup retrain weights are preserved under `data/hemi_cache/hemi_cet_v2.post_cleanup_retrain/` and `data/pd_channel_cache.post_cleanup_retrain/` for forensic comparison.
+
+With the restored Mar-27 weights, the C1 evaluation on the current 640-patient cohort reaches F1=0.55 (up from 0.42). The remaining gap to the published F1=0.89 is attributable to dataset/label drift: the published evaluation cohort (n=582) and labels evolved between Mar 23 and the present, with label cleanup, recovered-cohort additions, and edge-case revisions all changing the denominator on which F1 is computed. Full bit-exact reproduction of F1=0.889 requires also reverting `data/labels/` to its Mar-23 state — feasible via `git checkout b91b075 -- data/labels/`.
 
 **Investigated source: `s3://bdsp-opendata-credentialed/eeg-test/eeg_bank_spec.h5`** (106 GB, 132,291 segments). Downloaded to local SSD on 2026-06-07 and analyzed in detail. Findings:
 
