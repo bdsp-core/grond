@@ -20,6 +20,12 @@ aws s3 cp s3://bdsp-opendata-credentialed/grond/grond_data.h5 data/grond_data.h5
 #    Option B: rebuild from data/eeg/ + data/labels/ (no S3 needed):
 python code/data_management/build_grond_h5_bank.py --out data/grond_data.h5
 
+# 3a. (Optional) Download the canonical labeling viewers (4 self-contained HTMLs,
+#     470 MB total) — the actual tools used by the four raters to score the
+#     200-per-subtype IRR cohort. Useful for inspecting how labels were created.
+aws s3 cp --recursive s3://bdsp-opendata-credentialed/grond/independent_expert_tasks/ \
+    paper_materials/independent_expert_tasks/viewers/
+
 # 4. Regenerate every figure and table
 python paper_materials/generate_all_figures.py
 
