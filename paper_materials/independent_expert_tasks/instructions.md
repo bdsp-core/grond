@@ -1,6 +1,6 @@
 # Independent expert annotation instructions
 
-> **Audience:** colleagues helping us validate the GROND PD/RDA characterization system. You should have received an email from M Brandon Westover (mb.westover@gmail.com) with the four download links. This document explains how to use the labeling tools and what each task asks of you.
+> **Audience:** colleagues helping us validate the GROND PD/RDA characterization system. The four labeling task HTMLs are downloadable from the GitHub release at https://github.com/bdsp-core/grond/releases/tag/v1.0-rater-tools &mdash; you should have received an email from M Brandon Westover (mb.westover@gmail.com) pointing at it. This document explains how to use the labeling tools and what each task asks of you.
 
 ## Why this exists
 

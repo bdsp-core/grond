@@ -1,11 +1,10 @@
 # Email template — independent expert annotation request
 
 > **Before sending:** paste each colleague's first name into the
-> `<NAME>` slot, paste the four pre-signed URLs into the
-> `<DOWNLOAD_URL_*>` slots (these expire 7 days after generation —
-> see `.presigned_urls.txt`), and fill in the **deadline** (the
-> placeholder is `<DEADLINE>`). The body below is intended for
-> Peter, Laura, Aaron, Sahar, Jenn, Tianyu, and Matt.
+> `<NAME>` slot. Download links are now permanent (GitHub release at
+> `https://github.com/bdsp-core/grond/releases/tag/v1.0-rater-tools`),
+> so no per-rater expiry handling is needed. The body below is
+> intended for Peter, Laura, Aaron, Sahar, Jenn, Tianyu, and Matt.
 
 ---
 
@@ -34,16 +33,18 @@ Estimated time per task: **45 minutes to 2 hours** depending on subtype (LPD/GPD
 
 Each task is a self-contained HTML file (no install, no clinical-data download — everything is inlined). Open it in any modern browser, click through the cases, and click **Export** at the end to download a JSON of your labels.
 
-**Step 1 — Download the four task files** (each is 80–150 MB; 7-day pre-signed S3 links; valid until `<EXPIRY_DATE>`). From a terminal:
+**Step 1 — Download the four task files** (each is 80–150 MB). Click on the GitHub release page:
+
+> https://github.com/bdsp-core/grond/releases/tag/v1.0-rater-tools
+
+…or from a terminal:
 
 ```bash
-curl -O '<DOWNLOAD_URL_LPD>'
-curl -O '<DOWNLOAD_URL_GPD>'
-curl -O '<DOWNLOAD_URL_LRDA>'
-curl -O '<DOWNLOAD_URL_GRDA>'
+curl -LO https://github.com/bdsp-core/grond/releases/download/v1.0-rater-tools/lpd_task.html
+curl -LO https://github.com/bdsp-core/grond/releases/download/v1.0-rater-tools/gpd_task.html
+curl -LO https://github.com/bdsp-core/grond/releases/download/v1.0-rater-tools/lrda_task.html
+curl -LO https://github.com/bdsp-core/grond/releases/download/v1.0-rater-tools/grda_task.html
 ```
-
-If `curl` is not your thing, paste the URLs into your browser address bar and they will download.
 
 **Step 2 — Open the HTML file in any modern browser** (Chrome, Safari, Firefox, Edge):
 

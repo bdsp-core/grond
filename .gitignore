@@ -110,3 +110,6 @@ data/grond_data.h5
 
 # Recovery audit logs (regenerable + can be large)
 results/c1_repro/*.log
+
+# Per-rater personalized email drafts (regenerated as needed)
+paper_materials/independent_expert_tasks/email_to_*.md
