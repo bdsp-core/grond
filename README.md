@@ -2,13 +2,13 @@
 
 **GROND** (Generalized Rhythmic and Oscillatory Neurophysiology Descriptor) is an automated system for joint characterization — lateralization, spatial localization, discharge timing, and frequency estimation — of periodic discharges (PD) and rhythmic delta activity (RDA) in continuous EEG. It is built around two complementary pipelines: the **PD-Profiler** (LPD, GPD, BIPD) and the **RDA-Profiler** (LRDA, GRDA), each with its own README sections below. GROND was developed for critical-care EEG monitoring at Massachusetts General Hospital and Beth Israel Deaconess Medical Center.
 
-**Manuscript**: Jing J, Sun C, Zhang T, Byrd M, T\u{a}u\c{t}an AM, Basovic L, Hadar PN, Fernandes MP, Goldenholz D, Kim J, Struck AF, Zafar SF, Westover MB. "GROND: Automated Characterization of Periodic and Rhythmic EEG Patterns." *Journal of Neural Engineering* — manuscript in preparation. Source LaTeX in [paper_materials/manuscript.tex](paper_materials/manuscript.tex); built PDF at [paper_materials/manuscript.pdf](paper_materials/manuscript.pdf).
+**Manuscript**: Jing J, Sun C, Zhang T, Byrd M, T\u{a}u\c{t}an AM, Basovic L, Hadar PN, Fernandes MP, Goldenholz D, Kim J, Struck AF, Zafar SF, Westover MB. "GROND: Automated Characterization of Periodic and Rhythmic EEG Patterns." *Journal of Neural Engineering* — manuscript in preparation. Source LaTeX in [paper_materials/manuscript/manuscript.tex](paper_materials/manuscript/manuscript.tex); built PDF at [paper_materials/manuscript/manuscript.pdf](paper_materials/manuscript/manuscript.pdf).
 
 **Predecessor**: T\u{a}u\c{t}an AM, Jing J, Basovic L, Hadar PN, Sartipi S, Fernandes MP, Kim J, Struck AF, Westover MB, Zafar SF. "Automated estimation of frequency and spatial extent of periodic and rhythmic epileptiform activity from continuous electroencephalography data." *Journal of Neural Engineering*, 22(6):066027, 2025. [doi:10.1088/1741-2552/ae2716](https://doi.org/10.1088/1741-2552/ae2716). The present system substantially improves on this prior work across all characterization tasks.
 
 ## Status
 
-Headline numbers from the manuscript (see [paper_materials/manuscript.tex](paper_materials/manuscript.tex) for full Methods, sample-size reconciliation, and confidence intervals).
+Headline numbers from the manuscript (see [paper_materials/manuscript/manuscript.tex](paper_materials/manuscript/manuscript.tex) for full Methods, sample-size reconciliation, and confidence intervals).
 
 | Task | Metric | N | Performance | Method |
 |------|--------|---|-------------|--------|
@@ -17,7 +17,7 @@ Headline numbers from the manuscript (see [paper_materials/manuscript.tex](paper
 | LPD vs. GPD classification | AUC | 7,037 | **0.911** | RF on per-channel probs + features |
 | 3-way LPD/GPD/BIPD (macro) | AUC | 5,064 | **0.862** | RF on probs + timing features |
 | BIPD vs. GPD | AUC | 2,308 | **0.937** | GBT on timing features |
-| PD discharge timing | F1 | 582 | **0.889** (timing MAE 1.0 ms) | HemiCET-UNet + DP |
+| PD discharge timing | F1 | 576 | **0.817** (mean timing MAE 3.12 ms, median 0 samples) | HemiCET-UNet + DP |
 | PD frequency (LPD / GPD) | Spearman ρ | 1,103 / 1,099 | **0.772 / 0.819** | IPI from HemiCET-UNet + DP |
 | PD spatial extent | Jaccard | 211 | **0.731** (expert–expert 0.751, 97.3%) | Hybrid-PLV @ threshold 0.38 |
 | PD spatial localization | — | — | Discharge-locked topoplot | Laplacian–GFP alignment + morgoth-viewer regions |
@@ -33,11 +33,11 @@ Headline numbers from the manuscript (see [paper_materials/manuscript.tex](paper
 | LRDA laterality | Cohen κ | 150 | **0.948 vs 0.983** (Δ=−0.035, *p*=0.116, n.s.) | V14 amplitude/rhythmicity hybrid |
 | LPD laterality | Cohen κ | 156 | **0.948 vs 0.970** (Δ=−0.022, *p*=0.29, tie) | V12 |
 
-**All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [docs/history/APPROACH_REVIEW_v17.md](docs/history/APPROACH_REVIEW_v17.md) for the development log and [paper_materials/manuscript.tex](paper_materials/manuscript.tex) for the formal Methods.
+**All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [docs/history/APPROACH_REVIEW_v17.md](docs/history/APPROACH_REVIEW_v17.md) for the development log and [paper_materials/manuscript/manuscript.tex](paper_materials/manuscript/manuscript.tex) for the formal Methods.
 
 ### PD-Profiler
 
-The PD characterization pipeline (referred to in code as `PDProfiler`) uses a single per-channel CNN (**ChannelPD-Net**) as a backbone serving three roles: laterality detection, spatial reference selection, and evidence channel weighting. Laterality detection feeds forward into both downstream modules — constraining the spatial localizer to seed from the ipsilateral hemisphere and restricting the discharge detector to ipsilateral channels. See [paper_materials/unified_pd_pipeline.md](paper_materials/unified_pd_pipeline.md) for the design doc and [paper_materials/manuscript.tex](paper_materials/manuscript.tex) §2.2 + appendix B for the formal mathematical specification.
+The PD characterization pipeline (referred to in code as `PDProfiler`) uses a single per-channel CNN (**ChannelPD-Net**) as a backbone serving three roles: laterality detection, spatial reference selection, and evidence channel weighting. Laterality detection feeds forward into both downstream modules — constraining the spatial localizer to seed from the ipsilateral hemisphere and restricting the discharge detector to ipsilateral channels. See [paper_materials/manuscript/manuscript.tex](paper_materials/manuscript/manuscript.tex) §2.3 + appendix B for the formal mathematical specification.
 
 ## Overview
 
@@ -76,85 +76,86 @@ conda env create -f code/environment.yml
 
 ## Data Access
 
-EEG data, expert annotations, and pre-trained model weights are stored on AWS S3 (not in this git repository due to size):
+The entire dataset — every EEG segment, every expert annotation, every algorithm prediction, and the IRR/discharge-timing cohort flags — is bundled into a single self-contained HDF5 file on S3:
 
 ```bash
-# Download all data needed to reproduce results (~4 GB)
-aws s3 sync s3://bdsp-opendata-credentialed/iiic-freq3/data/ data/
-
-# Download contest results and paper data files
-aws s3 sync s3://bdsp-opendata-credentialed/iiic-freq3/results/ results/
-aws s3 sync s3://bdsp-opendata-credentialed/iiic-freq3/paper_materials/ paper_materials/ --exclude "*.py" --exclude "*.md"
+# Download the GROND data bank (1.69 GB, ~14,300 segments)
+aws s3 cp s3://bdsp-opendata-credentialed/grond/grond_data.h5 data/grond_data.h5
 ```
 
 This requires AWS credentials with access to the `bdsp-opendata-credentialed` bucket. To request access, visit the [Brain Data Science Platform (BDSP)](https://bdsp.io).
 
+Pre-trained model weights live in this git repository under `data/hemi_cache/`, `data/pd_channel_cache/`, `data/cet_cache/`, and `data/models/`. Once you have `grond_data.h5` + the git repo, you can reproduce every figure and every number in the manuscript with `python paper_materials/generate_all_figures.py`.
+
 ### S3 Data Contents
 
-The S3 bucket contains 9,857 labeled EEG segments (all segments with expert annotations used in training and evaluation), pre-trained model weights, label files, and evaluation results:
-
 ```
-s3://bdsp-opendata-credentialed/iiic-freq3/
-├── data/
-│   ├── eeg/                       9,857 .mat files (labeled segments only)
-│   ├── labels/                    All label files (see Label System below)
-│   ├── cet_cache/                 CET-UNet model weights (5-fold)
-│   ├── pd_channel_cache/          ChannelPD-Net model weights (5-fold)
-│   ├── hemi_cache/                HemiCET model weights (5-fold)
-│   ├── e2e_cache/                 End-to-end model weights
-│   ├── pdnet_v2_cache/            PDNetV2 model weights
-│   ├── unified_model_cache/       Unified model weights
-│   ├── bipd_cache/                BIPD detection cache
-│   └── rda_cache/                 Pre-computed RDA features (494 files)
-├── results/
-│   ├── lateralization_contest_v4/ 76-method contest results (JSONs)
-│   └── spatial_agreement.json     Spatial inter-rater Jaccard matrix
-└── paper_materials/
-    ├── spatial_inference_cache.json  Pre-computed spatial predictions
-    └── method_comparison_table.json  Timing method comparison data
+s3://bdsp-opendata-credentialed/grond/
+├── grond_data.h5                              (1.69 GB) — the entire dataset
+└── independent_expert_tasks/                  (470 MB) — labeling viewers
+    ├── lpd_task.html
+    ├── gpd_task.html
+    ├── lrda_task.html
+    └── grda_task.html
 ```
 
-After downloading, the repository code will find all data files in their expected locations. The `data/` directory on S3 mirrors the local `data/` directory structure.
+### `grond_data.h5` schema
 
-The `data/` directory contains:
-- `eeg/` — 9,857 .mat files (10s monopolar EEG segments, 19ch at 200 Hz, labeled subset)
-- `labels/` — canonical label files (see Label System below)
-- `*_cache/` — pre-trained model weights and evaluation results
+```
+/segments/{segment_id}/
+    eeg              (19, 2000) float32 monopolar referential EEG at 200 Hz
+    attrs            patient_id, subtype, eeg_source, mat_file,
+                     has_discharge_timing
+/labels/{segment_id}/
+    discharge_times  (N,) float32 — per-discharge times (PD-GT only)
+    attrs            freq_hz_consensus, laterality_consensus,
+                     spatial_channels, freq_per_rater_json, …
+/predictions/pdchar/{segment_id}/    — PD-Profiler outputs
+/predictions/tautan/{segment_id}/    — Tăuțan-baseline outputs
+/predictions/rda_plv/{segment_id}/   — RDA-PLV spatial-extent outputs
+/cohorts/
+    segment_ids      (N,) str
+    pd_gt            (N,) bool
+    irr_canonical    (N,) bool
+/metadata/
+    channel_names_mono       (19,) str
+    bipolar_pair_definitions_json    JSON — derive the canonical
+                                     18-channel bipolar banana on demand
+```
 
-### Data Structure
+The bank stores **19-channel monopolar referential** EEG as the canonical format. Downstream code (PD-Profiler, build_fig2, etc.) derives whichever montage it needs at runtime — bipolar banana for the discharge detector + most plotting, Laplacian for the discharge-locked topography, common-average for some analyses.
+
+### Local Data Structure
 
 ```
 data/
-├── eeg/                       13,556 .mat files (19ch × 2000 samples @ 200 Hz)
+├── eeg/                       14,341 .mat files (19-ch monopolar × 2000 samples @ 200 Hz)
+├── grond_data.h5              ← all of the above bundled (download from S3, see Data Access)
 ├── labels/
-│   ├── labels.csv             Unified per-rater labels (44,449 rows)
+│   ├── labels.csv             Unified per-rater labels (48,727 rows)
 │   │                          One row per (segment, rater, label_type)
-│   │                          All human annotations in one file
-│   ├── segments.csv           Segment registry (13,556 rows)
-│   │                          One row per EEG file: metadata + algo predictions
-│   ├── segment_labels.csv     Consolidated summary (13,556 rows)
-│   │                          One row per segment, aggregating labels.csv + segments.csv
-│   ├── annotations.csv        Legacy per-rater annotations (10,727 rows)
-│   ├── discharge_times.json   PD per-discharge timing (2,938 entries)
-│   ├── rda_wave_labels.json   RDA per-wave timing (549 entries)
-│   ├── channel_involvement.json   Spatial ground truth (594 entries)
+│   ├── segments.csv           Segment registry (14,369 rows; algo predictions + metadata)
+│   ├── segment_labels.csv     Consolidated summary (one row per segment)
+│   ├── discharge_times.json   PD per-discharge timing (593 PD ground-truth: 423 LPD + 170 GPD)
+│   ├── rda_wave_labels.json   RDA per-wave timing
+│   ├── channel_involvement.json   PD spatial ground truth
 │   ├── channel_pseudolabels.json  Channel detection training labels
 │   └── archive_labels/        Raw labeling session outputs, backups, deprecated files
-├── cet_cache/                 CET-UNet model weights (5-fold)
-├── pd_channel_cache/          ChannelPD-Net model weights (5-fold)
-├── hemi_cache/                HemiCET model weights (5-fold)
-└── e2e_cache/                 End-to-end model weights
+├── hemi_cache/hemi_cet_v2/    HemiCET-UNet weights (canonical, 5-fold)
+├── pd_channel_cache/          ChannelPD-Net weights (5-fold)
+├── cet_cache/                 Legacy CET weights (superseded by HemiCET)
+└── models/                    BIPD GBT, LPD-vs-GPD RF, 3-way RF
 ```
 
 ### Label System
 
 The label system has three tiers:
 
-1. **`labels.csv`** (44,449 rows) — the unified per-rater label store. Each row is one (segment, rater, label_type, value) tuple. All human annotations — frequency, spatial extent, spatial channels, discharge timing, wave timing, pattern class, laterality — live here. This is where new annotations go.
+1. **`labels.csv`** (48,727 rows) — the unified per-rater label store. Each row is one (segment, rater, label_type, value) tuple. All human annotations — frequency, spatial extent, spatial channels, discharge timing, wave timing, pattern class, laterality — live here. This is where new annotations go.
 
-2. **`segments.csv`** (13,556 rows) — segment registry. One row per EEG file on disk. Contains physical metadata (montage, sampling rate, duration) and algorithm predictions (algo_freq_hz, pdchar_freq_hz, tautan_freq_hz). No human labels.
+2. **`segments.csv`** (14,369 rows) — segment registry. One row per EEG file on disk. Contains physical metadata (montage, sampling rate, duration) and algorithm predictions (algo_freq_hz, pdchar_freq_hz, tautan_freq_hz). No human labels.
 
-3. **`segment_labels.csv`** (13,556 rows) — consolidated read-only summary. One row per segment, aggregating expert labels from labels.csv with algorithm predictions from segments.csv. **Regenerated** by `python code/data_management/build_segment_labels.py`.
+3. **`segment_labels.csv`** (14,369 rows) — consolidated read-only summary. One row per segment, aggregating expert labels from labels.csv with algorithm predictions from segments.csv. **Regenerated** by `python code/data_management/build_segment_labels.py`.
 
 **JSON label files** store per-event annotations that don't fit a single-value-per-segment model:
 - **`discharge_times.json`** — per-discharge peak times within each PD segment
@@ -262,8 +263,10 @@ conda activate morgoth
 python -c "
 from code.pd_profiler import PDProfiler
 import scipy.io as sio
-eeg = sio.loadmat('your_segment.mat')['data']  # 18×2000 bipolar
-result = PDProfiler().characterize(eeg, subtype='lpd')
+eeg = sio.loadmat('your_segment.mat')['data']  # 19×2000 monopolar referential
+result = PDProfiler().characterize(eeg, subtype='lpd')  # PDProfiler does any
+                                                       # mono→bipolar / Laplacian
+                                                       # derivation it needs
 print(result)
 "
 ```
@@ -354,10 +357,10 @@ Standalone callable: `code/pd_profiler.py` (class `PDProfiler`). A single per-ch
 
 - **Laterality**: Compare hemisphere mean PD probabilities (AUC = 0.989, n = 1,274)
 - **Spatial**: Hybrid-PLV — CNN picks ipsilateral reference channels, PLV finds connected regions. Inter-rater agreement: Model Jaccard 0.731 vs human 0.751 (97.3% of expert–expert agreement, n = 211 with 3-rater ground truth)
-- **Timing**: HemiCET-UNet + DP — learned evidence trace + dynamic programming with periodic prior (F1 = 0.889, timing MAE = 1.0 ms, n = 582)
+- **Timing**: HemiCET-UNet + DP — learned evidence trace + dynamic programming with periodic prior (F1 = 0.817, mean timing MAE = 3.12 ms, median 0 samples, n = 576)
 - **Frequency**: IPI from detected discharges (Spearman ρ = 0.786 LPD / 0.846 GPD)
 
-Laterality detection feeds forward into both spatial localizer (ipsilateral seed) and discharge detector (hemisphere selection). See `paper_materials/unified_pd_pipeline.md` for the design doc and `paper_materials/manuscript.tex` §2.2 + appendix B for the formal mathematical specification.
+Laterality detection feeds forward into both spatial localizer (ipsilateral seed) and discharge detector (hemisphere selection). See `paper_materials/manuscript/manuscript.tex` §2.3 + appendix B for the formal mathematical specification.
 
 ### RDA-Profiler (LRDA/GRDA)
 
@@ -367,7 +370,7 @@ The RDA characterization pipeline classifies LRDA vs GRDA, determines laterality
 
 **Laterality** (V14, amplitude / rhythmicity hybrid): the V12 laterality call is amplitude-based (which hemisphere has more narrowband envelope amplitude at the estimated rhythm frequency) and is fallible whenever artifact, slow drift, or asymmetric volume conduction inflates one hemisphere's amplitude even when the rhythm itself is on the other side. V14 defaults to the V12 amplitude call but **overrides only when four amplitude-normalized rhythmicity measures unanimously disagree**: per-channel Q-factor (f<sub>peak</sub>/FWHM near est_freq), within-hemisphere phase-locking value at est_freq, narrowband peak-amplitude consistency, and per-hemisphere spectral peak prominence. The override is parameter-free. On the 156-segment consensus set it flips 4 of 156 V12 calls and lifts mean expert–algorithm κ from 0.927 to 0.953 (per-rater: MW 0.910→0.935; SZ 0.946→0.982; TZ 0.912→0.941).
 
-76 methods benchmarked across 5 contest rounds. See [docs/history/APPROACH_REVIEW_v17.md](docs/history/APPROACH_REVIEW_v17.md) appendix A for the full leaderboard, and `paper_materials/manuscript.tex` appendix A for the contest naming scheme. The V12/V14 work is documented in [paper_materials/independent_expert_tasks/lrda_path_c_plan.md](paper_materials/independent_expert_tasks/lrda_path_c_plan.md).
+76 methods benchmarked across 5 contest rounds. See [docs/history/APPROACH_REVIEW_v17.md](docs/history/APPROACH_REVIEW_v17.md) appendix A for the full leaderboard, and `paper_materials/manuscript/manuscript.tex` appendix A for the contest naming scheme. The V12/V14 work is documented in [paper_materials/independent_expert_tasks/lrda_path_c_plan.md](paper_materials/independent_expert_tasks/lrda_path_c_plan.md).
 
 ### Verbal Descriptions
 
@@ -389,6 +392,24 @@ conda run -n morgoth python paper_materials/render_figures.py --pick '{"lpd":[1,
 ```
 
 ## Citation
+
+If you use the GROND data bank, model weights, or pipeline, please cite:
+
+```bibtex
+@article{jing2026grond,
+  title={GROND: Automated Characterization of Periodic and Rhythmic EEG Patterns},
+  author={Jing, Jin and Sun, Chenxi and Zhang, Tianyu and Byrd, Matt and
+          T{\u{a}}u{\c{t}}an, Alexandra-Maria and Basovic, Lara
+          and Hadar, Parimala Nallappan and Fernandes, Marcos Paulo
+          and Goldenholz, Daniel and Kim, Jonathan and Struck, Aaron F
+          and Zafar, Sahar F and Westover, M Brandon},
+  journal={Journal of Neural Engineering},
+  year={2026},
+  note={Manuscript in preparation}
+}
+```
+
+The predecessor frequency / spatial-extent paper:
 
 ```bibtex
 @article{tautan2025automated,

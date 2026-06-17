@@ -6,9 +6,15 @@ algorithm predictions, cohort flags, and metadata.
 
 Schema:
   /segments/{segment_id}/
-       eeg              (18, 2000) float32 bipolar EEG at 200 Hz
+       eeg              (19, 2000) float32 monopolar referential EEG at 200 Hz
        attrs: patient_id, subtype, fs_hz=200, eeg_source, eeg_file,
               montage, mat_file, has_discharge_timing
+
+       The bank stores the canonical 19-channel monopolar referential
+       montage. Downstream code is expected to derive whichever montage
+       it needs (bipolar banana, Laplacian, average reference, etc.) at
+       runtime. Bipolar banana derivation is documented in
+       /metadata/bipolar_pair_definitions_json.
   /labels/{segment_id}/
        freq_hz          float32 — expert frequency (consensus across raters)
        freq_per_rater   variable-length attr — JSON {rater: freq_hz}
@@ -78,7 +84,17 @@ PID_RE = re.compile(r'sub-S0001(\d+)_')
 
 
 def load_eeg(mat_file):
-    """Load a .mat file from data/eeg/; return (18, 2000) float32 bipolar."""
+    """Load a .mat file from data/eeg/; return (19, 2000) float32 monopolar referential.
+
+    The bank stores 19-channel monopolar EEG so that downstream code can
+    choose its own derivation (bipolar banana, Laplacian, average reference,
+    etc.) at runtime. For consumers that want the canonical 18-channel
+    bipolar banana montage, use the bipolar_pair_definitions in
+    /metadata/ to derive it on the fly:
+
+        mono = h5['segments'][seg_id]['eeg'][:]                # (19, 2000)
+        bip = mono[BIPOLAR_INDICES[:,0]] - mono[BIPOLAR_INDICES[:,1]]  # (18, 2000)
+    """
     p = EEG_DIR / mat_file
     if not p.exists():
         return None
@@ -97,17 +113,17 @@ def load_eeg(mat_file):
     if data.shape[1] != 2000:
         return None
     if data.shape[0] == 19:
-        # monopolar → bipolar
-        bip = data[BIPOLAR_INDICES[:, 0]] - data[BIPOLAR_INDICES[:, 1]]
-    elif data.shape[0] == 18:
-        bip = data
-    elif data.shape[0] == 20:
-        # Drop EKG (last channel) → monopolar 19, then bipolar
-        mono = data[:19]
-        bip = mono[BIPOLAR_INDICES[:, 0]] - mono[BIPOLAR_INDICES[:, 1]]
-    else:
+        # Already canonical 19-ch monopolar
+        return data.astype(np.float32)
+    if data.shape[0] == 20:
+        # Drop EKG (last channel) → canonical 19-ch monopolar
+        return data[:19].astype(np.float32)
+    if data.shape[0] == 18:
+        # File has been pre-derived to bipolar; the monopolar original is
+        # not recoverable from the bipolar signal alone (the bipolar set has
+        # 18 independent equations on 19 unknowns). Mark for caller to skip.
         return None
-    return bip.astype(np.float32)
+    return None
 
 
 def main():
@@ -228,7 +244,7 @@ def main():
             if eeg is None:
                 n_no_eeg += 1
                 continue
-            if eeg.shape != (18, 2000):
+            if eeg.shape != (19, 2000):
                 n_bad_shape += 1
                 continue
 
