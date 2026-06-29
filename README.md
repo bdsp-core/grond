@@ -85,13 +85,25 @@ aws s3 cp s3://bdsp-opendata-credentialed/grond/grond_data.h5 data/grond_data.h5
 
 This requires AWS credentials with access to the `bdsp-opendata-credentialed` bucket. To request access, visit the [Brain Data Science Platform (BDSP)](https://bdsp.io).
 
-Pre-trained model weights live in this git repository under `data/hemi_cache/`, `data/pd_channel_cache/`, `data/cet_cache/`, and `data/models/`. Once you have `grond_data.h5` + the git repo, you can reproduce every figure and every number in the manuscript with `python paper_materials/generate_all_figures.py`.
+Pre-trained model weights are distributed via S3 (they are gitignored — too large for git). After cloning, sync them into `data/`:
+
+```bash
+# Inference model weights a fresh clone is missing (~12 MB)
+aws s3 sync s3://bdsp-opendata-credentialed/grond/data/ data/
+```
+
+This adds `data/pd_channel_cache/` (ChannelPD-Net), `data/cet_cache/` (CET-UNet), `data/dl_cache/` (ridge frequency model), and `data/models/` (BIPD GBT). The HemiCET timing weights (`data/hemi_cache/hemi_cet_v2/`) and `data/unified_model_cache/` already ship in the git repo. Once you have `grond_data.h5` + the git repo + the synced weights, you can reproduce every figure and every number in the manuscript with `python paper_materials/generate_all_figures.py`.
 
 ### S3 Data Contents
 
 ```
 s3://bdsp-opendata-credentialed/grond/
 ├── grond_data.h5                              (1.69 GB) — the entire dataset
+├── data/                                      (~12 MB)  — gitignored inference weights
+│   ├── pd_channel_cache/   ChannelPD-Net (cnn_attn folds)
+│   ├── cet_cache/          CET-UNet evidence folds
+│   ├── dl_cache/           ridge frequency model
+│   └── models/             BIPD GBT classifier
 └── independent_expert_tasks/                  (470 MB) — labeling viewers
     ├── lpd_task.html
     ├── gpd_task.html

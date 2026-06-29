@@ -1,5 +1,7 @@
 # Large binary data (EEG .mat files, model weights — download via BDSP)
-# All directories below mirror s3://bdsp-opendata-credentialed/iiic-freq3/data/.
+# The gitignored weights below mirror s3://bdsp-opendata-credentialed/grond/data/.
+# After cloning, sync them with:
+#   aws s3 sync s3://bdsp-opendata-credentialed/grond/data/ data/
 data/eeg/
 data/dl_cache/
 data/cet_cache/
