@@ -39,7 +39,7 @@ pdflatex -interaction=nonstopmode manuscript.tex   # second pass for refs
 
 | Artifact | Path | Contents |
 |---|---|---|
-| EEG bank | `data/grond_data.h5` | All 14,341 10-second EEG segments + labels + algorithm predictions + cohort flags. Self-contained, single-file. See "Data bank schema" below. |
+| EEG bank | `data/grond_data.h5` | All 14,307 10-second EEG segments + labels + algorithm predictions + cohort flags. Self-contained, single-file. See "Data bank schema" below. |
 | EEG individual files | `data/eeg/{pid}_seg000.mat` | One .mat per segment. Same content as the h5; kept for backward compatibility with the optimization harness. |
 | Per-segment label index | `data/labels/segments.csv` | One row per segment: patient_id, subtype, source, .mat path, label-availability flags. |
 | Frequency / laterality long-form | `data/labels/labels.csv` | Long-format expert annotations: one row per (rater, label_type, segment). |
@@ -57,9 +57,16 @@ The h5 file is self-contained: every label, prediction, and cohort flag is keyed
    channel_names_bipolar, channel_names_mono, bipolar_pair_definitions_json,
    fs_hz=200, n_samples_per_segment=2000, n_bipolar_channels=18, citation
 
-/segments/{segment_id}/                 # 14,341 segments
-   eeg                                  # (18, 2000) float32 bipolar EEG at 200 Hz
-   attrs: patient_id, subtype, eeg_source, mat_file, has_discharge_timing
+/segments/{segment_id}/                 # 14,307 segments
+   eeg                                  # (19, 2000) float32 MONOPOLAR referential EEG at 200 Hz
+   attrs: patient_id, subtype, subtype_source, eeg_source, eeg_file, mat_file,
+          montage, has_discharge_timing
+   # NOTE: `montage` records the montage of the ORIGINAL source .mat file
+   # (provenance), NOT the format stored here. Stored EEG is always 19-channel
+   # monopolar referential, whatever that attribute says. Derive the 18-channel
+   # bipolar banana at runtime from /metadata/bipolar_pair_definitions_json:
+   #     mono = h5['segments'][sid]['eeg'][:]                              # (19, 2000)
+   #     bip  = mono[PAIRS[:,0]] - mono[PAIRS[:,1]]                        # (18, 2000)
 
 /labels/{segment_id}/
    discharge_times                      # (N,) float32 — discharge times in seconds (PD-GT only)

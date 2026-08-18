@@ -257,7 +257,13 @@ def main():
             sg.attrs['subtype_source'] = str(row.get('subtype_source', ''))
             sg.attrs['eeg_source'] = str(row.get('eeg_source', ''))
             sg.attrs['eeg_file'] = str(row.get('eeg_file', '') or '')
+            # Provenance only: the montage of the SOURCE .mat file. The array
+            # written above is always 19-channel monopolar referential (see
+            # load_eeg), so do not read this as the stored format. Also written
+            # under an unambiguous name for consumers of future rebuilds.
             sg.attrs['montage'] = str(row.get('montage', ''))
+            sg.attrs['source_montage'] = str(row.get('montage', ''))
+            sg.attrs['stored_montage'] = 'monopolar_referential_19ch'
             sg.attrs['mat_file'] = mat_file
             sg.attrs['has_discharge_timing'] = bool(pid in pd_gt_pids)
 
