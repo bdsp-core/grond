@@ -317,6 +317,11 @@ def run_montage(name, arr, meta, folds):
     # ---- segment-level aggregation ----
     left, right = cfg['left'], cfg['right']
     lat_y, lat_s, per_sub = [], [], {'lpd': ([], []), 'gpd': ([], [])}
+    # Per-segment out-of-fold records. Summary metrics alone cannot support a
+    # paired bootstrap between montages, so keep the raw per-segment estimates:
+    # patient_id lets the bootstrap be patient-stratified, matching the
+    # manuscript's other significance tests.
+    per_seg = {}
     for si, m in enumerate(meta):
         sel = seg_idx == si
         p = oof_prob[sel][np.argsort(ch_idx[sel])]
@@ -334,8 +339,19 @@ def run_montage(name, arr, meta, folds):
             per_sub[m['subtype']][0].append(m['freq'])
             per_sub[m['subtype']][1].append(est)
 
+        per_seg[m['mat_file']] = {
+            'patient_id': m['patient_id'],
+            'subtype': m['subtype'],
+            'expert_freq': m['freq'],
+            'cnn_freq': est,
+            'lat_true': m['laterality'],
+            'lat_score': float(p[right].mean() - p[left].mean()),
+            'mean_prob': float(p.mean()),
+        }
+
     res['laterality_auc'] = auc(np.array(lat_y), np.array(lat_s))
     res['n_laterality'] = len(lat_y)
+    res['per_segment'] = per_seg
     for sub, (gt, pr) in per_sub.items():
         res[f'{sub}_freq_rho'] = spearman(gt, pr)
         res[f'{sub}_freq_mae'] = float(np.mean(np.abs(np.array(gt) - np.array(pr))))
