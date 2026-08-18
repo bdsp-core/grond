@@ -2,7 +2,7 @@
 
 **GROND** (Generalized Rhythmic and Oscillatory Neurophysiology Descriptor) is an automated system for joint characterization — lateralization, spatial localization, discharge timing, and frequency estimation — of periodic discharges (PD) and rhythmic delta activity (RDA) in continuous EEG. It is built around two complementary pipelines: the **PD-Profiler** (LPD, GPD, BIPD) and the **RDA-Profiler** (LRDA, GRDA), each with its own README sections below. GROND was developed for critical-care EEG monitoring at Massachusetts General Hospital and Beth Israel Deaconess Medical Center.
 
-**Manuscript**: Jing J, Sun C, Zhang T, Byrd M, T\u{a}u\c{t}an AM, Basovic L, Hadar PN, Fernandes MP, Goldenholz D, Kim J, Struck AF, Zafar SF, Westover MB. "GROND: Automated Characterization of Periodic and Rhythmic EEG Patterns." *Journal of Neural Engineering* — manuscript in preparation. Source LaTeX in [paper_materials/manuscript/manuscript.tex](paper_materials/manuscript/manuscript.tex); built PDF at [paper_materials/manuscript/manuscript.pdf](paper_materials/manuscript/manuscript.pdf).
+**Manuscript**: Jing J, Sun C, Zhang T, Byrd M, T\u{a}u\c{t}an AM, Basovic L, Hadar PN, Fernandes MP, Goldenholz D, Kim J, Struck AF, Zafar SF, Westover MB. "GROND: Automated Characterization of Periodic and Rhythmic EEG Patterns." *Journal of Neural Engineering* — under revision (JNE-110934). Source LaTeX in [paper_materials/manuscript/manuscript.tex](paper_materials/manuscript/manuscript.tex); built PDF at [paper_materials/manuscript/manuscript.pdf](paper_materials/manuscript/manuscript.pdf).
 
 **Predecessor**: T\u{a}u\c{t}an AM, Jing J, Basovic L, Hadar PN, Sartipi S, Fernandes MP, Kim J, Struck AF, Westover MB, Zafar SF. "Automated estimation of frequency and spatial extent of periodic and rhythmic epileptiform activity from continuous electroencephalography data." *Journal of Neural Engineering*, 22(6):066027, 2025. [doi:10.1088/1741-2552/ae2716](https://doi.org/10.1088/1741-2552/ae2716). The present system substantially improves on this prior work across all characterization tasks.
 
@@ -13,31 +13,46 @@ Headline numbers from the manuscript (see [paper_materials/manuscript/manuscript
 | Task | Metric | N | Performance | Method |
 |------|--------|---|-------------|--------|
 | **PD-Profiler** | | | | |
-| PD hemisphere lateralization | AUC | 1,274 | **0.989** | ChannelPD-Net mean probability |
-| LPD vs. GPD classification | AUC | 7,037 | **0.911** | RF on per-channel probs + features |
+| PD hemisphere lateralization | AUC | 1,276 | **0.989** | ChannelPD-Net mean probability |
+| LPD vs. GPD classification | AUC | 7,037 | **0.909** | RF on per-channel probs + features |
 | 3-way LPD/GPD/BIPD (macro) | AUC | 5,064 | **0.862** | RF on probs + timing features |
 | BIPD vs. GPD | AUC | 2,308 | **0.937** | GBT on timing features |
 | PD discharge timing | F1 | 576 | **0.817** (mean timing MAE 3.12 ms, median 0 samples) | HemiCET-UNet + DP |
-| PD frequency (LPD / GPD) | Spearman ρ | 1,103 / 1,099 | **0.772 / 0.819** | IPI from HemiCET-UNet + DP |
+| PD frequency (LPD / GPD) | Spearman ρ | 1,155 / 1,137 | **0.778 / 0.802** | IPI from HemiCET-UNet + DP |
 | PD spatial extent | Jaccard | 211 | **0.731** (expert–expert 0.751, 97.3%) | Hybrid-PLV @ threshold 0.38 |
 | PD spatial localization | — | — | Discharge-locked topoplot | Laplacian–GFP alignment + morgoth-viewer regions |
 | **RDA-Profiler** | | | | |
 | LRDA vs. GRDA | AUC | 4,253 | **0.837** | NB-Hilbert (iterative narrowband Hilbert refinement) |
-| RDA frequency (LRDA / GRDA) | Spearman ρ | 721 / 1,453 | **0.719 / 0.795** | NB-Hilbert (V12) |
+| RDA frequency (LRDA / GRDA) | Spearman ρ | 730 / 1,453 | **0.740 / 0.804** | NB-Hilbert (V12) |
 | RDA spatial extent | ICC(3,1) | 211 | **0.371** (expert–expert 0.373) | RDA-PLV @ threshold 0.15 |
-| **Independent-expert IRR (3-rater majority-accept consensus, V14)** | | | | |
-| LPD frequency (mean EA ICC vs mean EE ICC) | ICC(3,1) | 187 | **0.916 vs 0.866** (Δ=+0.051, *p*<0.001, **EA above EE**) | V12 (NB-Hilbert) |
-| GPD frequency | ICC(3,1) | 197 | **0.975 vs 0.966** (Δ=+0.009, *p*<0.001, **EA above EE**) | V12 |
-| GRDA frequency | ICC(3,1) | 123 | **0.942 vs 0.944** (Δ=−0.002, *p*=0.55, tie at EE ceiling) | V12 |
-| LRDA frequency | ICC(3,1) | 150 | **0.815 vs 0.894** (Δ=−0.079, *p*=0.048) | V12 retuned |
-| LRDA laterality | Cohen κ | 150 | **0.948 vs 0.983** (Δ=−0.035, *p*=0.116, n.s.) | V14 amplitude/rhythmicity hybrid |
-| LPD laterality | Cohen κ | 156 | **0.948 vs 0.970** (Δ=−0.022, *p*=0.29, tie) | V12 |
+| **Independent-expert IRR — canonical 4-rater cohort (MW, SZ, TZ, AS), majority-accept, production config** | | | | |
+| LPD frequency (mean EA ICC vs mean EE ICC) | ICC(3,1) | 177 | **0.931 vs 0.897** (Δ=+0.034, 95% CI [+0.016,+0.055], *p*<0.001, **EA above EE**) | V12 (NB-Hilbert) |
+| GPD frequency | ICC(3,1) | 191 | **0.980 vs 0.973** (Δ=+0.007, 95% CI [−0.000,+0.017], *p*=0.061, n.s.) | V12 |
+| GRDA frequency | ICC(3,1) | 134 | **0.926 vs 0.946** (Δ=−0.020, *p*=0.056, n.s.) | V12 |
+| LRDA frequency | ICC(3,1) | 104 | **0.848 vs 0.903** (Δ=−0.055, *p*=0.435, n.s.) | V12 retuned |
+| LPD laterality | Cohen κ | 177 | **0.945 vs 0.974** (Δ=−0.030, *p*=0.079, n.s.) | V12 |
+| LRDA laterality | Cohen κ | 104 | **0.961 vs 0.993** (Δ=−0.032, *p*=0.269, n.s.) | V14 amplitude/rhythmicity hybrid |
+
+The algorithm exceeds the expert–expert ceiling on LPD frequency and is statistically
+indistinguishable from it on every other attribute; none falls significantly below it. These are the
+numbers reported in the manuscript. Two notes on how they are computed, because both bit us:
+
+- **Use the production configuration.** `analyze_independent_expert_v1.py` defaults to `--algo v1`,
+  which scores the superseded amplitude-only laterality rule. Reported numbers require
+  `--algo v14 --n-boot 2000` (V12 frequency + V14 laterality). `summary.json` now records the `algo`
+  it was generated with, and `build_fig_irr_bars.py` refuses a mismatch.
+- **Several p-values sit near 0.05**, so bootstrap resample count changes verdicts. The borderline
+  comparisons were re-run at 20,000 resamples across three seeds and are stable (GPD 0.052–0.055,
+  GRDA 0.052–0.057, LRDA laterality 0.26–0.27).
+
+An earlier version of this table reported a 3-rater cohort that predated the fourth rater (AS) and
+quoted V12 laterality statistics; it has been replaced by the canonical 4-rater numbers above.
 
 **All methods use EEG-only input** — no gold standard labels provided as algorithm input. See [docs/history/APPROACH_REVIEW_v17.md](docs/history/APPROACH_REVIEW_v17.md) for the development log and [paper_materials/manuscript/manuscript.tex](paper_materials/manuscript/manuscript.tex) for the formal Methods.
 
 ### PD-Profiler
 
-The PD characterization pipeline (referred to in code as `PDProfiler`) uses a single per-channel CNN (**ChannelPD-Net**) as a backbone serving three roles: laterality detection, spatial reference selection, and evidence channel weighting. Laterality detection feeds forward into both downstream modules — constraining the spatial localizer to seed from the ipsilateral hemisphere and restricting the discharge detector to ipsilateral channels. See [paper_materials/manuscript/manuscript.tex](paper_materials/manuscript/manuscript.tex) §2.3 + appendix B for the formal mathematical specification.
+The PD characterization pipeline (referred to in code as `PDProfiler`) uses a single per-channel CNN (**ChannelPD-Net**) as a backbone serving three roles: laterality detection, spatial reference selection, and evidence channel weighting. Laterality detection feeds forward into both downstream modules — constraining the spatial localizer to seed from the ipsilateral hemisphere and restricting the discharge detector to ipsilateral channels. See [paper_materials/manuscript/manuscript.tex](paper_materials/manuscript/manuscript.tex) §2.4 + supplementary section S2 for the formal mathematical specification.
 
 ## Overview
 
@@ -83,7 +98,21 @@ The entire dataset — every EEG segment, every expert annotation, every algorit
 aws s3 cp s3://bdsp-opendata-credentialed/grond/grond_data.h5 data/grond_data.h5
 ```
 
-This requires AWS credentials with access to the `bdsp-opendata-credentialed` bucket. To request access, visit the [Brain Data Science Platform (BDSP)](https://bdsp.io).
+This requires AWS credentials with access to the `bdsp-opendata-credentialed` bucket. The data are
+de-identified (surrogate patient identifiers, shifted dates) but remain governed by the BDSP Data Use
+Agreement, so access is credentialed rather than open: register at
+[bdsp.io](https://bdsp.io), complete human-subjects research training, and sign the DUA.
+
+**Published dataset**: [GROND on BDSP](https://bdsp.io/content/s58yrgqds7xqn8622x7u/1.0.0/) —
+[doi:10.60508/05z5-qy29](https://doi.org/10.60508/05z5-qy29) (version) /
+[doi:10.60508/sn34-b171](https://doi.org/10.60508/sn34-b171) (all versions).
+The full release is 53 objects / 2.0 GB under `s3://bdsp-opendata-credentialed/grond/`: the HDF5 bank,
+the trained model weights under `data/`, and the four self-contained HTML rater tools under
+`independent_expert_tasks/`. To fetch everything rather than just the bank:
+
+```bash
+aws s3 sync s3://bdsp-opendata-credentialed/grond/ ./grond-data/
+```
 
 Pre-trained model weights live in this git repository under `data/hemi_cache/`, `data/pd_channel_cache/`, `data/cet_cache/`, and `data/models/`. Once you have `grond_data.h5` + the git repo, you can reproduce every figure and every number in the manuscript with `python paper_materials/generate_all_figures.py`.
 
@@ -214,11 +243,13 @@ code/
 
 paper_materials/
 ├── manuscript.tex                    Main manuscript (Journal of Neural Engineering format)
-├── appendix_math_methods.tex         Appendix B: full mathematical specifications
+├── appendix_math_methods.tex         Supplementary S2: full mathematical specifications
+├── supplementary.tex                 Standalone supplementary (S1 contest, S2 math, S3 montage ablation, S4 figures)
+├── response_to_reviewers.tex         Response to JNE reviewers (revision R1)
 ├── iopjournal.cls                    IOP Publishing LaTeX class file
-├── figures/                          Publication figures (Figs 1-9 main, S1-S2 supplement)
-├── tables/                           Publication tables (Tables 1-7)
-├── methods/                          Formal math writeups (10 methods, source for appendix B)
+├── figures/                          Publication figures (Figs 1-9 main, S1-S4 supplement)
+├── tables/                           Publication tables (Tables 1-10 main, S3 montage ablation)
+├── methods/                          Formal math writeups (10 methods, source for supplementary S2)
 ├── build_fig2.py                     Fig 2: PD pipeline (fully from data)
 ├── build_fig3.py                     Fig 3: RDA pipeline (fully from data)
 ├── render_figures.py                 Figs 5-8: characterization examples
@@ -360,7 +391,7 @@ Standalone callable: `code/pd_profiler.py` (class `PDProfiler`). A single per-ch
 - **Timing**: HemiCET-UNet + DP — learned evidence trace + dynamic programming with periodic prior (F1 = 0.817, mean timing MAE = 3.12 ms, median 0 samples, n = 576)
 - **Frequency**: IPI from detected discharges (Spearman ρ = 0.786 LPD / 0.846 GPD)
 
-Laterality detection feeds forward into both spatial localizer (ipsilateral seed) and discharge detector (hemisphere selection). See `paper_materials/manuscript/manuscript.tex` §2.3 + appendix B for the formal mathematical specification.
+Laterality detection feeds forward into both spatial localizer (ipsilateral seed) and discharge detector (hemisphere selection). See `paper_materials/manuscript/manuscript.tex` §2.4 + supplementary section S2 for the formal mathematical specification.
 
 ### RDA-Profiler (LRDA/GRDA)
 
@@ -405,7 +436,7 @@ If you use the GROND data bank, model weights, or pipeline, please cite:
           and Zafar, Sahar F and Westover, M Brandon},
   journal={Journal of Neural Engineering},
   year={2026},
-  note={Manuscript in preparation}
+  note={Under revision (JNE-110934)}
 }
 ```
 
@@ -440,7 +471,7 @@ Data provided by BDSP under their Data Use Agreement.
 
 ## Contact
 
-- **Data access**: [bdsp.io](https://bdsp.io) or support@bdsp.io
+- **Data access**: [bdsp.io project page](https://bdsp.io/content/s58yrgqds7xqn8622x7u/1.0.0/) ([doi:10.60508/05z5-qy29](https://doi.org/10.60508/05z5-qy29)) or support@bdsp.io
 - **Code issues**: [GitHub Issues](https://github.com/bdsp-core/grond/issues)
 - **Research collaboration**: Contact the corresponding authors via the publication
 
