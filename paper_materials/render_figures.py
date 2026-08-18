@@ -28,15 +28,15 @@ matplotlib.rcParams['font.sans-serif'] = ['Arial', 'Helvetica', 'DejaVu Sans', '
 # --- Font Sizes ---
 # Base font size for general text (e.g., tick labels, general text)
 # Specific elements will override this with their dedicated constants.
-BASE_FONT_SIZE = 8
+BASE_FONT_SIZE = 10
 matplotlib.rcParams['font.size'] = BASE_FONT_SIZE
 matplotlib.rcParams['axes.labelsize'] = BASE_FONT_SIZE
 matplotlib.rcParams['xtick.labelsize'] = BASE_FONT_SIZE
 matplotlib.rcParams['ytick.labelsize'] = BASE_FONT_SIZE
 
-CHANNEL_LABEL_FONTSIZE = 9
-TIME_AXIS_LABEL_FONTSIZE = 9
-TIME_TICK_LABEL_FONTSIZE = 9
+CHANNEL_LABEL_FONTSIZE = 10.5
+TIME_AXIS_LABEL_FONTSIZE = 10.5
+TIME_TICK_LABEL_FONTSIZE = 10.5
 # CRITIQUE 7: Slightly increased font size for verbal descriptions
 VERBAL_DESCRIPTION_FONTSIZE = 10
 # CRITIQUE 1: Increased significantly for topoplot electrode labels
@@ -329,7 +329,7 @@ def draw_eeg_panel(ax, case, is_pd):
     ax.add_patch(arrow_up)
     ax.add_patch(arrow_dn)
     ax.text(scale_x + 0.15, scale_y_mid, f'{int(scale_uv)} µV',
-            fontsize=9, va='center', ha='left', color='black', clip_on=False) # Increased font size for consistency
+            fontsize=10.5, va='center', ha='left', color='black', clip_on=False) # Increased font size for consistency
 
     # Difficulty badge (CRITIQUE 2: Increased Font Size for Agreement Percentages)
     difficulty = case.get('difficulty', '')

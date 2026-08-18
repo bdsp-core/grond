@@ -180,13 +180,13 @@ def main():
             ax.plot([0, 3], [0, 3], 'k--', alpha=0.3, linewidth=1)
             ax.set_xlim(0, 3); ax.set_ylim(0, 3); ax.set_aspect('equal')
             ax.spines['top'].set_visible(False); ax.spines['right'].set_visible(False)
-            if row_idx == 1: ax.set_xlabel('Expert Frequency (Hz)', fontsize=9)
-            if col_idx == 0: ax.set_ylabel('Predicted Frequency (Hz)', fontsize=9)
+            if row_idx == 1: ax.set_xlabel('Expert Frequency (Hz)', fontsize=10.5)
+            if col_idx == 0: ax.set_ylabel('Predicted Frequency (Hz)', fontsize=10.5)
             if row_idx == 0:
                 ax.set_title(f'{label} (n={len(d)})\n\u03c1={rho:.3f}, MAE={mae:.3f}', fontsize=13, fontweight='bold')
             else:
                 ax.set_title(f'\u03c1={rho:.3f}, MAE={mae:.3f}', fontsize=12, fontweight='bold')
-            ax.legend(fontsize=6, loc='upper left')
+            ax.legend(fontsize=9, loc='upper left')
 
     fig.text(0.01, 0.73, 'PDProfiler\n(CNN+PLV+DP)', fontsize=12, fontweight='bold',
              va='center', ha='left', rotation=90, color='#333')

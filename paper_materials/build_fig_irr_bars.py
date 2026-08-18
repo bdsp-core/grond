@@ -279,7 +279,7 @@ def draw_panel(ax, rows, *, panel_title, y_label=False,
         bar_xs.extend([centers[i] - bar_w/2, centers[i] + bar_w/2])
         bar_lbls.extend(['EE', 'EA'])
     ax.set_xticks(bar_xs)
-    ax.set_xticklabels(bar_lbls, fontsize=9.5, color='#333333')
+    ax.set_xticklabels(bar_lbls, fontsize=10.5, color='#333333')
     ax.tick_params(axis='x', length=0, pad=2)
     for i, r in enumerate(rows):
         ax.text(centers[i], -0.105, r['label'],
@@ -345,6 +345,18 @@ def main():
 
     with open(SUMMARY_JSON) as f:
         summary = json.load(f)
+    # The bars above were overlaid with V14 predictions; the significance
+    # annotations come from summary.json. If that summary was computed for a
+    # different algorithm version the stars would describe a system other than
+    # the one plotted -- which silently produced a V12-derived significance
+    # marker on V14 LRDA-laterality bars until this check was added.
+    summary_algo = summary.get('algo')
+    if summary_algo != 'v14':
+        raise SystemExit(
+            f"{SUMMARY_JSON} was generated with algo={summary_algo!r}, but this figure "
+            "plots V14 predictions. Regenerate it with:\n"
+            "  conda run -n morgoth python code/evaluation/analyze_independent_expert_v1.py "
+            "--algo v14 --n-boot 2000")
     sig_lookup = summary['ee_vs_ea_significance']
 
     print('Loading prior 4-rater Tautan-cohort tables (PH/LB/SZ/MW)...')

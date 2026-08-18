@@ -1011,7 +1011,13 @@ def main():
                 print(f"  {PRETTY[sub]:<6s} {metric:<10s} {d['ee_mean']:>8.3f} {d['ea_mean']:>8.3f} "
                       f"{d['delta_point']:>+8.3f}  [{ci[0]:>+6.3f}, {ci[1]:>+6.3f}] {d['p_two_sided']:>8.3f}  {verdict}")
 
-    # Save JSON
+    # Save JSON. The algo/consensus tags matter: downstream consumers
+    # (build_fig_irr_bars.py) overlay a specific algorithm version onto the bars
+    # and must not pair those bars with significance tests computed for a
+    # different version, so they check these fields.
+    results['algo'] = args.algo
+    results['consensus'] = args.consensus
+    results['n_boot'] = args.n_boot
     summary_path = RESULTS_DIR / 'summary.json'
     with open(summary_path, 'w') as f:
         json.dump(results, f, indent=2, default=lambda o: None if (isinstance(o, float) and np.isnan(o)) else o)

@@ -659,11 +659,11 @@ def plot_icc_bars(ax, values, labels, ci_list=None, title='', ylabel='ICC(3,1)',
     for i, v in enumerate(values):
         if np.isfinite(v):
             ax.text(i, v + 0.02, f'{v:.3f}', ha='center', va='bottom',
-                   fontsize=8, fontweight='bold')
+                   fontsize=10, fontweight='bold')
 
     ax.set_xticks(x)
-    ax.set_xticklabels(labels, fontsize=8, rotation=15, ha='right')
-    ax.set_ylabel(ylabel, fontsize=9)
+    ax.set_xticklabels(labels, fontsize=10, rotation=15, ha='right')
+    ax.set_ylabel(ylabel, fontsize=10.5)
     ax.set_title(title, fontsize=13, fontweight='bold')
     ax.set_ylim(0, 1.05)
     ax.axhline(0.75, color='gray', linestyle='--', alpha=0.4, linewidth=0.8)
@@ -693,7 +693,7 @@ def plot_icc_bars_by_subtype(ax, icc_data, subtypes_order, group_labels, title='
                 ax.bar(x, val, width=bar_width, color=COLORS[st],
                        edgecolor='black', linewidth=0.6, zorder=3)
                 ax.text(x, val + 0.02, f'{val:.2f}', ha='center', va='bottom',
-                       fontsize=6, fontweight='bold')
+                       fontsize=9, fontweight='bold')
             else:
                 ax.bar(x, 0, width=bar_width, color='lightgray',
                        edgecolor='black', linewidth=0.6, zorder=3, hatch='//')
@@ -704,8 +704,8 @@ def plot_icc_bars_by_subtype(ax, icc_data, subtypes_order, group_labels, title='
         group_centers.append(center)
 
     ax.set_xticks(group_centers)
-    ax.set_xticklabels(group_labels, fontsize=7.5, rotation=15, ha='right')
-    ax.set_ylabel(ylabel, fontsize=9)
+    ax.set_xticklabels(group_labels, fontsize=9.5, rotation=15, ha='right')
+    ax.set_ylabel(ylabel, fontsize=10.5)
     ax.set_title(title, fontsize=13, fontweight='bold')
     ax.set_ylim(0, 1.05)
     ax.axhline(0.75, color='gray', linestyle='--', alpha=0.4, linewidth=0.8)
@@ -737,7 +737,7 @@ def plot_pa_bars_by_subtype(ax, pa_data, subtypes_order, group_labels, title='',
                 ax.bar(x, val, width=bar_width, color=COLORS[st],
                        edgecolor='black', linewidth=0.6, zorder=3)
                 ax.text(x, val + 1, f'{val:.0f}', ha='center', va='bottom',
-                       fontsize=6.5, fontweight='bold')
+                       fontsize=9, fontweight='bold')
             else:
                 ax.bar(x, 0, width=bar_width, color='lightgray',
                        edgecolor='black', linewidth=0.6, zorder=3, hatch='//')
@@ -749,8 +749,8 @@ def plot_pa_bars_by_subtype(ax, pa_data, subtypes_order, group_labels, title='',
         group_centers.append(center)
 
     ax.set_xticks(group_centers)
-    ax.set_xticklabels(group_labels, fontsize=7.5, rotation=15, ha='right')
-    ax.set_ylabel(ylabel, fontsize=9)
+    ax.set_xticklabels(group_labels, fontsize=9.5, rotation=15, ha='right')
+    ax.set_ylabel(ylabel, fontsize=10.5)
     ax.set_title(title, fontsize=13, fontweight='bold')
     ax.set_ylim(0, 105)
     ax.grid(axis='y', alpha=0.2)
@@ -1023,7 +1023,7 @@ def main():
     legend_patches = [mpatches.Patch(facecolor=COLORS[st], edgecolor='black', linewidth=0.6,
                                       label=st.upper()) for st in ['lpd', 'gpd', 'lrda', 'grda']]
     fig.legend(handles=legend_patches, loc='lower center', ncol=4,
-               fontsize=9, frameon=True, fancybox=True, shadow=False,
+               fontsize=10.5, frameon=True, fancybox=True, shadow=False,
                bbox_to_anchor=(0.5, 0.01))
 
     # Row labels

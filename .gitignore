@@ -13,6 +13,7 @@ data/_archive/
 data/pdnet_v2_cache/
 data/e2e_cache/
 data/models/
+data/montage_ablation_cache/
 
 # Loose binary template files
 data/templates_*.npy

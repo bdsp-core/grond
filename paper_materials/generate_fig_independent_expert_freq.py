@@ -79,18 +79,18 @@ def main():
         ax.set_xlabel('Frequency (Hz)')
         ax.set_ylabel('Number of segments')
         ax.set_xticks(edges)
-        ax.set_xticklabels([f'{e:.2f}' for e in edges], rotation=45, ha='right', fontsize=8)
+        ax.set_xticklabels([f'{e:.2f}' for e in edges], rotation=45, ha='right', fontsize=10)
         ax.set_xlim(LO - BIN_W / 2, HI + BIN_W / 2)
         ax.axhline(TARGET_PER_BIN, color='gray', linestyle='--', linewidth=0.8, alpha=0.6)
         ax.grid(axis='y', alpha=0.3)
         for c, n in zip(centers, counts):
             if n > 0:
-                ax.text(c, n + 0.5, str(int(n)), ha='center', va='bottom', fontsize=8)
+                ax.text(c, n + 0.5, str(int(n)), ha='center', va='bottom', fontsize=10)
 
     axes[0, 0].text(
         0.02, 0.98,
         f'gray dashed line: {TARGET_PER_BIN} cases/bin (uniform-200 target)',
-        transform=axes[0, 0].transAxes, fontsize=8, va='top',
+        transform=axes[0, 0].transAxes, fontsize=10, va='top',
         color='gray', style='italic',
     )
 

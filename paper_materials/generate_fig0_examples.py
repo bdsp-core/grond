@@ -181,13 +181,13 @@ def plot_eeg_panel(ax, eeg_data, fs, panel_label, subtitle_text):
     ax.set_ylim(y_bottom, y_top)
 
     ax.set_yticks(yticks)
-    ax.set_yticklabels(yticklabels, fontsize=7, fontfamily='sans-serif')
+    ax.set_yticklabels(yticklabels, fontsize=9.5, fontfamily='sans-serif')
 
     # --- IMPROVEMENT 6: Refine Time Axis Labeling ---
     # Removed ax.set_xlabel for individual panels. A figure-wide label will be added in main().
     ax.set_xlabel('') # Clear label for all panels
 
-    ax.tick_params(axis='x', labelsize=8)
+    ax.tick_params(axis='x', labelsize=10)
 
     # Remove top and right spines
     ax.spines['top'].set_visible(False)
@@ -207,7 +207,7 @@ def plot_eeg_panel(ax, eeg_data, fs, panel_label, subtitle_text):
     # --- IMPROVEMENT 1: Adjust Font Sizes and Positioning for Verbal Descriptions ---
     # Subtitle (descriptive text) centered above the plot area
     # Reduced fontsize from 8.5 to 8, increased pad from 10 to 15 to move it higher.
-    ax.set_title(subtitle_text, fontsize=8, fontfamily='sans-serif',
+    ax.set_title(subtitle_text, fontsize=10, fontfamily='sans-serif',
                  loc='center', pad=15) # pad controls distance from top of plot
 
     # --- IMPROVEMENT 4: Standardize Scale Bar Placement and Appearance ---
@@ -229,9 +229,9 @@ def plot_eeg_panel(ax, eeg_data, fs, panel_label, subtitle_text):
     
     # Text labels for scale bar
     # Adjusted text positions slightly for better alignment with new bar placement
-    ax.text(x_end_data - 0.5, y_bottom_data - 10, '1 s', fontsize=7,
+    ax.text(x_end_data - 0.5, y_bottom_data - 10, '1 s', fontsize=9.5,
             ha='center', va='top', fontfamily='sans-serif', clip_on=False)
-    ax.text(x_end_data - 0.15, y_bottom_data + 50, '100 \u00b5V', fontsize=7,
+    ax.text(x_end_data - 0.15, y_bottom_data + 50, '100 \u00b5V', fontsize=9.5,
             ha='right', va='center', fontfamily='sans-serif', rotation=90, clip_on=False)
 
 
@@ -348,7 +348,7 @@ def main():
 
     # --- IMPROVEMENT 6: Refine Time Axis Labeling (Figure-wide) ---
     # Add a single 'Time (s)' label centrally below the entire figure.
-    fig.supxlabel('Time (s)', fontsize=9, fontfamily='sans-serif', y=0.015) # Adjusted y for better placement
+    fig.supxlabel('Time (s)', fontsize=10.5, fontfamily='sans-serif', y=0.015) # Adjusted y for better placement
 
     # Save
     fig.savefig(str(OUT_PATH), dpi=300, bbox_inches='tight', facecolor='white')

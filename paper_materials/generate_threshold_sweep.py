@@ -373,13 +373,13 @@ def plot_figure(pd_results, rda_results, thresholds):
                         ax.annotate(f'T={best_t:.2f}\n{metric_key.upper()}={best_v:.3f}',
                                     xy=(best_t, best_v),
                                     xytext=(best_t + 0.08, best_v + y_off),
-                                    fontsize=8, color='red', fontweight='bold',
+                                    fontsize=10, color='red', fontweight='bold',
                                     arrowprops=dict(arrowstyle='->', color='red', lw=0.8))
 
             ax.set_xlabel('Threshold', fontsize=10)
             ax.set_ylabel(metric_label, fontsize=10)
             ax.set_xlim(0, 1)
-            ax.legend(fontsize=8, loc='best')
+            ax.legend(fontsize=10, loc='best')
             ax.grid(True, alpha=0.3)
 
             if col_i == 0:

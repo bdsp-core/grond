@@ -342,7 +342,7 @@ def _render_eeg_panel(case, is_pd, figsize=(6, 8), show_scale_bar=True):
         ax.add_patch(arrow_up)
         ax.add_patch(arrow_dn)
         ax.text(scale_x + 0.15, scale_y_mid, f'{int(scale_uv)} µV',
-                fontsize=9, va='center', ha='left', color='black', zorder=5)
+                fontsize=10.5, va='center', ha='left', color='black', zorder=5)
 
     # Force identical layout so both panels produce the same pixel size
     ax.set_xlim(-0.05, 10.05)

@@ -226,7 +226,7 @@ def _render_eeg_panel(case, is_pd, figsize=(6, 8), show_scale_bar=True):
         ax.add_patch(arrow_up)
         ax.add_patch(arrow_dn)
         ax.text(scale_x + 0.15, scale_y_mid, f'{int(scale_uv)} µV',
-                fontsize=9, va='center', ha='left', color='black', zorder=5)
+                fontsize=10.5, va='center', ha='left', color='black', zorder=5)
 
     ax.set_xlim(-0.05, 10.05)
     fig.subplots_adjust(left=0.12, right=0.98, top=0.98, bottom=0.06)
